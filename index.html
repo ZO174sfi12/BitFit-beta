@@ -455,7 +455,10 @@ header::after {
         <div class="analysis-text" id="a-evolution">—</div>
         <div style="margin-top:10px" id="new-ex-container"></div>
       </div>
-
+      <div class="analysis-block">
+        <div class="analysis-title r">◆ FEEDBACK</div>
+        <div class="analysis-text" id="a-tips">—</div>
+      </div>
     </div>
   </div>
 
@@ -646,13 +649,17 @@ function parseCSV(text) {
     return {date, muscle, volume: Math.round(v*10)/10};
   });
 
-  // Training days
+  // Training days (gym only — for stats panel)
   const gymDates = new Set();
+  // All active days including kickboxing (for dots)
+  const allActiveDates = new Set();
   exLogs.forEach(row => {
     const e = (row.ename||'').trim();
+    if (e) allActiveDates.add(row.mydate);
     if (!SKIP.has(e) && !KICKBOX.has(e)) gymDates.add(row.mydate);
   });
   data.training_days = Array.from(gymDates).sort();
+  data.all_active_days = Array.from(allActiveDates).sort();
 
   // New exercises
   const seen = new Set();
@@ -896,6 +903,7 @@ function computeStats(start) {
   const todayStr = TODAY.toISOString().slice(0,10);
   const totalDays = Math.round((TODAY - start) / 86400000) + 1;
   const td = DATA.training_days.filter(d => d >= startStr && d <= todayStr).length;
+  const allActive = new Set(DATA.all_active_days || DATA.training_days);
   const wPts = DATA.weight.filter(p => p.date >= startStr && p.date <= todayStr);
   const wFirst = wPts.length ? wPts[0].weight : null;
   const wLast  = wPts.length ? wPts[wPts.length-1].weight : null;
