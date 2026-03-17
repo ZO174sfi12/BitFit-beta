@@ -37,5 +37,39 @@
     false,
     true,
     false
-  ]
+  ],
+  "muscle_rest": {
+    "Core": {
+      "last": "2026-02-25",
+      "rest": 19
+    },
+    "Rug": {
+      "last": "2026-03-13",
+      "rest": 3
+    },
+    "Biceps": {
+      "last": "2026-03-13",
+      "rest": 3
+    },
+    "Borst": {
+      "last": "2026-03-14",
+      "rest": 2
+    },
+    "Schouders": {
+      "last": "2026-03-14",
+      "rest": 2
+    },
+    "Triceps": {
+      "last": "2026-03-14",
+      "rest": 2
+    },
+    "Benen": {
+      "last": "2026-03-16",
+      "rest": 0
+    },
+    "Glutes": {
+      "last": "2026-03-16",
+      "rest": 0
+    }
+  }
 }
