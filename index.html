@@ -355,7 +355,7 @@ function buildLiftDatasets(start) {
 function computeStats(start) {
   const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const totalDays = Math.round((TODAY - start) / 86400000) + 1;
-  const td = DATA.training_days.filter(d => d >= s && d <= t).length;
+  const td = (DATA.all_active_days || DATA.training_days).filter(d => d >= s && d <= t).length;
   const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wFirst = wPts.length ? wPts[0].weight : null;
   const wLast  = wPts.length ? wPts[wPts.length-1].weight : null;
