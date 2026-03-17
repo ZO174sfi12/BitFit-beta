@@ -8,391 +8,108 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
-
 :root {
-  --bg:      #08080f;
-  --panel:   #0d0d18;
-  --border:  #1c1c30;
-  --accent:  #7b5cff;
-  --cyan:    #00e5ff;
-  --green:   #00ffb3;
-  --red:     #ff3d6b;
-  --yellow:  #ffd600;
-  --text:    #c0c0d8;
-  --muted:   #454560;
-  --glow-a:  0 0 12px #7b5cff88, 0 0 30px #7b5cff33;
-  --glow-c:  0 0 12px #00e5ff88, 0 0 30px #00e5ff33;
-  --glow-g:  0 0 12px #00ffb388, 0 0 30px #00ffb333;
+  --bg:#08080f; --panel:#0d0d18; --border:#1c1c30;
+  --accent:#7b5cff; --cyan:#00e5ff; --green:#00ffb3;
+  --red:#ff3d6b; --yellow:#ffd600; --text:#c0c0d8; --muted:#454560;
+  --glow-a:0 0 12px #7b5cff88,0 0 30px #7b5cff33;
+  --glow-c:0 0 12px #00e5ff88,0 0 30px #00e5ff33;
+  --glow-g:0 0 12px #00ffb388,0 0 30px #00ffb333;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Oxanium', sans-serif;
-  font-size: 14px;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 40% at 10% 10%, #7b5cff0a 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 90% 90%, #00e5ff08 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(123,92,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(123,92,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── LOADER ── */
-#loader {
-  position: fixed; inset: 0;
-  background: var(--bg);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  z-index: 9999;
-  gap: 20px;
-}
-.loader-logo {
-  font-family: 'Oxanium', sans-serif;
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: 6px;
-  color: var(--accent);
-  text-shadow: var(--glow-a);
-}
-.loader-logo span { color: var(--cyan); }
-.loader-bar {
-  width: 200px; height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.loader-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--cyan));
-  animation: load-anim 1.5s ease forwards;
-}
-@keyframes load-anim {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-.loader-status {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  animation: blink 1s ease infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-/* ── HEADER ── */
-header {
-  position: relative;
-  padding: 16px 20px 14px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #0a0a16 0%, transparent 100%);
-  z-index: 10;
-}
-header::after {
-  content: '';
-  position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--cyan), transparent);
-  animation: pulse-line 4s ease-in-out infinite;
-}
-@keyframes pulse-line { 0%,100%{opacity:0.4} 50%{opacity:1} }
-
-.header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 10px;
-}
-.logo {
-  font-family: 'Oxanium', sans-serif;
-  font-size: clamp(18px, 5vw, 26px);
-  font-weight: 800;
-  letter-spacing: 4px;
-  color: var(--accent);
-  text-shadow: var(--glow-a);
-}
-.logo span { color: var(--cyan); text-shadow: var(--glow-c); }
-.header-meta {
-  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
-}
-.meta-item {
-  display: flex; flex-direction: column; align-items: flex-end;
-}
-.meta-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 8px; letter-spacing: 2px; color: var(--muted);
-}
-.meta-value {
-  font-family: 'Space Mono', monospace;
-  font-size: 12px; font-weight: 700;
-}
-#status-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse-dot 2s ease-in-out infinite;
-  display: inline-block; margin-right: 4px;
-}
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
-
-/* ── TABS ── */
-.tabs {
-  display: flex; padding: 12px 20px 0; gap: 6px;
-  overflow-x: auto; scrollbar-width: none;
-  position: relative; z-index: 10;
-}
-.tabs::-webkit-scrollbar { display: none; }
-.tab {
-  padding: 7px 16px;
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 1.5px;
-  cursor: pointer;
-  border: 1px solid var(--muted);
-  background: transparent;
-  color: var(--muted);
-  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-  transition: all .2s; white-space: nowrap; flex-shrink: 0;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.tab:hover { color: var(--cyan); border-color: var(--cyan); }
-.tab.active {
-  color: var(--accent); border-color: var(--accent);
-  background: #7b5cff11;
-  box-shadow: 0 0 12px #7b5cff22;
-}
-#period-badge {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; color: var(--muted);
-  padding: 4px 0 10px 20px;
-  position: relative; z-index: 10;
-}
-#period-badge span { color: var(--cyan); }
-
-/* ── MAIN ── */
-.main {
-  padding: 0 14px 24px;
-  display: flex; flex-direction: column; gap: 12px;
-  position: relative; z-index: 1;
-}
-
-/* ── PANEL ── */
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 14px;
-  position: relative;
-  overflow: hidden;
-}
-.panel::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent 60%);
-  box-shadow: 0 0 8px var(--accent);
-}
-.panel.c::before { background: linear-gradient(90deg, var(--cyan), transparent 60%); box-shadow: 0 0 8px var(--cyan); }
-.panel.g::before { background: linear-gradient(90deg, var(--green), transparent 60%); box-shadow: 0 0 8px var(--green); }
-.panel.y::before { background: linear-gradient(90deg, var(--yellow), transparent 60%); box-shadow: 0 0 8px var(--yellow); }
-.panel.r::before { background: linear-gradient(90deg, var(--red), transparent 60%); box-shadow: 0 0 8px var(--red); }
-
-.panel-title {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: 2.5px;
-  color: var(--accent); margin-bottom: 12px;
-  text-transform: uppercase;
-}
-.panel.c .panel-title { color: var(--cyan); }
-.panel.g .panel-title { color: var(--green); }
-.panel.y .panel-title { color: var(--yellow); }
-.panel.r .panel-title { color: var(--red); }
-
-/* ── CHART ── */
-
-
-/* ── LIFT FILTERS ── */
-.lift-filters {
-  display: flex; flex-wrap: wrap; gap: 5px;
-  margin-bottom: 10px;
-}
-.lift-btn {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: 1px;
-  padding: 3px 9px;
-  border: 1px solid;
-  background: transparent;
-  cursor: pointer;
-  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-  transition: all .15s; opacity: 0.35;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.lift-btn.active { opacity: 1; }
-
-/* ── STATS ── */
-.stats-row {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-  margin-bottom: 12px;
-}
-.stat-card {
-  background: #0a0a15;
-  border: 1px solid var(--border);
-  padding: 10px 12px;
-}
-.stat-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 8px; letter-spacing: 1px; color: var(--muted); margin-bottom: 4px;
-}
-.stat-value {
-  font-size: clamp(18px, 5vw, 24px);
-  font-weight: 700; line-height: 1;
-  color: var(--accent);
-  text-shadow: var(--glow-a);
-}
-.stat-value.c { color: var(--cyan); text-shadow: var(--glow-c); }
-.stat-value.g { color: var(--green); text-shadow: var(--glow-g); }
-.stat-value.r { color: var(--red); }
-.stat-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-
-/* ── PR ROWS ── */
-.pr-section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 8px; letter-spacing: 2px; color: var(--muted); margin-bottom: 6px;
-}
-.pr-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: 5px 0; border-bottom: 1px solid var(--border);
-  font-size: 12px;
-}
-.pr-row:last-child { border-bottom: none; }
-.pr-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.pr-lift { flex: 1; }
-.pr-vals { font-family: 'Space Mono', monospace; font-size: 11px; }
-.pr-gain { color: var(--green); font-family: 'Space Mono', monospace; font-size: 11px; margin-left: 6px; }
-
-/* ── ANALYSIS ── */
-.analysis-blocks { display: flex; flex-direction: column; gap: 14px; }
-.analysis-block {}
-.analysis-title {
-  font-family: 'Space Mono', monospace; font-size: 8px;
-  letter-spacing: 2px; margin-bottom: 6px;
-  padding-bottom: 5px; border-bottom: 1px solid var(--border);
-}
-.analysis-title.a { color: var(--accent); }
-.analysis-title.c { color: var(--cyan); }
-.analysis-title.g { color: var(--green); }
-.analysis-title.y { color: var(--yellow); }
-.analysis-text { font-size: 13px; color: var(--text); line-height: 1.65; }
-.analysis-text b { color: var(--yellow); }
-.analysis-text em { color: var(--cyan); font-style: normal; }
-
-/* ── NEW EXERCISES ── */
-.new-ex-list { max-height: 180px; overflow-y: auto; }
-.new-ex-item {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 4px 0; border-bottom: 1px solid var(--border); font-size: 12px;
-}
-.new-ex-item:last-child { border-bottom: none; }
-.new-ex-date {
-  font-family: 'Space Mono', monospace; font-size: 9px;
-  color: var(--muted); white-space: nowrap; margin-left: 8px;
-}
-
-/* ── ERROR STATE ── */
-#error-panel {
-  display: none;
-  text-align: center; padding: 40px 20px;
-}
-#error-panel h2 { color: var(--red); font-size: 18px; margin-bottom: 10px; }
-#error-panel p { color: var(--muted); font-size: 13px; line-height: 1.6; }
-
-/* ── CORNER DECOS ── */
-.cd {
-  position: absolute; width: 10px; height: 10px;
-  border-color: var(--accent); border-style: solid; opacity: 0.3;
-}
-.cd.tl { top: 4px; left: 4px; border-width: 1px 0 0 1px; }
-.cd.tr { top: 4px; right: 4px; border-width: 1px 1px 0 0; }
-.cd.bl { bottom: 4px; left: 4px; border-width: 0 0 1px 1px; }
-.cd.br { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
-
-/* ── DESKTOP ── */
-@media (min-width: 768px) {
-  header { padding: 18px 28px 14px; }
-  .tabs { padding: 16px 28px 0; }
-  #period-badge { padding: 4px 0 12px 28px; }
-  .main {
-    padding: 0 28px 28px;
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 14px;
-  }
-  .lift-panel { grid-row: 1; }
-  .right-col  { grid-row: 1; display: flex; flex-direction: column; gap: 12px; }
-  .analysis-panel { grid-column: 1 / -1; }
-  .analysis-blocks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  
-  .panel { padding: 16px 18px; }
-}
-
-@keyframes popup-in {
-  from { opacity:0; transform: translateY(6px) scale(.97); }
-  to   { opacity:1; transform: translateY(0) scale(1); }
-}
-.phase-popup {
-  position: fixed; z-index: 10000;
-  background: #090912; border: 1px solid var(--border);
-  padding: 12px 14px; max-width: 260px;
-  font-size: 12px; line-height: 1.6; color: var(--text);
-  box-shadow: 0 0 30px rgba(0,0,0,0.9);
-  animation: popup-in .15s ease; pointer-events: none;
-}
-.phase-popup-title {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 2px; margin-bottom: 7px;
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;font-size:14px;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 10% 10%,#7b5cff0a 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 90% 90%,#00e5ff08 0%,transparent 60%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(123,92,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(123,92,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+@keyframes pulse-line{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes popup-in{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes neon-a{0%,100%{text-shadow:var(--glow-a)}50%{text-shadow:0 0 4px #7b5cffcc,0 0 30px #7b5cff99}}
+header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
+header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),transparent);animation:pulse-line 4s ease-in-out infinite;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;}
+.logo-bit{color:var(--accent)}.logo-fit{color:var(--cyan)}.logo-beta{color:var(--muted);font-size:.55em;letter-spacing:2px;}
+.header-right{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.meta-item{display:flex;flex-direction:column;align-items:flex-end;}
+.meta-label{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);}
+.meta-value{font-family:monospace;font-size:11px;font-weight:700;}
+.tabs{display:flex;padding:10px 18px 0;gap:5px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:10;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:6px 14px;font-family:monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;border:1px solid var(--muted);background:transparent;color:var(--muted);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;user-select:none;}
+.tab:hover{color:var(--cyan);border-color:var(--cyan);}
+.tab.active{color:var(--accent);border-color:var(--accent);background:#7b5cff11;box-shadow:0 0 12px #7b5cff22;}
+#period-badge{font-family:monospace;font-size:9px;color:var(--muted);padding:4px 0 10px 18px;position:relative;z-index:10;}
+#period-badge span{color:var(--cyan);}
+.main{padding:0 12px 24px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;}
+.panel{background:var(--panel);border:1px solid var(--border);padding:14px;position:relative;overflow:hidden;}
+.panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 8px var(--accent);}
+.panel.c::before{background:linear-gradient(90deg,var(--cyan),transparent 60%);box-shadow:0 0 8px var(--cyan);}
+.panel.g::before{background:linear-gradient(90deg,var(--green),transparent 60%);box-shadow:0 0 8px var(--green);}
+.panel.y::before{background:linear-gradient(90deg,var(--yellow),transparent 60%);box-shadow:0 0 8px var(--yellow);}
+.panel.r::before{background:linear-gradient(90deg,var(--red),transparent 60%);box-shadow:0 0 8px var(--red);}
+.panel-title{font-family:monospace;font-size:9px;letter-spacing:2.5px;color:var(--accent);margin-bottom:12px;text-transform:uppercase;}
+.panel.c .panel-title{color:var(--cyan);}.panel.g .panel-title{color:var(--green);}
+.panel.y .panel-title{color:var(--yellow);}.panel.r .panel-title{color:var(--red);}
+.lift-filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.lift-btn{font-family:monospace;font-size:9px;letter-spacing:1px;padding:3px 9px;border:1px solid;background:transparent;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;opacity:.35;-webkit-tap-highlight-color:transparent;user-select:none;}
+.lift-btn.active{opacity:1;}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.stat-card{background:#0a0a15;border:1px solid var(--border);padding:10px 12px;}
+.stat-label{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.stat-value{font-size:clamp(18px,5vw,24px);font-weight:700;line-height:1;color:var(--accent);text-shadow:var(--glow-a);}
+.stat-value.c{color:var(--cyan);text-shadow:var(--glow-c);}
+.stat-value.g{color:var(--green);text-shadow:var(--glow-g);}
+.stat-value.r{color:var(--red);}
+.stat-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.pr-section-label{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
+.pr-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.pr-row:last-child{border-bottom:none;}
+.pr-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.pr-lift{flex:1;}.pr-vals{font-family:monospace;font-size:10px;color:var(--muted);}
+.pr-gain{color:var(--green);font-family:monospace;font-size:11px;margin-left:4px;}
+.analysis-blocks{display:flex;flex-direction:column;gap:14px;}
+.analysis-block{}
+.analysis-title{font-family:monospace;font-size:8px;letter-spacing:2px;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+.analysis-title.a{color:var(--accent);}.analysis-title.c{color:var(--cyan);}
+.analysis-title.g{color:var(--green);}.analysis-title.y{color:var(--yellow);}.analysis-title.r{color:var(--red);}
+.analysis-text{font-size:13px;color:var(--text);line-height:1.65;}
+.analysis-text b{color:var(--yellow);}.analysis-text em{color:var(--cyan);font-style:normal;}
+.new-ex-list{}.new-ex-item{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.new-ex-item:last-child{border-bottom:none;}
+.new-ex-date{font-family:monospace;font-size:9px;color:var(--muted);white-space:nowrap;margin-left:8px;}
+.cd{position:absolute;width:10px;height:10px;border-color:var(--accent);border-style:solid;opacity:.3;}
+.cd.tl{top:4px;left:4px;border-width:1px 0 0 1px;}.cd.tr{top:4px;right:4px;border-width:1px 1px 0 0;}
+.cd.bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.cd.br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
+.phase-popup{position:fixed;z-index:10000;background:#090912;border:1px solid var(--border);padding:12px 14px;max-width:260px;font-size:12px;line-height:1.6;color:var(--text);box-shadow:0 0 30px rgba(0,0,0,.9);animation:popup-in .15s ease;pointer-events:none;}
+.phase-popup-title{font-family:monospace;font-size:10px;letter-spacing:2px;margin-bottom:7px;}
+@media(min-width:768px){
+  header{padding:16px 24px 14px;}
+  .tabs{padding:14px 24px 0;}
+  #period-badge{padding:4px 0 12px 24px;}
+  .main{padding:0 24px 28px;display:grid;grid-template-columns:1fr 300px;gap:14px;}
+  .lift-panel{grid-row:1;}.right-col{grid-row:1;display:flex;flex-direction:column;gap:12px;}
+  .analysis-panel{grid-column:1 / -1;}
+  .analysis-blocks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  .panel{padding:16px 18px;}
 }
 </style>
 </head>
 <body>
 
-<div id="loader">
-  <div class="loader-logo">BIT<span>FIT</span> BETA</div>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
-  <div class="loader-status" id="loader-status">FETCHING CSV...</div>
-</div>
-
-<div id="app" style="display:none;">
-
 <header>
   <div class="header-inner">
-    <div class="logo">BIT<span>FIT</span> <span style="font-size:0.6em;color:var(--muted)">BETA</span></div>
-    <div class="header-meta">
+    <div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span> <span class="logo-beta">BETA</span></div>
+    <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">—</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">84.6</span>KG</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">EXPORT</span>
+        <span class="meta-value" style="color:var(--muted)">2026-03-16</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
-        <span class="meta-value"><span id="status-dot"></span><span style="color:var(--green)">LIVE</span></span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">DATA</span>
-        <span class="meta-value" style="color:var(--muted)" id="hdr-date">—</span>
+        <span class="meta-value" style="color:var(--green)">LIVE</span>
       </div>
     </div>
   </div>
@@ -409,24 +126,25 @@ header::after {
 <div class="main">
 
   <div class="panel lift-panel">
-    <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="cd bl"></div><div class="cd br"></div>
-    <div class="panel-title">▸ LIFTS — WERKGEWICHT</div>
+    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+    <div class="panel-title">&#9658; LIFTS &mdash; WERKGEWICHT</div>
     <div class="lift-filters" id="lift-filters"></div>
-    <div style="position:relative;height:clamp(220px,55vw,320px);"><canvas id="liftChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas></div>
+    <div style="position:relative;height:clamp(220px,55vw,320px);">
+      <canvas id="liftChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+    </div>
   </div>
 
   <div class="right-col">
     <div class="panel y">
       <div class="cd tl" style="border-color:var(--yellow)"></div>
       <div class="cd tr" style="border-color:var(--yellow)"></div>
-      <div class="panel-title">▸ PERIODE STATS</div>
+      <div class="panel-title">&#9658; PERIODE STATS</div>
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-label">GYM / PERIODE</div>
           <div style="display:flex;align-items:baseline;gap:3px;">
             <span class="stat-value" id="s-gymdays">—</span>
-            <span style="font-family:'Space Mono',monospace;color:var(--muted);font-size:11px" id="s-totaldays"></span>
+            <span style="font-family:monospace;color:var(--muted);font-size:11px" id="s-totaldays"></span>
           </div>
         </div>
         <div class="stat-card">
@@ -435,28 +153,27 @@ header::after {
           <div class="stat-sub" id="s-wrange">—</div>
         </div>
       </div>
-      <div class="pr-section-label">▸ TOP 3 GESCHATTE 1RM</div>
-      <div id="pr-top2"></div>
+      <div class="pr-section-label">&#9658; TOP 3 GESCHATTE 1RM</div>
+      <div id="pr-top3"></div>
     </div>
   </div>
 
   <div class="panel g analysis-panel">
     <div class="cd tl" style="border-color:var(--green)"></div>
     <div class="cd tr" style="border-color:var(--green)"></div>
-    <div class="panel-title" id="analysis-title">▸ ANALYSE PERIODE</div>
+    <div class="panel-title" id="analysis-title">&#9658; ANALYSE PERIODE</div>
     <div class="analysis-blocks">
       <div class="analysis-block">
-        <div class="analysis-title a">◆ SPIERGROEP BALANS</div>
+        <div class="analysis-title a">&#9670; SPIERGROEP BALANS</div>
         <div class="analysis-text" id="a-focus">—</div>
-        <div id="a-fases-container"></div>
       </div>
       <div class="analysis-block">
-        <div class="analysis-title g" id="evolution-title">◆ TRAINING EVOLUTIE</div>
+        <div class="analysis-title g" id="evolution-title">&#9670; TRAINING EVOLUTIE</div>
         <div class="analysis-text" id="a-evolution">—</div>
         <div style="margin-top:10px" id="new-ex-container"></div>
       </div>
       <div class="analysis-block">
-        <div class="analysis-title r">◆ FEEDBACK</div>
+        <div class="analysis-title r">&#9670; FEEDBACK</div>
         <div class="analysis-text" id="a-tips">—</div>
       </div>
     </div>
@@ -464,60 +181,11 @@ header::after {
 
 </div>
 
-<div id="error-panel">
-  <h2>CSV niet gevonden</h2>
-  <p>Push een JEFIT export CSV naar<br><code style="color:var(--cyan)">github.com/zo174sfi12/bitfitbeta</code><br>om het dashboard te laden.</p>
-</div>
-
-</div><!-- #app -->
-
 <script>
-// ── CONFIG ──
-const GITHUB_USER = "ZO174sfi12";
-const GITHUB_REPO = "BitFit-beta";
-const GITHUB_API  = "https://api.github.com/repos/" + GITHUB_USER + "/" + GITHUB_REPO + "/contents/";
-const RAW_BASE    = "https://raw.githubusercontent.com/" + GITHUB_USER + "/" + GITHUB_REPO + "/main/";
+const DATA = {"lifts": {"DB Bench": {"color": "#4dd0e1", "name": "DB Bench", "points": [{"date": "2026-01-08", "weight": 40.0, "volume": 1256, "pr": true}, {"date": "2026-01-20", "weight": 44.0, "volume": 1776, "pr": true}, {"date": "2026-01-27", "weight": 48.0, "volume": 2236, "pr": true}, {"date": "2026-02-03", "weight": 48.0, "volume": 2680, "pr": false}, {"date": "2026-02-10", "weight": 60.0, "volume": 1880, "pr": true}, {"date": "2026-02-17", "weight": 48.0, "volume": 2178, "pr": false}, {"date": "2026-02-25", "weight": 44.0, "volume": 2340, "pr": false}]}, "Deadlift": {"color": "#ffd600", "name": "Deadlift", "points": [{"date": "2026-01-17", "weight": 60.0, "volume": 2880, "pr": true}, {"date": "2026-02-04", "weight": 80.0, "volume": 2850, "pr": true}, {"date": "2026-02-11", "weight": 80.0, "volume": 2380, "pr": false}, {"date": "2026-02-18", "weight": 75.0, "volume": 2150, "pr": false}, {"date": "2026-02-23", "weight": 75.0, "volume": 2800, "pr": false}, {"date": "2026-03-03", "weight": 77.5, "volume": 2715, "pr": false}]}, "Lat PD": {"color": "#ff8a65", "name": "Lat PD", "points": [{"date": "2026-01-17", "weight": 35.0, "volume": 1510, "pr": true}, {"date": "2026-02-04", "weight": 45.0, "volume": 1830, "pr": true}, {"date": "2026-02-11", "weight": 40.0, "volume": 1240, "pr": false}, {"date": "2026-02-18", "weight": 45.0, "volume": 1560, "pr": false}, {"date": "2026-02-23", "weight": 40.0, "volume": 1280, "pr": false}, {"date": "2026-03-03", "weight": 40.0, "volume": 1230, "pr": false}, {"date": "2026-03-13", "weight": 60.0, "volume": 1925, "pr": true}]}, "Bench": {"color": "#64b5f6", "name": "Bench", "points": [{"date": "2026-01-20", "weight": 45.0, "volume": 1305, "pr": true}, {"date": "2026-02-21", "weight": 55.0, "volume": 2145, "pr": true}, {"date": "2026-03-14", "weight": 60.0, "volume": 2435, "pr": true}]}, "Squat": {"color": "#b388ff", "name": "Squat", "points": [{"date": "2026-01-26", "weight": 60.0, "volume": 1800, "pr": true}, {"date": "2026-02-02", "weight": 70.0, "volume": 2080, "pr": true}, {"date": "2026-02-09", "weight": 70.0, "volume": 1670, "pr": false}, {"date": "2026-02-16", "weight": 70.0, "volume": 2370, "pr": false}, {"date": "2026-02-20", "weight": 72.5, "volume": 2205, "pr": true}, {"date": "2026-02-24", "weight": 75.0, "volume": 2520, "pr": true}, {"date": "2026-03-02", "weight": 77.5, "volume": 2565, "pr": true}, {"date": "2026-03-06", "weight": 80.0, "volume": 2720, "pr": true}, {"date": "2026-03-16", "weight": 70.0, "volume": 650, "pr": false}]}, "OHP": {"color": "#00ffb3", "name": "OHP", "points": [{"date": "2026-02-10", "weight": 40.0, "volume": 1080, "pr": true}, {"date": "2026-02-21", "weight": 40.0, "volume": 1400, "pr": false}, {"date": "2026-03-14", "weight": 42.5, "volume": 1755, "pr": true}]}, "Dip": {"color": "#f48fb1", "name": "Dip", "points": [{"date": "2026-02-10", "weight": 42.0, "volume": 1120, "pr": true}, {"date": "2026-03-14", "weight": 14.0, "volume": 175, "pr": false}]}}, "weight": [{"date": "2026-01-07", "weight": 84.2}, {"date": "2026-01-11", "weight": 85.6}, {"date": "2026-01-12", "weight": 83.9}, {"date": "2026-01-13", "weight": 83.9}, {"date": "2026-01-17", "weight": 83.3}, {"date": "2026-01-18", "weight": 83.2}, {"date": "2026-01-20", "weight": 83.8}, {"date": "2026-01-26", "weight": 83.0}, {"date": "2026-01-27", "weight": 82.8}, {"date": "2026-01-30", "weight": 82.1}, {"date": "2026-02-02", "weight": 81.6}, {"date": "2026-02-03", "weight": 81.6}, {"date": "2026-02-04", "weight": 82.2}, {"date": "2026-02-07", "weight": 81.8}, {"date": "2026-02-08", "weight": 82.8}, {"date": "2026-02-09", "weight": 81.6}, {"date": "2026-02-10", "weight": 82.7}, {"date": "2026-02-11", "weight": 82.6}, {"date": "2026-02-13", "weight": 81.6}, {"date": "2026-02-16", "weight": 82.3}, {"date": "2026-02-17", "weight": 82.1}, {"date": "2026-02-18", "weight": 82.0}, {"date": "2026-02-20", "weight": 82.3}, {"date": "2026-02-22", "weight": 83.0}, {"date": "2026-02-23", "weight": 82.3}, {"date": "2026-02-24", "weight": 83.0}, {"date": "2026-02-25", "weight": 82.3}, {"date": "2026-02-26", "weight": 82.5}, {"date": "2026-02-27", "weight": 82.1}, {"date": "2026-03-02", "weight": 82.6}, {"date": "2026-03-03", "weight": 82.8}, {"date": "2026-03-05", "weight": 82.4}, {"date": "2026-03-06", "weight": 82.2}, {"date": "2026-03-09", "weight": 83.4}, {"date": "2026-03-12", "weight": 83.5}, {"date": "2026-03-13", "weight": 82.8}, {"date": "2026-03-14", "weight": 83.5}, {"date": "2026-03-15", "weight": 83.7}, {"date": "2026-03-16", "weight": 84.6}], "muscle_daily": [{"date": "2026-01-03", "muscle": "Schouders", "volume": 315.0}, {"date": "2026-01-03", "muscle": "Benen", "volume": 1260.0}, {"date": "2026-01-03", "muscle": "Core", "volume": 420.0}, {"date": "2026-01-07", "muscle": "Benen", "volume": 4955.0}, {"date": "2026-01-07", "muscle": "Glutes", "volume": 680.0}, {"date": "2026-01-08", "muscle": "Biceps", "volume": 698.5}, {"date": "2026-01-08", "muscle": "Schouders", "volume": 200.0}, {"date": "2026-01-08", "muscle": "Borst", "volume": 1018.0}, {"date": "2026-01-11", "muscle": "Benen", "volume": 1000.0}, {"date": "2026-01-11", "muscle": "Rug/Biceps", "volume": 1012.0}, {"date": "2026-01-12", "muscle": "Benen", "volume": 3762.5}, {"date": "2026-01-12", "muscle": "Glutes", "volume": 800.0}, {"date": "2026-01-17", "muscle": "Rug/Hamstrings", "volume": 2880.0}, {"date": "2026-01-17", "muscle": "Rug/Biceps", "volume": 1510.0}, {"date": "2026-01-17", "muscle": "Benen", "volume": 410.0}, {"date": "2026-01-20", "muscle": "Borst", "volume": 2573.0}, {"date": "2026-01-24", "muscle": "Benen", "volume": 1200.0}, {"date": "2026-01-24", "muscle": "Glutes", "volume": 1715.0}, {"date": "2026-01-26", "muscle": "Benen", "volume": 1800.0}, {"date": "2026-01-26", "muscle": "Glutes", "volume": 3845.0}, {"date": "2026-01-27", "muscle": "Borst", "volume": 1676.0}, {"date": "2026-02-02", "muscle": "Benen", "volume": 2080.0}, {"date": "2026-02-02", "muscle": "Glutes", "volume": 1240.0}, {"date": "2026-02-03", "muscle": "Borst", "volume": 2234.0}, {"date": "2026-02-03", "muscle": "Triceps", "volume": 355.0}, {"date": "2026-02-04", "muscle": "Rug/Hamstrings", "volume": 2850.0}, {"date": "2026-02-04", "muscle": "Glutes", "volume": 2355.0}, {"date": "2026-02-04", "muscle": "Rug/Biceps", "volume": 3210.0}, {"date": "2026-02-07", "muscle": "Core", "volume": 1600.0}, {"date": "2026-02-08", "muscle": "Core", "volume": 1200.0}, {"date": "2026-02-09", "muscle": "Benen", "volume": 2550.0}, {"date": "2026-02-09", "muscle": "Glutes", "volume": 1892.5}, {"date": "2026-02-10", "muscle": "Borst", "volume": 1320.0}, {"date": "2026-02-10", "muscle": "Schouders", "volume": 1080.0}, {"date": "2026-02-10", "muscle": "Triceps", "volume": 1120.0}, {"date": "2026-02-11", "muscle": "Rug/Hamstrings", "volume": 2380.0}, {"date": "2026-02-11", "muscle": "Rug/Biceps", "volume": 2990.0}, {"date": "2026-02-11", "muscle": "Biceps", "volume": 462.5}, {"date": "2026-02-13", "muscle": "Glutes", "volume": 2155.0}, {"date": "2026-02-13", "muscle": "Rug/Hamstrings", "volume": 690.0}, {"date": "2026-02-13", "muscle": "Benen", "volume": 1320.0}, {"date": "2026-02-16", "muscle": "Benen", "volume": 2370.0}, {"date": "2026-02-16", "muscle": "Glutes", "volume": 2075.0}, {"date": "2026-02-17", "muscle": "Borst", "volume": 1485.0}, {"date": "2026-02-17", "muscle": "Triceps", "volume": 440.0}, {"date": "2026-02-18", "muscle": "Rug/Hamstrings", "volume": 2150.0}, {"date": "2026-02-18", "muscle": "Rug/Biceps", "volume": 2850.0}, {"date": "2026-02-18", "muscle": "Schouders", "volume": 540.0}, {"date": "2026-02-20", "muscle": "Benen", "volume": 2205.0}, {"date": "2026-02-20", "muscle": "Glutes", "volume": 1890.0}, {"date": "2026-02-21", "muscle": "Schouders", "volume": 1400.0}, {"date": "2026-02-21", "muscle": "Borst", "volume": 2545.0}, {"date": "2026-02-23", "muscle": "Rug/Hamstrings", "volume": 2800.0}, {"date": "2026-02-23", "muscle": "Rug/Biceps", "volume": 3060.0}, {"date": "2026-02-23", "muscle": "Biceps", "volume": 203.0}, {"date": "2026-02-24", "muscle": "Benen", "volume": 2520.0}, {"date": "2026-02-24", "muscle": "Glutes", "volume": 1755.0}, {"date": "2026-02-25", "muscle": "Borst", "volume": 1600.5}, {"date": "2026-02-25", "muscle": "Core", "volume": 180.0}, {"date": "2026-03-02", "muscle": "Benen", "volume": 3425.0}, {"date": "2026-03-02", "muscle": "Glutes", "volume": 750.0}, {"date": "2026-03-03", "muscle": "Rug/Hamstrings", "volume": 2715.0}, {"date": "2026-03-03", "muscle": "Rug/Biceps", "volume": 2670.0}, {"date": "2026-03-06", "muscle": "Benen", "volume": 2720.0}, {"date": "2026-03-06", "muscle": "Glutes", "volume": 825.0}, {"date": "2026-03-13", "muscle": "Rug/Biceps", "volume": 3651.0}, {"date": "2026-03-13", "muscle": "Biceps", "volume": 240.0}, {"date": "2026-03-13", "muscle": "Rug/Hamstrings", "volume": 320.0}, {"date": "2026-03-14", "muscle": "Schouders", "volume": 1755.0}, {"date": "2026-03-14", "muscle": "Borst", "volume": 2775.0}, {"date": "2026-03-14", "muscle": "Triceps", "volume": 175.0}, {"date": "2026-03-16", "muscle": "Benen", "volume": 1750.0}, {"date": "2026-03-16", "muscle": "Glutes", "volume": 1320.0}], "training_days": ["2026-01-03", "2026-01-07", "2026-01-08", "2026-01-11", "2026-01-12", "2026-01-17", "2026-01-20", "2026-01-24", "2026-01-26", "2026-01-27", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-13", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-20", "2026-02-21", "2026-02-23", "2026-02-24", "2026-02-25", "2026-03-02", "2026-03-03", "2026-03-06", "2026-03-13", "2026-03-14", "2026-03-16"], "all_active_days": ["2026-01-03", "2026-01-04", "2026-01-07", "2026-01-08", "2026-01-11", "2026-01-12", "2026-01-15", "2026-01-17", "2026-01-20", "2026-01-22", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-29", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-08", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16"], "new_exercises": [{"exercise": "Cable External Rotation", "date": "2026-01-03"}, {"exercise": "Cable Rope Face Pull", "date": "2026-01-03"}, {"exercise": "Barbell Front Squat", "date": "2026-01-03"}, {"exercise": "Cable Internal Rotation", "date": "2026-01-03"}, {"exercise": "One-Arm Hang", "date": "2026-01-03"}, {"exercise": "Shoulder Rotation", "date": "2026-01-03"}, {"exercise": "Chest and Shoulder Stretch", "date": "2026-01-03"}, {"exercise": "Shoulder Stretch", "date": "2026-01-03"}, {"exercise": "Front to Back Leg Swings", "date": "2026-01-03"}, {"exercise": "Machine Seated Leg Curl", "date": "2026-01-07"}, {"exercise": "Technogym hip thrust", "date": "2026-01-07"}, {"exercise": "Machine Leg Press", "date": "2026-01-07"}, {"exercise": "stretching", "date": "2026-01-07"}, {"exercise": "Dumbbell Alternating Bicep Curl", "date": "2026-01-08"}, {"exercise": "Dumbbell Rotational Curl", "date": "2026-01-08"}, {"exercise": "Leverage Incline Chest Press", "date": "2026-01-08"}, {"exercise": "Dumbbell Bench Press", "date": "2026-01-08"}, {"exercise": "Pectoral machine (techno gym)", "date": "2026-01-08"}, {"exercise": "Bodyweight Squat", "date": "2026-01-11"}, {"exercise": "Dumbbell One-Arm Row", "date": "2026-01-11"}, {"exercise": "Dumbbell Bent-Over Row", "date": "2026-01-11"}, {"exercise": "Machine Leg Extension", "date": "2026-01-12"}, {"exercise": "Machine Ab Crunch", "date": "2026-01-12"}, {"exercise": "Barbell Deadlift", "date": "2026-01-17"}, {"exercise": "Machine Lat Pulldown", "date": "2026-01-17"}, {"exercise": "Barbell Bench Press", "date": "2026-01-20"}, {"exercise": "Standing abductor", "date": "2026-01-24"}, {"exercise": "Barbell Squat", "date": "2026-01-26"}, {"exercise": "Machine Hip Abduction", "date": "2026-01-26"}, {"exercise": "Dumbbell Incline Bench Press", "date": "2026-01-27"}, {"exercise": "Bodyweight Calf Raise", "date": "2026-02-02"}, {"exercise": "Machine Fly", "date": "2026-02-03"}, {"exercise": "Cable Tricep Pushdown (Rope)", "date": "2026-02-03"}, {"exercise": "Cable Rope Overhead Tricep Extension", "date": "2026-02-03"}, {"exercise": "Cable Rope Hammer Curl", "date": "2026-02-03"}, {"exercise": "Cable Lat Pulldown (Wide Grip)", "date": "2026-02-04"}, {"exercise": "Cable Seated Row", "date": "2026-02-04"}, {"exercise": "Barbell Military Press", "date": "2026-02-10"}, {"exercise": "Machine Assisted Dip", "date": "2026-02-10"}, {"exercise": "Cable Bicep Curl", "date": "2026-02-11"}, {"exercise": "Barbell Romanian Deadlift", "date": "2026-02-13"}, {"exercise": "Kettlebell Alternating Floor Press", "date": "2026-02-17"}, {"exercise": "Dumbbell skull crusher", "date": "2026-02-17"}, {"exercise": "Dumbbell Press (Close Grip)", "date": "2026-02-17"}, {"exercise": "Barbell Bent-Over Row", "date": "2026-02-18"}, {"exercise": "Ab wheel", "date": "2026-02-25"}, {"exercise": "Machine Seated Row", "date": "2026-03-13"}, {"exercise": "Dumbbell Romanian Deadlift", "date": "2026-03-13"}]};
 
-// ── CONSTANTS ──
-const SKIP = new Set(['Kickboxing','stretching ','Indoor Cycling','Step Machine','Rowing',
-  'Crunch','Sit-Up','Air Bike','Leg Raise','Oblique Crunch','Push-Up','Elevated Push-Up']);
-const KICKBOX = new Set(['Kickboxing','Kickboxing ']);
+const TODAY = new Date('2026-03-16');
 
-const KEY_LIFTS = {
-  'Barbell Squat':'Squat','Barbell Deadlift':'Deadlift',
-  'Barbell Bench Press':'Bench','Dumbbell Bench Press':'DB Bench',
-  'Barbell Military Press':'OHP',
-  'Cable Lat Pulldown (Wide Grip)':'Lat PD','Machine Lat Pulldown':'Lat PD',
-  'Machine Assisted Dip':'Dip',
-};
-const LIFT_COLORS = {
-  'Squat':'#b388ff','Deadlift':'#ffd600','Bench':'#64b5f6',
-  'DB Bench':'#4dd0e1','OHP':'#00ffb3','Lat PD':'#ff8a65','Dip':'#f48fb1',
-};
-const MUSCLE_MAP = {
-  'Barbell Squat':'Benen','Barbell Front Squat':'Benen','Machine Leg Press':'Benen',
-  'Machine Leg Extension':'Benen','Bodyweight Squat':'Benen','Machine Seated Leg Curl':'Benen',
-  'Standing abductor ':'Glutes','Standing abductor':'Glutes','Machine Hip Abduction':'Glutes',
-  'Technogym hip thrust':'Glutes',
-  'Barbell Romanian Deadlift':'Rug/Hamstrings','Barbell Deadlift':'Rug/Hamstrings',
-  'Dumbbell Romanian Deadlift':'Rug/Hamstrings',
-  'Cable Lat Pulldown (Wide Grip)':'Rug/Biceps','Machine Lat Pulldown':'Rug/Biceps',
-  'Cable Seated Row':'Rug/Biceps','Dumbbell One-Arm Row':'Rug/Biceps',
-  'Barbell Bent-Over Row':'Rug/Biceps','Machine Seated Row':'Rug/Biceps',
-  'Dumbbell Bent-Over Row':'Rug/Biceps',
-  'Barbell Bench Press':'Borst','Dumbbell Bench Press':'Borst',
-  'Leverage Incline Chest Press':'Borst','Machine Fly':'Borst',
-  'Pectoral machine (techno gym) ':'Borst','Dumbbell Incline Bench Press':'Borst',
-  'Kettlebell Alternating Floor Press':'Borst',
-  'Barbell Military Press':'Schouders','Cable Rope Face Pull':'Schouders',
-  'Cable External Rotation':'Schouders','Cable Internal Rotation':'Schouders',
-  'Machine Assisted Dip':'Triceps','Dumbbell skull crusher':'Triceps',
-  'Cable Tricep Pushdown (Rope)':'Triceps',
-  'Dumbbell Alternating Bicep Curl':'Biceps','Dumbbell Rotational Curl':'Biceps',
-  'Cable Bicep Curl':'Biceps',
-  'Sit-Up':'Core','Air Bike':'Core','Leg Raise':'Core',
-  'Oblique Crunch':'Core','Ab wheel':'Core','Crunch':'Core',
-};
 const PHASES = [
   {label:'ORIENTATIE',    short:'ORI', start:'2026-01-03',end:'2026-01-15',color:'#7c6fff',
    desc:'<b>3 jan - 15 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell.'},
@@ -528,289 +196,84 @@ const PHASES = [
   {label:'VERKOUDEN',     short:'ZK',  start:'2026-03-02',end:'2026-03-12',color:'#ffaa00',
    desc:'<b>2 mrt - 12 mrt</b><br>Lage frequentie door ziekte. Kracht behouden.'},
 ];
+
 const PHASE_ANALYSIS = {
   'ORIENTATIE': {
-    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span> dominant (~60%), geen trekwerk aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ff8a65">Rug</span> volledig afwezig. Geen barbell, geen verticale of horizontale pull.',
-    evolution:'<b>Methode: orientatie.</b> Machines en dumbbells als kennismaking. Geen structuur, breed verkennen. Face Pull, Hip Thrust, Front Squat, Leg Press geintroduceerd. 5 sessies in 2 weken - lage intensiteit, hoog leereffect.',
+    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes</span> dominant (~60% volume). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ff8a65">Rug</span> volledig afwezig. Geen barbell, geen verticale of horizontale pull.',
+    evolution:'<b>Methode: orientatie.</b> Machines en dumbbells als kennismaking. Geen structuur, breed verkennen. 5 sessies in 2 weken &mdash; lage intensiteit, hoog leereffect voor neurale activatie.',
     tips:'<b>Rug ontbreekt volledig.</b> Elke sessie push zonder pull = structurele schoudergordel onbalans. Face Pulls zijn een pleister, geen oplossing. Voeg Lat PD of rows toe vanaf dag 1, niet pas in week 3.'
   },
   'BARBELL INTRO': {
-    focus:'<b style="color:var(--yellow)">IN OPBOUW</b> - <span style="color:#64b5f6">Borst</span> (Bench) en <span style="color:#ff8a65">Rug</span> (Lat PD, Deadlift) komen samen. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">Schouders</span> - geen OHP of verticale push aanwezig.',
-    evolution:'<b>Methode: lineaire introductie.</b> Barbell Deadlift (17/1), Bench (20/1), Squat (26/1) in 10 dagen. Elke sessie een PR - normaal bij techniek leren op nieuwe bewegingen. Overgang van machine-gebaseerd naar free weight compound lifts.',
-    tips:'<b>OHP ontbreekt 2.5 weken lang</b> terwijl Lat PD al draait. Verticale push en pull horen samen. Bench werd slechts 1x getraind in 2.5 week - te weinig voor borststimulatie. Rug krijgt al meer aandacht dan borst: patroon van onbalans start hier.'
+    focus:'<b style="color:var(--yellow)">IN OPBOUW</b> &mdash; <span style="color:#64b5f6">Borst</span> (Bench) en <span style="color:#ff8a65">Rug</span> (Lat PD, Deadlift) komen samen. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#00ffb3">OHP</span> &mdash; geen verticale push aanwezig.',
+    evolution:'<b>Methode: lineaire introductie.</b> Deadlift (17/1), Bench (20/1), Squat (26/1) in 10 dagen. Elke sessie een PR &mdash; normaal bij nieuwe bewegingen aanleren. Overgang van machine naar free weight compound.',
+    tips:'<b>OHP ontbreekt 2.5 weken lang</b> terwijl Lat PD al draait. Bench werd slechts 1x getraind in 2.5 week &mdash; te weinig voor borststimulatie. Rug krijgt al meer aandacht dan borst: patroon van onbalans start hier.'
   },
   'BARBELL VOLUME': {
-    focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#69f0ae">Schouders</span> (OHP) aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#64b5f6">Borst/Rug verhouding</span> ~1:2.5 - ideaal is 1:1.5.',
-    evolution:'<b>Methode: volume explosie.</b> 17 sessies in 22 dagen - drukste periode. OHP, Dips, RDL, Skull Crushers, Ab Wheel, Cable Rows in 3 weken ingevoerd. Push/pull/legs structuur begint te tekenen. Intuïtief hoog volume zonder structuur.',
-    tips:'<b>17 sessies in 22 dagen is overreaching.</b> Verkoudheid direct erna is geen toeval. Bench werd 3x getraind, Squat 7x - verhouding 1:2.3 is onaanvaardbaar als je borst serieus wil ontwikkelen. Rug/Hamstrings domineren alles. Intuïtief trainen werkt hier tegen je.'
+    focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#00ffb3">OHP</span> aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> Borst/Rug verhouding ~1:2.5, ideaal is 1:1.5.',
+    evolution:'<b>Methode: volume explosie.</b> 17 sessies in 22 dagen &mdash; drukste periode. OHP, Dips, RDL, Skull Crushers, Ab Wheel ingevoerd. Push/pull/legs structuur begint te vormen. Intuïtief hoog volume zonder structuur.',
+    tips:'<b>17 sessies in 22 dagen is overreaching.</b> Verkoudheid direct erna is geen toeval. Bench 3x getraind, Squat 7x &mdash; verhouding 1:2.3. Rug/Hamstrings domineren alles. Intuïtief trainen werkt hier tegen je.'
   },
   'VERKOUDEN': {
-    focus:'<b style="color:var(--red)">BEPERKTE DATA</b> - 4 sessies door ziekte. <span style="color:#b388ff">Benen</span> en <span style="color:#ff8a65">Rug</span> bij terugkeer. Bench 60kg en OHP 42.5kg als nieuwe PRs op 14/3. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:var(--red)">gewicht steeg 1.5kg</span> tijdens ziekte.',
-    evolution:'<b>Methode: herstel na onderbreking.</b> Lage frequentie door ziekte (4 sessies in 13 dagen). Kracht volledig behouden - kortdurende pauze heeft geen negatief effect op lifts. Maar gewicht steeg van 82.2 naar 83.5-84.6 kg: minder activiteit + zelfde voeding = snel bijgekomen.',
-    tips:'<b>+1.5kg in 2 weken ziekte = te veel eten bij weinig bewegen.</b> Dit is een patroon om te kennen: zodra activiteit wegvalt schiet gewicht omhoog. Kickboxing en gym maskeren een calorie-overschot - ze compenseren het niet. Zonder die activiteit kom je snel bij. Bench nog altijd niet op gelijke frequentie als squat. Na 11 weken trainen is dat een bewuste keuze of een blinde vlek.'
+    focus:'<b style="color:var(--red)">BEPERKTE DATA</b> &mdash; 4 sessies door ziekte. <span style="color:#b388ff">Benen</span> en <span style="color:#ff8a65">Rug</span> bij terugkeer. Bench 60kg en OHP 42.5kg als nieuwe PRs op 14/3. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:var(--red)">gewicht +1.5kg</span> tijdens ziekte.',
+    evolution:'<b>Methode: herstel na onderbreking.</b> Kracht volledig behouden &mdash; kortdurende pauze heeft geen negatief effect op lifts. Maar activiteitsdaling onthult een calorie-overschot dat normaal gemaskeerd wordt door training en kickboxing.',
+    tips:'<b>+1.5kg in 2 weken ziekte = structureel calorie-overschot.</b> Kickboxing en gym compenseren normaal &mdash; ze maskeren het. Bench nog altijd niet op gelijke frequentie als squat na 11 weken. Bewuste keuze of blinde vlek?'
   },
   'multi': {
-    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes ~40%</span>, <span style="color:#ff8a65">Rug ~30%</span>, <span style="color:#64b5f6">Borst ~15%</span>. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">OHP ondervertegenwoordigd</span> - pas ingevoerd in februari, te weinig volume gekregen.',
-    evolution:'<b>Methode: ongestructureerde lineaire progressie.</b> Periodes in dit venster: van oriëntatie naar barbell introductie naar volume, of richting verkoudheidsperiode. Intuïtief trainen werkte - squat +33%, deadlift +33%, bench +33% in 11 weken. Gewicht -0.7kg bij krachtgroei = recomposition.',
-    tips:'<b>Rug traint 2-3x vaker dan borst over de hele periode.</b> Geen schema of keuze - het is wat je van nature aantrekt. OHP is het meest verwaarloosde grote lift. Gewichtsfluctuaties tonen dat voeding niet aangepast wordt aan activiteitsniveau. Zolang lifts stijgen is er geen urgentie, maar borst en OHP worden straks de limiterende factor.'
+    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes ~40%</span>, <span style="color:#ff8a65">Rug ~30%</span>, <span style="color:#64b5f6">Borst ~15%</span>. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#00ffb3">OHP</span> &mdash; pas ingevoerd in feb, te weinig volume gekregen.',
+    evolution:'<b>Methode: ongestructureerde lineaire progressie.</b> Periodes in dit venster tonen de evolutie: van oriëntatie naar barbell introductie naar volume-explosie naar herstel. Squat +33%, DL +33%, Bench +33% in 11 weken bij gelijktijdig gewichtsverlies = body recomposition.',
+    tips:'<b>Rug traint 2-3x vaker dan borst over de hele periode.</b> OHP meest verwaarloosde grote lift. Gewichtsfluctuaties tonen dat voeding niet meebeweegt met activiteitsniveau. Zolang lifts stijgen geen urgentie &mdash; maar borst en OHP worden straks de limiterende factor.'
   }
 };
 
-// ── CHART.JS DEFAULTS ──
 Chart.defaults.color = '#454560';
 Chart.defaults.font.family = "'Space Mono', monospace";
 Chart.defaults.font.size = 9;
 
-// ── STATE ──
-let DATA = null;
-let TODAY = null;
 let liftChart = null;
 let _phaseBandHitAreas = [];
 let _activePopup = null;
 
-// ── CSV PARSER ──
-function parseCSV(text) {
-  const sections = text.split('######################################################');
-  const data = { lifts:{}, weight:[], muscle_daily:[], training_days:[], new_exercises:[] };
-
-  // Exercise logs
-  const exSec = sections.find(s => s.includes('### EXERCISE LOGS'));
-  if (!exSec) return null;
-  const exLines = exSec.trim().split('\n').filter(l => l && !l.startsWith('#'));
-  const exLogs = parseCSVSection(exLines).filter(r => r.mydate && r.mydate.startsWith('2026'));
-
-  // Profile (weight)
-  const prSec = sections.find(s => s.includes('### PROFILE'));
-  if (prSec) {
-    const prLines = prSec.trim().split('\n').filter(l => l && !l.startsWith('#'));
-    const profiles = parseCSVSection(prLines);
-    data.weight = profiles
-      .filter(r => r.mydate && r.mydate.startsWith('2026') && parseFloat(r.weight||0) > 50)
-      .map(r => ({date: r.mydate, weight: Math.round(parseFloat(r.weight)*10)/10}))
-      .sort((a,b) => a.date.localeCompare(b.date));
-  }
-
-  // Build lifts
-  const raw = {};
-  exLogs.forEach(row => {
-    const ename = (row.ename||'').trim();
-    const key = KEY_LIFTS[ename];
-    if (!key) return;
-    const logs = (row.logs||'').replace(/^"|"$/g,'');
-    let maxW = 0, totalVol = 0;
-    logs.split(',').forEach(s => {
-      s = s.trim();
-      if (s.includes('x')) {
-        const parts = s.split('x');
-        try {
-          const w = parseFloat(parts[0]), r = parseFloat(parts[1]);
-          if (w > maxW) maxW = w;
-          totalVol += w * r;
-        } catch(e) {}
-      }
-    });
-    if (maxW <= 0) return;
-    // DB Bench: both dumbbells combined = x2
-    if (key === 'DB Bench') { maxW = Math.round(maxW * 2 * 10) / 10; totalVol *= 2; }
-    if (!raw[key]) raw[key] = {};
-    if (!raw[key][row.mydate] || maxW > raw[key][row.mydate].weight) {
-      raw[key][row.mydate] = {weight: maxW, volume: Math.round(totalVol)};
-    }
-  });
-
-  Object.entries(raw).forEach(([key, byDate]) => {
-    const pts = Object.entries(byDate)
-      .sort((a,b) => a[0].localeCompare(b[0]))
-      .map(([date, v]) => ({date, weight: Math.round(v.weight*100)/100, volume: v.volume, pr: false}));
-    let maxSoFar = 0;
-    pts.forEach(p => { p.pr = p.weight > maxSoFar; if (p.pr) maxSoFar = p.weight; });
-    data.lifts[key] = {color: LIFT_COLORS[key]||'#888', name: key, points: pts};
-  });
-
-  // Muscle daily
-  const muscleTotals = {};
-  exLogs.forEach(row => {
-    const ename = (row.ename||'').trim();
-    const muscle = MUSCLE_MAP[ename];
-    if (!muscle) return;
-    const logs = (row.logs||'').replace(/^"|"$/g,'');
-    let vol = 0;
-    logs.split(',').forEach(s => {
-      if (s.includes('x')) {
-        try { const [w,r] = s.trim().split('x'); vol += parseFloat(w)*parseFloat(r); } catch(e) {}
-      }
-    });
-    if (vol <= 0) return;
-    const k = row.mydate + '|' + muscle;
-    muscleTotals[k] = (muscleTotals[k]||0) + vol;
-  });
-  data.muscle_daily = Object.entries(muscleTotals).map(([k,v]) => {
-    const [date, muscle] = k.split('|');
-    return {date, muscle, volume: Math.round(v*10)/10};
-  });
-
-  // Training days (gym only — for stats panel)
-  const gymDates = new Set();
-  // All active days including kickboxing (for dots)
-  const allActiveDates = new Set();
-  exLogs.forEach(row => {
-    const e = (row.ename||'').trim();
-    if (e) allActiveDates.add(row.mydate);
-    if (!SKIP.has(e) && !KICKBOX.has(e)) gymDates.add(row.mydate);
-  });
-  data.training_days = Array.from(gymDates).sort();
-  data.all_active_days = Array.from(allActiveDates).sort();
-
-  // New exercises
-  const seen = new Set();
-  const allDates = [...new Set(exLogs.map(r => r.mydate))].sort();
-  allDates.forEach(d => {
-    exLogs.filter(r => r.mydate === d).forEach(r => {
-      const e = (r.ename||'').trim();
-      if (e && !seen.has(e) && !SKIP.has(e) && !KICKBOX.has(e)) {
-        data.new_exercises.push({exercise: e, date: d});
-        seen.add(e);
-      }
-    });
-  });
-
-  return data;
+function inPeriod(dateStr, start) {
+  const s = start.toISOString().slice(0,10);
+  const t = TODAY.toISOString().slice(0,10);
+  return dateStr >= s && dateStr <= t;
+}
+function fmt(d) { return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}); }
+function getPeriodStart(days) {
+  if (days === 0) return new Date('2026-01-01');
+  const d = new Date(TODAY); d.setDate(d.getDate() - days); return d;
 }
 
-function parseCSVSection(lines) {
-  if (!lines.length) return [];
-  const headers = parseCSVRow(lines[0]);
-  return lines.slice(1).map(line => {
-    const vals = parseCSVRow(line);
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = vals[i]||'');
-    return obj;
-  });
-}
-
-function parseCSVRow(line) {
-  const result = [];
-  let cur = '', inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') { inQuotes = !inQuotes; }
-    else if (ch === ',' && !inQuotes) { result.push(cur.trim()); cur = ''; }
-    else { cur += ch; }
-  }
-  result.push(cur.trim());
-  return result;
-}
-
-// ── GITHUB FETCH ──
-async function loadFromGitHub() {
-  setStatus('SCANNING REPO...');
-
-  // One clean strategy: GitHub Contents API -> download_url
-  // This is the most reliable approach for public repos
-  try {
-    setStatus('CONTACTING GITHUB API...');
-    const apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + '/contents/';
-    const res = await fetch(apiUrl, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    });
-
-    setStatus('API STATUS: ' + res.status);
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error('API error:', res.status, errText);
-      setStatus('API ERROR ' + res.status + ' - CHECK CONSOLE');
-      await new Promise(r => setTimeout(r, 2000));
-      throw new Error('API ' + res.status);
-    }
-
-    const files = await res.json();
-    console.log('Files in repo:', files.map ? files.map(f => f.name) : files);
-
-    if (!Array.isArray(files)) {
-      setStatus('UNEXPECTED RESPONSE - CHECK CONSOLE');
-      await new Promise(r => setTimeout(r, 2000));
-      throw new Error('Not array: ' + JSON.stringify(files).slice(0,100));
-    }
-
-    const csv = files.find(f => f.name.toLowerCase().endsWith('.csv'));
-    if (!csv) {
-      const names = files.map(f => f.name).join(', ');
-      setStatus('NO CSV FOUND. FILES: ' + names);
-      console.error('No CSV. Files:', names);
-      await new Promise(r => setTimeout(r, 4000));
-      return null;
-    }
-
-    setStatus('FOUND: ' + csv.name);
-    console.log('CSV found:', csv.name, 'url:', csv.download_url);
-
-    const rawRes = await fetch(csv.download_url);
-    if (!rawRes.ok) throw new Error('Download failed: ' + rawRes.status);
-
-    const text = await rawRes.text();
-    setStatus('PARSING ' + text.length + ' BYTES...');
-    return parseCSV(text);
-
-  } catch(e) {
-    console.error('Load failed:', e);
-    setStatus('ERROR: ' + e.message);
-    await new Promise(r => setTimeout(r, 3000));
-    return null;
-  }
-}
-
-function setStatus(msg) {
-  const el = document.getElementById('loader-status');
-  if (el) el.textContent = msg;
-}
-
-// ── PHASE BANDS PLUGIN ──
 const phaseBandsPlugin = {
   id: 'phaseBands',
   afterDraw(chart) {
-    const { ctx, chartArea: { left, right, top, bottom } } = chart;
+    const {ctx, chartArea:{left,right,top,bottom}} = chart;
     const opts = chart.options.plugins.phaseBands;
     if (!opts || !opts.phases || !opts.labels.length) return;
-    const labels = opts.labels;
-    const total = labels.length;
+    const labels = opts.labels, total = labels.length;
     if (total < 2) return;
     const slotW = (right - left) / total;
     _phaseBandHitAreas = [];
-
     opts.phases.forEach(phase => {
-      const firstIdx = labels.findIndex(d => d >= phase.start);
-      const lastRev  = [...labels].reverse().findIndex(d => d <= phase.end);
-      const lastIdx  = lastRev === -1 ? -1 : total - 1 - lastRev;
-      if (firstIdx === -1 || lastIdx === -1 || firstIdx > lastIdx) return;
-
-      const x1 = left + firstIdx * slotW;
-      const x2 = left + (lastIdx + 1) * slotW;
-      const bandH = 18, y = bottom + 2;
-
+      const fi = labels.findIndex(d => d >= phase.start);
+      const lr = [...labels].reverse().findIndex(d => d <= phase.end);
+      const li = lr === -1 ? -1 : total - 1 - lr;
+      if (fi === -1 || li === -1 || fi > li) return;
+      const x1 = left + fi * slotW, x2 = left + (li+1) * slotW;
+      const bandH = 18, y = bottom + 2, bw = x2 - x1;
       ctx.save();
-      ctx.fillStyle = phase.color + '25';
-      ctx.fillRect(x1, y, x2 - x1, bandH);
-      ctx.strokeStyle = phase.color + 'aa';
-      ctx.lineWidth = 1;
+      ctx.fillStyle = phase.color + '25'; ctx.fillRect(x1, y, bw, bandH);
+      ctx.strokeStyle = phase.color + 'aa'; ctx.lineWidth = 1;
       ctx.shadowColor = phase.color; ctx.shadowBlur = 3;
-      ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke();
-      ctx.shadowBlur = 0;
-      const bw = x2 - x1;
-      const label = bw < 50 ? phase.short : phase.label;
-      ctx.fillStyle = phase.color;
-      ctx.shadowColor = phase.color; ctx.shadowBlur = 5;
+      ctx.beginPath(); ctx.moveTo(x1,y); ctx.lineTo(x2,y); ctx.stroke(); ctx.shadowBlur = 0;
+      const lbl = bw < 50 ? phase.short : phase.label;
+      ctx.fillStyle = phase.color; ctx.shadowColor = phase.color; ctx.shadowBlur = 5;
       ctx.font = "700 8px 'Space Mono', monospace";
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(label, x1 + bw/2, y + bandH/2);
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = phase.color + '33';
-      ctx.setLineDash([3,3]);
-      ctx.beginPath(); ctx.moveTo(x1, top); ctx.lineTo(x1, bottom); ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.restore();
+      ctx.fillText(lbl, x1 + bw/2, y + bandH/2); ctx.shadowBlur = 0;
+      ctx.strokeStyle = phase.color + '33'; ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.moveTo(x1,top); ctx.lineTo(x1,bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
       _phaseBandHitAreas.push({phase, x1, x2, y, bandH});
     });
   }
@@ -827,106 +290,64 @@ function showPhasePopup(phase, cx, cy) {
   if (left + 260 > window.innerWidth - 8) left = cx - 272;
   if (top + 140 > window.innerHeight - 8) top = window.innerHeight - 148;
   el.style.left = left + 'px'; el.style.top = top + 'px';
-  document.body.appendChild(el);
-  _activePopup = el;
+  document.body.appendChild(el); _activePopup = el;
 }
-function hidePhasePopup() {
-  if (_activePopup) { _activePopup.remove(); _activePopup = null; }
-}
+function hidePhasePopup() { if (_activePopup) { _activePopup.remove(); _activePopup = null; } }
 document.addEventListener('click', e => { if (_activePopup && !_activePopup.contains(e.target)) hidePhasePopup(); });
 
-// ── HELPERS ──
-function inPeriod(dateStr, start) {
-  return dateStr >= start.toISOString().slice(0,10) && dateStr <= TODAY.toISOString().slice(0,10);
-}
-function fmt(d) {
-  return d.toLocaleDateString('nl-NL', {day:'numeric', month:'short', year:'numeric'});
-}
-function getPeriodStart(days) {
-  if (days === 0) return new Date('2026-01-01');
-  const d = new Date(TODAY);
-  d.setDate(d.getDate() - days);
-  return d;
-}
-
-// ── BUILD DATASETS ──
 function buildLiftDatasets(start) {
-  const startStr = start.toISOString().slice(0,10);
-  const todayStr = TODAY.toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const allDatesSet = new Set();
-  Object.values(DATA.lifts).forEach(lift => {
-    lift.points.filter(p => p.date >= startStr && p.date <= todayStr).forEach(p => allDatesSet.add(p.date));
-  });
-  DATA.weight.filter(p => p.date >= startStr && p.date <= todayStr).forEach(p => allDatesSet.add(p.date));
+  Object.values(DATA.lifts).forEach(lift => lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date)));
+  DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date));
   const allDates = Array.from(allDatesSet).sort();
-
   const datasets = Object.entries(DATA.lifts).map(([key, lift]) => {
-    const pts = lift.points.filter(p => p.date >= startStr && p.date <= todayStr);
     const byDate = {};
-    pts.forEach(p => byDate[p.date] = p);
+    lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => byDate[p.date] = p);
     return {
-      label: key,
-      data: allDates.map(d => byDate[d] ? byDate[d].weight : null),
-      borderColor: lift.color,
-      backgroundColor: lift.color + '22',
+      label: key, data: allDates.map(d => byDate[d] ? byDate[d].weight : null),
+      borderColor: lift.color, backgroundColor: lift.color + '22',
       pointBackgroundColor: allDates.map(d => byDate[d] ? lift.color : 'transparent'),
-      pointBorderColor: allDates.map(d => byDate[d]?.pr ? '#ffffff88' : 'transparent'),
+      pointBorderColor: allDates.map(d => byDate[d]&&byDate[d].pr ? '#ffffff88' : 'transparent'),
       pointBorderWidth: 1,
       pointRadius: allDates.map(d => byDate[d] ? 3 : 0),
-      pointHoverRadius: 5,
-      borderWidth: 2, tension: 0.3, spanGaps: true, fill: false,
+      pointHoverRadius: 5, borderWidth: 2, tension: 0.3, spanGaps: true, fill: false,
     };
   });
-
-  // Weight line — same y axis as lifts, shown as subtle dashed white line
   const wByDate = {};
-  DATA.weight.filter(p => p.date >= startStr && p.date <= todayStr).forEach(p => wByDate[p.date] = p.weight);
+  DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => wByDate[p.date] = p.weight);
   datasets.push({
-    label: 'Gewicht',
-    data: allDates.map(d => wByDate[d] ?? null),
-    borderColor: 'rgba(255,255,255,0.35)',
-    backgroundColor: 'transparent',
-    pointBackgroundColor: 'rgba(255,255,255,0.35)',
-    pointBorderColor: 'transparent',
-    pointStyle: 'circle',
-    pointRadius: allDates.map(d => wByDate[d] !== undefined ? 2 : 0),
-    pointHoverRadius: 4,
-    borderWidth: 1, tension: 0.5, spanGaps: true, fill: false,
-    borderDash: [4,4],
+    label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
+    borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
+    pointBackgroundColor: 'rgba(255,255,255,0.35)', pointBorderColor: 'transparent',
+    pointStyle: 'circle', pointRadius: allDates.map(d => wByDate[d]!==undefined ? 2 : 0),
+    pointHoverRadius: 4, borderWidth: 1, tension: 0.5, spanGaps: true, fill: false, borderDash: [4,4],
   });
-
   return {datasets, labels: allDates};
 }
 
 function computeStats(start) {
-  const startStr = start.toISOString().slice(0,10);
-  const todayStr = TODAY.toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const totalDays = Math.round((TODAY - start) / 86400000) + 1;
-  const td = DATA.training_days.filter(d => d >= startStr && d <= todayStr).length;
-  const allActive = new Set(DATA.all_active_days || DATA.training_days);
-  const wPts = DATA.weight.filter(p => p.date >= startStr && p.date <= todayStr);
+  const td = DATA.training_days.filter(d => d >= s && d <= t).length;
+  const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wFirst = wPts.length ? wPts[0].weight : null;
   const wLast  = wPts.length ? wPts[wPts.length-1].weight : null;
   const wDelta = wFirst && wLast ? Math.round((wLast-wFirst)*10)/10 : null;
-
-  const prs = {};
-  // Estimate 1RM via Epley ~1.1x working weight (assumes ~5 rep sets)
   const epley = w => Math.round(w * 1.1 * 10) / 10;
+  const prs = {};
   Object.entries(DATA.lifts).forEach(([key, lift]) => {
-    const allInPeriod = lift.points.filter(p => p.date >= startStr && p.date <= todayStr);
-    const prPts = allInPeriod.filter(p => p.pr);
+    const all = lift.points.filter(p => p.date >= s && p.date <= t);
+    const prPts = all.filter(p => p.pr);
     if (!prPts.length) return;
-    const firstW = allInPeriod[0]?.weight ?? prPts[0].weight;
+    const firstW = all[0]?.weight ?? prPts[0].weight;
     const maxW = Math.max(...prPts.map(p => p.weight));
-    const est1RM = epley(maxW);
-    const est1RMFirst = epley(firstW);
-    prs[key] = {weight: maxW, est1RM, firstWeight: firstW, est1RMFirst, gain: Math.round((maxW-firstW)*10)/10, rm_gain: Math.round((est1RM-est1RMFirst)*10)/10, color: lift.color};
+    prs[key] = {weight: maxW, est1rm: epley(maxW), firstWeight: firstW, rm_gain: Math.round((epley(maxW)-epley(firstW))*10)/10, color: lift.color};
   });
-  const top2 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
-  return {td, totalDays, wFirst, wLast, wDelta, prs, top2};
+  const top3 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
+  return {td, totalDays, wFirst, wLast, wDelta, top3};
 }
 
-// ── RENDER ──
 function renderStats(stats) {
   const $ = id => document.getElementById(id);
   $('s-gymdays').textContent = stats.td;
@@ -937,41 +358,36 @@ function renderStats(stats) {
     $('s-wdelta').className = 'stat-value ' + (stats.wDelta <= 0 ? 'g' : 'r');
     $('s-wrange').textContent = stats.wFirst + ' -> ' + stats.wLast + ' kg';
   }
-  const top2El = $('pr-top2');
-  top2El.innerHTML = '';
-  if (!stats.top2.length) {
-    top2El.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:4px 0">Geen PRs in deze periode</div>';
+  const top3El = $('pr-top3');
+  top3El.innerHTML = '';
+  if (!stats.top3.length) {
+    top3El.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:4px 0">Geen PRs in deze periode</div>';
   } else {
-    stats.top2.forEach(([key, info]) => {
-      top2El.innerHTML += '<div class="pr-row"><div class="pr-dot" style="background:' + info.color + ';box-shadow:0 0 5px ' + info.color + '"></div><div class="pr-lift">' + key + '</div><div class="pr-vals" style="font-size:10px;color:var(--muted)">~' + info.est1RM + 'kg 1RM</div><div class="pr-gain">+' + info.rm_gain + 'kg</div></div>';
+    stats.top3.forEach(([key, info]) => {
+      top3El.innerHTML += '<div class="pr-row"><div class="pr-dot" style="background:' + info.color + ';box-shadow:0 0 5px ' + info.color + '"></div><div class="pr-lift">' + key + '</div><div class="pr-vals">~' + info.est1rm + 'kg 1RM</div><div class="pr-gain">+' + info.rm_gain + 'kg</div></div>';
     });
   }
 }
 
 function renderNewEx(start) {
-  const startStr = start.toISOString().slice(0,10);
-  const todayStr = TODAY.toISOString().slice(0,10);
-  const filtered = DATA.new_exercises.filter(e => e.date >= startStr && e.date <= todayStr);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const filtered = DATA.new_exercises.filter(e => e.date >= s && e.date <= t);
   const container = document.getElementById('new-ex-container');
   if (!filtered.length) { container.innerHTML = ''; return; }
-  const show = filtered.slice(0, 5);
+  const show = filtered.slice(0,5);
   const extra = filtered.length > 5 ? '<div style="color:var(--muted);font-size:10px;padding:3px 0">+ ' + (filtered.length-5) + ' meer</div>' : '';
-  container.innerHTML = '<div style="font-family:\'Space Mono\',monospace;font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:5px;">NIEUW IN PERIODE</div>' +
+  container.innerHTML = '<div style="font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:5px;">NIEUW IN PERIODE</div>' +
     show.map(e => '<div class="new-ex-item"><span>' + e.exercise + '</span><span class="new-ex-date">' + e.date.slice(5).replace('-','/') + '</span></div>').join('') + extra;
 }
 
 function renderAnalysis(start) {
-  const startStr = start.toISOString().slice(0,10);
-  const todayStr = TODAY.toISOString().slice(0,10);
-  const overlapping = PHASES.filter(p => p.start <= todayStr && p.end >= startStr);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const overlapping = PHASES.filter(p => p.start <= t && p.end >= s);
   let a;
-  if (overlapping.length === 1) {
-    a = PHASE_ANALYSIS[overlapping[0].label] || PHASE_ANALYSIS['multi'];
-  } else if (overlapping.length === 0) {
-    a = PHASE_ANALYSIS['multi'];
-  } else if (overlapping.length >= 3) {
-    a = PHASE_ANALYSIS['multi'];
-  } else {
+  if (overlapping.length === 1) { a = PHASE_ANALYSIS[overlapping[0].label] || PHASE_ANALYSIS['multi']; }
+  else if (!overlapping.length) { a = PHASE_ANALYSIS['multi']; }
+  else if (overlapping.length >= 3) { a = PHASE_ANALYSIS['multi']; }
+  else {
     let best = overlapping[0], bestDays = 0;
     overlapping.forEach(p => {
       const ps = new Date(Math.max(new Date(p.start), start));
@@ -981,32 +397,23 @@ function renderAnalysis(start) {
     });
     a = PHASE_ANALYSIS[best.label] || PHASE_ANALYSIS['multi'];
   }
-
-  const phaseTag = overlapping.length === 1
-    ? '<span style="color:' + overlapping[0].color + ';margin-left:8px;font-size:8px">- ' + overlapping[0].label + '</span>'
-    : '<span style="color:var(--muted);margin-left:8px;font-size:8px">' + overlapping.length + ' FASES</span>';
-  document.getElementById('analysis-title').innerHTML = '&#9658; ANALYSE PERIODE' + phaseTag;
-
-  document.getElementById('a-focus').innerHTML    = a.focus;
-  document.getElementById('a-results').innerHTML  = a.results;
+  const phaseNames = overlapping.length
+    ? ' <span style="font-family:monospace;color:var(--muted);font-size:8px">(' + overlapping.map(p => p.label).join(' + ') + ')</span>'
+    : '';
+  document.getElementById('analysis-title').innerHTML = '&#9658; ANALYSE PERIODE' + phaseNames;
+  const evoEl = document.getElementById('evolution-title');
+  if (evoEl) evoEl.innerHTML = '&#9670; TRAINING EVOLUTIE' + phaseNames;
+  document.getElementById('a-focus').innerHTML = a.focus;
   document.getElementById('a-evolution').innerHTML = a.evolution;
-  const tipsEl = document.getElementById('a-tips'); if (tipsEl) tipsEl.innerHTML = a.tips || '-';
-
-  const fasesEl = document.getElementById('a-fases-container');
-  if (overlapping.length >= 2) {
-    fasesEl.innerHTML = '<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">' +
-      overlapping.map(p => '<span style="font-family:\'Space Mono\',monospace;font-size:8px;color:' + p.color + ';border:1px solid ' + p.color + '33;padding:2px 6px;">' + p.label + '</span>').join('') + '</div>';
-  } else { fasesEl.innerHTML = ''; }
+  document.getElementById('a-tips').innerHTML = a.tips || '-';
 }
 
 function update(periodDays) {
   const start = getPeriodStart(periodDays);
   document.getElementById('badge-text').textContent = fmt(start) + ' - ' + fmt(TODAY);
-
   const {datasets: liftDs, labels: liftLabels} = buildLiftDatasets(start);
   const stats = computeStats(start);
   const mobile = window.innerWidth < 768;
-
   if (liftChart) liftChart.destroy();
   const ctx = document.getElementById('liftChart').getContext('2d');
   liftChart = new Chart(ctx, {
@@ -1014,66 +421,42 @@ function update(periodDays) {
     data: {labels: liftLabels, datasets: liftDs},
     options: {
       responsive: true, maintainAspectRatio: false,
-      interaction: {mode: 'index', intersect: false},
-      layout: {padding: {bottom: 22}},
+      interaction: {mode:'index',intersect:false},
+      layout: {padding:{bottom:22}},
       scales: {
-        x: {
-          type: 'category',
-          grid: {color: '#1a1a2e'},
-          ticks: {
-            maxRotation: mobile ? 45 : 35, color: '#454560',
-            autoSkip: true, maxTicksLimit: mobile ? 6 : 12,
-            font: {size: mobile ? 8 : 9},
-            callback: function(val, i) { const v = this.getLabelForValue(val); return v ? v.slice(5) : ''; }
-          }
-        },
-        y: {
-          grid: {color: '#1a1a2e'},
-          ticks: {color: '#7b5cff99', font: {size: mobile ? 8 : 9}, callback: v => v + 'kg'},
-        }
+        x: {type:'category',grid:{color:'#1a1a2e'},ticks:{maxRotation:mobile?45:35,color:'#454560',autoSkip:true,maxTicksLimit:mobile?6:12,font:{size:mobile?8:9},callback:function(val,i){const v=this.getLabelForValue(val);return v?v.slice(5):'';}}},
+        y: {grid:{color:'#1a1a2e'},ticks:{color:'#7b5cff99',font:{size:mobile?8:9},callback:v=>v+'kg'}}
       },
       plugins: {
-        legend: {display: false},
-        tooltip: {
-          backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1,
-          titleColor: '#7b5cff', bodyColor: '#c0c0d8',
-          callbacks: {label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y + 'kg'}
-        },
-        phaseBands: {phases: PHASES, labels: liftLabels}
+        legend: {display:false},
+        tooltip: {backgroundColor:'#0a0a15',borderColor:'#1c1c30',borderWidth:1,titleColor:'#7b5cff',bodyColor:'#c0c0d8',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+'kg'}},
+        phaseBands: {phases:PHASES, labels:liftLabels}
       }
     }
   });
-
-  // Phase band click handler
   const canvas = document.getElementById('liftChart');
   canvas.style.cursor = 'default';
   canvas.onclick = e => {
     const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    const mx = e.clientX-rect.left, my = e.clientY-rect.top;
     let hit = false;
-    for (const area of _phaseBandHitAreas) {
-      if (mx >= area.x1 && mx <= area.x2 && my >= area.y && my <= area.y + area.bandH) {
-        showPhasePopup(area.phase, e.clientX, e.clientY); hit = true; break;
-      }
+    for (const a of _phaseBandHitAreas) {
+      if (mx>=a.x1&&mx<=a.x2&&my>=a.y&&my<=a.y+a.bandH) { showPhasePopup(a.phase,e.clientX,e.clientY); hit=true; break; }
     }
     if (!hit) hidePhasePopup();
   };
   canvas.onmousemove = e => {
     const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-    canvas.style.cursor = _phaseBandHitAreas.some(a => mx >= a.x1 && mx <= a.x2 && my >= a.y && my <= a.y + a.bandH) ? 'pointer' : 'default';
+    const mx = e.clientX-rect.left, my = e.clientY-rect.top;
+    canvas.style.cursor = _phaseBandHitAreas.some(a=>mx>=a.x1&&mx<=a.x2&&my>=a.y&&my<=a.y+a.bandH)?'pointer':'default';
   };
-
-  // Lift filter buttons
   const filtersEl = document.getElementById('lift-filters');
   filtersEl.innerHTML = '';
   liftDs.forEach((ds, i) => {
     if (ds.label === 'Gewicht') return;
     const hasData = ds.data.some(v => v !== null);
-    const defaultHidden = false;
-    if (defaultHidden) liftChart.getDatasetMeta(i).hidden = true;
     const btn = document.createElement('button');
-    const active = hasData && !defaultHidden;
+    const active = hasData;
     btn.className = 'lift-btn' + (active ? ' active' : '');
     btn.textContent = ds.label;
     btn.style.color = ds.borderColor;
@@ -1090,13 +473,11 @@ function update(periodDays) {
     filtersEl.appendChild(btn);
   });
   liftChart.update();
-
   renderStats(stats);
   renderNewEx(start);
   renderAnalysis(start);
 }
 
-// ── TABS ──
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1104,43 +485,12 @@ document.querySelectorAll('.tab').forEach(tab => {
     update(parseInt(tab.dataset.period));
   });
 });
-
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    const active = parseInt(document.querySelector('.tab.active').dataset.period);
-    update(active);
-  }, 200);
+  resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
 });
-
-// ── INIT ──
-(async function init() {
-  DATA = await loadFromGitHub();
-
-  if (!DATA || !DATA.training_days.length) {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('error-panel').style.display = 'block';
-    return;
-  }
-
-  // Set TODAY from data
-  const allDates = [...DATA.training_days, ...DATA.weight.map(w => w.date)].sort();
-  TODAY = new Date(allDates[allDates.length - 1] + 'T12:00:00');
-
-  // Header
-  const latestW = DATA.weight[DATA.weight.length - 1];
-  if (latestW) document.getElementById('hdr-weight').textContent = latestW.weight + ' ';
-  document.getElementById('hdr-date').textContent = allDates[allDates.length - 1].slice(5).replace('-', '/');
-
-  setStatus('RENDERING...');
-  setTimeout(() => {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    update(30);
-  }, 300);
-})();
+update(30);
 </script>
 </body>
 </html>
