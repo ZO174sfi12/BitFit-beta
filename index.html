@@ -345,7 +345,7 @@ header::after {
   .lift-panel { grid-row: 1; }
   .right-col  { grid-row: 1; display: flex; flex-direction: column; gap: 12px; }
   .analysis-panel { grid-column: 1 / -1; }
-  .analysis-blocks { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+  .analysis-blocks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   #liftChart { height: 320px; }
   .panel { padding: 16px 18px; }
 }
@@ -451,11 +451,7 @@ header::after {
         <div id="a-fases-container"></div>
       </div>
       <div class="analysis-block">
-        <div class="analysis-title c">◆ PROGRESSIE &amp; ADAPTATIE</div>
-        <div class="analysis-text" id="a-results">—</div>
-      </div>
-      <div class="analysis-block">
-        <div class="analysis-title g">◆ TRAINING EVOLUTIE</div>
+        <div class="analysis-title g" id="evolution-title">◆ TRAINING EVOLUTIE</div>
         <div class="analysis-text" id="a-evolution">—</div>
         <div style="margin-top:10px" id="new-ex-container"></div>
       </div>
@@ -534,34 +530,29 @@ const PHASES = [
 ];
 const PHASE_ANALYSIS = {
   'ORIENTATIE': {
-    focus:'Alleen <b>machines en dumbbells</b>. Benen en Glutes dominant. Geen rug-trekwerk aanwezig.',
-    results:'5 sessies in 2 weken. Lage intensiteit, hoog leereffect. <b>Neurale activatie</b> wordt ingeslepen.',
-    evolution:'Breed orienteren. Face Pull, Hip Thrust, Front Squat nieuw. Geen barbell, geen structuur.',
-    tips:'<b>Correct:</b> orienteren zonder te forceren. Volgende fase: elke push heeft een pull nodig.'
+    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span> dominant (~60%), geen trekwerk aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ff8a65">Rug</span> volledig afwezig. Geen barbell, geen verticale of horizontale pull.',
+    evolution:'<b>Methode: orientatie.</b> Machines en dumbbells als kennismaking. Geen structuur, breed verkennen. Face Pull, Hip Thrust, Front Squat, Leg Press geintroduceerd. 5 sessies in 2 weken - lage intensiteit, hoog leereffect.',
+    tips:'<b>Correct aanpak voor een beginner.</b> Breed orienteren voor je kiest wat werkt. Let op: zonder trekwerk bouw je snel een onbalans op in de schoudergordel.'
   },
   'BARBELL INTRO': {
-    focus:'<b>Horizontale push</b> (Bench) en <b>verticale pull</b> (Lat PD) samen voor het eerst. Balans verbetert.',
-    results:'Elke sessie een PR - normaal bij techniek leren. Lichaamsgewicht daalt van 84.2 naar 82.8 kg.',
-    evolution:'Deadlift (17 jan), Bench (20 jan), Squat (26 jan) in 10 dagen. Echte start van krachttraining.',
-    tips:'<b>Voeg OHP toe</b> als verticale push. Face Pull blijven doen als rotator cuff bescherming.'
+    focus:'<b style="color:var(--yellow)">IN OPBOUW</b> - <span style="color:#64b5f6">Borst</span> (Bench) en <span style="color:#ff8a65">Rug</span> (Lat PD, Deadlift) komen samen. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">Schouders</span> - geen OHP of verticale push aanwezig.',
+    evolution:'<b>Methode: lineaire introductie.</b> Barbell Deadlift (17/1), Bench (20/1), Squat (26/1) in 10 dagen. Elke sessie een PR - normaal bij techniek leren op nieuwe bewegingen. Overgang van machine-gebaseerd naar free weight compound lifts.',
+    tips:'<b>OHP ontbreekt</b> als verticale push tegenover de Lat PD. Dat is de enige echte missing link in deze fase. Gewicht daalt al van 84.2 naar 82.8 kg - recomposition begint.'
   },
   'BARBELL VOLUME': {
-    focus:'Meest <b>gebalanceerde fase</b>. OHP en Lat PD aanwezig. <b>Zwak:</b> Borst lag achter op Rug (~1:2.5).',
-    results:'Squat +25%, DL +33%, Bench +22%. Body recomposition: gewicht stabiel, kracht stijgt.',
-    evolution:'OHP, Dips, RDL, Skull Crushers, Ab Wheel in 3 weken. Push/pull/legs structuur tekent zich af.',
-    tips:'<b>Bench frequentie verhogen</b> naar gelijk niveau met Squat. Rows consequenter trainen.'
+    focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#69f0ae">Schouders</span> (OHP) aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#64b5f6">Borst/Rug verhouding</span> ~1:2.5 - ideaal is 1:1.5.',
+    evolution:'<b>Methode: volume explosie.</b> 17 sessies in 22 dagen - drukste periode. OHP, Dips, RDL, Skull Crushers, Ab Wheel, Cable Rows in 3 weken ingevoerd. Push/pull/legs structuur begint te tekenen. Intuïtief hoog volume zonder structuur.',
+    tips:'<b>Bench frequentie te laag</b> vs squat en rug. Rug/Hamstrings kreeg 2-3x meer sessies dan borst. Rows consequenter naast Lat PD trainen als horizontale pull. Op rand van overreaching - 17 sessies in 22 dagen is te hoog om lang vol te houden.'
   },
   'VERKOUDEN': {
-    focus:'Beperkte data. Squat en Rug bij terugkeer. <b>Bench 60kg, OHP 42.5kg</b> op eerste terugkeersessie.',
-    results:'Kracht volledig behouden ondanks ziekte. Bench +5kg, OHP +2.5kg direct bij terugkeer.',
-    evolution:'Machine Seated Row en DB RDL nieuw. Einde ongestructureerde beginfase.',
-    tips:'<b>Start GZCLP of dubbele progressie.</b> Squat T1 80kg / DL T1 77.5kg / Bench T1 60kg / OHP T1 42.5kg.'
+    focus:'<b style="color:var(--red)">BEPERKTE DATA</b> - 4 sessies door ziekte. <span style="color:#b388ff">Benen</span> en <span style="color:#ff8a65">Rug</span> bij terugkeer. Bench 60kg en OHP 42.5kg als nieuwe PRs op 14/3. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:var(--red)">gewicht steeg 1.5kg</span> tijdens ziekte.',
+    evolution:'<b>Methode: herstel na onderbreking.</b> Lage frequentie door ziekte (4 sessies in 13 dagen). Kracht volledig behouden - kortdurende pauze heeft geen negatief effect op lifts. Maar gewicht steeg van 82.2 naar 83.5-84.6 kg: minder activiteit + zelfde voeding = snel bijgekomen.',
+    tips:'<b>Gewichtsstijging serieus nemen.</b> +1.5-2kg in 2 weken ziekte wijst op te hoge calorie-inname bij lage activiteit. Kickboxing en training compenseren normaal - bij pauze compenseer je dat zelf. Doorgaan met barbell op huidige intuïtieve manier is prima, maar verhoog Bench frequentie naar 2x per week.'
   },
   'multi': {
-    focus:'Over de gehele periode: <b>Benen/Glutes ~40%</b>, <b>Rug ~30%</b>, <b>Borst ~15%</b>. OHP ondervertegenwoordigd.',
-    results:'Squat +33%, DL +33%, Bench +33%, OHP +6%. Gewicht -0.7kg bij gelijktijdige krachtgroei = recomposition.',
-    evolution:'Meerdere fases zichtbaar. <b>Orientatie -> Barbell Intro -> Barbell Volume -> Verkouden.</b> Van machines naar barbell, van techniek naar volume, van volume naar herstel.',
-    tips:'<b>GZCLP is de logische volgende stap.</b> Basis gelegd, techniek ingeslepen, gewichten substantieel.'
+    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes ~40%</span>, <span style="color:#ff8a65">Rug ~30%</span>, <span style="color:#64b5f6">Borst ~15%</span>. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">OHP ondervertegenwoordigd</span> - pas ingevoerd in februari, te weinig volume gekregen.',
+    evolution:'<b>Methode: ongestructureerde lineaire progressie.</b> Periodes in dit venster: van oriëntatie naar barbell introductie naar volume, of richting verkoudheidsperiode. Intuïtief trainen werkte - squat +33%, deadlift +33%, bench +33% in 11 weken. Gewicht -0.7kg bij krachtgroei = recomposition.',
+    tips:'<b>Geen haast naar GZCLP.</b> Zolang lifts elke 1-2 weken stijgen werkt je huidig patroon. Verhoog wel Bench naar 2x per week en train OHP consequenter. Let op gewicht: bij verminderde activiteit snel bijkomen is een signaal om voeding aan te passen.'
   }
 };
 
@@ -707,22 +698,65 @@ function parseCSVRow(line) {
 // ── GITHUB FETCH ──
 async function loadFromGitHub() {
   setStatus('SCANNING REPO...');
+  // Strategy 1: GitHub Contents API to find CSV
   try {
     const res = await fetch(GITHUB_API);
-    if (!res.ok) throw new Error('API ' + res.status);
-    const files = await res.json();
-    const csv = files.find(f => f.name.endsWith('.csv'));
-    if (!csv) throw new Error('No CSV found');
-    setStatus('LOADING ' + csv.name + '...');
-    const rawRes = await fetch(RAW_BASE + csv.name);
-    if (!rawRes.ok) throw new Error('Fetch failed');
-    const text = await rawRes.text();
-    setStatus('PARSING DATA...');
-    return parseCSV(text);
-  } catch(e) {
-    console.error('GitHub load error:', e);
-    return null;
+    if (res.ok) {
+      const files = await res.json();
+      if (Array.isArray(files)) {
+        const csv = files.find(f => f.name.toLowerCase().endsWith('.csv'));
+        if (csv) {
+          setStatus('LOADING ' + csv.name + '...');
+          const rawRes = await fetch(RAW_BASE + csv.name);
+          if (rawRes.ok) {
+            setStatus('PARSING DATA...');
+            return parseCSV(await rawRes.text());
+          }
+        }
+      }
+    }
+  } catch(e) { console.warn('Contents API failed, trying tree:', e); }
+
+  // Strategy 2: Git Tree API (works more reliably for public repos)
+  try {
+    const treeRes = await fetch('https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + '/git/trees/HEAD?recursive=1');
+    if (treeRes.ok) {
+      const tree = await treeRes.json();
+      const csvFile = (tree.tree || []).find(f => f.path.toLowerCase().endsWith('.csv'));
+      if (csvFile) {
+        setStatus('LOADING ' + csvFile.path + '...');
+        const rawRes = await fetch(RAW_BASE + csvFile.path);
+        if (rawRes.ok) {
+          setStatus('PARSING DATA...');
+          return parseCSV(await rawRes.text());
+        }
+      }
+    }
+  } catch(e) { console.warn('Tree API failed:', e); }
+
+  // Strategy 3: Try common naming patterns directly
+  const year = new Date().getFullYear();
+  const candidates = [];
+  // Try last 30 days worth of date patterns
+  for (let i = 0; i <= 30; i++) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const ds = d.toISOString().slice(0,10).replace(/-/g,'');
+    candidates.push('scottygambino_' + ds + '.csv');
+    candidates.push('scottygambino_' + ds + '_.csv');
+    candidates.push('scottygambino_' + ds + '_1_.csv');
   }
+  for (const name of candidates) {
+    try {
+      const r = await fetch(RAW_BASE + name);
+      if (r.ok) {
+        setStatus('LOADING ' + name + '...');
+        return parseCSV(await r.text());
+      }
+    } catch(e) {}
+  }
+
+  console.error('All strategies failed');
+  return null;
 }
 
 function setStatus(msg) {
