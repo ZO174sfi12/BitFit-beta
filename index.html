@@ -698,64 +698,62 @@ function parseCSVRow(line) {
 // ── GITHUB FETCH ──
 async function loadFromGitHub() {
   setStatus('SCANNING REPO...');
-  const bust = '?t=' + Date.now();
 
-  // Strategy 1: GitHub Contents API
+  // One clean strategy: GitHub Contents API -> download_url
+  // This is the most reliable approach for public repos
   try {
-    const res = await fetch(GITHUB_API + bust, {headers: {'Accept': 'application/vnd.github.v3+json'}});
-    if (res.ok) {
-      const files = await res.json();
-      if (Array.isArray(files)) {
-        const csv = files.find(f => f.name.toLowerCase().endsWith('.csv'));
-        if (csv) {
-          setStatus('LOADING ' + csv.name + '...');
-          const rawUrl = csv.download_url + bust;
-          const rawRes = await fetch(rawUrl);
-          if (rawRes.ok) {
-            setStatus('PARSING DATA...');
-            return parseCSV(await rawRes.text());
-          }
-        }
+    setStatus('CONTACTING GITHUB API...');
+    const apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + '/contents/';
+    const res = await fetch(apiUrl, {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28'
       }
+    });
+
+    setStatus('API STATUS: ' + res.status);
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error('API error:', res.status, errText);
+      setStatus('API ERROR ' + res.status + ' - CHECK CONSOLE');
+      await new Promise(r => setTimeout(r, 2000));
+      throw new Error('API ' + res.status);
     }
-  } catch(e) { console.warn('Contents API:', e.message); }
 
-  // Strategy 2: jsDelivr CDN (bypasses CORS issues with raw.githubusercontent)
-  const jsdelivr = 'https://cdn.jsdelivr.net/gh/' + GITHUB_USER + '/' + GITHUB_REPO + '/';
-  const candidates = [];
-  for (let i = 0; i <= 60; i++) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const ds = d.toISOString().slice(0,10).replace(/-/g,'');
-    candidates.push('scottygambino_' + ds + '.csv');
-    candidates.push('scottygambino_' + ds + '_.csv');
-    candidates.push('scottygambino_' + ds + '_1_.csv');
-    candidates.push('scottygambino_' + ds + '__1_.csv');
+    const files = await res.json();
+    console.log('Files in repo:', files.map ? files.map(f => f.name) : files);
+
+    if (!Array.isArray(files)) {
+      setStatus('UNEXPECTED RESPONSE - CHECK CONSOLE');
+      await new Promise(r => setTimeout(r, 2000));
+      throw new Error('Not array: ' + JSON.stringify(files).slice(0,100));
+    }
+
+    const csv = files.find(f => f.name.toLowerCase().endsWith('.csv'));
+    if (!csv) {
+      const names = files.map(f => f.name).join(', ');
+      setStatus('NO CSV FOUND. FILES: ' + names);
+      console.error('No CSV. Files:', names);
+      await new Promise(r => setTimeout(r, 4000));
+      return null;
+    }
+
+    setStatus('FOUND: ' + csv.name);
+    console.log('CSV found:', csv.name, 'url:', csv.download_url);
+
+    const rawRes = await fetch(csv.download_url);
+    if (!rawRes.ok) throw new Error('Download failed: ' + rawRes.status);
+
+    const text = await rawRes.text();
+    setStatus('PARSING ' + text.length + ' BYTES...');
+    return parseCSV(text);
+
+  } catch(e) {
+    console.error('Load failed:', e);
+    setStatus('ERROR: ' + e.message);
+    await new Promise(r => setTimeout(r, 3000));
+    return null;
   }
-
-  // Try jsDelivr first (better CORS support)
-  for (const name of candidates) {
-    try {
-      const r = await fetch(jsdelivr + name);
-      if (r.ok) {
-        setStatus('LOADING ' + name + '...');
-        return parseCSV(await r.text());
-      }
-    } catch(e) {}
-  }
-
-  // Strategy 3: raw.githubusercontent with no-cors workaround
-  for (const name of candidates) {
-    try {
-      const r = await fetch(RAW_BASE + name + bust);
-      if (r.ok) {
-        setStatus('LOADING ' + name + '...');
-        return parseCSV(await r.text());
-      }
-    } catch(e) {}
-  }
-
-  console.error('All strategies failed');
-  return null;
 }
 
 function setStatus(msg) {
