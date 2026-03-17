@@ -3,22 +3,22 @@
   "phase": "GZCLP",
   "squat": {
     "weight": 70.0,
-    "est1rm": 77.0,
+    "est1rm": 81.7,
     "pr": false
   },
   "deadlift": {
     "weight": 77.5,
-    "est1rm": 85.2,
+    "est1rm": 93.0,
     "pr": false
   },
   "bench": {
     "weight": 60.0,
-    "est1rm": 66.0,
+    "est1rm": 70.0,
     "pr": true
   },
   "ohp": {
     "weight": 42.5,
-    "est1rm": 46.8,
+    "est1rm": 49.6,
     "pr": true
   },
   "bodyweight": {
@@ -71,5 +71,20 @@
       "last": "2026-03-16",
       "rest": 0
     }
+  },
+  "db_bench": {
+    "weight": 44.0,
+    "est1rm": 58.7,
+    "pr": false
+  },
+  "lat_pd": {
+    "weight": 60.0,
+    "est1rm": 70.0,
+    "pr": true
+  },
+  "dip": {
+    "weight": 84.6,
+    "est1rm": 101.5,
+    "pr": true
   }
 }

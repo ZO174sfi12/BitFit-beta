@@ -196,14 +196,16 @@ const DATA = {"lifts": {"Squat": {"color": "#b388ff", "name": "Squat", "points":
 const TODAY = new Date('2026-03-16');
 
 const PHASES = [
-  {label:'ORIENTATIE',    short:'ORI', start:'2026-01-03',end:'2026-01-15',color:'#7c6fff',
+  {label:'ORIENTATIE',    short:'ORI', start:'2026-01-03',end:'2026-01-31',color:'#7c6fff',
    desc:'<b>3 jan - 15 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell.'},
-  {label:'BARBELL INTRO', short:'BB+', start:'2026-01-17',end:'2026-02-03',color:'#00e5ff',
+  {label:'BARBELL INTRO', short:'BB+', start:'2026-02-01',end:'2026-02-03',color:'#00e5ff',
    desc:'<b>17 jan - 3 feb</b><br>Deadlift, Bench, Squat ingevoerd. Techniek op lichte gewichten.'},
-  {label:'BARBELL VOLUME',short:'BB*', start:'2026-02-04',end:'2026-02-25',color:'#ff3d6b',
+  {label:'BARBELL 5x5',   short:'5x5', start:'2026-02-04',end:'2026-02-25',color:'#ff3d6b',
    desc:'<b>4 feb - 25 feb</b><br>17 sessies in 22 dagen. Squat 60-75kg, DL naar 80kg.'},
   {label:'VERKOUDEN',     short:'ZK',  start:'2026-03-02',end:'2026-03-12',color:'#ffaa00',
    desc:'<b>2 mrt - 12 mrt</b><br>Lage frequentie door ziekte. Kracht behouden.'},
+  {label:'BARBELL 5x5',   short:'5x5', start:'2026-03-13',end:'2026-03-16',color:'#ff3d6b',
+   desc:'<b>13 mrt - heden</b><br>Terugkeer na verkoudheid. Verderzetten van 5x5 aanpak.'},
 ];
 
 const PHASE_ANALYSIS = {
@@ -217,7 +219,7 @@ const PHASE_ANALYSIS = {
     evolution:'<b>Methode: lineaire introductie.</b> Deadlift (17/1), Bench (20/1), Squat (26/1) in 10 dagen. Elke sessie een PR &mdash; normaal bij nieuwe bewegingen aanleren. Overgang van machine naar free weight compound.',
     tips:'<b>OHP ontbreekt 2.5 weken lang</b> terwijl Lat PD al draait. Bench werd slechts 1x getraind in 2.5 week &mdash; te weinig voor borststimulatie. Rug krijgt al meer aandacht dan borst: patroon van onbalans start hier.'
   },
-  'BARBELL VOLUME': {
+  'BARBELL 5x5': {
     focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#00ffb3">OHP</span> aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> Borst/Rug verhouding ~1:2.5, ideaal is 1:1.5.',
     evolution:'<b>Methode: volume explosie.</b> 17 sessies in 22 dagen &mdash; drukste periode. OHP, Dips, RDL, Skull Crushers, Ab Wheel ingevoerd. Push/pull/legs structuur begint te vormen. Intuïtief hoog volume zonder structuur.',
     tips:'<b>17 sessies in 22 dagen is overreaching.</b> Verkoudheid direct erna is geen toeval. Bench 3x getraind, Squat 7x &mdash; verhouding 1:2.3. Rug/Hamstrings domineren alles. Intuïtief trainen werkt hier tegen je.'
