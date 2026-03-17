@@ -1,6 +1,6 @@
 {
   "updated": "2026-03-16",
-  "phase": "GZCLP",
+  "phase": "BARBELL 5x5",
   "squat": {
     "weight": 70.0,
     "est1rm": 81.7,
@@ -25,18 +25,18 @@
     "current": 84.6,
     "delta_10d": 1.2
   },
-  "gym_days_10d": 3,
+  "gym_days_10d": 5,
   "days_10d": [
-    true,
-    true,
-    true,
+    false,
     true,
     false,
     false,
     false,
     false,
     true,
-    false
+    true,
+    true,
+    true
   ],
   "muscle_rest": {
     "Core": {
