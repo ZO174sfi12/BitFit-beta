@@ -246,7 +246,7 @@ header::after {
 
 /* ── STATS ── */
 .stats-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
   margin-bottom: 12px;
 }
 .stat-card {
@@ -345,7 +345,7 @@ header::after {
   .lift-panel { grid-row: 1; }
   .right-col  { grid-row: 1; display: flex; flex-direction: column; gap: 12px; }
   .analysis-panel { grid-column: 1 / -1; }
-  .analysis-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .analysis-blocks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   
   .panel { padding: 16px 18px; }
 }
@@ -435,7 +435,7 @@ header::after {
           <div class="stat-sub" id="s-wrange">—</div>
         </div>
       </div>
-      <div class="pr-section-label">▸ TOP PR PROGRESSIE</div>
+      <div class="pr-section-label">▸ TOP 3 GESCHATTE 1RM</div>
       <div id="pr-top2"></div>
     </div>
   </div>
@@ -529,27 +529,27 @@ const PHASE_ANALYSIS = {
   'ORIENTATIE': {
     focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span> dominant (~60%), geen trekwerk aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ff8a65">Rug</span> volledig afwezig. Geen barbell, geen verticale of horizontale pull.',
     evolution:'<b>Methode: orientatie.</b> Machines en dumbbells als kennismaking. Geen structuur, breed verkennen. Face Pull, Hip Thrust, Front Squat, Leg Press geintroduceerd. 5 sessies in 2 weken - lage intensiteit, hoog leereffect.',
-    tips:'<b>Correct aanpak voor een beginner.</b> Breed orienteren voor je kiest wat werkt. Let op: zonder trekwerk bouw je snel een onbalans op in de schoudergordel.'
+    tips:'<b>Rug ontbreekt volledig.</b> Elke sessie push zonder pull = structurele schoudergordel onbalans. Face Pulls zijn een pleister, geen oplossing. Voeg Lat PD of rows toe vanaf dag 1, niet pas in week 3.'
   },
   'BARBELL INTRO': {
     focus:'<b style="color:var(--yellow)">IN OPBOUW</b> - <span style="color:#64b5f6">Borst</span> (Bench) en <span style="color:#ff8a65">Rug</span> (Lat PD, Deadlift) komen samen. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">Schouders</span> - geen OHP of verticale push aanwezig.',
     evolution:'<b>Methode: lineaire introductie.</b> Barbell Deadlift (17/1), Bench (20/1), Squat (26/1) in 10 dagen. Elke sessie een PR - normaal bij techniek leren op nieuwe bewegingen. Overgang van machine-gebaseerd naar free weight compound lifts.',
-    tips:'<b>OHP ontbreekt</b> als verticale push tegenover de Lat PD. Dat is de enige echte missing link in deze fase. Gewicht daalt al van 84.2 naar 82.8 kg - recomposition begint.'
+    tips:'<b>OHP ontbreekt 2.5 weken lang</b> terwijl Lat PD al draait. Verticale push en pull horen samen. Bench werd slechts 1x getraind in 2.5 week - te weinig voor borststimulatie. Rug krijgt al meer aandacht dan borst: patroon van onbalans start hier.'
   },
   'BARBELL VOLUME': {
     focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#69f0ae">Schouders</span> (OHP) aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#64b5f6">Borst/Rug verhouding</span> ~1:2.5 - ideaal is 1:1.5.',
     evolution:'<b>Methode: volume explosie.</b> 17 sessies in 22 dagen - drukste periode. OHP, Dips, RDL, Skull Crushers, Ab Wheel, Cable Rows in 3 weken ingevoerd. Push/pull/legs structuur begint te tekenen. Intuïtief hoog volume zonder structuur.',
-    tips:'<b>Bench frequentie te laag</b> vs squat en rug. Rug/Hamstrings kreeg 2-3x meer sessies dan borst. Rows consequenter naast Lat PD trainen als horizontale pull. Op rand van overreaching - 17 sessies in 22 dagen is te hoog om lang vol te houden.'
+    tips:'<b>17 sessies in 22 dagen is overreaching.</b> Verkoudheid direct erna is geen toeval. Bench werd 3x getraind, Squat 7x - verhouding 1:2.3 is onaanvaardbaar als je borst serieus wil ontwikkelen. Rug/Hamstrings domineren alles. Intuïtief trainen werkt hier tegen je.'
   },
   'VERKOUDEN': {
     focus:'<b style="color:var(--red)">BEPERKTE DATA</b> - 4 sessies door ziekte. <span style="color:#b388ff">Benen</span> en <span style="color:#ff8a65">Rug</span> bij terugkeer. Bench 60kg en OHP 42.5kg als nieuwe PRs op 14/3. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:var(--red)">gewicht steeg 1.5kg</span> tijdens ziekte.',
     evolution:'<b>Methode: herstel na onderbreking.</b> Lage frequentie door ziekte (4 sessies in 13 dagen). Kracht volledig behouden - kortdurende pauze heeft geen negatief effect op lifts. Maar gewicht steeg van 82.2 naar 83.5-84.6 kg: minder activiteit + zelfde voeding = snel bijgekomen.',
-    tips:'<b>Gewichtsstijging serieus nemen.</b> +1.5-2kg in 2 weken ziekte wijst op te hoge calorie-inname bij lage activiteit. Kickboxing en training compenseren normaal - bij pauze compenseer je dat zelf. Doorgaan met barbell op huidige intuïtieve manier is prima, maar verhoog Bench frequentie naar 2x per week.'
+    tips:'<b>+1.5kg in 2 weken ziekte = te veel eten bij weinig bewegen.</b> Dit is een patroon om te kennen: zodra activiteit wegvalt schiet gewicht omhoog. Kickboxing en gym maskeren een calorie-overschot - ze compenseren het niet. Zonder die activiteit kom je snel bij. Bench nog altijd niet op gelijke frequentie als squat. Na 11 weken trainen is dat een bewuste keuze of een blinde vlek.'
   },
   'multi': {
     focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> - <span style="color:#b388ff">Benen/Glutes ~40%</span>, <span style="color:#ff8a65">Rug ~30%</span>, <span style="color:#64b5f6">Borst ~15%</span>. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#69f0ae">OHP ondervertegenwoordigd</span> - pas ingevoerd in februari, te weinig volume gekregen.',
     evolution:'<b>Methode: ongestructureerde lineaire progressie.</b> Periodes in dit venster: van oriëntatie naar barbell introductie naar volume, of richting verkoudheidsperiode. Intuïtief trainen werkte - squat +33%, deadlift +33%, bench +33% in 11 weken. Gewicht -0.7kg bij krachtgroei = recomposition.',
-    tips:'<b>Geen haast naar GZCLP.</b> Zolang lifts elke 1-2 weken stijgen werkt je huidig patroon. Verhoog wel Bench naar 2x per week en train OHP consequenter. Let op gewicht: bij verminderde activiteit snel bijkomen is een signaal om voeding aan te passen.'
+    tips:'<b>Rug traint 2-3x vaker dan borst over de hele periode.</b> Geen schema of keuze - het is wat je van nature aantrekt. OHP is het meest verwaarloosde grote lift. Gewichtsfluctuaties tonen dat voeding niet aangepast wordt aan activiteitsniveau. Zolang lifts stijgen is er geen urgentie, maar borst en OHP worden straks de limiterende factor.'
   }
 };
 
@@ -607,6 +607,8 @@ function parseCSV(text) {
       }
     });
     if (maxW <= 0) return;
+    // DB Bench: both dumbbells combined = x2
+    if (key === 'DB Bench') { maxW = Math.round(maxW * 2 * 10) / 10; totalVol *= 2; }
     if (!raw[key]) raw[key] = {};
     if (!raw[key][row.mydate] || maxW > raw[key][row.mydate].weight) {
       raw[key][row.mydate] = {weight: maxW, volume: Math.round(totalVol)};
@@ -869,21 +871,21 @@ function buildLiftDatasets(start) {
     };
   });
 
-  // Weight line
+  // Weight line — same y axis as lifts, shown as subtle dashed white line
   const wByDate = {};
   DATA.weight.filter(p => p.date >= startStr && p.date <= todayStr).forEach(p => wByDate[p.date] = p.weight);
   datasets.push({
     label: 'Gewicht',
     data: allDates.map(d => wByDate[d] ?? null),
-    borderColor: 'rgba(255,255,255,0.5)',
+    borderColor: 'rgba(255,255,255,0.35)',
     backgroundColor: 'transparent',
-    pointBackgroundColor: 'rgba(255,255,255,0.5)',
+    pointBackgroundColor: 'rgba(255,255,255,0.35)',
     pointBorderColor: 'transparent',
     pointStyle: 'circle',
     pointRadius: allDates.map(d => wByDate[d] !== undefined ? 2 : 0),
     pointHoverRadius: 4,
-    borderWidth: 1.5, tension: 0.5, spanGaps: true, fill: false,
-    yAxisID: 'y2', borderDash: [4,4],
+    borderWidth: 1, tension: 0.5, spanGaps: true, fill: false,
+    borderDash: [4,4],
   });
 
   return {datasets, labels: allDates};
@@ -900,15 +902,19 @@ function computeStats(start) {
   const wDelta = wFirst && wLast ? Math.round((wLast-wFirst)*10)/10 : null;
 
   const prs = {};
+  // Estimate 1RM via Epley ~1.1x working weight (assumes ~5 rep sets)
+  const epley = w => Math.round(w * 1.1 * 10) / 10;
   Object.entries(DATA.lifts).forEach(([key, lift]) => {
     const allInPeriod = lift.points.filter(p => p.date >= startStr && p.date <= todayStr);
     const prPts = allInPeriod.filter(p => p.pr);
     if (!prPts.length) return;
     const firstW = allInPeriod[0]?.weight ?? prPts[0].weight;
     const maxW = Math.max(...prPts.map(p => p.weight));
-    prs[key] = {weight: maxW, firstWeight: firstW, gain: Math.round((maxW-firstW)*10)/10, color: lift.color};
+    const est1RM = epley(maxW);
+    const est1RMFirst = epley(firstW);
+    prs[key] = {weight: maxW, est1RM, firstWeight: firstW, est1RMFirst, gain: Math.round((maxW-firstW)*10)/10, rm_gain: Math.round((est1RM-est1RMFirst)*10)/10, color: lift.color};
   });
-  const top2 = Object.entries(prs).sort((a,b) => b[1].gain - a[1].gain).slice(0,2);
+  const top2 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
   return {td, totalDays, wFirst, wLast, wDelta, prs, top2};
 }
 
@@ -929,7 +935,7 @@ function renderStats(stats) {
     top2El.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:4px 0">Geen PRs in deze periode</div>';
   } else {
     stats.top2.forEach(([key, info]) => {
-      top2El.innerHTML += '<div class="pr-row"><div class="pr-dot" style="background:' + info.color + ';box-shadow:0 0 5px ' + info.color + '"></div><div class="pr-lift">' + key + '</div><div class="pr-vals">' + info.firstWeight + '->' + info.weight + 'kg</div><div class="pr-gain">+' + info.gain + 'kg</div></div>';
+      top2El.innerHTML += '<div class="pr-row"><div class="pr-dot" style="background:' + info.color + ';box-shadow:0 0 5px ' + info.color + '"></div><div class="pr-lift">' + key + '</div><div class="pr-vals" style="font-size:10px;color:var(--muted)">~' + info.est1RM + 'kg 1RM</div><div class="pr-gain">+' + info.rm_gain + 'kg</div></div>';
     });
   }
 }
@@ -940,8 +946,10 @@ function renderNewEx(start) {
   const filtered = DATA.new_exercises.filter(e => e.date >= startStr && e.date <= todayStr);
   const container = document.getElementById('new-ex-container');
   if (!filtered.length) { container.innerHTML = ''; return; }
-  container.innerHTML = '<div style="font-family:\'Space Mono\',monospace;font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:5px;">+ NIEUW (' + filtered.length + ')</div><div class="new-ex-list">' +
-    filtered.map(e => '<div class="new-ex-item"><span>' + e.exercise + '</span><span class="new-ex-date">' + e.date.slice(5).replace('-','/') + '</span></div>').join('') + '</div>';
+  const show = filtered.slice(0, 5);
+  const extra = filtered.length > 5 ? '<div style="color:var(--muted);font-size:10px;padding:3px 0">+ ' + (filtered.length-5) + ' meer</div>' : '';
+  container.innerHTML = '<div style="font-family:\'Space Mono\',monospace;font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:5px;">NIEUW IN PERIODE</div>' +
+    show.map(e => '<div class="new-ex-item"><span>' + e.exercise + '</span><span class="new-ex-date">' + e.date.slice(5).replace('-','/') + '</span></div>').join('') + extra;
 }
 
 function renderAnalysis(start) {
@@ -974,7 +982,7 @@ function renderAnalysis(start) {
   document.getElementById('a-focus').innerHTML    = a.focus;
   document.getElementById('a-results').innerHTML  = a.results;
   document.getElementById('a-evolution').innerHTML = a.evolution;
-  const tipsEl = document.getElementById('a-tips'); if (tipsEl) tipsEl.innerHTML = '';
+  const tipsEl = document.getElementById('a-tips'); if (tipsEl) tipsEl.innerHTML = a.tips || '-';
 
   const fasesEl = document.getElementById('a-fases-container');
   if (overlapping.length >= 2) {
@@ -1014,13 +1022,6 @@ function update(periodDays) {
         y: {
           grid: {color: '#1a1a2e'},
           ticks: {color: '#7b5cff99', font: {size: mobile ? 8 : 9}, callback: v => v + 'kg'},
-          title: {display: true, text: 'WORK', color: '#7b5cff66', font: {family: "'Space Mono',monospace", size: 9}},
-        },
-        y2: {
-          position: 'right', grid: {drawOnChartArea: false},
-          ticks: {color: 'rgba(255,255,255,0.35)', font: {size: mobile ? 8 : 9}, callback: v => v + 'kg'},
-          title: {display: true, text: 'BODY', color: 'rgba(255,255,255,0.25)', font: {family: "'Space Mono',monospace", size: 9}},
-          min: 78, max: 90,
         }
       },
       plugins: {
@@ -1061,7 +1062,7 @@ function update(periodDays) {
   liftDs.forEach((ds, i) => {
     if (ds.label === 'Gewicht') return;
     const hasData = ds.data.some(v => v !== null);
-    const defaultHidden = ds.label === 'DB Bench';
+    const defaultHidden = false;
     if (defaultHidden) liftChart.getDatasetMeta(i).hidden = true;
     const btn = document.createElement('button');
     const active = hasData && !defaultHidden;

@@ -1,0 +1,36 @@
+{
+  "updated": "2026-03-16",
+  "phase": "GZCLP",
+  "squat": {
+    "weight": 70.0,
+    "est1rm": 77.0,
+    "pr": false
+  },
+  "deadlift": {
+    "weight": 77.5,
+    "est1rm": 85.2,
+    "pr": false
+  },
+  "bench": {
+    "weight": 60.0,
+    "est1rm": 66.0,
+    "pr": true
+  },
+  "bodyweight": {
+    "current": 84.6,
+    "delta_10d": 1.2
+  },
+  "gym_days_10d": 3,
+  "days_10d": [
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]
+}
