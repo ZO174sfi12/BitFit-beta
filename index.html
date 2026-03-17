@@ -698,16 +698,19 @@ function parseCSVRow(line) {
 // ── GITHUB FETCH ──
 async function loadFromGitHub() {
   setStatus('SCANNING REPO...');
-  // Strategy 1: GitHub Contents API to find CSV
+  const bust = '?t=' + Date.now();
+
+  // Strategy 1: GitHub Contents API
   try {
-    const res = await fetch(GITHUB_API);
+    const res = await fetch(GITHUB_API + bust, {headers: {'Accept': 'application/vnd.github.v3+json'}});
     if (res.ok) {
       const files = await res.json();
       if (Array.isArray(files)) {
         const csv = files.find(f => f.name.toLowerCase().endsWith('.csv'));
         if (csv) {
           setStatus('LOADING ' + csv.name + '...');
-          const rawRes = await fetch(RAW_BASE + csv.name);
+          const rawUrl = csv.download_url + bust;
+          const rawRes = await fetch(rawUrl);
           if (rawRes.ok) {
             setStatus('PARSING DATA...');
             return parseCSV(await rawRes.text());
@@ -715,39 +718,35 @@ async function loadFromGitHub() {
         }
       }
     }
-  } catch(e) { console.warn('Contents API failed, trying tree:', e); }
+  } catch(e) { console.warn('Contents API:', e.message); }
 
-  // Strategy 2: Git Tree API (works more reliably for public repos)
-  try {
-    const treeRes = await fetch('https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + '/git/trees/HEAD?recursive=1');
-    if (treeRes.ok) {
-      const tree = await treeRes.json();
-      const csvFile = (tree.tree || []).find(f => f.path.toLowerCase().endsWith('.csv'));
-      if (csvFile) {
-        setStatus('LOADING ' + csvFile.path + '...');
-        const rawRes = await fetch(RAW_BASE + csvFile.path);
-        if (rawRes.ok) {
-          setStatus('PARSING DATA...');
-          return parseCSV(await rawRes.text());
-        }
-      }
-    }
-  } catch(e) { console.warn('Tree API failed:', e); }
-
-  // Strategy 3: Try common naming patterns directly
-  const year = new Date().getFullYear();
+  // Strategy 2: jsDelivr CDN (bypasses CORS issues with raw.githubusercontent)
+  const jsdelivr = 'https://cdn.jsdelivr.net/gh/' + GITHUB_USER + '/' + GITHUB_REPO + '/';
   const candidates = [];
-  // Try last 30 days worth of date patterns
-  for (let i = 0; i <= 30; i++) {
+  for (let i = 0; i <= 60; i++) {
     const d = new Date(); d.setDate(d.getDate() - i);
     const ds = d.toISOString().slice(0,10).replace(/-/g,'');
     candidates.push('scottygambino_' + ds + '.csv');
     candidates.push('scottygambino_' + ds + '_.csv');
     candidates.push('scottygambino_' + ds + '_1_.csv');
+    candidates.push('scottygambino_' + ds + '__1_.csv');
   }
+
+  // Try jsDelivr first (better CORS support)
   for (const name of candidates) {
     try {
-      const r = await fetch(RAW_BASE + name);
+      const r = await fetch(jsdelivr + name);
+      if (r.ok) {
+        setStatus('LOADING ' + name + '...');
+        return parseCSV(await r.text());
+      }
+    } catch(e) {}
+  }
+
+  // Strategy 3: raw.githubusercontent with no-cors workaround
+  for (const name of candidates) {
+    try {
+      const r = await fetch(RAW_BASE + name + bust);
       if (r.ok) {
         setStatus('LOADING ' + name + '...');
         return parseCSV(await r.text());
