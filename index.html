@@ -104,11 +104,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">84.6</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">—</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-03-16</span>
+        <span class="meta-value" style="color:var(--muted)" id="hdr-export">—</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -154,6 +154,10 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
           <div style="display:flex;align-items:baseline;gap:3px;">
             <span class="stat-value" id="s-gymdays">—</span>
             <span style="font-family:monospace;color:var(--muted);font-size:11px" id="s-totaldays"></span>
+          </div>
+          <div style="margin-top:8px;">
+            <div style="font-family:monospace;font-size:7px;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">ACTIVITEIT 10D</div>
+            <div id="act-dots" style="display:flex;gap:4px;align-items:center;"></div>
           </div>
         </div>
         <div class="stat-card">
@@ -528,6 +532,35 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
 });
+// Dynamic header: weight + export date from DATA
+(function() {
+  const lastW = DATA.weight.length ? DATA.weight[DATA.weight.length - 1] : null;
+  if (lastW) {
+    document.getElementById('hdr-weight').textContent = lastW.weight;
+  }
+  const lastActive = DATA.all_active_days.length ? DATA.all_active_days[DATA.all_active_days.length - 1] : TODAY.toISOString().slice(0,10);
+  document.getElementById('hdr-export').textContent = lastActive;
+
+  // Activity dots: last 10 days fixed to TODAY
+  const activeSet = new Set(DATA.all_active_days);
+  const dotsEl = document.getElementById('act-dots');
+  for (let i = 9; i >= 0; i--) {
+    const d = new Date(TODAY); d.setDate(d.getDate() - i);
+    const dStr = d.toISOString().slice(0, 10);
+    const on = activeSet.has(dStr);
+    const day = d.toLocaleDateString('nl-NL', {weekday:'narrow'});
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:2px;';
+    const dot = document.createElement('div');
+    dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:' + (on ? '#7b5cff' : '#1c1c30') + ';' + (on ? 'box-shadow:0 0 5px #7b5cff88;' : '');
+    const lbl = document.createElement('div');
+    lbl.style.cssText = 'font-family:monospace;font-size:6px;color:' + (on ? '#7b5cff99' : '#2a2a3a') + ';';
+    lbl.textContent = day;
+    col.appendChild(dot);
+    col.appendChild(lbl);
+    dotsEl.appendChild(col);
+  }
+})();
 update(30);
 </script>
 </body>
