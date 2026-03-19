@@ -32,28 +32,29 @@ if (!stats) {
 
   const bit = header.addText("BIT");
   bit.textColor = new Color("#7b5cff");
-  bit.font = Font.boldSystemFont(13);
+  bit.font = Font.boldSystemFont(15);
   const fit = header.addText("FIT");
   fit.textColor = new Color("#00e5ff");
-  fit.font = Font.boldSystemFont(13);
+  fit.font = Font.boldSystemFont(15);
   header.addSpacer(6);
   const phaseEl = header.addText(stats.phase);
   phaseEl.textColor = new Color("#00e5ff");
-  phaseEl.font = Font.boldSystemFont(9);
+  phaseEl.font = Font.boldSystemFont(10);
   header.addSpacer();
   const dateEl = header.addText(stats.updated.slice(5).replace("-", "/"));
   dateEl.textColor = new Color("#454560");
-  dateEl.font = Font.systemFont(9);
+  dateEl.font = Font.systemFont(10);
 
   w.addSpacer(10);
 
   // ROW 1: 5 lifts evenly spaced
+  const yr = stats.year_records || {};
   const LIFTS = [
-    {label:"SQ",  data: stats.squat,    color:"#b388ff", muscle:"Benen"},
-    {label:"DL",  data: stats.deadlift, color:"#ffd600", muscle:"Rug"},
-    {label:"BP",  data: stats.bench,    color:"#64b5f6", muscle:"Borst"},
-    {label:"OHP", data: stats.ohp,      color:"#00ffb3", muscle:"Schouders"},
-    {label:"DIP", data: stats.dip,      color:"#f48fb1", muscle:"Triceps"},
+    {label:"SQ",  data: stats.squat,    color:"#b388ff", muscle:"Benen",      rec: yr.squat},
+    {label:"DL",  data: stats.deadlift, color:"#ffd600", muscle:"Rug",        rec: yr.deadlift},
+    {label:"BP",  data: stats.bench,    color:"#64b5f6", muscle:"Borst",      rec: yr.bench},
+    {label:"OHP", data: stats.ohp,      color:"#00ffb3", muscle:"Schouders",  rec: yr.ohp},
+    {label:"DIP", data: stats.dip,      color:"#f48fb1", muscle:"Triceps",    rec: yr.dip},
   ];
 
   const liftRow = w.addStack();
@@ -68,8 +69,8 @@ if (!stats) {
 
     // Label
     const lbl = cell.addText(lift.label);
-    lbl.textColor = new Color("#454560");
-    lbl.font = Font.boldSystemFont(7);
+    lbl.textColor = new Color("#555575");
+    lbl.font = Font.boldSystemFont(9);
     lbl.centerAlignText();
     cell.addSpacer(2);
 
@@ -77,8 +78,21 @@ if (!stats) {
     const wt = lift.data ? lift.data.weight + "kg" : "-";
     const wtEl = cell.addText(wt);
     wtEl.textColor = new Color(lift.color);
-    wtEl.font = Font.boldSystemFont(15);
+    wtEl.font = Font.boldSystemFont(17);
     wtEl.centerAlignText();
+    cell.addSpacer(2);
+
+    // Year record (dim, only if different from current)
+    const recW = lift.rec ? lift.rec.weight : null;
+    const isCurrent = lift.data && recW !== null && lift.data.weight === recW;
+    const recTxt = recW !== null ? (isCurrent ? "▲" : recW + "kg") : "";
+    if (recTxt) {
+      cell.addSpacer(1);
+      const recEl = cell.addText(recTxt);
+      recEl.textColor = isCurrent ? new Color(lift.color + "99") : new Color("#454580");
+      recEl.font = Font.systemFont(9);
+      recEl.centerAlignText();
+    }
     cell.addSpacer(2);
 
     // Rest days
@@ -87,14 +101,14 @@ if (!stats) {
     const rdColor = rd === null ? "#454560" : rd <= 1 ? "#00ffb3" : rd <= 2 ? "#ffd600" : "#ff3d6b";
     const rdEl = cell.addText(rd !== null ? rd + "d" : "-");
     rdEl.textColor = new Color(rdColor);
-    rdEl.font = Font.boldSystemFont(10);
+    rdEl.font = Font.boldSystemFont(12);
     rdEl.centerAlignText();
 
     if (i < LIFTS.length - 1) {
       liftRow.addSpacer();
       const sep = liftRow.addStack();
       sep.backgroundColor = new Color("#1c1c2a");
-      sep.size = new Size(1, 44);
+      sep.size = new Size(1, 60);
     }
   });
 
@@ -119,20 +133,20 @@ if (!stats) {
   bwBlock.layoutVertically();
 
   const bwLbl = bwBlock.addText("GEWICHT");
-  bwLbl.textColor = new Color("#454560");
-  bwLbl.font = Font.boldSystemFont(7);
+  bwLbl.textColor = new Color("#555575");
+  bwLbl.font = Font.boldSystemFont(8);
   bwBlock.addSpacer(2);
 
   const bwVal = bwBlock.addText(stats.bodyweight.current + " kg");
   bwVal.textColor = Color.white();
-  bwVal.font = Font.boldSystemFont(18);
+  bwVal.font = Font.boldSystemFont(20);
   bwBlock.addSpacer(1);
 
   const delta = stats.bodyweight.delta_10d;
   const deltaLabel = stats.bodyweight.delta_label || ((delta >= 0 ? '+' : '') + delta + " (10d)");
   const dEl = bwBlock.addText(deltaLabel);
   dEl.textColor = delta <= 0 ? new Color("#00ffb3") : new Color("#ff3d6b");
-  dEl.font = Font.boldSystemFont(9);
+  dEl.font = Font.boldSystemFont(10);
 
   // Divider
   const div = bottomRow.addStack();
@@ -144,8 +158,8 @@ if (!stats) {
   gymBlock.layoutVertically();
 
   const gymLbl = gymBlock.addText("ACTIVITEIT 10D");
-  gymLbl.textColor = new Color("#454560");
-  gymLbl.font = Font.boldSystemFont(7);
+  gymLbl.textColor = new Color("#555575");
+  gymLbl.font = Font.boldSystemFont(8);
   gymBlock.addSpacer(4);
 
   const dotsRow = gymBlock.addStack();
@@ -155,15 +169,15 @@ if (!stats) {
   const days = stats.days_10d || [];
   for (let i = 0; i < 10; i++) {
     const on = days[i] === true;
-    const dot = dotsRow.addText(on ? "*" : ".");
-    dot.textColor = on ? new Color("#7b5cff") : new Color("#1c1c30");
-    dot.font = on ? Font.boldSystemFont(13) : Font.systemFont(13);
+    const dot = dotsRow.addText(on ? "●" : "○");
+    dot.textColor = on ? new Color("#7b5cff") : new Color("#2a2a40");
+    dot.font = on ? Font.boldSystemFont(14) : Font.systemFont(14);
   }
 
   gymBlock.addSpacer(2);
   const cntEl = gymBlock.addText(stats.gym_days_10d + " van 10");
   cntEl.textColor = new Color("#7b5cff");
-  cntEl.font = Font.boldSystemFont(9);
+  cntEl.font = Font.boldSystemFont(10);
 }
 
 Script.setWidget(w);

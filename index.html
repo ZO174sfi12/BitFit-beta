@@ -168,6 +168,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="pr-section-label">&#9658; TOP 3 GESCHATTE 1RM</div>
       <div id="pr-top3"></div>
+      <div class="pr-section-label" style="margin-top:12px;">&#9650; JAAR RECORDS 2026</div>
+      <div id="yr-records"></div>
     </div>
   </div>
 
@@ -529,6 +531,29 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
 });
+// JAAR RECORDS: best actual weight per lift YTD (computed from DATA)
+(function() {
+  const LIFT_COLORS = {'Squat':'#b388ff','Deadlift':'#ffd600','Bench':'#64b5f6','OHP':'#00ffb3','DIP-BW':'#f48fb1'};
+  const LIFT_SHOW = ['Squat','Deadlift','Bench','OHP','DIP-BW'];
+  const el = document.getElementById('yr-records');
+  if (!el) return;
+  el.innerHTML = '';
+  LIFT_SHOW.forEach(key => {
+    const lift = DATA.lifts[key];
+    if (!lift || !lift.points.length) return;
+    const best = lift.points.reduce((a, b) => b.weight > a.weight ? b : a);
+    const isCurrent = lift.points[lift.points.length-1].weight === best.weight;
+    const color = LIFT_COLORS[key] || '#7b5cff';
+    const dateShort = best.date.slice(5).replace('-','/');
+    el.innerHTML += '<div class="pr-row">'
+      + '<div class="pr-dot" style="background:' + color + ';box-shadow:0 0 5px ' + color + '"></div>'
+      + '<div class="pr-lift">' + key + '</div>'
+      + '<div style="font-family:monospace;font-size:13px;font-weight:700;color:' + color + ';text-shadow:0 0 8px ' + color + '55">' + best.weight + ' kg</div>'
+      + '<div style="font-family:monospace;font-size:9px;color:var(--muted);margin-left:4px">' + dateShort + (isCurrent ? ' <span style="color:var(--green)">●</span>' : '') + '</div>'
+      + '</div>';
+  });
+})();
+
 // Dynamic header: weight + export date from DATA
 (function() {
   const lastW = DATA.weight.length ? DATA.weight[DATA.weight.length - 1] : null;

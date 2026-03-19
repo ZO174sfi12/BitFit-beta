@@ -89,5 +89,27 @@
       "last": "2026-03-18",
       "rest": 1
     }
+  },
+  "year_records": {
+    "squat": {
+      "weight": 80.0,
+      "date": "2026-03-06"
+    },
+    "deadlift": {
+      "weight": 80.0,
+      "date": "2026-02-04"
+    },
+    "bench": {
+      "weight": 60.0,
+      "date": "2026-03-14"
+    },
+    "ohp": {
+      "weight": 45.0,
+      "date": "2026-03-18"
+    },
+    "dip": {
+      "weight": 84.6,
+      "date": "2026-03-16"
+    }
   }
 }
