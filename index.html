@@ -104,11 +104,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">84.6</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">84.4</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-03-16</span>
+        <span class="meta-value" style="color:var(--muted)">2026-03-19</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -209,29 +209,29 @@ const PHASES = [
 
 const PHASE_ANALYSIS = {
   'ORIENTATIE': {
-    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes</span> dominant (~58% volume). Geen structurele verticale push, geen barbell. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#00ffb3">Schouders/OHP</span> volledig afwezig &mdash; Borst zonder tegenpool.',
-    evolution:'<b>Methode: verkennende oriëntatie.</b> Machines en dumbbells als eerste contact. Deadlift (17/1), Bench (20/1), Squat (26/1) in de laatste 2 weken van de fase &mdash; van machine naar barbell in 10 dagen. Hoog leereffect, lage structuur.',
-    tips:'<b>Rug volledig afwezig in eerste 2 weken.</b> Cable Face Pull is geen vervanging voor Lat PD of Row. Bench slechts 1x in 4 weken getraind terwijl Benen en Glutes 8+ sessies kregen &mdash; patroon van bovenlichaam-verwaarlozing start hier al.'
+    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#b388ff">Benen</span> (40%), <span style="color:#ce93d8">Glutes</span> (20%), <span style="color:#64b5f6">Borst</span> (17%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#f48fb1">Triceps</span> volledig afwezig.',
+    evolution:'<b>15 sessies in 31 dagen (48% densiteit). 6 PRs.</b> Squat geïntroduceerd (01/26, 60.0kg) &mdash; Deadlift geïntroduceerd (01/17, 60.0kg) &mdash; Bench geïntroduceerd (01/20, 45.0kg) &mdash; DB Bench x2: 40.0→48.0kg (+8.0kg). Gewicht: 84.2→82.1kg (-2.1kg).',
+    tips:'<b>OHP afwezig in deze fase.</b> Verticale push ontbreekt bij aanwezige horizontale push.'
   },
   'BARBELL INTRO': {
-    focus:'<b style="color:var(--yellow)">IN OPBOUW</b> &mdash; <span style="color:#64b5f6">Borst</span> (Bench + DB), <span style="color:#ff8a65">Rug</span> (DL + Lat PD), <span style="color:#b388ff">Benen</span> (Squat) actief. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#00ffb3">OHP</span> &mdash; verticale push nog steeds afwezig op dag 32.',
-    evolution:'<b>Methode: snelle barbell-integratie.</b> Squat (2/2), Borst-dag (3/2), DL+Rug (4/2) &mdash; alle grote bewegingen in 3 dagen ingepland. Eerste keer push/pull/legs structuur zichtbaar. Elke sessie een eerste contact, alle sets zijn leerinvestering.',
-    tips:'<b>OHP ontbreekt al 5 weken.</b> Bench wordt 1x per 2 weken getraind terwijl Squat nu 3x draait. Verticale push en pull zijn structureel ondervertegenwoordigd. Bovenlichaam opbouw loopt al direct achter.'
+    focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: <span style="color:#b388ff">Benen</span> (37%), <span style="color:#64b5f6">Borst</span> (33%), <span style="color:#ce93d8">Glutes</span> (18%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ffd600">Rug</span>, <span style="color:#00ffb3">Schouders</span> volledig afwezig.',
+    evolution:'<b>3 sessies in 3 dagen (100% densiteit). 2 PRs.</b> Squat geïntroduceerd (02/02, 70.0kg) &mdash; DB Bench x2 geïntroduceerd (02/03, 48.0kg). Gewicht: 81.6→81.6kg (+0.0kg).',
+    tips:'<b>Bench volledig afwezig terwijl Squat 1x getraind.</b> Bovenlichaam push loopt achter.'
   },
   'BARBELL 5x5': {
-    focus:'<b style="color:var(--green)">MEEST GEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes</span>, <span style="color:#ff8a65">Rug</span>, <span style="color:#64b5f6">Borst</span>, <span style="color:#00ffb3">OHP + Dips</span> allemaal aanwezig. <b style="color:var(--yellow)">Zwakke schakel:</b> Rug/Borst verhouding ~2:1 &mdash; Deadlift + Rows + Lat PD overschaduwt Bench.',
-    evolution:'<b>Methode: volume-explosie met brede integratie.</b> OHP (10/2), Dips (10/2), RDL (13/2), Ab Wheel (25/2) ingevoerd. 17+ sessies in 22 dagen &mdash; drukste periode. Squat piek 75kg, DL piek est1RM 96kg (11/2). Intuïtief trainen zonder deload.',
-    tips:'<b>17 sessies in 22 dagen met zware DL en Squat = overreaching.</b> Verkoudheid direct erna is statistische correlatie, geen toeval. DB Bench piek (60kg op 10/2) daarna terug naar 44-48kg &mdash; volume zonder recuperatie leidt tot regressie bij accessoires.'
+    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (43%), <span style="color:#64b5f6">Borst</span> (20%), <span style="color:#00ffb3">Schouders</span> (16%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#80cbc4">Biceps</span> ondervertegenwoordigd (1%).',
+    evolution:'<b>7 sessies in 8 dagen (88% densiteit). 6 PRs.</b> Squat geïntroduceerd (03/16, 70.0kg) &mdash; Deadlift geïntroduceerd (03/17, 80.0kg) &mdash; Bench geïntroduceerd (03/14, 60.0kg) &mdash; DB Bench x2 geïntroduceerd (03/18, 52.0kg). Gewicht: 82.8→84.4kg (+1.6kg).',
+    tips:'<b>Rug/Borst verhouding 43%/20%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
   },
   'VERKOUDEN': {
-    focus:'<b style="color:var(--red)">BEPERKTE DATA</b> &mdash; Training doorgespeeld tijdens herstel. <span style="color:#b388ff">Benen</span> en <span style="color:#ff8a65">Rug</span> bij terugkeer. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:var(--red)">gewicht +1.3kg</span> tijdens inactiviteit onthult structureel overschot.',
-    evolution:'<b>Methode: doorgaan waar mogelijk.</b> Squat piek 80kg x5 (06/3), Bench PR 60kg en OHP PR 42.5kg al op 14/3 &mdash; kracht volledig behouden na pauze. Korte onderbreking heeft geen meetbaar negatief effect op 1RM. Gewicht steeg van 82.2 naar 83.5kg.',
-    tips:'<b>+1.3kg in 8 ziektedagen = calorie-overschot dat normaal gecompenseerd wordt door gym + kickboxing.</b> Dat betekent: als jij traint, eet je in onderhoud. Als je stopt, eet je in surplus. Sturing van inname is onafhankelijk van activiteit nog niet aanwezig.'
+    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#b388ff">Benen</span> (47%), <span style="color:#ffd600">Rug</span> (41%), <span style="color:#ce93d8">Glutes</span> (12%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#64b5f6">Borst</span>, <span style="color:#00ffb3">Schouders</span> volledig afwezig.',
+    evolution:'<b>6 sessies in 11 dagen (55% densiteit). 2 PRs.</b> Squat: 77.5→80.0kg (+2.5kg) &mdash; Deadlift geïntroduceerd (03/03, 77.5kg) &mdash; Lat PD geïntroduceerd (03/03, 40.0kg). Gewicht: 82.6→83.5kg (+0.9kg).',
+    tips:'<b>Bench volledig afwezig terwijl Squat 2x getraind.</b> Bovenlichaam push loopt achter.'
   },
   'multi': {
-    focus:'<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b> &mdash; <span style="color:#b388ff">Benen/Glutes ~38%</span>, <span style="color:#ff8a65">Rug ~28%</span>, <span style="color:#64b5f6">Borst ~16%</span>. <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#00ffb3">OHP</span> meest verwaarloosde grote lift &mdash; slechts 4 sessies in 77 dagen, nu eindelijk in progressie.',
-    evolution:'<b>Methode: van verkenning naar 5x5 structuur (ORIENTATIE → BARBELL INTRO → BARBELL 5x5 → VERKOUDEN → BARBELL 5x5).</b> Squat van 60→80kg piek, DL est1RM van 76→96kg, Bench van 45→60kg, OHP van 40→45kg. 77 dagen, 50 actieve dagen (65%). Body recomposition: krachtgrenzen gestegen terwijl gewicht stabiel bleef tot mrt.',
-    tips:'<b>Bench traint 3x tegenover Squat 9x over de volledige periode.</b> OHP heeft minder totale sessies dan Dips. Rug domineert het volume structureel. Zolang lifts stijgen is het urgent maar beheerst: voeg een vaste Bench-dag toe aan het schema of Borst zal straks de zwakste schakel zijn in je compound progressie.'
+    focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (31%), <span style="color:#b388ff">Benen</span> (27%), <span style="color:#ce93d8">Glutes</span> (17%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#80cbc4">Biceps</span> ondervertegenwoordigd (1%).',
+    evolution:'<b>51 sessies in 79 dagen (65% densiteit). 26 PRs.</b> Squat: 60.0→70.0kg (+10.0kg) &mdash; Deadlift: 60.0→80.0kg (+20.0kg) &mdash; Bench: 45.0→60.0kg (+15.0kg) &mdash; DB Bench x2: 40.0→52.0kg (+12.0kg). Gewicht: 84.2→84.4kg (+0.2kg).',
+    tips:'<b>Squat 9x vs Bench 3x.</b> Consistentie in bovenlichaam push ontbreekt. &mdash; <b>Rug/Borst verhouding 31%/14%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
   }
 };
 
