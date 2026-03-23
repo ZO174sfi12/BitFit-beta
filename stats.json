@@ -1,9 +1,9 @@
 {
-  "updated": "2026-03-20",
+  "updated": "2026-03-23",
   "phase": "BARBELL 5x5",
   "squat": {
-    "weight": 70.0,
-    "est1rm": 81.7,
+    "weight": 82.5,
+    "est1rm": 90.8,
     "pr": false
   },
   "deadlift": {
@@ -37,63 +37,63 @@
     "pr": false
   },
   "bodyweight": {
-    "current": 84.4,
+    "current": 83.9,
     "recent_avg": 84.13,
-    "old_avg": 83.45,
-    "delta_10d": 0.68,
-    "delta_label": "+0.68 (3d gem)"
+    "old_avg": 83.38,
+    "delta_10d": 0.75,
+    "delta_label": "+0.75 (3d gem)"
   },
-  "gym_days_10d": 7,
+  "gym_days_10d": 8,
   "days_10d": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
     false,
     false,
     true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    false
+    true
   ],
   "muscle_rest": {
     "Biceps": {
       "last": "2026-03-13",
-      "rest": 7
-    },
-    "Benen": {
-      "last": "2026-03-16",
-      "rest": 4
+      "rest": 10
     },
     "Glutes": {
       "last": "2026-03-16",
-      "rest": 4
+      "rest": 7
     },
     "Rug": {
       "last": "2026-03-17",
-      "rest": 3
+      "rest": 6
     },
     "Core": {
       "last": "2026-03-17",
-      "rest": 3
+      "rest": 6
     },
     "Schouders": {
       "last": "2026-03-18",
-      "rest": 2
+      "rest": 5
     },
     "Borst": {
       "last": "2026-03-18",
-      "rest": 2
+      "rest": 5
     },
     "Triceps": {
       "last": "2026-03-18",
-      "rest": 2
+      "rest": 5
+    },
+    "Benen": {
+      "last": "2026-03-23",
+      "rest": 0
     }
   },
   "year_records": {
     "squat": {
-      "weight": 80.0,
-      "date": "2026-03-06"
+      "weight": 82.5,
+      "date": "2026-03-23"
     },
     "deadlift": {
       "weight": 80.0,
