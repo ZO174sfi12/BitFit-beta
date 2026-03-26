@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-23",
+  "updated": "2026-03-26",
   "phase": "BARBELL 5x5",
   "squat": {
     "weight": 82.5,
@@ -39,55 +39,55 @@
   "bodyweight": {
     "current": 83.9,
     "recent_avg": 84.13,
-    "old_avg": 83.38,
-    "delta_10d": 0.75,
-    "delta_label": "+0.75 (3d gem)"
+    "old_avg": 83.96,
+    "delta_10d": 0.17,
+    "delta_label": "+0.17 (3d gem)"
   },
-  "gym_days_10d": 8,
+  "gym_days_10d": 5,
   "days_10d": [
     true,
     true,
     true,
-    true,
+    false,
+    false,
     true,
     true,
     false,
     false,
-    true,
-    true
+    false
   ],
   "muscle_rest": {
     "Biceps": {
       "last": "2026-03-13",
-      "rest": 10
+      "rest": 13
     },
     "Glutes": {
       "last": "2026-03-16",
-      "rest": 7
+      "rest": 10
     },
     "Rug": {
       "last": "2026-03-17",
-      "rest": 6
+      "rest": 9
     },
     "Core": {
       "last": "2026-03-17",
-      "rest": 6
+      "rest": 9
     },
     "Schouders": {
       "last": "2026-03-18",
-      "rest": 5
+      "rest": 8
     },
     "Borst": {
       "last": "2026-03-18",
-      "rest": 5
+      "rest": 8
     },
     "Triceps": {
       "last": "2026-03-18",
-      "rest": 5
+      "rest": 8
     },
     "Benen": {
       "last": "2026-03-23",
-      "rest": 0
+      "rest": 3
     }
   },
   "year_records": {
