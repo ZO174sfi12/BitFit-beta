@@ -195,16 +195,15 @@ const DATA = {"lifts":{"Squat":{"color":"#b388ff","name":"Squat","points":[{"dat
 const TODAY = new Date('2026-03-26');
 
 const PHASES = [
-  {label:'ORIENTATIE',    short:'ORI', start:'2026-01-03',end:'2026-01-31',color:'#7c6fff',
-   desc:'<b>3 jan - 15 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell.'},
-  {label:'BARBELL INTRO', short:'BB+', start:'2026-02-01',end:'2026-02-03',color:'#00e5ff',
-   desc:'<b>17 jan - 3 feb</b><br>Deadlift, Bench, Squat ingevoerd. Techniek op lichte gewichten.'},
-  {label:'BARBELL 5x5',   short:'5x5', start:'2026-02-04',end:'2026-02-25',color:'#ff3d6b',
-   desc:'<b>4 feb - 25 feb</b><br>17 sessies in 22 dagen. Squat 60-75kg, DL naar 80kg.'},
-  {label:'VERKOUDEN',     short:'ZK',  start:'2026-03-02',end:'2026-03-12',color:'#ffaa00',
-   desc:'<b>2 mrt - 12 mrt</b><br>Lage frequentie door ziekte. Kracht behouden.'},
-  {label:'BARBELL 5x5',   short:'5x5', start:'2026-03-13',end:'2026-12-31',color:'#ff3d6b',
-   desc:'<b>13 mrt - heden</b><br>Terugkeer na verkoudheid. Verderzetten van 5x5 aanpak.'},
+  {label:"ORIENTATIE",short:"ORI",start:"2026-01-01",end:"2026-01-31",color:"#7c6fff",track:0,desc:"<b>1 jan - 31 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell."},
+  {label:"BARBELL INTRO",short:"BB+",start:"2026-02-01",end:"2026-02-03",color:"#00e5ff",track:0,desc:"<b>1 feb - 3 feb</b><br>Deadlift, Bench, Squat ingevoerd. Techniek op lichte gewichten."},
+  {label:"BARBELL 5x5",short:"5x5",start:"2026-02-04",end:"2026-02-25",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
+  {label:"VERKOUDEN",short:"ZK",start:"2026-03-02",end:"2026-03-12",color:"#ffaa00",track:1,desc:"<b>Verkouden</b><br>Lage frequentie door ziekte."},
+  {label:"BARBELL 5x5",short:"5x5",start:"2026-03-13",end:"2026-03-23",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
+  {label:"VERKOUDEN",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Verkouden</b><br>Lage frequentie door ziekte."},
+  {label:"BARBELL 5x5",short:"5x5",start:"2026-03-26",end:"2026-04-02",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
+  {label:"OPERATIE",short:"OP",start:"2026-04-03",end:"2099-12-31",color:"#ff3d6b",track:1,desc:"<b>3 apr</b><br>Operatie. Herstelperiode."},
+  {label:"CREATINE 3G",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>3g creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
 
 const PHASE_ANALYSIS = {
@@ -231,6 +230,11 @@ const PHASE_ANALYSIS = {
   'OPERATIE': {
     focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: . Brede verdeling over alle groepen.',
     evolution:'<b>0 sessies in -7 dagen (0% densiteit). geen PRs.</b> ',
+    tips:'Geen kritische opmerkingen voor deze fase (0 sessies).'
+  },
+  'CREATINE 3G': {
+    focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: . Brede verdeling over alle groepen.',
+    evolution:'<b>0 sessies in 3 dagen (0% densiteit). geen PRs.</b> ',
     tips:'Geen kritische opmerkingen voor deze fase (0 sessies).'
   },
   'multi': {
@@ -280,6 +284,7 @@ const phaseBandsPlugin = {
     const labels = opts.labels, total = labels.length;
     if (total < 2) return;
     const slotW = (right - left) / total;
+    const bandH = 16, gap = 2;
     _phaseBandHitAreas = [];
     opts.phases.forEach(phase => {
       const fi = labels.findIndex(d => d >= phase.start);
@@ -287,9 +292,11 @@ const phaseBandsPlugin = {
       const li = lr === -1 ? -1 : total - 1 - lr;
       if (fi === -1 || li === -1 || fi > li) return;
       const x1 = left + fi * slotW, x2 = left + (li+1) * slotW;
-      const bandH = 18, y = bottom + 2, bw = x2 - x1;
+      const track = phase.track || 0;
+      const y = bottom + 2 + track * (bandH + gap);
+      const bw = x2 - x1;
       ctx.save();
-      ctx.fillStyle = phase.color + '25'; ctx.fillRect(x1, y, bw, bandH);
+      ctx.fillStyle = phase.color + '22'; ctx.fillRect(x1, y, bw, bandH);
       ctx.strokeStyle = phase.color + 'aa'; ctx.lineWidth = 1;
       ctx.shadowColor = phase.color; ctx.shadowBlur = 3;
       ctx.beginPath(); ctx.moveTo(x1,y); ctx.lineTo(x2,y); ctx.stroke(); ctx.shadowBlur = 0;
@@ -298,9 +305,13 @@ const phaseBandsPlugin = {
       ctx.font = "700 8px 'Space Mono', monospace";
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(lbl, x1 + bw/2, y + bandH/2); ctx.shadowBlur = 0;
-      ctx.strokeStyle = phase.color + '33'; ctx.setLineDash([3,3]);
-      ctx.beginPath(); ctx.moveTo(x1,top); ctx.lineTo(x1,bottom); ctx.stroke();
-      ctx.setLineDash([]); ctx.restore();
+      // verticale markering alleen op track 0
+      if (track === 0) {
+        ctx.strokeStyle = phase.color + '33'; ctx.setLineDash([3,3]);
+        ctx.beginPath(); ctx.moveTo(x1,top); ctx.lineTo(x1,bottom); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      ctx.restore();
       _phaseBandHitAreas.push({phase, x1, x2, y, bandH});
     });
   }
@@ -327,6 +338,11 @@ function buildLiftDatasets(start) {
   const allDatesSet = new Set();
   Object.values(DATA.lifts).forEach(lift => lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date)));
   DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date));
+  // Altijd uitbreiden tot het laatste weegpunt — ook als dat na de laatste trainingssessie valt
+  // (bv. na operatie: geen training meer maar wel dagelijks wegen)
+  const allWSorted = DATA.weight.slice().sort((a,b) => a.date.localeCompare(b.date));
+  const lastWDate = allWSorted.length ? allWSorted[allWSorted.length-1].date : null;
+  if (lastWDate && lastWDate >= s) allDatesSet.add(lastWDate);
   const allDates = Array.from(allDatesSet).sort();
   const datasets = Object.entries(DATA.lifts).map(([key, lift]) => {
     const byDate = {};
@@ -345,7 +361,8 @@ function buildLiftDatasets(start) {
     };
   });
   const wByDate = {};
-  DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => wByDate[p.date] = p.weight);
+  // Inclusief het laatste weegpunt ook als dat na de periode-grens t valt
+  DATA.weight.filter(p => p.date >= s).forEach(p => wByDate[p.date] = p.weight);
   datasets.push({
     label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
     borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
