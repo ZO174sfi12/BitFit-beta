@@ -100,7 +100,10 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 
 <header>
   <div class="header-inner">
-    <div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span> <span class="logo-beta">BETA</span></div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span> <span class="logo-beta">BETA</span></div>
+      <a href="supplement-tracker.html" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:3px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--cyan)';this.style.borderColor='var(--cyan)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">BIT<span style="color:var(--green)">SUPP</span></a>
+    </div>
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
@@ -437,7 +440,8 @@ function renderNewEx(start) {
 
 function renderAnalysis(start) {
   const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
-  const overlapping = PHASES.filter(p => p.start <= t && p.end >= s);
+  // Alleen trainingsfases (track 0) bepalen welke analyse getoond wordt
+  const overlapping = PHASES.filter(p => (p.track || 0) === 0 && p.start <= t && p.end >= s);
   let a;
   if (overlapping.length === 1) { a = PHASE_ANALYSIS[overlapping[0].label] || PHASE_ANALYSIS['multi']; }
   else if (!overlapping.length) { a = PHASE_ANALYSIS['multi']; }
