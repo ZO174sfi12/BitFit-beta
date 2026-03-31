@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Supplement Tracker – Bert</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #161a22;
+      --card: #1e2330;
+      --border: #2a3045;
+      --accent: #f97316;
+      --accent2: #3b82f6;
+      --green: #22c55e;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    header h1 span { color: var(--accent); }
+    #date-display {
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 5px;
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 8px 20px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── Supplement Cards (Today) ── */
+    .supplement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .supp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: border-color 0.2s;
+    }
+    .supp-card.logged { border-color: var(--green); }
+
+    .supp-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .supp-name { font-weight: 700; font-size: 1rem; }
+    .supp-brand { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .supp-badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      background: rgba(249,115,22,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(249,115,22,0.3);
+    }
+
+    .supp-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .supp-info strong { color: var(--text); }
+
+    .supp-controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .control-group label {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .control-group input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+    }
+    .control-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* ── Time buttons ── */
+    .time-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 2px;
+    }
+    .time-btn {
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .time-btn:hover { border-color: var(--accent); color: var(--text); }
+    .time-btn.selected {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .log-btn {
+      width: 100%;
+      padding: 9px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+    }
+    .log-btn:hover { background: #ea6c0a; }
+    .log-btn:active { transform: scale(0.98); }
+    .log-btn.logged-state {
+      background: var(--green);
+    }
+    .log-btn.logged-state:hover { background: #16a34a; }
+
+    /* ── Day summary bar ── */
+    .day-summary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .day-summary span { font-size: 0.9rem; color: var(--muted); }
+    .day-summary strong { color: var(--text); }
+    .progress-bar {
+      flex: 1;
+      min-width: 100px;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── Notes ── */
+    .day-notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .day-notes label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .day-notes textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 7px;
+      padding: 10px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 70px;
+    }
+    .day-notes textarea:focus { outline: none; border-color: var(--accent); }
+
+    /* ── Overview tab ── */
+    .overview-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .overview-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .overview-card .brand-line {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .overview-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .overview-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .overview-table td:first-child { color: var(--muted); width: 40%; }
+    .overlap-note {
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #93c5fd;
+      margin-top: 16px;
+    }
+    .overlap-note strong { color: #60a5fa; }
+
+    /* ── History tab ── */
+    .history-toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .history-toolbar input[type=date] {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+    }
+    .export-btn {
+      padding: 8px 16px;
+      background: var(--accent2);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: background 0.18s;
+      margin-left: auto;
+    }
+    .export-btn:hover { background: #2563eb; }
+
+    .history-table-wrap { overflow-x: auto; }
+    table.history-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    table.history-tbl th {
+      background: var(--surface);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    table.history-tbl td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    table.history-tbl tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge-unit {
+      font-size: 0.75rem;
+      background: rgba(249,115,22,0.12);
+      color: var(--accent);
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .no-data {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px;
+      font-size: 0.9rem;
+    }
+
+    /* ── Delete button ── */
+    .del-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .del-btn:hover { color: #ef4444; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>💊 Supplement <span>Tracker</span></h1>
+    <div style="font-size:0.78rem;color:var(--muted);margin-top:3px;">Bert · Dagelijks overzicht</div>
+  </div>
+  <div id="date-display"></div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('today')">Vandaag</button>
+  <button class="tab-btn" onclick="switchTab('overview')">Overzicht</button>
+  <button class="tab-btn" onclick="switchTab('history')">Geschiedenis</button>
+</div>
+
+<!-- ══════════════════════════ TAB: TODAY ══════════════════════════ -->
+<div id="tab-today" class="tab-pane active">
+
+  <div class="day-summary">
+    <span>Voortgang vandaag</span>
+    <strong id="progress-text">0 / 4</strong>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="supplement-grid" id="supp-grid"></div>
+
+  <div class="day-notes">
+    <label>Notities voor vandaag</label>
+    <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════ TAB: OVERVIEW ══════════════════════════ -->
+<div id="tab-overview" class="tab-pane">
+  <div id="overview-content"></div>
+  <div class="overlap-note">
+    <strong>⚠️ Overlap notities:</strong><br/>
+    • <strong>Magnesium:</strong> Opti-Men bevat 100 mg + Lucovitaal geeft 375 mg → totaal ~475 mg/dag (ADH = 375 mg, veilig voor gezonde volwassenen).<br/>
+    • <strong>Vitamine D:</strong> Opti-Men bevat 300 IU + Body&Fit Omega-3 geeft 1000 IU → totaal ~1300 IU/dag (veilige grens = 4000 IU/dag).<br/>
+    • <strong>Creatine:</strong> Opti-Men bevat geen creatine – geen overlap.
+  </div>
+</div>
+
+<!-- ══════════════════════════ TAB: HISTORY ══════════════════════════ -->
+<div id="tab-history" class="tab-pane">
+  <div class="history-toolbar">
+    <label style="font-size:0.85rem;color:var(--muted)">Van:</label>
+    <input type="date" id="filter-from" onchange="renderHistory()"/>
+    <label style="font-size:0.85rem;color:var(--muted)">Tot:</label>
+    <input type="date" id="filter-to" onchange="renderHistory()"/>
+    <button class="export-btn" onclick="exportCSV()">⬇ Export CSV (Bitfit)</button>
+  </div>
+  <div class="history-table-wrap">
+    <table class="history-tbl">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Supplement</th>
+          <th>Merk</th>
+          <th>Dosis</th>
+          <th>Tijdstip</th>
+          <th>Notities dag</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="history-body"></tbody>
+    </table>
+    <div id="no-history" class="no-data" style="display:none">Nog geen logs gevonden voor deze periode.</div>
+  </div>
+</div>
+
+<footer>Supplement Tracker · Data opgeslagen in browser (localStorage) · Export via CSV voor Bitfit</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// SUPPLEMENT DATA
+// ══════════════════════════════════════════════
+const SUPPLEMENTS = [
+  {
+    id: 'magnesium',
+    name: 'Magnesium Bisglycinaat 375 mg',
+    brand: 'Lucovitaal',
+    type: 'Tablet',
+    badge: 'Mineraal',
+    defaultDose: 2,
+    unit: 'tablets',
+    defaultTime: 'avond 🌙',
+    info: {
+      'Werkzame stof': 'Magnesiumbisglycinaat',
+      'Per dagdosering': '375 mg elementair magnesium',
+      'Verpakking': '90 tabletten',
+      'Opname': 'Bisglycinaat = hoge biologische beschikbaarheid',
+      'Aanbeveling': '\'s Avonds → glycine bevordert ontspanning & slaap'
+    }
+  },
+  {
+    id: 'optimen',
+    name: 'Opti-Men Multivitamine',
+    brand: 'Optimum Nutrition',
+    type: 'Tablet',
+    badge: 'Multivitamine',
+    defaultDose: 1,
+    unit: 'tablets',
+    defaultTime: 'middag 🍽️',
+    info: {
+      'Werkzame stoffen': '75+ ingrediënten (vitamines, mineralen, aminozuren)',
+      'Vitamine C': '300 mg (500% ADH)',
+      'Vitamine D': '300 IU',
+      'B-vitamines': 'B1, B2, B6 tot 2500–5000% ADH',
+      'Zink': '30 mg (200% ADH)',
+      'Magnesium': '100 mg (in formule)',
+      'Amino-blend': 'L-arginine, L-glutamine, BCAA\'s',
+      'Aanbeveling': 'Bij lunch of avondmaaltijd (vetoplosbare vit. hebben vet nodig; niet nuchter)'
+    }
+  },
+  {
+    id: 'omega3',
+    name: 'Omega-3 + Vitamine D3',
+    brand: 'Body&Fit',
+    type: 'Softgel',
+    badge: 'Visolie',
+    defaultDose: 1,
+    unit: 'capsules',
+    defaultTime: 'middag 🍽️',
+    info: {
+      'Per capsule': '1000 mg visolie',
+      'EPA': '180 mg',
+      'DHA': '120 mg',
+      'Vitamine D3': '1000 IU (25 µg) cholecalciferol',
+      'Verpakking': '180 softgels',
+      'Aanbeveling': 'Bij maaltijd met vet (D3 vetoplosbaar). Niet nuchter → oprispingen'
+    }
+  },
+  {
+    id: 'creatine',
+    name: 'Creatine Monohydrate',
+    brand: 'Body&Fit',
+    type: 'Poeder',
+    badge: 'Kracht',
+    defaultDose: 6,
+    unit: 'gram',
+    defaultTime: 'pre-workout 💪',
+    info: {
+      'Samenstelling': '100% Creatine Monohydraat',
+      'Per maatschep': '~3 g creatine (maatschep = 3,4 g)',
+      'Standaard dosis': '6 g per dag (2 scoops)',
+      'Oplosmiddel': 'Mixen met 200–250 ml water',
+      'Effect': 'Vergroot fysieke prestaties bij korte intensieve inspanning',
+      'Aanbeveling': 'Timing maakt weinig verschil voor effect. Pre-workout = handig als vaste routine'
+    }
+  }
+];
+
+// ══════════════════════════════════════════════
+// STATE & STORAGE
+// ══════════════════════════════════════════════
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function loadLogs() {
+  try { return JSON.parse(localStorage.getItem('supp_logs') || '[]'); } catch { return []; }
+}
+function saveLogs(logs) {
+  localStorage.setItem('supp_logs', JSON.stringify(logs));
+}
+function loadTodayState() {
+  try { return JSON.parse(localStorage.getItem('supp_today_' + todayStr()) || '{}'); } catch { return {}; }
+}
+function saveTodayState(state) {
+  localStorage.setItem('supp_today_' + todayStr(), JSON.stringify(state));
+}
+function loadDayNotes() {
+  return localStorage.getItem('supp_notes_' + todayStr()) || '';
+}
+function saveDayNotes() {
+  localStorage.setItem('supp_notes_' + todayStr(), document.getElementById('day-notes-input').value);
+}
+
+// ══════════════════════════════════════════════
+// RENDER: TODAY
+// ══════════════════════════════════════════════
+function renderToday() {
+  const state = loadTodayState();
+  const grid = document.getElementById('supp-grid');
+  grid.innerHTML = '';
+
+  let loggedCount = 0;
+
+  SUPPLEMENTS.forEach(s => {
+    const entry = state[s.id] || {};
+    const isLogged = !!entry.logged;
+    if (isLogged) loggedCount++;
+
+    const dose = entry.dose !== undefined ? entry.dose : s.defaultDose;
+    const time = entry.time || s.defaultTime;
+
+    const card = document.createElement('div');
+    card.className = 'supp-card' + (isLogged ? ' logged' : '');
+    card.id = 'card-' + s.id;
+
+    card.innerHTML = `
+      <div class="supp-card-header">
+        <div>
+          <div class="supp-name">${isLogged ? '✅ ' : ''}${s.name}</div>
+          <div class="supp-brand">${s.brand} · ${s.type}</div>
+        </div>
+        <span class="supp-badge">${s.badge}</span>
+      </div>
+      <div class="supp-controls">
+        <div class="control-group">
+          <label>Dosis (${s.unit})</label>
+          <input type="number" id="dose-${s.id}" value="${dose}" min="0" step="${s.unit === 'gram' ? 0.5 : 1}"
+            onchange="updateEntry('${s.id}')"/>
+        </div>
+        <div class="control-group">
+          <label>Tijdstip</label>
+          <div class="time-btns" id="timebtns-${s.id}">
+            ${['ochtend ☀️','middag 🍽️','avond 🌙','pre-workout 💪','post-workout 🔁','met maaltijd 🥗'].map(t =>
+              `<button class="time-btn${time === t ? ' selected' : ''}" onclick="selectTime('${s.id}','${t}')">${t}</button>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+      <button class="log-btn ${isLogged ? 'logged-state' : ''}" onclick="toggleLog('${s.id}')">
+        ${isLogged ? '✓ Gelogd vandaag' : 'Log supplement'}
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Progress
+  const pct = Math.round((loggedCount / SUPPLEMENTS.length) * 100);
+  document.getElementById('progress-text').textContent = loggedCount + ' / ' + SUPPLEMENTS.length;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Notes
+  document.getElementById('day-notes-input').value = loadDayNotes();
+}
+
+function selectTime(id, t) {
+  // Update button UI
+  document.querySelectorAll(`#timebtns-${id} .time-btn`).forEach(b => {
+    b.classList.toggle('selected', b.textContent === t);
+  });
+  updateEntry(id);
+}
+
+function getSelectedTime(id) {
+  const sel = document.querySelector(`#timebtns-${id} .time-btn.selected`);
+  return sel ? sel.textContent : '';
+}
+
+function updateEntry(id) {
+  const state = loadTodayState();
+  if (!state[id]) state[id] = {};
+  state[id].dose = parseFloat(document.getElementById('dose-' + id).value) || 0;
+  state[id].time = getSelectedTime(id);
+  saveTodayState(state);
+}
+
+function toggleLog(id) {
+  updateEntry(id);
+  const state = loadTodayState();
+  if (!state[id]) state[id] = {};
+
+  if (state[id].logged) {
+    // Unlog
+    state[id].logged = false;
+    saveTodayState(state);
+    // Remove from logs
+    const logs = loadLogs().filter(l => !(l.date === todayStr() && l.id === id));
+    saveLogs(logs);
+  } else {
+    // Log
+    state[id].logged = true;
+    const supp = SUPPLEMENTS.find(s => s.id === id);
+    saveTodayState(state);
+    const logs = loadLogs();
+    // Remove existing entry for today+id if any
+    const filtered = logs.filter(l => !(l.date === todayStr() && l.id === id));
+    filtered.push({
+      date: todayStr(),
+      id: id,
+      name: supp.name,
+      brand: supp.brand,
+      dose: state[id].dose,
+      unit: supp.unit,
+      time: state[id].time,
+      notes: loadDayNotes()
+    });
+    saveLogs(filtered);
+  }
+
+  renderToday();
+  if (document.getElementById('tab-history').classList.contains('active')) renderHistory();
+}
+
+// ══════════════════════════════════════════════
+// RENDER: OVERVIEW
+// ══════════════════════════════════════════════
+function renderOverview() {
+  const cont = document.getElementById('overview-content');
+  cont.innerHTML = SUPPLEMENTS.map(s => `
+    <div class="overview-card">
+      <h3>${s.name}</h3>
+      <div class="brand-line">${s.brand} · ${s.type} · standaarddosis: ${s.defaultDose} ${s.unit}/dag</div>
+      <table class="overview-table">
+        ${Object.entries(s.info).map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+      </table>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════
+// RENDER: HISTORY
+// ══════════════════════════════════════════════
+function renderHistory() {
+  const from = document.getElementById('filter-from').value;
+  const to = document.getElementById('filter-to').value;
+  let logs = loadLogs();
+
+  if (from) logs = logs.filter(l => l.date >= from);
+  if (to)   logs = logs.filter(l => l.date <= to);
+
+  logs.sort((a, b) => b.date.localeCompare(a.date));
+
+  const tbody = document.getElementById('history-body');
+  const noData = document.getElementById('no-history');
+
+  if (!logs.length) {
+    tbody.innerHTML = '';
+    noData.style.display = 'block';
+    return;
+  }
+  noData.style.display = 'none';
+
+  tbody.innerHTML = logs.map((l, i) => `
+    <tr>
+      <td>${l.date}</td>
+      <td>${l.name}</td>
+      <td style="color:var(--muted)">${l.brand}</td>
+      <td><span class="badge-unit">${l.dose} ${l.unit}</span></td>
+      <td>${l.time}</td>
+      <td style="color:var(--muted);font-size:0.8rem">${l.notes ? l.notes.slice(0, 40) + (l.notes.length > 40 ? '…' : '') : '—'}</td>
+      <td><button class="del-btn" onclick="deleteLog(${i}, '${l.date}', '${l.id}')" title="Verwijder">🗑</button></td>
+    </tr>
+  `).join('');
+}
+
+function deleteLog(visIdx, date, id) {
+  if (!confirm('Log verwijderen?')) return;
+  let logs = loadLogs();
+  const idx = logs.findIndex(l => l.date === date && l.id === id);
+  if (idx !== -1) logs.splice(idx, 1);
+  saveLogs(logs);
+
+  // Unlog in today state if applicable
+  if (date === todayStr()) {
+    const state = loadTodayState();
+    if (state[id]) { state[id].logged = false; saveTodayState(state); }
+    renderToday();
+  }
+  renderHistory();
+}
+
+// ══════════════════════════════════════════════
+// EXPORT CSV
+// ══════════════════════════════════════════════
+function exportCSV() {
+  const from = document.getElementById('filter-from').value;
+  const to   = document.getElementById('filter-to').value;
+  let logs = loadLogs();
+  if (from) logs = logs.filter(l => l.date >= from);
+  if (to)   logs = logs.filter(l => l.date <= to);
+  logs.sort((a, b) => a.date.localeCompare(b.date));
+
+  const header = ['Datum','Supplement','Merk','Dosis','Eenheid','Tijdstip','Notities'];
+  const rows = logs.map(l => [
+    l.date, l.name, l.brand, l.dose, l.unit, l.time,
+    (l.notes || '').replace(/"/g, '""')
+  ].map(v => `"${v}"`).join(','));
+
+  const csv = [header.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'supplementen_log_' + (from || 'alle') + '_' + (to || 'vandaag') + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+
+  if (tab === 'overview') renderOverview();
+  if (tab === 'history') renderHistory();
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+(function init() {
+  // Date display
+  const now = new Date();
+  document.getElementById('date-display').textContent =
+    now.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  // Default filter dates (last 30 days)
+  const today = todayStr();
+  const month = new Date(); month.setDate(month.getDate() - 30);
+  document.getElementById('filter-to').value = today;
+  document.getElementById('filter-from').value = month.toISOString().slice(0, 10);
+
+  renderToday();
+})();
+</script>
+</body>
+</html>
