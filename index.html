@@ -84,6 +84,13 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .cd.bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.cd.br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
 .phase-popup{position:fixed;z-index:10000;background:#090912;border:1px solid var(--border);padding:12px 14px;max-width:260px;font-size:12px;line-height:1.6;color:var(--text);box-shadow:0 0 30px rgba(0,0,0,.9);animation:popup-in .15s ease;pointer-events:none;}
 .phase-popup-title{font-family:monospace;font-size:10px;letter-spacing:2px;margin-bottom:7px;}
+#phase-timeline{margin-top:8px;}
+.phase-track{position:relative;height:17px;margin-bottom:2px;}
+.phase-block{position:absolute;top:0;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;overflow:hidden;white-space:nowrap;border-top:1px solid;}
+.phase-block.clickable{cursor:pointer;transition:filter .15s;}.phase-block.clickable:hover{filter:brightness(1.6);}
+.phase-block.phase-selected{border-top-width:2px!important;filter:brightness(1.5);outline:1px solid rgba(255,255,255,.15);}
+.radar-wrap{width:100%;display:flex;align-items:center;justify-content:center;padding:4px 0;}
+.lift-mode-btn.wt-active{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06);}
 @media(min-width:768px){
   header{padding:16px 24px 14px;}
   .tabs{padding:14px 24px 0;}
@@ -101,7 +108,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 <header>
   <div class="header-inner">
     <div style="display:flex;align-items:center;gap:14px;">
-      <div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span> <span class="logo-beta">BETA</span></div>
+      <div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span></div>
       <a href="supplement-tracker.html" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:3px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--cyan)';this.style.borderColor='var(--cyan)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">BIT<span style="color:var(--green)">SUPP</span></a>
     </div>
     <div class="header-right">
@@ -139,14 +146,22 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
         <button class="lift-mode-btn active" id="btn-werk" onclick="setLiftMode('werk')">WERKGEWICHT</button>
         <button class="lift-mode-btn" id="btn-1rm" onclick="setLiftMode('1rm')">EST. 1RM</button>
       </div>
+      <button class="lift-mode-btn wt-active" id="btn-weight" onclick="toggleWeight()">GEWICHT</button>
     </div>
     <div class="lift-filters" id="lift-filters"></div>
     <div style="position:relative;height:clamp(220px,55vw,320px);">
       <canvas id="liftChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
     </div>
+    <div id="phase-timeline"></div>
   </div>
 
   <div class="right-col">
+    <div class="panel c">
+      <div class="cd tl" style="border-color:var(--cyan)"></div>
+      <div class="cd tr" style="border-color:var(--cyan)"></div>
+      <div class="panel-title" id="radar-title">&#9658; SPIERBOOM</div>
+      <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
+    </div>
     <div class="panel y">
       <div class="cd tl" style="border-color:var(--yellow)"></div>
       <div class="cd tr" style="border-color:var(--yellow)"></div>
@@ -260,81 +275,113 @@ function setLiftMode(mode) {
   document.getElementById('btn-werk').classList.toggle('active', mode === 'werk');
   document.getElementById('btn-1rm').classList.toggle('active', mode === '1rm');
   document.getElementById('panel-lift-title').textContent = mode === 'werk' ? 'WERKGEWICHT' : 'GESCHATTE 1RM (~x1.1)';
-  // Re-update current period
-  const active = parseInt(document.querySelector('.tab.active').dataset.period);
-  update(active);
+  // Re-update using active period or custom start
+  update(getActiveStart());
 }
-let _phaseBandHitAreas = [];
-let _activePopup = null;
+let showWeight = true;
+let _customStart = null; // Date | null — ingesteld via fase-klik
+let radarChart = null;
 
-function inPeriod(dateStr, start) {
-  const s = start.toISOString().slice(0,10);
-  const t = TODAY.toISOString().slice(0,10);
-  return dateStr >= s && dateStr <= t;
-}
 function fmt(d) { return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}); }
 function getPeriodStart(days) {
-  if (days === 0) return new Date('2026-01-01');
+  if (days === 0) return new Date(PHASES[0].start);
   const d = new Date(TODAY); d.setDate(d.getDate() - days); return d;
 }
-
-const phaseBandsPlugin = {
-  id: 'phaseBands',
-  afterDraw(chart) {
-    const {ctx, chartArea:{left,right,top,bottom}} = chart;
-    const opts = chart.options.plugins.phaseBands;
-    if (!opts || !opts.phases || !opts.labels.length) return;
-    const labels = opts.labels, total = labels.length;
-    if (total < 2) return;
-    const slotW = (right - left) / total;
-    const bandH = 16, gap = 2;
-    _phaseBandHitAreas = [];
-    opts.phases.forEach(phase => {
-      const fi = labels.findIndex(d => d >= phase.start);
-      const lr = [...labels].reverse().findIndex(d => d <= phase.end);
-      const li = lr === -1 ? -1 : total - 1 - lr;
-      if (fi === -1 || li === -1 || fi > li) return;
-      const x1 = left + fi * slotW, x2 = left + (li+1) * slotW;
-      const track = phase.track || 0;
-      const y = bottom + 2 + track * (bandH + gap);
-      const bw = x2 - x1;
-      ctx.save();
-      ctx.fillStyle = phase.color + '22'; ctx.fillRect(x1, y, bw, bandH);
-      ctx.strokeStyle = phase.color + 'aa'; ctx.lineWidth = 1;
-      ctx.shadowColor = phase.color; ctx.shadowBlur = 3;
-      ctx.beginPath(); ctx.moveTo(x1,y); ctx.lineTo(x2,y); ctx.stroke(); ctx.shadowBlur = 0;
-      const lbl = bw < 50 ? phase.short : phase.label;
-      ctx.fillStyle = phase.color; ctx.shadowColor = phase.color; ctx.shadowBlur = 5;
-      ctx.font = "700 8px 'Space Mono', monospace";
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(lbl, x1 + bw/2, y + bandH/2); ctx.shadowBlur = 0;
-      // verticale markering alleen op track 0
-      if (track === 0) {
-        ctx.strokeStyle = phase.color + '33'; ctx.setLineDash([3,3]);
-        ctx.beginPath(); ctx.moveTo(x1,top); ctx.lineTo(x1,bottom); ctx.stroke();
-        ctx.setLineDash([]);
-      }
-      ctx.restore();
-      _phaseBandHitAreas.push({phase, x1, x2, y, bandH});
-    });
-  }
-};
-Chart.register(phaseBandsPlugin);
-
-function showPhasePopup(phase, cx, cy) {
-  hidePhasePopup();
-  const el = document.createElement('div');
-  el.className = 'phase-popup';
-  el.style.borderColor = phase.color + '66';
-  el.innerHTML = '<div class="phase-popup-title" style="color:' + phase.color + '">' + phase.label + '</div>' + phase.desc;
-  let left = cx + 12, top = cy - 20;
-  if (left + 260 > window.innerWidth - 8) left = cx - 272;
-  if (top + 140 > window.innerHeight - 8) top = window.innerHeight - 148;
-  el.style.left = left + 'px'; el.style.top = top + 'px';
-  document.body.appendChild(el); _activePopup = el;
+function getActiveStart() {
+  if (_customStart) return _customStart;
+  const tab = document.querySelector('.tab.active');
+  return tab ? getPeriodStart(parseInt(tab.dataset.period)) : getPeriodStart(30);
 }
-function hidePhasePopup() { if (_activePopup) { _activePopup.remove(); _activePopup = null; } }
-document.addEventListener('click', e => { if (_activePopup && !_activePopup.contains(e.target)) hidePhasePopup(); });
+
+function toggleWeight() {
+  showWeight = !showWeight;
+  document.getElementById('btn-weight').classList.toggle('wt-active', showWeight);
+  update(getActiveStart());
+}
+
+// ── Fase tijdlijn ──
+function renderTimeline(start) {
+  const el = document.getElementById('phase-timeline');
+  if (!el) return;
+  const s = start.toISOString().slice(0,10);
+  const t = TODAY.toISOString().slice(0,10);
+  const totalMs = new Date(t) - new Date(s);
+  if (totalMs <= 0) { el.innerHTML = ''; return; }
+  const selectedStart = _customStart ? _customStart.toISOString().slice(0,10) : null;
+  const tracks = [[], [], []];
+  PHASES.forEach(p => {
+    if (p.end < s || p.start > t) return;
+    (tracks[p.track || 0] || tracks[0]).push(p);
+  });
+  el.innerHTML = tracks.map((phases, ti) => {
+    if (!phases.length) return '';
+    const blocks = phases.map(p => {
+      const pS = new Date(Math.max(new Date(p.start), new Date(s)));
+      const pE = new Date(Math.min(new Date(p.end), new Date(t)));
+      const left = (pS - new Date(s)) / totalMs * 100;
+      const width = (pE - pS) / totalMs * 100;
+      if (width < 0.3) return '';
+      const isSelected = selectedStart && p.start === selectedStart;
+      const clickable = ti === 0;
+      const lbl = width > 12 ? (width > 22 ? p.label : p.short) : '';
+      return `<div class="phase-block${clickable?' clickable':''}${isSelected?' phase-selected':''}"
+        style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%;background:${p.color}18;border-color:${p.color}88;color:${p.color};"
+        title="${p.label} (${p.start} → ${p.end})"
+        ${clickable ? `onclick="selectPhase('${p.start}','${p.end}')"` : ''}
+      >${lbl}</div>`;
+    }).join('');
+    return `<div class="phase-track">${blocks}</div>`;
+  }).join('');
+}
+
+function selectPhase(startStr, endStr) {
+  _customStart = new Date(startStr);
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  update(_customStart);
+}
+
+// ── Radar ──
+const MUSCLE_COLORS = {Benen:'#b388ff',Rug:'#ffd600',Borst:'#64b5f6',Schouders:'#00ffb3',Glutes:'#ce93d8',Triceps:'#f48fb1',Biceps:'#80cbc4',Core:'#ff8a65'};
+const RADAR_MUSCLES = ['Benen','Rug','Borst','Schouders','Glutes','Triceps','Biceps','Core'];
+
+function renderRadar(start) {
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const vols = {};
+  RADAR_MUSCLES.forEach(m => vols[m] = 0);
+  DATA.muscle_daily.filter(d => d.date >= s && d.date <= t).forEach(d => {
+    if (vols[d.muscle] !== undefined) vols[d.muscle] += d.volume;
+  });
+  const total = Object.values(vols).reduce((a,b) => a+b, 0) || 1;
+  const data = RADAR_MUSCLES.map(m => Math.round(vols[m] / total * 100));
+  if (radarChart) radarChart.destroy();
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: RADAR_MUSCLES,
+      datasets: [{
+        data, borderColor: '#7b5cff88', backgroundColor: '#7b5cff11',
+        pointBackgroundColor: RADAR_MUSCLES.map(m => MUSCLE_COLORS[m]),
+        pointBorderColor: 'transparent', borderWidth: 1, pointRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      scales: { r: {
+        beginAtZero: true, min: 0,
+        ticks: { display: false, stepSize: 10 },
+        grid: { color: '#1c1c30' }, angleLines: { color: '#1c1c30' },
+        pointLabels: { color: ctx => MUSCLE_COLORS[ctx.label] || '#c0c0d8', font: { family: "'Space Mono',monospace", size: 8 } }
+      }},
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1, bodyColor: '#c0c0d8',
+          callbacks: { label: ctx => ` ${RADAR_MUSCLES[ctx.dataIndex]}: ${ctx.raw}%` }
+        }
+      }
+    }
+  });
+}
 
 function buildLiftDatasets(start) {
   const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
@@ -363,16 +410,17 @@ function buildLiftDatasets(start) {
       pointHoverRadius: 5, borderWidth: 2, tension: 0.3, spanGaps: true, fill: false,
     };
   });
-  const wByDate = {};
-  // Inclusief het laatste weegpunt ook als dat na de periode-grens t valt
-  DATA.weight.filter(p => p.date >= s).forEach(p => wByDate[p.date] = p.weight);
-  datasets.push({
-    label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
-    borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
-    pointBackgroundColor: 'rgba(255,255,255,0.35)', pointBorderColor: 'transparent',
-    pointStyle: 'circle', pointRadius: allDates.map(d => wByDate[d]!==undefined ? 2 : 0),
-    pointHoverRadius: 4, borderWidth: 1, tension: 0.5, spanGaps: true, fill: false, borderDash: [4,4],
-  });
+  if (showWeight) {
+    const wByDate = {};
+    DATA.weight.filter(p => p.date >= s).forEach(p => wByDate[p.date] = p.weight);
+    datasets.push({
+      label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
+      borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
+      pointBackgroundColor: 'rgba(255,255,255,0.35)', pointBorderColor: 'transparent',
+      pointStyle: 'circle', pointRadius: allDates.map(d => wByDate[d]!==undefined ? 2 : 0),
+      pointHoverRadius: 4, borderWidth: 1, tension: 0.5, spanGaps: true, fill: false, borderDash: [4,4],
+    });
+  }
   return {datasets, labels: allDates};
 }
 
@@ -467,8 +515,8 @@ function renderAnalysis(start) {
   document.getElementById('a-tips').innerHTML = a.tips || '-';
 }
 
-function update(periodDays) {
-  const start = getPeriodStart(periodDays);
+function update(arg) {
+  const start = (arg instanceof Date) ? arg : getPeriodStart(arg);
   document.getElementById('badge-text').textContent = fmt(start) + ' - ' + fmt(TODAY);
   const {datasets: liftDs, labels: liftLabels} = buildLiftDatasets(start);
   const stats = computeStats(start);
@@ -481,46 +529,27 @@ function update(periodDays) {
     options: {
       responsive: true, maintainAspectRatio: false,
       interaction: {mode:'index',intersect:false},
-      layout: {padding:{bottom:22}},
       scales: {
         x: {type:'category',grid:{color:'#1a1a2e'},ticks:{maxRotation:mobile?45:35,color:'#454560',autoSkip:true,maxTicksLimit:mobile?6:12,font:{size:mobile?8:9},callback:function(val,i){const v=this.getLabelForValue(val);return v?v.slice(5):'';}}},
         y: {grid:{color:'#1a1a2e'},ticks:{color:'#7b5cff99',font:{size:mobile?8:9},callback:v=>v+'kg'}}
       },
       plugins: {
         legend: {display:false},
-        tooltip: {backgroundColor:'#0a0a15',borderColor:'#1c1c30',borderWidth:1,titleColor:'#7b5cff',bodyColor:'#c0c0d8',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+'kg'}},
-        phaseBands: {phases:PHASES, labels:liftLabels}
+        tooltip: {backgroundColor:'#0a0a15',borderColor:'#1c1c30',borderWidth:1,titleColor:'#7b5cff',bodyColor:'#c0c0d8',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+'kg'}}
       }
     }
   });
-  const canvas = document.getElementById('liftChart');
-  canvas.style.cursor = 'default';
-  canvas.onclick = e => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX-rect.left, my = e.clientY-rect.top;
-    let hit = false;
-    for (const a of _phaseBandHitAreas) {
-      if (mx>=a.x1&&mx<=a.x2&&my>=a.y&&my<=a.y+a.bandH) { showPhasePopup(a.phase,e.clientX,e.clientY); hit=true; break; }
-    }
-    if (!hit) hidePhasePopup();
-  };
-  canvas.onmousemove = e => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX-rect.left, my = e.clientY-rect.top;
-    canvas.style.cursor = _phaseBandHitAreas.some(a=>mx>=a.x1&&mx<=a.x2&&my>=a.y&&my<=a.y+a.bandH)?'pointer':'default';
-  };
   const filtersEl = document.getElementById('lift-filters');
   filtersEl.innerHTML = '';
   liftDs.forEach((ds, i) => {
     if (ds.label === 'Gewicht') return;
     const hasData = ds.data.some(v => v !== null);
     const btn = document.createElement('button');
-    const active = hasData;
-    btn.className = 'lift-btn' + (active ? ' active' : '');
+    btn.className = 'lift-btn' + (hasData ? ' active' : '');
     btn.textContent = ds.label;
     btn.style.color = ds.borderColor;
     btn.style.borderColor = ds.borderColor;
-    btn.style.backgroundColor = active ? ds.borderColor + '15' : 'transparent';
+    btn.style.backgroundColor = hasData ? ds.borderColor + '15' : 'transparent';
     btn.addEventListener('click', () => {
       const meta = liftChart.getDatasetMeta(i);
       const hidden = meta.hidden === true;
@@ -531,16 +560,18 @@ function update(periodDays) {
     });
     filtersEl.appendChild(btn);
   });
-  liftChart.update();
   renderStats(stats);
   renderNewEx(start);
   renderAnalysis(start);
+  renderTimeline(start);
+  renderRadar(start);
 }
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+    _customStart = null;
     update(parseInt(tab.dataset.period));
   });
 });
