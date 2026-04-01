@@ -6,7 +6,7 @@
     "brand": "Lucovitaal",
     "dose": 2,
     "unit": "tablets",
-    "time": "middag Ã°ÂÂÂ½Ã¯Â¸Â",
+    "time": "middag ÃÂ°ÃÂÃÂÃÂ½ÃÂ¯ÃÂ¸ÃÂ",
     "notes": ""
   },
   {
@@ -16,7 +16,7 @@
     "brand": "Optimum Nutrition",
     "dose": 1,
     "unit": "tablets",
-    "time": "ochtend Ã¢ÂÂÃ¯Â¸Â",
+    "time": "ochtend ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ",
     "notes": ""
   },
   {
@@ -26,7 +26,7 @@
     "brand": "Body&Fit",
     "dose": 1,
     "unit": "capsules",
-    "time": "ochtend Ã¢ÂÂÃ¯Â¸Â",
+    "time": "ochtend ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ",
     "notes": ""
   },
   {
@@ -36,7 +36,7 @@
     "brand": "Body&Fit",
     "dose": 10,
     "unit": "gram",
-    "time": "pre-workout Ã°ÂÂÂª",
+    "time": "pre-workout ÃÂ°ÃÂÃÂÃÂª",
     "notes": ""
   },
   {
@@ -57,6 +57,16 @@
     "dose": 10,
     "unit": "gram",
     "time": "pre-workout",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-01",
+    "id": "custom_1775072955268",
+    "name": "Zma",
+    "brand": "Body fit",
+    "dose": 2,
+    "unit": "tablets",
+    "time": "avond",
     "notes": ""
   }
 ]
