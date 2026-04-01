@@ -398,7 +398,22 @@ const DEFAULT_SUPPLEMENTS = [
   { id:'creatine', name:'Creatine Monohydrate', brand:'Body&Fit', type:'Poeder',
     badge:'KRACHT', badgeClass:'badge-kracht', defaultDose:6, unit:'gram', defaultTime:'pre-workout',
     info:{'Samenstelling':'100% Creatine Monohydraat','Per maatschep':'~3 g (maatschep = 3,4 g)',
-          'Standaard dosis':'6 g/dag (2 scoops)','Effect':'Vergroot prestaties bij korte inspanning'} }
+          'Standaard dosis':'6 g/dag (2 scoops)','Effect':'Vergroot prestaties bij korte inspanning'} },
+  { id:'nac', name:'NAC-Forte', brand:'DeBa Pharma', type:'V-capsule',
+    badge:'ANTIOXIDANT', badgeClass:'badge-multi', defaultDose:1, unit:'capsules', defaultTime:'met maaltijd',
+    info:{'NAC':'299 mg N-Acetyl-L-Cysteïne','Vitamine C':'180 mg','Selenium':'12,5 µg','Molybdeen':'12,5 µg',
+          'Werking':'Voorloper van glutathion — voornaamste endogeen antioxidant',
+          'Ondersteunt':'Leverfunctie en luchtwegen','Aanbeveling':'1 capsule per dag na de maaltijd'} },
+  { id:'stacker', name:'Black Burn', brand:'Stacker Europe', type:'Capsule',
+    badge:'THERMOGEEN', badgeClass:'badge-kracht', defaultDose:2, unit:'capsules', defaultTime:'pre-workout',
+    info:{'Verpakking':'120 caps / 60 servings','Werking':'Thermogene vetverbrander',
+          'Bevat':'Cafeïne, groene thee-extract en andere stimulanten',
+          'Doel':'Thermogenese en gewichtscontrole','Claim':'Award winning fat burner'} },
+  { id:'coq10', name:'CoQ10 200 mg', brand:'Swanson', type:'Capsule',
+    badge:'ENERGIE', badgeClass:'badge-oil', defaultDose:1, unit:'capsules', defaultTime:'met maaltijd',
+    info:{'Per capsule':'200 mg coënzym Q10','Opmerking':'Hoge dosis (standaard is 100 mg)',
+          'Werking':'Mitochondriale energieproductie + antioxidant',
+          'Toepassing':'Cardiovasculaire gezondheid','Aanbeveling':'Bij maaltijd met vet'} }
 ];
 
 function loadCustomSupps(){ try{ return JSON.parse(localStorage.getItem('bitsupp_custom')||'[]'); }catch{ return []; } }
