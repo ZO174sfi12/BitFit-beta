@@ -159,8 +159,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="panel c">
       <div class="cd tl" style="border-color:var(--cyan)"></div>
       <div class="cd tr" style="border-color:var(--cyan)"></div>
-      <div class="panel-title" id="radar-title">&#9658; SPIERBOOM</div>
-      <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
+      <div class="panel-title" id="radar-title">&#9658; SETS / OEFENING</div>
+      <div class="radar-wrap" style="height:180px"><canvas id="radarChart"></canvas></div>
     </div>
     <div class="panel y">
       <div class="cd tl" style="border-color:var(--yellow)"></div>
@@ -214,14 +214,13 @@ const TODAY = new Date('2026-04-01');
 
 const PHASES = [
   {label:"ORIENTATIE",short:"ORI",start:"2026-01-01",end:"2026-01-31",color:"#7c6fff",track:0,desc:"<b>1 jan - 31 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell."},
-  {label:"BARBELL INTRO",short:"BB+",start:"2026-02-01",end:"2026-02-03",color:"#00e5ff",track:0,desc:"<b>1 feb - 3 feb</b><br>Deadlift, Bench, Squat ingevoerd. Techniek op lichte gewichten."},
-  {label:"BARBELL 5x5",short:"5x5",start:"2026-02-04",end:"2026-02-25",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
-  {label:"VERKOUDEN",short:"ZK",start:"2026-03-02",end:"2026-03-12",color:"#ffaa00",track:1,desc:"<b>Verkouden</b><br>Lage frequentie door ziekte."},
-  {label:"BARBELL 5x5",short:"5x5",start:"2026-03-13",end:"2026-03-23",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
-  {label:"VERKOUDEN",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Verkouden</b><br>Lage frequentie door ziekte."},
-  {label:"BARBELL 5x5",short:"5x5",start:"2026-03-26",end:"2026-04-02",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
-  {label:"OPERATIE",short:"OP",start:"2026-04-03",end:"2099-12-31",color:"#ff3d6b",track:1,desc:"<b>3 apr</b><br>Operatie. Herstelperiode."},
-  {label:"CREATINE 3G",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>3g creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
+  {label:"INTRO",short:"BB+",start:"2026-02-01",end:"2026-02-03",color:"#00e5ff",track:0,desc:"<b>1 feb - 3 feb</b><br>Barbell ge\u00efntroduceerd: Deadlift, Bench, Squat. Techniek op lichte gewichten."},
+  {label:"5x5",short:"5x5",start:"2026-02-04",end:"2026-03-29",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
+  {label:"ZIEKTE",short:"ZK",start:"2026-03-09",end:"2026-03-12",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
+  {label:"ZIEKTE",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
+  {label:"FULL BODY",short:"FB",start:"2026-03-30",end:"2026-04-02",color:"#00e5ff",track:0,desc:"<b>Full Body</b><br>Compound lifts full body per sessie."},
+  {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2099-12-31",color:"#ff8a65",track:1,desc:"<b>3 apr \u2192</b><br>Operatie. Herstelperiode \u2014 geen training."},
+  {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
 
 const PHASE_ANALYSIS = {
@@ -230,27 +229,32 @@ const PHASE_ANALYSIS = {
     evolution:'<b>15 sessies in 31 dagen (48% densiteit). 6 PRs.</b> Squat geïntroduceerd (01/26, 60.0kg) &mdash; Deadlift geïntroduceerd (01/17, 60.0kg) &mdash; Bench geïntroduceerd (01/20, 45.0kg) &mdash; DB Bench x2: 40.0→48.0kg (+8.0kg). Gewicht: 84.2→82.1kg (-2.1kg).',
     tips:'<b>OHP afwezig in deze fase.</b> Verticale push ontbreekt bij aanwezige horizontale push.'
   },
-  'BARBELL INTRO': {
+  'INTRO': {
     focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: <span style="color:#b388ff">Benen</span> (37%), <span style="color:#64b5f6">Borst</span> (33%), <span style="color:#ce93d8">Glutes</span> (18%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ffd600">Rug</span>, <span style="color:#00ffb3">Schouders</span> volledig afwezig.',
     evolution:'<b>3 sessies in 3 dagen (100% densiteit). 2 PRs.</b> Squat geïntroduceerd (02/02, 70.0kg) &mdash; DB Bench x2 geïntroduceerd (02/03, 48.0kg). Gewicht: 81.6→81.6kg (+0.0kg).',
     tips:'<b>Bench volledig afwezig terwijl Squat 1x getraind.</b> Bovenlichaam push loopt achter.'
   },
-  'BARBELL 5x5': {
-    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (57%), <span style="color:#64b5f6">Borst</span> (18%), <span style="color:#b388ff">Benen</span> (16%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#f48fb1">Triceps</span>, <span style="color:#80cbc4">Biceps</span> volledig afwezig.',
-    evolution:'<b>3 sessies in 8 dagen (38% densiteit). geen PRs.</b> Squat geïntroduceerd (03/30, 70.0kg) &mdash; Deadlift geïntroduceerd (03/31, 80.0kg) &mdash; Bench geïntroduceerd (03/30, 55.0kg) &mdash; OHP geïntroduceerd (03/31, 32.5kg). Gewicht: 83.9→85.2kg (+1.3kg).',
-    tips:'<b>+1.3kg gewicht bij 38% activiteit.</b> Calorie-inname niet gecorrigeerd bij lagere output. &mdash; <b>Rug/Borst verhouding 57%/18%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
+  '5x5': {
+    focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (38%), <span style="color:#b388ff">Benen</span> (25%), <span style="color:#ce93d8">Glutes</span> (15%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#ff8a65">Core</span> ondervertegenwoordigd (0%).',
+    evolution:'<b>36 sessies in 54 dagen (67% densiteit). 18 PRs.</b> Squat: 70.0→82.5kg (+12.5kg) &mdash; Deadlift: 80.0→80.0kg (+0.0kg) &mdash; Bench: 55.0→60.0kg (+5.0kg) &mdash; DB Bench x2: 60.0→52.0kg (-8.0kg). Gewicht: 82.2→83.9kg (+1.7kg).',
+    tips:'<b>Squat 8x vs Bench 2x.</b> Consistentie in bovenlichaam push ontbreekt. &mdash; <b>Rug/Borst verhouding 38%/11%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
   },
-  'VERKOUDEN': {
+  'ZIEKTE': {
     focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: . Brede verdeling over alle groepen.',
     evolution:'<b>0 sessies in 2 dagen (0% densiteit). geen PRs.</b> ',
     tips:'Geen kritische opmerkingen voor deze fase (0 sessies).'
   },
-  'OPERATIE': {
+  'FULL BODY': {
+    focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (57%), <span style="color:#64b5f6">Borst</span> (18%), <span style="color:#b388ff">Benen</span> (16%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#f48fb1">Triceps</span>, <span style="color:#80cbc4">Biceps</span> volledig afwezig.',
+    evolution:'<b>2 sessies in 4 dagen (50% densiteit). geen PRs.</b> Squat geïntroduceerd (03/30, 70.0kg) &mdash; Deadlift geïntroduceerd (03/31, 80.0kg) &mdash; Bench geïntroduceerd (03/30, 55.0kg) &mdash; OHP geïntroduceerd (03/31, 32.5kg). Gewicht: 85.4→85.2kg (-0.2kg).',
+    tips:'<b>Rug/Borst verhouding 57%/18%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
+  },
+  'RECOVERY': {
     focus:'<b style="color:var(--green)">GEBALANCEERD</b> &mdash; Volume: . Brede verdeling over alle groepen.',
     evolution:'<b>0 sessies in -1 dagen (0% densiteit). geen PRs.</b> ',
     tips:'Geen kritische opmerkingen voor deze fase (0 sessies).'
   },
-  'CREATINE 3G': {
+  'CREATINE': {
     focus:'<b style="color:var(--red)">ONGEBALANCEERD</b> &mdash; Volume: <span style="color:#ffd600">Rug</span> (57%), <span style="color:#64b5f6">Borst</span> (18%), <span style="color:#b388ff">Benen</span> (16%). <b style="color:var(--yellow)">Zwakke schakel:</b> <span style="color:#f48fb1">Triceps</span>, <span style="color:#80cbc4">Biceps</span> volledig afwezig.',
     evolution:'<b>3 sessies in 9 dagen (33% densiteit). geen PRs.</b> Squat geïntroduceerd (03/30, 70.0kg) &mdash; Deadlift geïntroduceerd (03/31, 80.0kg) &mdash; Bench geïntroduceerd (03/30, 55.0kg) &mdash; OHP geïntroduceerd (03/31, 32.5kg). Gewicht: 83.9→85.2kg (+1.3kg).',
     tips:'<b>+1.3kg gewicht bij 33% activiteit.</b> Calorie-inname niet gecorrigeerd bij lagere output. &mdash; <b>Rug/Borst verhouding 57%/18%.</b> Trek domineert structureel over duw — Bench meer frequentie nodig.'
@@ -340,43 +344,52 @@ function selectPhase(startStr, endStr) {
   update(_customStart);
 }
 
-// ── Radar ──
-const MUSCLE_COLORS = {Benen:'#b388ff',Rug:'#ffd600',Borst:'#64b5f6',Schouders:'#00ffb3',Glutes:'#ce93d8',Triceps:'#f48fb1',Biceps:'#80cbc4',Core:'#ff8a65'};
-const RADAR_MUSCLES = ['Benen','Rug','Borst','Schouders','Glutes','Triceps','Biceps','Core'];
-
+// ── Sets per oefening ──
 function renderRadar(start) {
   const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
-  const vols = {};
-  RADAR_MUSCLES.forEach(m => vols[m] = 0);
-  DATA.muscle_daily.filter(d => d.date >= s && d.date <= t).forEach(d => {
-    if (vols[d.muscle] !== undefined) vols[d.muscle] += d.volume;
-  });
-  const total = Object.values(vols).reduce((a,b) => a+b, 0) || 1;
-  const data = RADAR_MUSCLES.map(m => Math.round(vols[m] / total * 100));
+  // Bereken sets per oefening: volume / (weight * reps) afgerond
+  const exercises = Object.entries(DATA.lifts).map(([key, lift]) => {
+    const pts = lift.points.filter(p => p.date >= s && p.date <= t);
+    const sets = pts.reduce((acc, p) => {
+      const n = (p.weight && p.reps) ? Math.round(p.volume / (p.weight * p.reps)) : 0;
+      return acc + n;
+    }, 0);
+    const vol = pts.reduce((acc, p) => acc + p.volume, 0);
+    return {key, sets, vol, color: lift.color};
+  }).filter(e => e.sets > 0).sort((a, b) => b.sets - a.sets);
   if (radarChart) radarChart.destroy();
+  if (!exercises.length) { radarChart = null; return; }
   const ctx = document.getElementById('radarChart').getContext('2d');
   radarChart = new Chart(ctx, {
-    type: 'radar',
+    type: 'bar',
     data: {
-      labels: RADAR_MUSCLES,
+      labels: exercises.map(e => e.key),
       datasets: [{
-        data, borderColor: '#7b5cff88', backgroundColor: '#7b5cff11',
-        pointBackgroundColor: RADAR_MUSCLES.map(m => MUSCLE_COLORS[m]),
-        pointBorderColor: 'transparent', borderWidth: 1, pointRadius: 3,
+        data: exercises.map(e => e.sets),
+        backgroundColor: exercises.map(e => e.color + '44'),
+        borderColor: exercises.map(e => e.color),
+        borderWidth: 1,
+        borderRadius: 2,
+        _vols: exercises.map(e => e.vol),
       }]
     },
     options: {
-      responsive: true, maintainAspectRatio: true,
-      scales: { r: {
-        beginAtZero: true, min: 0,
-        ticks: { display: false, stepSize: 10 },
-        grid: { color: '#1c1c30' }, angleLines: { color: '#1c1c30' },
-        pointLabels: { color: ctx => MUSCLE_COLORS[ctx.label] || '#c0c0d8', font: { family: "'Space Mono',monospace", size: 8 } }
-      }},
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { grid: { color: '#1a1a2e' }, ticks: { color: '#454560', font: { size: 8 }, stepSize: 1 }, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { color: '#c0c0d8', font: { family: "'Space Mono',monospace", size: 8 } } }
+      },
       plugins: {
         legend: { display: false },
-        tooltip: { backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1, bodyColor: '#c0c0d8',
-          callbacks: { label: ctx => ` ${RADAR_MUSCLES[ctx.dataIndex]}: ${ctx.raw}%` }
+        tooltip: {
+          backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1, bodyColor: '#c0c0d8', titleColor: '#7b5cff',
+          callbacks: {
+            label: ctx => {
+              const vol = ctx.dataset._vols[ctx.dataIndex];
+              return ` ${ctx.raw} sets  |  ${Math.round(vol/1000*10)/10}k kg vol`;
+            }
+          }
         }
       }
     }

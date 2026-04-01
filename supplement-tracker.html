@@ -21,6 +21,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 @keyframes neon-a{0%,100%{text-shadow:var(--glow-a)}50%{text-shadow:0 0 4px #7b5cffcc,0 0 30px #7b5cff99}}
 @keyframes neon-g{0%,100%{text-shadow:var(--glow-g)}50%{text-shadow:0 0 4px #00ffb3cc,0 0 30px #00ffb399}}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slide-down{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── Header ── */
 header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
@@ -32,7 +33,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .back-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);text-decoration:none;transition:all .2s;white-space:nowrap;}
 .back-btn:hover{background:#7b5cff20;box-shadow:var(--glow-a);}
-.back-btn svg{width:12px;height:12px;fill:currentColor;}
+.back-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 #date-display{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);}
 .sync-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .3s;}
 .sync-badge.ok{color:var(--green);border-color:#00ffb333;background:#00ffb30a;}
@@ -47,24 +48,17 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .tab-btn{padding:7px 16px;font-family:monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;border:1px solid var(--muted);background:transparent;color:var(--muted);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;user-select:none;}
 .tab-btn:hover{color:var(--green);border-color:var(--green);}
 .tab-btn.active{color:var(--green);border-color:var(--green);background:#00ffb311;box-shadow:0 0 12px #00ffb322;}
-.tab-pane{display:none;}
-.tab-pane.active{display:block;}
+.tab-pane{display:none;}.tab-pane.active{display:block;}
 
-/* ── Main layout ── */
+/* ── Main ── */
 .main{padding:14px 14px 28px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1;}
 
 /* ── Panels ── */
 .panel{background:var(--panel);border:1px solid var(--border);padding:16px;position:relative;overflow:hidden;}
 .panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 8px var(--accent);}
-.panel.c::before{background:linear-gradient(90deg,var(--cyan),transparent 60%);box-shadow:0 0 8px var(--cyan);}
 .panel.g::before{background:linear-gradient(90deg,var(--green),transparent 60%);box-shadow:0 0 8px var(--green);}
-.panel.y::before{background:linear-gradient(90deg,var(--yellow),transparent 60%);box-shadow:0 0 8px var(--yellow);}
 .panel-title{font-family:monospace;font-size:10px;letter-spacing:2.5px;color:var(--accent);margin-bottom:14px;text-transform:uppercase;}
-.panel.c .panel-title{color:var(--cyan);}
 .panel.g .panel-title{color:var(--green);}
-.panel.y .panel-title{color:var(--yellow);}
-
-/* ── Corner decorators ── */
 .cd{position:absolute;width:10px;height:10px;border-color:var(--accent);border-style:solid;opacity:.3;}
 .cd.tl{top:4px;left:4px;border-width:1px 0 0 1px;}.cd.tr{top:4px;right:4px;border-width:1px 1px 0 0;}
 .cd.bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.cd.br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
@@ -76,125 +70,145 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .4s ease;box-shadow:0 0 8px var(--green);}
 .progress-label{font-family:'Space Mono',monospace;font-size:12px;color:var(--green);white-space:nowrap;font-weight:700;}
 
-/* ── Action bar (boven de kaarten) ── */
-.action-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
-.add-supp-btn{display:flex;align-items:center;gap:7px;padding:8px 18px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
+/* ── Action bar ── */
+.action-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.action-bar-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);}
+.add-supp-btn{display:flex;align-items:center;gap:7px;padding:7px 16px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 .add-supp-btn:hover{background:#00ffb315;box-shadow:var(--glow-g);}
 
-/* ── Supplement cards ── */
-.supp-grid{display:grid;grid-template-columns:1fr;gap:12px;}
-.supp-card{background:#0a0a15;border:1px solid var(--border);padding:16px;position:relative;transition:border-color .2s;}
-.supp-card.logged{border-color:var(--green);box-shadow:0 0 14px #00ffb322;}
-.supp-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px;}
-.supp-name{font-family:'Oxanium',sans-serif;font-weight:700;font-size:15px;letter-spacing:.5px;line-height:1.3;}
-.supp-brand{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);margin-top:4px;}
-.supp-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;white-space:nowrap;border:1px solid;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);}
+/* ── TIME GROUP LABEL ── */
+.time-group-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);padding:6px 0 4px;margin-top:4px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.time-group-label:first-child{margin-top:0;}
+
+/* ── SUPPLEMENT CARD — COLLAPSED ── */
+.supp-list{display:flex;flex-direction:column;gap:6px;}
+.supp-card{background:#0a0a15;border:1px solid var(--border);transition:border-color .2s;}
+.supp-card.logged{border-color:#00ffb344;}
+
+/* collapsed header row */
+.card-row{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:default;}
+.card-check{width:20px;height:20px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .2s;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.card-check:hover{border-color:var(--green);}
+.supp-card.logged .card-check{border-color:var(--green);background:#00ffb318;color:var(--green);}
+.card-info{flex:1;min-width:0;}
+.card-name{font-family:'Oxanium',sans-serif;font-weight:700;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.supp-card.logged .card-name{color:var(--green);}
+.card-meta{font-family:monospace;font-size:9px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;}
+.card-meta-dose{color:var(--text);}
+.card-time-pill{font-family:monospace;font-size:8px;padding:2px 8px;border:1px solid var(--border);color:var(--muted);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);white-space:nowrap;flex-shrink:0;}
+.supp-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;white-space:nowrap;border:1px solid;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);flex-shrink:0;}
 .badge-mineral{color:var(--cyan);border-color:var(--cyan);background:#00e5ff11;}
 .badge-multi{color:var(--yellow);border-color:var(--yellow);background:#ffd60011;}
 .badge-oil{color:var(--accent);border-color:var(--accent);background:#7b5cff11;}
 .badge-kracht{color:var(--green);border-color:var(--green);background:#00ffb311;}
 .badge-custom{color:var(--muted);border-color:var(--muted);background:#45456011;}
+.card-expand-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:monospace;font-size:9px;letter-spacing:1px;padding:4px 8px;white-space:nowrap;transition:color .15s;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.card-expand-btn:hover{color:var(--cyan);}
+.card-expand-btn.open{color:var(--cyan);}
 
-/* ── Info table ── */
-.supp-info-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
-.supp-info-table td{padding:4px 8px;border-bottom:1px solid #1a1a2a;vertical-align:top;line-height:1.5;}
-.supp-info-table td:first-child{font-family:monospace;font-size:9px;letter-spacing:.5px;color:var(--muted);width:38%;padding-right:12px;}
+/* collapsed details */
+.card-details{display:none;padding:0 14px 14px;border-top:1px solid var(--border);animation:slide-down .15s ease;}
+.card-details.open{display:block;}
+
+/* ── info table inside card ── */
+.supp-info-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 12px;}
+.supp-info-table td{padding:4px 6px;border-bottom:1px solid #1a1a2a;vertical-align:top;line-height:1.5;}
+.supp-info-table td:first-child{font-family:monospace;font-size:9px;color:var(--muted);width:36%;}
 .supp-info-table tr:last-child td{border-bottom:none;}
 
-/* ── Controls ── */
-.supp-controls{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+/* ── controls inside card ── */
 .ctrl-label{font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:4px;}
-.ctrl-input{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:13px;transition:border-color .2s;}
+.ctrl-input{background:#08080f;border:1px solid var(--border);color:var(--text);padding:7px 10px;font-family:'Space Mono',monospace;font-size:13px;width:100%;transition:border-color .2s;}
 .ctrl-input:focus{outline:none;border-color:var(--green);}
-.time-btns{display:flex;flex-wrap:wrap;gap:5px;}
-.time-btn{padding:5px 11px;border:1px solid var(--border);background:transparent;color:var(--muted);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-family:monospace;font-size:9px;letter-spacing:.5px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.time-btns{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.time-btn{padding:5px 10px;border:1px solid var(--border);background:transparent;color:var(--muted);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-family:monospace;font-size:9px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
 .time-btn:hover{border-color:var(--green);color:var(--text);}
 .time-btn.selected{background:#00ffb315;border-color:var(--green);color:var(--green);}
-
-/* ── Log button ── */
-.log-btn{width:100%;padding:10px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;text-transform:uppercase;-webkit-tap-highlight-color:transparent;}
+.card-actions{display:flex;gap:8px;align-items:center;}
+.log-btn{flex:1;padding:9px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 .log-btn:hover{background:#00ffb315;box-shadow:0 0 12px #00ffb333;}
-.log-btn.logged-state{background:#00ffb320;color:var(--green);box-shadow:0 0 8px #00ffb322;}
-.del-card-btn{position:absolute;top:10px;right:10px;background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:monospace;font-size:9px;letter-spacing:.5px;padding:3px 6px;transition:color .15s;}
-.del-card-btn:hover{color:var(--red);}
+.log-btn.logged-state{background:#00ffb320;color:var(--green);}
+.del-card-btn{padding:9px 12px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:9px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:color .15s;}
+.del-card-btn:hover{color:var(--red);border-color:var(--red);}
 
 /* ── Notes ── */
 .notes-wrap textarea{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'Space Mono',monospace;font-size:12px;resize:vertical;min-height:65px;transition:border-color .2s;line-height:1.5;}
 .notes-wrap textarea:focus{outline:none;border-color:var(--accent);}
 
-/* ── Overview ── */
-.overview-grid{display:flex;flex-direction:column;gap:12px;}
-.overview-card{background:#0a0a15;border:1px solid var(--border);padding:16px;}
-.overview-card h3{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;}
-.overview-brand{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--green);margin-bottom:12px;}
-.overlap-note{background:#00e5ff08;border:1px solid #00e5ff22;padding:14px 16px;font-size:12px;color:#00e5ffaa;margin-top:12px;line-height:1.8;}
+/* ── OVERVIEW ── */
+.overview-card{background:#0a0a15;border:1px solid var(--border);padding:16px;margin-bottom:10px;position:relative;}
+.ov-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.ov-name{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;}
+.ov-brand{font-family:monospace;font-size:9px;color:var(--green);margin-top:3px;letter-spacing:1px;}
+.edit-ov-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;white-space:nowrap;}
+.edit-ov-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.edit-ov-btn.active{border-color:var(--yellow);color:var(--yellow);}
+.ov-edit-form{display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:12px;animation:slide-down .15s ease;}
+.ov-edit-form.open{display:block;}
+.ov-field{margin-bottom:10px;}
+.ov-field label{display:block;font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.ov-field input,.ov-field textarea,.ov-field select{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:7px 10px;font-family:'Space Mono',monospace;font-size:12px;transition:border-color .2s;}
+.ov-field input:focus,.ov-field textarea:focus,.ov-field select:focus{outline:none;border-color:var(--cyan);}
+.ov-field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.ov-field select option{background:#0d0d18;}
+.ov-save-btn{padding:7px 18px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:monospace;font-size:9px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .15s;}
+.ov-save-btn:hover{background:#00e5ff15;}
+.ov-delete-btn{padding:7px 14px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:9px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;margin-left:auto;}
+.ov-delete-btn:hover{border-color:var(--red);color:var(--red);}
+.overlap-note{background:#00e5ff08;border:1px solid #00e5ff22;padding:14px 16px;font-size:12px;color:#00e5ffaa;margin-top:14px;line-height:1.8;}
 .overlap-note strong{color:var(--cyan);}
 
 /* ── History ── */
 .history-toolbar{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
-.hist-date{background:#08080f;border:1px solid var(--border);color:var(--text);padding:6px 10px;font-family:'Space Mono',monospace;font-size:12px;transition:border-color .2s;}
+.hist-date{background:#08080f;border:1px solid var(--border);color:var(--text);padding:6px 10px;font-family:'Space Mono',monospace;font-size:12px;}
 .hist-date:focus{outline:none;border-color:var(--green);}
 .toolbar-label{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);}
-.export-btn{padding:6px 14px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .15s;margin-left:auto;-webkit-tap-highlight-color:transparent;}
-.export-btn:hover{background:#00e5ff15;box-shadow:0 0 10px #00e5ff33;}
+.export-btn{padding:6px 14px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .15s;margin-left:auto;}
+.export-btn:hover{background:#00e5ff15;}
 .history-table-wrap{overflow-x:auto;}
 table.history-tbl{width:100%;border-collapse:collapse;font-size:12px;}
 table.history-tbl th{background:#0a0a15;padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);border-bottom:1px solid var(--border);}
 table.history-tbl td{padding:9px 12px;border-bottom:1px solid #12121e;line-height:1.4;}
-table.history-tbl tr:hover td{background:rgba(123,92,255,.03);}
-.badge-unit{font-family:monospace;font-size:9px;letter-spacing:.5px;border:1px solid var(--green);color:var(--green);padding:2px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);}
+.badge-unit{font-family:monospace;font-size:9px;border:1px solid var(--green);color:var(--green);padding:2px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);}
 .no-data{text-align:center;color:var(--muted);padding:40px;font-family:monospace;font-size:10px;letter-spacing:2px;}
 .del-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:2px 6px;transition:color .15s;font-family:monospace;}
 .del-btn:hover{color:var(--red);}
 
-/* ── ADD SUPPLEMENT MODAL ── */
+/* ── Modals ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--panel);border:1px solid var(--border);padding:22px;width:min(520px,100%);position:relative;max-height:90vh;overflow-y:auto;}
 .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 60%);box-shadow:0 0 8px var(--green);}
 .modal h3{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;margin-bottom:16px;color:var(--green);}
-.modal-field{margin-bottom:14px;}
-.modal-field label{display:block;font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;}
-.modal-field input,.modal-field select,.modal-field textarea{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:9px 12px;font-family:'Space Mono',monospace;font-size:13px;transition:border-color .2s;}
+.modal-field{margin-bottom:13px;}
+.modal-field label{display:block;font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px;}
+.modal-field input,.modal-field select,.modal-field textarea{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:13px;transition:border-color .2s;}
 .modal-field input:focus,.modal-field select:focus,.modal-field textarea:focus{outline:none;border-color:var(--green);}
 .modal-field select option{background:#0d0d18;}
 .modal-field textarea{resize:vertical;min-height:70px;line-height:1.5;}
-.search-row{display:flex;gap:8px;align-items:flex-end;margin-bottom:14px;}
-.search-row input{flex:1;background:#08080f;border:1px solid var(--border);color:var(--text);padding:9px 12px;font-family:'Space Mono',monospace;font-size:13px;}
+.search-row{display:flex;gap:8px;margin-bottom:12px;}
+.search-row input{flex:1;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:13px;}
 .search-row input:focus{outline:none;border-color:var(--green);}
-.search-btn{padding:9px 16px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;white-space:nowrap;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.search-btn{padding:8px 14px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;white-space:nowrap;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .15s;}
 .search-btn:hover{background:#00e5ff15;}
 .search-btn:disabled{opacity:.4;cursor:not-allowed;}
-.search-spinner{display:none;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
-#search-results{margin-bottom:14px;}
-.search-result-item{padding:10px 12px;border:1px solid var(--border);margin-bottom:6px;cursor:pointer;font-size:12px;transition:border-color .15s,background .15s;}
+.search-spinner{display:none;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;margin:8px auto;}
+.search-result-item{padding:10px 12px;border:1px solid var(--border);margin-bottom:5px;cursor:pointer;font-size:12px;transition:border-color .15s,background .15s;}
 .search-result-item:hover{border-color:var(--green);background:#00ffb308;}
-.search-result-item .sr-name{font-weight:700;font-size:13px;margin-bottom:3px;}
-.search-result-item .sr-brand{font-family:monospace;font-size:9px;color:var(--muted);}
-.search-result-item .sr-info{font-size:11px;color:var(--muted);margin-top:3px;}
+.search-result-item .sr-name{font-weight:700;font-size:13px;margin-bottom:2px;}
+.search-result-item .sr-sub{font-family:monospace;font-size:9px;color:var(--muted);margin-top:2px;}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;}
 .btn-save{padding:8px 20px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;}
 .btn-save:hover{background:#00ffb315;box-shadow:var(--glow-g);}
-.btn-cancel{padding:8px 16px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:10px;letter-spacing:1px;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .15s;}
-
-/* ── GitHub settings modal ── */
-.gh-modal{background:var(--panel);border:1px solid var(--border);padding:24px;width:min(420px,94vw);position:relative;}
-.gh-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 8px var(--accent);}
-.gh-modal h3{font-family:'Oxanium',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;margin-bottom:6px;color:var(--accent);}
+.btn-cancel{padding:8px 16px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:10px;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);}
+.gh-modal::before{background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 8px var(--accent);}
+.gh-modal h3{color:var(--accent);}
 .gh-modal p{font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
 .gh-modal p a{color:var(--cyan);}
-.gh-modal input{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:12px;margin-bottom:12px;transition:border-color .2s;}
-.gh-modal input:focus{outline:none;border-color:var(--accent);}
 
 footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;letter-spacing:2px;margin-top:40px;padding-top:16px;border-top:1px solid var(--border);position:relative;z-index:1;}
 
-@media(min-width:640px){
-  .supp-grid{grid-template-columns:repeat(2,1fr);}
-}
-@media(min-width:1100px){
-  .supp-grid{grid-template-columns:repeat(4,1fr);}
-  .main{padding:14px 24px 28px;}
-}
+@media(min-width:900px){.main{padding:14px 24px 28px;}}
 </style>
 </head>
 <body>
@@ -207,21 +221,21 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
       <div id="sync-status" class="sync-badge syncing">↻ LADEN</div>
       <button class="settings-btn" onclick="openSettings()">⚙ GITHUB</button>
       <a href="index.html" class="back-btn">
-        <svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>
+        <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
         BITFIT
       </a>
     </div>
   </div>
 </header>
 
-<!-- GitHub settings modal -->
+<!-- GitHub modal -->
 <div class="modal-overlay" id="settings-modal">
-  <div class="gh-modal">
-    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+  <div class="modal gh-modal">
+    <div class="cd tl"></div><div class="cd tr"></div>
     <h3>// GITHUB TOKEN</h3>
-    <p>Jouw Personal Access Token wordt alleen opgeslagen in <strong style="color:var(--text)">deze browser</strong> — nooit in de code of op GitHub.<br/><br/>
-    Maak een token aan via <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> met <strong style="color:var(--text)">repo</strong>-rechten.</p>
-    <input type="password" id="token-input" placeholder="ghp_…" />
+    <p>Token wordt lokaal opgeslagen — nooit in de code of op GitHub.<br/>
+    Maak aan via <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> met <strong style="color:var(--text)">repo</strong>-rechten.</p>
+    <input type="password" id="token-input" placeholder="ghp_…" style="width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:12px;margin-bottom:12px;"/>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeSettings()">ANNULEER</button>
       <button class="btn-save" onclick="saveToken()">OPSLAAN</button>
@@ -232,60 +246,48 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 <!-- Add supplement modal -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal">
-    <div class="cd tl g"></div><div class="cd tr g"></div><div class="cd bl g"></div><div class="cd br g"></div>
+    <div class="cd tl g"></div><div class="cd tr g"></div>
     <h3>// SUPPLEMENT TOEVOEGEN</h3>
-
-    <div style="margin-bottom:6px;font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);">ZOEK ONLINE</div>
+    <div style="font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);margin-bottom:6px;">ZOEK ONLINE (Open Food Facts)</div>
     <div class="search-row">
-      <input type="text" id="search-input" placeholder="bv. magnesium, creatine, omega-3…" onkeydown="if(event.key==='Enter')searchOnline()"/>
+      <input type="text" id="search-input" placeholder="bv. creatine, magnesium, omega-3…" onkeydown="if(event.key==='Enter')searchOnline()"/>
       <button class="search-btn" id="search-btn" onclick="searchOnline()">ZOEK</button>
     </div>
     <div class="search-spinner" id="search-spinner"></div>
-    <div id="search-results"></div>
-
-    <div class="modal-field">
-      <label>Naam *</label>
-      <input type="text" id="f-name" placeholder="bv. Magnesium Bisglycinaat 375 mg"/>
-    </div>
+    <div id="search-results" style="margin-bottom:10px;"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="modal-field" style="grid-column:1/-1;">
+        <label>Naam *</label>
+        <input type="text" id="f-name" placeholder="bv. Magnesium Bisglycinaat 375 mg"/>
+      </div>
       <div class="modal-field">
         <label>Merk</label>
         <input type="text" id="f-brand" placeholder="bv. Lucovitaal"/>
       </div>
       <div class="modal-field">
         <label>Type</label>
-        <select id="f-type">
-          <option>Tablet</option><option>Capsule</option><option>Softgel</option>
-          <option>Poeder</option><option>Vloeistof</option><option>Anders</option>
-        </select>
+        <select id="f-type"><option>Tablet</option><option>Capsule</option><option>Softgel</option><option>Poeder</option><option>Vloeistof</option><option>Anders</option></select>
       </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div class="modal-field">
         <label>Standaard dosis</label>
         <input type="number" id="f-dose" value="1" min="0" step="0.5"/>
       </div>
       <div class="modal-field">
         <label>Eenheid</label>
-        <select id="f-unit">
-          <option value="tablets">tablets</option><option value="capsules">capsules</option>
-          <option value="gram">gram</option><option value="ml">ml</option><option value="druppels">druppels</option>
-        </select>
+        <select id="f-unit"><option value="tablets">tablets</option><option value="capsules">capsules</option><option value="gram">gram</option><option value="ml">ml</option><option value="druppels">druppels</option></select>
+      </div>
+      <div class="modal-field">
+        <label>Standaard tijdstip</label>
+        <select id="f-time"><option>ochtend</option><option>middag</option><option>avond</option><option>pre-workout</option><option>post-workout</option><option>met maaltijd</option></select>
+      </div>
+      <div class="modal-field">
+        <label>Categorie</label>
+        <select id="f-badge"><option value="MINERAAL|badge-mineral">Mineraal</option><option value="MULTI|badge-multi">Multivitamine</option><option value="VISOLIE|badge-oil">Visolie / Omega</option><option value="KRACHT|badge-kracht">Kracht / Sport</option><option value="CUSTOM|badge-custom">Overig</option></select>
       </div>
     </div>
     <div class="modal-field">
-      <label>Categorie</label>
-      <select id="f-badge">
-        <option value="MINERAAL|badge-mineral">Mineraal</option>
-        <option value="MULTI|badge-multi">Multivitamine</option>
-        <option value="VISOLIE|badge-oil">Visolie / Omega</option>
-        <option value="KRACHT|badge-kracht">Kracht / Sport</option>
-        <option value="CUSTOM|badge-custom">Overig</option>
-      </select>
-    </div>
-    <div class="modal-field">
-      <label>Info / notities (optioneel)</label>
-      <textarea id="f-info" placeholder="Ingrediënten, aanbevolen dosering, gebruik…"></textarea>
+      <label>Info / notities (optioneel — één per regel, bv. "EPA: 180mg")</label>
+      <textarea id="f-info" placeholder="EPA: 180 mg&#10;DHA: 120 mg&#10;Aanbeveling: bij maaltijd"></textarea>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeAddModal()">ANNULEER</button>
@@ -295,17 +297,17 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 </div>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('today', this)">VANDAAG</button>
-  <button class="tab-btn" onclick="switchTab('overview', this)">OVERZICHT</button>
-  <button class="tab-btn" onclick="switchTab('history', this)">GESCHIEDENIS</button>
+  <button class="tab-btn active" onclick="switchTab('today',this)">VANDAAG</button>
+  <button class="tab-btn" onclick="switchTab('overview',this)">OVERZICHT</button>
+  <button class="tab-btn" onclick="switchTab('history',this)">GESCHIEDENIS</button>
 </div>
 
 <div class="main">
 
-<!-- ══ TAB: TODAY ══ -->
+<!-- ══ VANDAAG ══ -->
 <div id="tab-today" class="tab-pane active">
-  <div class="panel g" style="margin-bottom:0;">
-    <div class="cd tl g"></div><div class="cd tr g"></div><div class="cd bl g"></div><div class="cd br g"></div>
+  <div class="panel g">
+    <div class="cd tl g"></div><div class="cd tr g"></div>
     <div class="panel-title">&#9658; VOORTGANG VANDAAG</div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
@@ -314,17 +316,14 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 
   <div class="action-bar">
-    <div style="font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);">SUPPLEMENTEN VANDAAG</div>
-    <button class="add-supp-btn" onclick="openAddModal()">
-      <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2v12M2 8h12"/></svg>
-      SUPP TOEVOEGEN
-    </button>
+    <div class="action-bar-label">SUPPLEMENTEN</div>
+    <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
   </div>
 
-  <div class="supp-grid" id="supp-grid"></div>
+  <div class="supp-list" id="supp-grid"></div>
 
   <div class="panel" style="margin-top:14px;">
-    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+    <div class="cd tl"></div><div class="cd tr"></div>
     <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
     <div class="notes-wrap">
       <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
@@ -332,25 +331,25 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 </div>
 
-<!-- ══ TAB: OVERVIEW ══ -->
+<!-- ══ OVERZICHT ══ -->
 <div id="tab-overview" class="tab-pane">
   <div class="panel">
-    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
-    <div class="panel-title">&#9658; SUPPLEMENT SPECS</div>
-    <div class="overview-grid" id="overview-content"></div>
-    <div class="overlap-note" style="margin-top:14px;">
+    <div class="cd tl"></div><div class="cd tr"></div>
+    <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
+    <div id="overview-content"></div>
+    <div class="overlap-note">
       <strong>// OVERLAP</strong><br/>
       • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
-      • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (veilige grens 4000 IU).<br/>
-      • <strong>Creatine:</strong> Opti-Men bevat geen creatine — geen overlap.
+      • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
+      • <strong>Creatine:</strong> geen overlap met Opti-Men.
     </div>
   </div>
 </div>
 
-<!-- ══ TAB: HISTORY ══ -->
+<!-- ══ GESCHIEDENIS ══ -->
 <div id="tab-history" class="tab-pane">
   <div class="panel">
-    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+    <div class="cd tl"></div><div class="cd tr"></div>
     <div class="panel-title">&#9658; LOGBOEK</div>
     <div class="history-toolbar">
       <span class="toolbar-label">VAN</span>
@@ -361,9 +360,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
     </div>
     <div class="history-table-wrap">
       <table class="history-tbl">
-        <thead>
-          <tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr>
-        </thead>
+        <thead><tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr></thead>
         <tbody id="history-body"></tbody>
       </table>
       <div id="no-history" class="no-data" style="display:none">// GEEN LOGS GEVONDEN</div>
@@ -371,333 +368,443 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 </div>
 
-</div><!-- /.main -->
-
+</div>
 <footer>BITSUPP // DATA IN BROWSER (localStorage) // SYNC VIA GITHUB</footer>
 
 <script>
-// ══════════════════════════════════════════════
-// DEFAULT SUPPLEMENTS
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════
+// TIJDSTIP VOLGORDE
+// ════════════════════════════════════════════
+const TIME_ORDER = ['ochtend','pre-workout','middag','met maaltijd','post-workout','avond'];
+function timeRank(t){ const i=TIME_ORDER.indexOf(t); return i<0?99:i; }
+
+// ════════════════════════════════════════════
+// SUPPLEMENT DATA
+// ════════════════════════════════════════════
 const DEFAULT_SUPPLEMENTS = [
-  {
-    id: 'magnesium', name: 'Magnesium Bisglycinaat 375 mg', brand: 'Lucovitaal',
-    type: 'Tablet', badge: 'MINERAAL', badgeClass: 'badge-mineral',
-    defaultDose: 2, unit: 'tablets', defaultTime: 'avond',
-    info: {'Werkzame stof':'Magnesiumbisglycinaat','Per dagdosering':'375 mg elementair Mg','Opname':'Hoge biologische beschikbaarheid','Aanbeveling':"'s Avonds → glycine bevordert slaap"}
-  },
-  {
-    id: 'optimen', name: 'Opti-Men Multivitamine', brand: 'Optimum Nutrition',
-    type: 'Tablet', badge: 'MULTI', badgeClass: 'badge-multi',
-    defaultDose: 1, unit: 'tablets', defaultTime: 'middag',
-    info: {'Werkzame stoffen':'75+ ingrediënten','Vitamine C':'300 mg (500% ADH)','Vitamine D':'300 IU','B-vitamines':'tot 5000% ADH','Zink':'30 mg (200% ADH)','Aanbeveling':'Bij lunch of avondmaaltijd'}
-  },
-  {
-    id: 'omega3', name: 'Omega-3 + Vitamine D3', brand: 'Body&Fit',
-    type: 'Softgel', badge: 'VISOLIE', badgeClass: 'badge-oil',
-    defaultDose: 1, unit: 'capsules', defaultTime: 'middag',
-    info: {'Per capsule':'1000 mg visolie','EPA':'180 mg','DHA':'120 mg','Vitamine D3':'1000 IU cholecalciferol','Aanbeveling':'Bij maaltijd met vet'}
-  },
-  {
-    id: 'creatine', name: 'Creatine Monohydrate', brand: 'Body&Fit',
-    type: 'Poeder', badge: 'KRACHT', badgeClass: 'badge-kracht',
-    defaultDose: 6, unit: 'gram', defaultTime: 'pre-workout',
-    info: {'Samenstelling':'100% Creatine Monohydraat','Per maatschep':'~3 g (maatschep = 3,4 g)','Standaard dosis':'6 g/dag (2 scoops)','Effect':'Vergroot prestaties bij korte inspanning'}
-  }
+  { id:'magnesium', name:'Magnesium Bisglycinaat 375 mg', brand:'Lucovitaal', type:'Tablet',
+    badge:'MINERAAL', badgeClass:'badge-mineral', defaultDose:2, unit:'tablets', defaultTime:'avond',
+    info:{'Werkzame stof':'Magnesiumbisglycinaat','Per dagdosering':'375 mg elementair Mg',
+          'Opname':'Hoge biologische beschikbaarheid','Aanbeveling':"'s Avonds → glycine bevordert slaap"} },
+  { id:'optimen', name:'Opti-Men Multivitamine', brand:'Optimum Nutrition', type:'Tablet',
+    badge:'MULTI', badgeClass:'badge-multi', defaultDose:1, unit:'tablets', defaultTime:'middag',
+    info:{'Werkzame stoffen':'75+ ingrediënten','Vitamine C':'300 mg (500% ADH)',
+          'Vitamine D':'300 IU','B-vitamines':'tot 5000% ADH','Zink':'30 mg (200% ADH)',
+          'Aanbeveling':'Bij lunch of avondmaaltijd'} },
+  { id:'omega3', name:'Omega-3 + Vitamine D3', brand:'Body&Fit', type:'Softgel',
+    badge:'VISOLIE', badgeClass:'badge-oil', defaultDose:1, unit:'capsules', defaultTime:'middag',
+    info:{'Per capsule':'1000 mg visolie','EPA':'180 mg','DHA':'120 mg',
+          'Vitamine D3':'1000 IU cholecalciferol','Aanbeveling':'Bij maaltijd met vet'} },
+  { id:'creatine', name:'Creatine Monohydrate', brand:'Body&Fit', type:'Poeder',
+    badge:'KRACHT', badgeClass:'badge-kracht', defaultDose:6, unit:'gram', defaultTime:'pre-workout',
+    info:{'Samenstelling':'100% Creatine Monohydraat','Per maatschep':'~3 g (maatschep = 3,4 g)',
+          'Standaard dosis':'6 g/dag (2 scoops)','Effect':'Vergroot prestaties bij korte inspanning'} }
 ];
 
-function loadCustomSupps() {
-  try { return JSON.parse(localStorage.getItem('bitsupp_custom') || '[]'); } catch { return []; }
-}
-function saveCustomSupps(arr) { localStorage.setItem('bitsupp_custom', JSON.stringify(arr)); }
-function getAllSupps() { return [...DEFAULT_SUPPLEMENTS, ...loadCustomSupps()]; }
+function loadCustomSupps(){ try{ return JSON.parse(localStorage.getItem('bitsupp_custom')||'[]'); }catch{ return []; } }
+function saveCustomSupps(a){ localStorage.setItem('bitsupp_custom', JSON.stringify(a)); }
 
-// ══════════════════════════════════════════════
-// GITHUB CONFIG
-// ══════════════════════════════════════════════
+// overrides: {id: {name, brand, type, badge, badgeClass, defaultDose, unit, defaultTime, info}}
+function loadOverrides(){ try{ return JSON.parse(localStorage.getItem('bitsupp_overrides')||'{}'); }catch{ return {}; } }
+function saveOverrides(o){ localStorage.setItem('bitsupp_overrides', JSON.stringify(o)); }
+
+function getAllSupps(){
+  const overrides = loadOverrides();
+  const base = DEFAULT_SUPPLEMENTS.map(s => overrides[s.id] ? {...s,...overrides[s.id]} : s);
+  return [...base, ...loadCustomSupps()];
+}
+
+function isCustom(id){ return !DEFAULT_SUPPLEMENTS.find(s=>s.id===id); }
+
+// ════════════════════════════════════════════
+// GITHUB
+// ════════════════════════════════════════════
 const GH = {
-  get token() { return localStorage.getItem('gh_token') || ''; },
-  owner: 'ZO174sfi12', repo: 'BitFit-beta', file: 'supplement-log.json'
+  get token(){ return localStorage.getItem('gh_token')||''; },
+  owner:'ZO174sfi12', repo:'BitFit-beta', file:'supplement-log.json'
 };
 const GH_API = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
-let _logs = [], _fileSha = null;
+let _logs=[], _fileSha=null;
 
-function setSyncStatus(state, msg) {
-  const el = document.getElementById('sync-status');
-  if (!el) return;
-  el.className = 'sync-badge ' + state;
-  el.textContent = msg;
+function setSyncStatus(state,msg){ const el=document.getElementById('sync-status'); if(!el)return; el.className='sync-badge '+state; el.textContent=msg; }
+async function ghFetch(method,body){
+  const opts={method,headers:{'Authorization':`Bearer ${GH.token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'}};
+  if(body) opts.body=JSON.stringify(body);
+  return fetch(GH_API,opts);
 }
-async function ghFetch(method, body) {
-  const opts = { method, headers: {'Authorization':`Bearer ${GH.token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'} };
-  if (body) opts.body = JSON.stringify(body);
-  return fetch(GH_API, opts);
-}
-async function loadLogsFromGitHub() {
+async function loadLogsFromGitHub(){
   setSyncStatus('syncing','↻ LADEN');
-  try {
-    const res = await ghFetch('GET');
-    if (res.status === 404) { _fileSha=null; _logs=[]; setSyncStatus('ok','✓ VERBONDEN'); return; }
-    if (!res.ok) throw new Error(res.status);
-    const data = await res.json();
-    _fileSha = data.sha;
-    _logs = JSON.parse(atob(data.content.replace(/\n/g,'')));
+  try{
+    const res=await ghFetch('GET');
+    if(res.status===404){_fileSha=null;_logs=[];setSyncStatus('ok','✓ VERBONDEN');return;}
+    if(!res.ok) throw new Error(res.status);
+    const data=await res.json();
+    _fileSha=data.sha;
+    _logs=JSON.parse(atob(data.content.replace(/\n/g,'')));
     setSyncStatus('ok','✓ GESYNCHRONISEERD');
-  } catch(e) { setSyncStatus('error','⚠ GITHUB FOUT'); }
+  }catch(e){setSyncStatus('error','⚠ GITHUB FOUT');}
 }
-async function saveLogsToGitHub() {
+async function saveLogsToGitHub(){
   setSyncStatus('syncing','↻ OPSLAAN');
-  try {
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(_logs,null,2))));
-    const body = {message:`Update supplement log ${todayStr()}`,content,...(_fileSha?{sha:_fileSha}:{})};
-    const res = await ghFetch('PUT',body);
-    if (!res.ok) throw new Error(res.status);
-    _fileSha = (await res.json()).content.sha;
+  try{
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(_logs,null,2))));
+    const body={message:`Update supplement log ${todayStr()}`,content,...(_fileSha?{sha:_fileSha}:{})};
+    const res=await ghFetch('PUT',body);
+    if(!res.ok) throw new Error(res.status);
+    _fileSha=(await res.json()).content.sha;
     setSyncStatus('ok','✓ OPGESLAGEN');
-  } catch(e) { setSyncStatus('error','⚠ OPSLAAN MISLUKT'); }
+  }catch(e){setSyncStatus('error','⚠ OPSLAAN MISLUKT');}
 }
 
-function todayStr() { return new Date().toISOString().slice(0,10); }
-function loadLogs() { return _logs; }
-async function saveLogs(logs) { _logs=logs; await saveLogsToGitHub(); }
-function loadTodayState() { try { return JSON.parse(localStorage.getItem('supp_today_'+todayStr())||'{}'); } catch { return {}; } }
-function saveTodayState(s) { localStorage.setItem('supp_today_'+todayStr(), JSON.stringify(s)); }
-function loadDayNotes() { return localStorage.getItem('supp_notes_'+todayStr())||''; }
-function saveDayNotes() { localStorage.setItem('supp_notes_'+todayStr(), document.getElementById('day-notes-input').value); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function loadLogs(){ return _logs; }
+async function saveLogs(logs){ _logs=logs; await saveLogsToGitHub(); }
+function loadTodayState(){ try{return JSON.parse(localStorage.getItem('supp_today_'+todayStr())||'{}');}catch{return {};} }
+function saveTodayState(s){ localStorage.setItem('supp_today_'+todayStr(),JSON.stringify(s)); }
+function loadDayNotes(){ return localStorage.getItem('supp_notes_'+todayStr())||''; }
+function saveDayNotes(){ localStorage.setItem('supp_notes_'+todayStr(),document.getElementById('day-notes-input').value); }
 
-// ══════════════════════════════════════════════
-// RENDER: TODAY
-// ══════════════════════════════════════════════
-function renderToday() {
+// ════════════════════════════════════════════
+// RENDER: VANDAAG — collapsed cards
+// ════════════════════════════════════════════
+function renderToday(){
   const state = loadTodayState();
-  const SUPPS = getAllSupps();
+  const SUPPS = getAllSupps().slice().sort((a,b)=>{
+    const ta = state[a.id]?.time || a.defaultTime;
+    const tb = state[b.id]?.time || b.defaultTime;
+    return timeRank(ta) - timeRank(tb);
+  });
   const grid = document.getElementById('supp-grid');
-  grid.innerHTML = '';
-  let loggedCount = 0;
+  grid.innerHTML='';
+  let loggedCount=0;
 
-  SUPPS.forEach(s => {
-    const entry = state[s.id] || {};
+  // group by time
+  let lastGroup='';
+  SUPPS.forEach(s=>{
+    const entry = state[s.id]||{};
     const isLogged = !!entry.logged;
-    if (isLogged) loggedCount++;
-    const dose = entry.dose !== undefined ? entry.dose : s.defaultDose;
-    const time = entry.time || s.defaultTime;
-    const isCustom = !DEFAULT_SUPPLEMENTS.find(d => d.id === s.id);
+    if(isLogged) loggedCount++;
+    const dose  = entry.dose!==undefined ? entry.dose : s.defaultDose;
+    const time  = entry.time || s.defaultTime;
 
-    const card = document.createElement('div');
-    card.className = 'supp-card' + (isLogged ? ' logged' : '');
-    card.id = 'card-' + s.id;
+    // time group label
+    if(time!==lastGroup){
+      lastGroup=time;
+      const lbl=document.createElement('div');
+      lbl.className='time-group-label';
+      lbl.textContent='// '+time.toUpperCase();
+      grid.appendChild(lbl);
+    }
 
-    const infoRows = s.info ? Object.entries(s.info).map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('') : '';
-    const timeBtns = ['ochtend','middag','avond','pre-workout','post-workout','met maaltijd']
-      .map(t => `<button class="time-btn${time===t?' selected':''}" onclick="selectTime('${s.id}','${t}')">${t}</button>`).join('');
+    const card=document.createElement('div');
+    card.className='supp-card'+(isLogged?' logged':'');
+    card.id='card-'+s.id;
 
-    card.innerHTML = `
-      ${isCustom ? `<button class="del-card-btn" onclick="removeCustomSupp('${s.id}')" title="Verwijderen">✕</button>` : ''}
-      <div class="supp-card-header">
-        <div>
-          <div class="supp-name">${isLogged?'&#9646; ':''}${s.name}</div>
-          <div class="supp-brand">${s.brand.toUpperCase()} // ${s.type.toUpperCase()}</div>
+    const infoRows = s.info ? Object.entries(s.info).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('') : '';
+    const timeBtns = TIME_ORDER.map(t=>`<button class="time-btn${time===t?' selected':''}" onclick="selectTime('${s.id}','${t}')">${t}</button>`).join('');
+    const doseStep = s.unit==='gram'?0.5:1;
+
+    card.innerHTML=`
+      <div class="card-row">
+        <div class="card-check" onclick="quickLog('${s.id}')" title="${isLogged?'Ongedaan maken':'Direct indienen met standaard waarden'}">
+          ${isLogged?'✓':''}
+        </div>
+        <div class="card-info">
+          <div class="card-name">${s.name}</div>
+          <div class="card-meta">
+            <span class="card-meta-dose">${dose} ${s.unit}</span>
+            <span class="card-time-pill">${time}</span>
+            <span style="color:var(--muted)">${s.brand}</span>
+          </div>
         </div>
         <span class="supp-badge ${s.badgeClass}">${s.badge}</span>
+        <button class="card-expand-btn" onclick="toggleCard('${s.id}')" id="expand-btn-${s.id}">&#9660; WIJZIG</button>
       </div>
-      ${infoRows ? `<table class="supp-info-table">${infoRows}</table>` : ''}
-      <div class="supp-controls">
-        <div>
-          <div class="ctrl-label">DOSIS (${s.unit})</div>
-          <input type="number" class="ctrl-input" id="dose-${s.id}" value="${dose}" min="0" step="${s.unit==='gram'?0.5:1}" onchange="updateEntry('${s.id}')"/>
+      <div class="card-details" id="details-${s.id}">
+        ${infoRows?`<table class="supp-info-table">${infoRows}</table>`:''}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+          <div>
+            <div class="ctrl-label">DOSIS (${s.unit})</div>
+            <input type="number" class="ctrl-input" id="dose-${s.id}" value="${dose}" min="0" step="${doseStep}" onchange="updateEntry('${s.id}')"/>
+          </div>
+          <div>
+            <div class="ctrl-label">TIJDSTIP</div>
+            <div style="padding-top:2px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text)">${time}</div>
+          </div>
         </div>
-        <div>
-          <div class="ctrl-label">TIJDSTIP</div>
-          <div class="time-btns" id="timebtns-${s.id}">${timeBtns}</div>
+        <div class="ctrl-label">TIJDSTIP WIJZIGEN</div>
+        <div class="time-btns" id="timebtns-${s.id}">${timeBtns}</div>
+        <div class="card-actions">
+          <button class="log-btn ${isLogged?'logged-state':''}" onclick="toggleLog('${s.id}')">
+            ${isLogged?'✓ GELOGD — ONGEDAAN MAKEN':'LOG MET BOVENSTAANDE WAARDEN'}
+          </button>
+          ${isCustom(s.id)?`<button class="del-card-btn" onclick="removeCustomSupp('${s.id}')">DEL</button>`:''}
         </div>
       </div>
-      <button class="log-btn ${isLogged?'logged-state':''}" onclick="toggleLog('${s.id}')">
-        ${isLogged ? '&#10003; GELOGD VANDAAG' : '+ LOG SUPPLEMENT'}
-      </button>
     `;
     grid.appendChild(card);
   });
 
-  const pct = SUPPS.length ? Math.round(loggedCount/SUPPS.length*100) : 0;
-  document.getElementById('progress-text').textContent = loggedCount+' / '+SUPPS.length;
-  document.getElementById('progress-fill').style.width = pct+'%';
-  document.getElementById('day-notes-input').value = loadDayNotes();
+  const pct=SUPPS.length?Math.round(loggedCount/SUPPS.length*100):0;
+  document.getElementById('progress-text').textContent=loggedCount+' / '+SUPPS.length;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('day-notes-input').value=loadDayNotes();
 }
 
-function selectTime(id, t) {
-  document.querySelectorAll(`#timebtns-${id} .time-btn`).forEach(b => b.classList.toggle('selected', b.textContent===t));
-  updateEntry(id);
-}
-function getSelectedTime(id) {
-  const sel = document.querySelector(`#timebtns-${id} .time-btn.selected`);
-  return sel ? sel.textContent : '';
-}
-function updateEntry(id) {
-  const state = loadTodayState();
-  if (!state[id]) state[id] = {};
-  state[id].dose = parseFloat(document.getElementById('dose-'+id).value) || 0;
-  state[id].time = getSelectedTime(id);
-  saveTodayState(state);
+function toggleCard(id){
+  const det=document.getElementById('details-'+id);
+  const btn=document.getElementById('expand-btn-'+id);
+  const open=det.classList.toggle('open');
+  btn.classList.toggle('open',open);
+  btn.innerHTML=open?'&#9650; SLUITEN':'&#9660; WIJZIG';
 }
 
-async function toggleLog(id) {
-  updateEntry(id);
-  const state = loadTodayState();
-  if (!state[id]) state[id] = {};
-  const supp = getAllSupps().find(s => s.id===id);
-  if (state[id].logged) {
-    state[id].logged = false;
+// quick-log: log met de huidige opgeslagen defaults (geen expand nodig)
+async function quickLog(id){
+  const state=loadTodayState();
+  if(!state[id]) state[id]={};
+  if(state[id].logged){
+    state[id].logged=false;
     saveTodayState(state);
-    await saveLogs(loadLogs().filter(l => !(l.date===todayStr() && l.id===id)));
+    await saveLogs(loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id)));
   } else {
-    state[id].logged = true;
+    const s=getAllSupps().find(x=>x.id===id);
+    const dose=state[id].dose!==undefined?state[id].dose:s.defaultDose;
+    const time=state[id].time||s.defaultTime;
+    state[id]={...state[id],logged:true,dose,time};
     saveTodayState(state);
-    const filtered = loadLogs().filter(l => !(l.date===todayStr() && l.id===id));
-    filtered.push({date:todayStr(),id,name:supp.name,brand:supp.brand,dose:state[id].dose,unit:supp.unit,time:state[id].time,notes:loadDayNotes()});
+    const filtered=loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id));
+    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose,unit:s.unit,time,notes:loadDayNotes()});
     await saveLogs(filtered);
   }
   renderToday();
-  if (document.getElementById('tab-history').classList.contains('active')) renderHistory();
+  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
 }
 
-// ══════════════════════════════════════════════
+function selectTime(id,t){
+  document.querySelectorAll(`#timebtns-${id} .time-btn`).forEach(b=>b.classList.toggle('selected',b.textContent===t));
+  // update display
+  const row=document.querySelector(`#card-${id} .card-time-pill`);
+  if(row) row.textContent=t;
+  updateEntry(id);
+  // re-sort check — just update entry
+}
+
+function getSelectedTime(id){
+  const sel=document.querySelector(`#timebtns-${id} .time-btn.selected`);
+  return sel?sel.textContent:'';
+}
+
+function updateEntry(id){
+  const state=loadTodayState();
+  if(!state[id]) state[id]={};
+  const doseEl=document.getElementById('dose-'+id);
+  if(doseEl) state[id].dose=parseFloat(doseEl.value)||0;
+  const t=getSelectedTime(id);
+  if(t) state[id].time=t;
+  saveTodayState(state);
+}
+
+async function toggleLog(id){
+  updateEntry(id);
+  const state=loadTodayState();
+  if(!state[id]) state[id]={};
+  const s=getAllSupps().find(x=>x.id===id);
+  if(state[id].logged){
+    state[id].logged=false;
+    saveTodayState(state);
+    await saveLogs(loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id)));
+  } else {
+    state[id].logged=true;
+    saveTodayState(state);
+    const filtered=loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id));
+    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose:state[id].dose||s.defaultDose,unit:s.unit,time:state[id].time||s.defaultTime,notes:loadDayNotes()});
+    await saveLogs(filtered);
+  }
+  renderToday();
+  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
+}
+
+// ════════════════════════════════════════════
 // CUSTOM SUPPLEMENTS
-// ══════════════════════════════════════════════
-function openAddModal() {
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-brand').value = '';
-  document.getElementById('f-dose').value = '1';
-  document.getElementById('f-info').value = '';
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-results').innerHTML = '';
+// ════════════════════════════════════════════
+function openAddModal(){
+  ['f-name','f-brand','f-info'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-dose').value='1';
+  document.getElementById('search-input').value='';
+  document.getElementById('search-results').innerHTML='';
   document.getElementById('add-modal').classList.add('open');
-  setTimeout(()=>document.getElementById('search-input').focus(), 100);
+  setTimeout(()=>document.getElementById('search-input').focus(),100);
 }
-function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
+function closeAddModal(){ document.getElementById('add-modal').classList.remove('open'); }
 
-async function searchOnline() {
-  const q = document.getElementById('search-input').value.trim();
-  if (!q) return;
-  const btn = document.getElementById('search-btn');
-  const spinner = document.getElementById('search-spinner');
-  const resultsEl = document.getElementById('search-results');
-  btn.disabled = true;
-  spinner.style.display = 'block';
-  resultsEl.innerHTML = '';
-
-  try {
-    // Open Food Facts API — vrij te gebruiken, CORS ondersteund
-    const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(q)}&action=process&json=1&fields=product_name,brands,serving_size,nutriments,categories_tags&page_size=5&lc=nl`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const products = (data.products || []).filter(p => p.product_name);
-    if (!products.length) {
-      resultsEl.innerHTML = `<div style="font-family:monospace;font-size:9px;color:var(--muted);padding:8px 0;">// GEEN RESULTATEN — VUL HANDMATIG IN</div>`;
+async function searchOnline(){
+  const q=document.getElementById('search-input').value.trim(); if(!q)return;
+  const btn=document.getElementById('search-btn');
+  const spinner=document.getElementById('search-spinner');
+  const resultsEl=document.getElementById('search-results');
+  btn.disabled=true; spinner.style.display='block'; resultsEl.innerHTML='';
+  try{
+    const res=await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(q)}&action=process&json=1&fields=product_name,brands,serving_size,nutriments,categories_tags&page_size=6`);
+    const data=await res.json();
+    const products=(data.products||[]).filter(p=>p.product_name);
+    window._searchProducts=products;
+    if(!products.length){
+      resultsEl.innerHTML=`<div style="font-family:monospace;font-size:9px;color:var(--muted);padding:6px 0">// GEEN RESULTATEN — VUL HANDMATIG IN</div>`;
     } else {
-      resultsEl.innerHTML = products.slice(0,5).map((p,i) => {
-        const brand = p.brands ? p.brands.split(',')[0].trim() : '';
-        const serving = p.serving_size || '';
-        const cats = (p.categories_tags||[]).filter(c=>c.startsWith('en:')).slice(0,2).map(c=>c.replace('en:','').replace(/-/g,' ')).join(', ');
+      resultsEl.innerHTML=products.slice(0,5).map((p,i)=>{
+        const brand=p.brands?p.brands.split(',')[0].trim():'';
+        const serving=p.serving_size||'';
         return `<div class="search-result-item" onclick="fillFromResult(${i})">
           <div class="sr-name">${p.product_name}</div>
-          ${brand?`<div class="sr-brand">${brand.toUpperCase()}</div>`:''}
-          ${serving||cats?`<div class="sr-info">${[serving,cats].filter(Boolean).join(' · ')}</div>`:''}
+          <div class="sr-sub">${[brand.toUpperCase(),serving].filter(Boolean).join(' · ')}</div>
         </div>`;
       }).join('');
-      // Store for later use
-      window._searchProducts = products;
     }
-  } catch(e) {
-    resultsEl.innerHTML = `<div style="font-family:monospace;font-size:9px;color:var(--red);padding:8px 0;">// ZOEKEN MISLUKT — CONTROLEER VERBINDING</div>`;
+  }catch(e){
+    resultsEl.innerHTML=`<div style="font-family:monospace;font-size:9px;color:var(--red);padding:6px 0">// ZOEKEN MISLUKT</div>`;
   }
-  btn.disabled = false;
-  spinner.style.display = 'none';
+  btn.disabled=false; spinner.style.display='none';
 }
 
-function fillFromResult(i) {
-  const p = (window._searchProducts || [])[i];
-  if (!p) return;
-  if (p.product_name) document.getElementById('f-name').value = p.product_name;
-  if (p.brands) document.getElementById('f-brand').value = p.brands.split(',')[0].trim();
-  // Build info text from nutriments
-  const n = p.nutriments || {};
-  const lines = [];
-  if (p.serving_size) lines.push(`Portie: ${p.serving_size}`);
-  if (n['energy-kcal_serving']) lines.push(`Energie: ${Math.round(n['energy-kcal_serving'])} kcal/portie`);
-  if (n['proteins_serving']) lines.push(`Eiwitten: ${n['proteins_serving']}g/portie`);
-  if (n['carbohydrates_serving']) lines.push(`KH: ${n['carbohydrates_serving']}g/portie`);
-  if (n['fat_serving']) lines.push(`Vetten: ${n['fat_serving']}g/portie`);
-  if (lines.length) document.getElementById('f-info').value = lines.join('\n');
-  document.getElementById('search-results').innerHTML = `<div style="font-family:monospace;font-size:9px;color:var(--green);padding:6px 0;">✓ INGEVULD — PAS AAN INDIEN NODIG</div>`;
+function fillFromResult(i){
+  const p=(window._searchProducts||[])[i]; if(!p)return;
+  if(p.product_name) document.getElementById('f-name').value=p.product_name;
+  if(p.brands) document.getElementById('f-brand').value=p.brands.split(',')[0].trim();
+  const n=p.nutriments||{};
+  const lines=[];
+  if(p.serving_size) lines.push(`Portie: ${p.serving_size}`);
+  if(n['energy-kcal_serving']) lines.push(`Energie: ${Math.round(n['energy-kcal_serving'])} kcal`);
+  if(n['proteins_serving']) lines.push(`Eiwitten: ${n['proteins_serving']}g`);
+  if(lines.length) document.getElementById('f-info').value=lines.join('\n');
+  document.getElementById('search-results').innerHTML=`<div style="font-family:monospace;font-size:9px;color:var(--green);padding:4px 0">✓ INGEVULD — PAS AAN INDIEN NODIG</div>`;
 }
 
-function saveNewSupp() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { document.getElementById('f-name').focus(); return; }
-  const badgeVal = document.getElementById('f-badge').value.split('|');
-  const infoText = document.getElementById('f-info').value.trim();
-  const infoObj = {};
-  if (infoText) {
-    infoText.split('\n').forEach(line => {
-      const [k,...rest] = line.split(':');
-      if (k && rest.length) infoObj[k.trim()] = rest.join(':').trim();
-      else if (k) infoObj['Info'] = k.trim();
-    });
-  }
-  const newSupp = {
-    id: 'custom_' + Date.now(),
-    name,
-    brand: document.getElementById('f-brand').value.trim() || '—',
-    type: document.getElementById('f-type').value,
-    badge: badgeVal[0],
-    badgeClass: badgeVal[1] || 'badge-custom',
-    defaultDose: parseFloat(document.getElementById('f-dose').value) || 1,
-    unit: document.getElementById('f-unit').value,
-    defaultTime: 'middag',
-    info: Object.keys(infoObj).length ? infoObj : null
+function saveNewSupp(){
+  const name=document.getElementById('f-name').value.trim(); if(!name){document.getElementById('f-name').focus();return;}
+  const badgeVal=document.getElementById('f-badge').value.split('|');
+  const infoText=document.getElementById('f-info').value.trim();
+  const infoObj={};
+  if(infoText) infoText.split('\n').forEach(line=>{ const idx=line.indexOf(':'); if(idx>0) infoObj[line.slice(0,idx).trim()]=line.slice(idx+1).trim(); else if(line.trim()) infoObj['Info']=line.trim(); });
+  const newSupp={
+    id:'custom_'+Date.now(), name, brand:document.getElementById('f-brand').value.trim()||'—',
+    type:document.getElementById('f-type').value, badge:badgeVal[0], badgeClass:badgeVal[1]||'badge-custom',
+    defaultDose:parseFloat(document.getElementById('f-dose').value)||1,
+    unit:document.getElementById('f-unit').value,
+    defaultTime:document.getElementById('f-time').value,
+    info:Object.keys(infoObj).length?infoObj:null
   };
-  const customs = loadCustomSupps();
-  customs.push(newSupp);
-  saveCustomSupps(customs);
-  closeAddModal();
-  renderToday();
+  saveCustomSupps([...loadCustomSupps(),newSupp]);
+  closeAddModal(); renderToday();
 }
 
-function removeCustomSupp(id) {
-  if (!confirm('Supplement verwijderen?')) return;
-  saveCustomSupps(loadCustomSupps().filter(s => s.id !== id));
-  renderToday();
+function removeCustomSupp(id){ if(!confirm('Supplement verwijderen?'))return; saveCustomSupps(loadCustomSupps().filter(s=>s.id!==id)); renderToday(); }
+
+// ════════════════════════════════════════════
+// RENDER: OVERZICHT — met bewerken
+// ════════════════════════════════════════════
+function renderOverview(){
+  const cont=document.getElementById('overview-content');
+  cont.innerHTML=getAllSupps().map(s=>{
+    const custom=isCustom(s.id);
+    const infoRows=s.info?Object.entries(s.info).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join(''):'';
+    const infoFlat=s.info?Object.entries(s.info).map(([k,v])=>`${k}: ${v}`).join('\n'):'';
+    return `
+    <div class="overview-card" id="ov-${s.id}">
+      <div class="ov-header">
+        <div>
+          <div class="ov-name">${s.name}</div>
+          <div class="ov-brand">${s.brand.toUpperCase()} // ${s.type.toUpperCase()} // ${s.defaultDose} ${s.unit}/dag // ${s.defaultTime}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+          <span class="supp-badge ${s.badgeClass}">${s.badge}</span>
+          <button class="edit-ov-btn" id="editbtn-${s.id}" onclick="toggleOvEdit('${s.id}')">BEWERK</button>
+        </div>
+      </div>
+      ${infoRows?`<table class="supp-info-table">${infoRows}</table>`:''}
+      <div class="ov-edit-form" id="ov-form-${s.id}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="ov-field" style="grid-column:1/-1"><label>NAAM</label><input id="ov-name-${s.id}" value="${s.name}"/></div>
+          <div class="ov-field"><label>MERK</label><input id="ov-brand-${s.id}" value="${s.brand}"/></div>
+          <div class="ov-field"><label>TYPE</label>
+            <select id="ov-type-${s.id}">
+              ${['Tablet','Capsule','Softgel','Poeder','Vloeistof','Anders'].map(t=>`<option${s.type===t?' selected':''}>${t}</option>`).join('')}
+            </select>
+          </div>
+          <div class="ov-field"><label>STANDAARD DOSIS</label><input type="number" id="ov-dose-${s.id}" value="${s.defaultDose}" min="0" step="0.5"/></div>
+          <div class="ov-field"><label>EENHEID</label>
+            <select id="ov-unit-${s.id}">
+              ${['tablets','capsules','gram','ml','druppels'].map(u=>`<option${s.unit===u?' selected':''}>${u}</option>`).join('')}
+            </select>
+          </div>
+          <div class="ov-field"><label>STANDAARD TIJDSTIP</label>
+            <select id="ov-time-${s.id}">
+              ${TIME_ORDER.map(t=>`<option${s.defaultTime===t?' selected':''}>${t}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="ov-field"><label>INFO (één per regel, bv. "EPA: 180 mg")</label>
+          <textarea id="ov-info-${s.id}">${infoFlat}</textarea>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+          <button class="ov-save-btn" onclick="saveOvEdit('${s.id}')">OPSLAAN</button>
+          <button class="btn-cancel" onclick="toggleOvEdit('${s.id}')">ANNULEER</button>
+          ${custom?`<button class="ov-delete-btn" onclick="removeCustomSupp('${s.id}')">VERWIJDEREN</button>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ══════════════════════════════════════════════
-// RENDER: OVERVIEW
-// ══════════════════════════════════════════════
-function renderOverview() {
-  const cont = document.getElementById('overview-content');
-  cont.innerHTML = getAllSupps().map(s => `
-    <div class="overview-card">
-      <h3>${s.name}</h3>
-      <div class="overview-brand">${s.brand.toUpperCase()} // ${s.type.toUpperCase()} // ${s.defaultDose} ${s.unit}/dag</div>
-      ${s.info ? `<table class="supp-info-table">${Object.entries(s.info).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>` : ''}
-    </div>
-  `).join('');
+function toggleOvEdit(id){
+  const form=document.getElementById('ov-form-'+id);
+  const btn=document.getElementById('editbtn-'+id);
+  const open=form.classList.toggle('open');
+  btn.classList.toggle('active',open);
+  btn.textContent=open?'SLUITEN':'BEWERK';
 }
 
-// ══════════════════════════════════════════════
-// RENDER: HISTORY
-// ══════════════════════════════════════════════
-function renderHistory() {
-  const from = document.getElementById('filter-from').value;
-  const to   = document.getElementById('filter-to').value;
-  let logs = loadLogs();
-  if (from) logs = logs.filter(l => l.date >= from);
-  if (to)   logs = logs.filter(l => l.date <= to);
-  logs.sort((a,b) => b.date.localeCompare(a.date));
-  const tbody = document.getElementById('history-body');
-  const noData = document.getElementById('no-history');
-  if (!logs.length) { tbody.innerHTML=''; noData.style.display='block'; return; }
+function saveOvEdit(id){
+  const infoText=document.getElementById('ov-info-'+id).value.trim();
+  const infoObj={};
+  if(infoText) infoText.split('\n').forEach(line=>{ const idx=line.indexOf(':'); if(idx>0) infoObj[line.slice(0,idx).trim()]=line.slice(idx+1).trim(); });
+  const updated={
+    name:document.getElementById('ov-name-'+id).value.trim(),
+    brand:document.getElementById('ov-brand-'+id).value.trim(),
+    type:document.getElementById('ov-type-'+id).value,
+    defaultDose:parseFloat(document.getElementById('ov-dose-'+id).value)||1,
+    unit:document.getElementById('ov-unit-'+id).value,
+    defaultTime:document.getElementById('ov-time-'+id).value,
+    info:Object.keys(infoObj).length?infoObj:null
+  };
+  if(isCustom(id)){
+    // update custom supp
+    const customs=loadCustomSupps().map(s=>s.id===id?{...s,...updated}:s);
+    saveCustomSupps(customs);
+  } else {
+    // save as override for default supp
+    const overrides=loadOverrides();
+    overrides[id]=updated;
+    saveOverrides(overrides);
+  }
+  renderOverview();
+}
+
+// ════════════════════════════════════════════
+// RENDER: GESCHIEDENIS
+// ════════════════════════════════════════════
+function renderHistory(){
+  const from=document.getElementById('filter-from').value;
+  const to=document.getElementById('filter-to').value;
+  let logs=loadLogs();
+  if(from) logs=logs.filter(l=>l.date>=from);
+  if(to)   logs=logs.filter(l=>l.date<=to);
+  logs.sort((a,b)=>b.date.localeCompare(a.date));
+  const tbody=document.getElementById('history-body');
+  const noData=document.getElementById('no-history');
+  if(!logs.length){tbody.innerHTML='';noData.style.display='block';return;}
   noData.style.display='none';
-  tbody.innerHTML = logs.map((l,i) => `
+  tbody.innerHTML=logs.map((l,i)=>`
     <tr>
       <td style="font-family:monospace;font-size:11px;color:var(--muted)">${l.date}</td>
       <td style="font-size:13px">${l.name}</td>
@@ -706,82 +813,66 @@ function renderHistory() {
       <td style="font-family:monospace;font-size:10px;color:var(--muted)">${l.time}</td>
       <td style="font-size:11px;color:var(--muted)">${l.notes?l.notes.slice(0,40)+(l.notes.length>40?'…':''):'—'}</td>
       <td><button class="del-btn" onclick="deleteLog(${i},'${l.date}','${l.id}')">DEL</button></td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
 
-async function deleteLog(visIdx, date, id) {
-  if (!confirm('Log verwijderen?')) return;
-  const logs = loadLogs();
-  const idx = logs.findIndex(l => l.date===date && l.id===id);
-  if (idx!==-1) logs.splice(idx,1);
+async function deleteLog(vi,date,id){
+  if(!confirm('Log verwijderen?'))return;
+  const logs=loadLogs(); const idx=logs.findIndex(l=>l.date===date&&l.id===id);
+  if(idx!==-1) logs.splice(idx,1);
   await saveLogs(logs);
-  if (date===todayStr()) {
-    const state = loadTodayState();
-    if (state[id]) { state[id].logged=false; saveTodayState(state); }
-    renderToday();
-  }
+  if(date===todayStr()){const state=loadTodayState();if(state[id]){state[id].logged=false;saveTodayState(state);}renderToday();}
   renderHistory();
 }
 
-function exportCSV() {
-  const from = document.getElementById('filter-from').value;
-  const to   = document.getElementById('filter-to').value;
-  let logs = loadLogs();
-  if (from) logs = logs.filter(l => l.date>=from);
-  if (to)   logs = logs.filter(l => l.date<=to);
+function exportCSV(){
+  const from=document.getElementById('filter-from').value, to=document.getElementById('filter-to').value;
+  let logs=loadLogs();
+  if(from) logs=logs.filter(l=>l.date>=from);
+  if(to)   logs=logs.filter(l=>l.date<=to);
   logs.sort((a,b)=>a.date.localeCompare(b.date));
-  const header = ['Datum','Supplement','Merk','Dosis','Eenheid','Tijdstip','Notities'];
-  const rows = logs.map(l=>[l.date,l.name,l.brand,l.dose,l.unit,l.time,(l.notes||'').replace(/"/g,'""')].map(v=>`"${v}"`).join(','));
-  const csv = [header.join(','),...rows].join('\n');
-  const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='bitsupp_'+(from||'alle')+'_'+(to||'vandaag')+'.csv'; a.click();
+  const header=['Datum','Supplement','Merk','Dosis','Eenheid','Tijdstip','Notities'];
+  const rows=logs.map(l=>[l.date,l.name,l.brand,l.dose,l.unit,l.time,(l.notes||'').replace(/"/g,'""')].map(v=>`"${v}"`).join(','));
+  const csv=[header.join(','),...rows].join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='bitsupp_'+(from||'alle')+'_'+(to||'vandaag')+'.csv'; a.click();
   URL.revokeObjectURL(url);
 }
 
-// ══════════════════════════════════════════════
-// TABS
-// ══════════════════════════════════════════════
-function switchTab(tab, el) {
+// ════════════════════════════════════════════
+// TABS & SETTINGS
+// ════════════════════════════════════════════
+function switchTab(tab,el){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
-  if (el) el.classList.add('active');
-  if (tab==='overview') renderOverview();
-  if (tab==='history')  renderHistory();
+  if(el) el.classList.add('active');
+  if(tab==='overview') renderOverview();
+  if(tab==='history')  renderHistory();
 }
 
-// ══════════════════════════════════════════════
-// SETTINGS
-// ══════════════════════════════════════════════
-function openSettings() { document.getElementById('token-input').value=GH.token; document.getElementById('settings-modal').classList.add('open'); }
-function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
-async function saveToken() {
-  const t = document.getElementById('token-input').value.trim();
-  if (!t) return;
-  localStorage.setItem('gh_token',t);
-  closeSettings();
-  await loadLogsFromGitHub();
-  renderToday();
+function openSettings(){ document.getElementById('token-input').value=GH.token; document.getElementById('settings-modal').classList.add('open'); }
+function closeSettings(){ document.getElementById('settings-modal').classList.remove('open'); }
+async function saveToken(){
+  const t=document.getElementById('token-input').value.trim(); if(!t)return;
+  localStorage.setItem('gh_token',t); closeSettings();
+  await loadLogsFromGitHub(); renderToday();
 }
 
-// close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) { closeSettings(); closeAddModal(); } }));
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o){closeSettings();closeAddModal();}}));
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════
 // INIT
-// ══════════════════════════════════════════════
-(async function init() {
-  const now = new Date();
-  document.getElementById('date-display').textContent =
-    now.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).toUpperCase();
-  const today = todayStr();
-  const month = new Date(); month.setDate(month.getDate()-30);
-  document.getElementById('filter-to').value = today;
-  document.getElementById('filter-from').value = month.toISOString().slice(0,10);
-  if (!GH.token) { setSyncStatus('error','⚠ TOKEN ONTBREEKT'); openSettings(); }
-  else { await loadLogsFromGitHub(); }
+// ════════════════════════════════════════════
+(async function init(){
+  const now=new Date();
+  document.getElementById('date-display').textContent=now.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).toUpperCase();
+  const today=todayStr(), month=new Date(); month.setDate(month.getDate()-30);
+  document.getElementById('filter-to').value=today;
+  document.getElementById('filter-from').value=month.toISOString().slice(0,10);
+  if(!GH.token){setSyncStatus('error','⚠ TOKEN ONTBREEKT');openSettings();}
+  else{await loadLogsFromGitHub();}
   renderToday();
 })();
 </script>
