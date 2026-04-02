@@ -98,5 +98,15 @@
     "unit": "tablets",
     "time": "avond",
     "notes": ""
+  },
+  {
+    "date": "2026-04-02",
+    "id": "custom_1775025982432",
+    "name": "Cetirizine",
+    "brand": "EG",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
   }
 ]
