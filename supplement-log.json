@@ -118,5 +118,15 @@
     "unit": "tablets",
     "time": "middag",
     "notes": ""
+  },
+  {
+    "date": "2026-04-03",
+    "id": "custom_1775232672282",
+    "name": "Paracetamol",
+    "brand": "EG",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
   }
 ]
