@@ -248,5 +248,15 @@
     "unit": "capsules",
     "time": "middag",
     "notes": ""
+  },
+  {
+    "date": "2026-04-06",
+    "id": "creatine",
+    "name": "Creatine Monohydrate",
+    "brand": "Body&Fit",
+    "dose": 10,
+    "unit": "gram",
+    "time": "pre-workout",
+    "notes": ""
   }
 ]
