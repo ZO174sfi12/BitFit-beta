@@ -288,5 +288,15 @@
     "unit": "tablets",
     "time": "middag",
     "notes": ""
+  },
+  {
+    "date": "2026-04-07",
+    "id": "omega3",
+    "name": "Omega-3 + Vitamine D3",
+    "brand": "Body&Fit",
+    "dose": 1,
+    "unit": "capsules",
+    "time": "middag",
+    "notes": ""
   }
 ]
