@@ -348,5 +348,15 @@
     "unit": "gram",
     "time": "pre-workout",
     "notes": ""
+  },
+  {
+    "date": "2026-04-09",
+    "id": "optimen",
+    "name": "Opti-Men Multivitamine",
+    "brand": "Optimum Nutrition",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
   }
 ]
