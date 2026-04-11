@@ -48,5 +48,15 @@
     "unit": "capsules",
     "time": "middag",
     "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "optimen",
+    "name": "Opti-Men Multivitamine",
+    "brand": "Optimum Nutrition",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
   }
 ]
