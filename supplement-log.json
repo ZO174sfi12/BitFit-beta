@@ -78,5 +78,15 @@
     "unit": "gram",
     "time": "pre-workout",
     "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "custom_1775072955268",
+    "name": "Zma",
+    "brand": "Body fit",
+    "dose": 2,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
   }
 ]
