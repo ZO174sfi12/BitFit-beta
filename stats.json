@@ -1,6 +1,6 @@
 {
-  "updated": "2026-04-01",
-  "phase": "FULL BODY",
+  "updated": "2026-04-13",
+  "phase": "RECOVERY",
   "squat": {
     "weight": 70.0,
     "est1rm": 79.3,
@@ -12,8 +12,8 @@
     "pr": false
   },
   "bench": {
-    "weight": 65.0,
-    "est1rm": 75.8,
+    "weight": 70.0,
+    "est1rm": 84.0,
     "pr": true
   },
   "ohp": {
@@ -22,71 +22,71 @@
     "pr": false
   },
   "db_bench": {
-    "weight": 52.0,
-    "est1rm": 65.9,
-    "pr": false
+    "weight": 64.0,
+    "est1rm": 76.8,
+    "pr": true
   },
   "lat_pd": {
-    "weight": 35.0,
-    "est1rm": 49.0,
+    "weight": 50.0,
+    "est1rm": 63.3,
     "pr": false
   },
   "dip": {
-    "weight": 83.6,
-    "est1rm": 97.5,
+    "weight": 84.0,
+    "est1rm": 100.8,
     "pr": false
   },
   "bodyweight": {
-    "current": 85.1,
-    "recent_avg": 85.23,
-    "old_avg": 83.9,
-    "delta_10d": 1.33,
-    "delta_label": "+1.33 (3d gem) \u26a1creatine"
+    "current": 85.0,
+    "recent_avg": 85.33,
+    "old_avg": 84.85,
+    "delta_10d": 0.48,
+    "delta_label": "+0.48 (3d gem) \u26a1creatine"
   },
-  "gym_days_10d": 5,
+  "gym_days_10d": 2,
   "days_10d": [
-    true,
-    false,
-    false,
-    true,
     false,
     false,
     false,
     true,
-    true,
+    false,
+    false,
+    false,
+    false,
+    false,
     true
   ],
   "muscle_rest": {
     "Biceps": {
       "last": "2026-03-13",
-      "rest": 19
+      "rest": 31
     },
     "Glutes": {
       "last": "2026-03-16",
-      "rest": 16
+      "rest": 28
     },
     "Core": {
       "last": "2026-03-17",
-      "rest": 15
-    },
-    "Triceps": {
-      "last": "2026-03-18",
-      "rest": 14
+      "rest": 27
     },
     "Schouders": {
       "last": "2026-03-31",
-      "rest": 1
+      "rest": 13
     },
     "Rug": {
-      "last": "2026-03-31",
-      "rest": 1
+      "last": "2026-04-07",
+      "rest": 6
     },
     "Benen": {
-      "last": "2026-04-01",
+      "last": "2026-04-13",
       "rest": 0
     },
     "Borst": {
-      "last": "2026-04-01",
+      "last": "2026-04-13",
+      "rest": 0
+    },
+    "Triceps": {
+      "last": "2026-04-13",
       "rest": 0
     }
   },
@@ -100,8 +100,8 @@
       "date": "2026-02-04"
     },
     "bench": {
-      "weight": 65.0,
-      "date": "2026-04-01"
+      "weight": 70.0,
+      "date": "2026-04-13"
     },
     "ohp": {
       "weight": 45.0,
