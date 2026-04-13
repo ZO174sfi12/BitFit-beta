@@ -43,10 +43,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .settings-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;font-family:monospace;font-size:8px;letter-spacing:1px;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .15s;}
 .settings-btn:hover{border-color:var(--accent);color:var(--text);}
 
-/* ── Section headers ── */
-.section-header{display:flex;align-items:center;gap:12px;padding:12px 0 6px;margin-top:8px;}
-.section-header-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
-.section-title{font-family:monospace;font-size:9px;letter-spacing:3px;color:var(--muted);white-space:nowrap;}
+/* ── Tabs ── */
+.tabs{display:flex;padding:10px 18px 0;gap:5px;position:relative;z-index:10;}
+.tab-btn{padding:7px 16px;font-family:monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;border:1px solid var(--muted);background:transparent;color:var(--muted);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;user-select:none;}
+.tab-btn:hover{color:var(--green);border-color:var(--green);}
+.tab-btn.active{color:var(--green);border-color:var(--green);background:#00ffb311;box-shadow:0 0 12px #00ffb322;}
+.tab-pane{display:none;}.tab-pane.active{display:block;}
 
 /* ── Main ── */
 .main{padding:14px 14px 28px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1;}
@@ -291,69 +293,66 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 </div>
 
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('today',this)">VANDAAG</button>
+  <button class="tab-btn" onclick="switchTab('overview',this)">OVERZICHT</button>
+  <button class="tab-btn" onclick="switchTab('history',this)">GESCHIEDENIS</button>
+</div>
+
 <div class="main">
 
 <!-- ══ VANDAAG ══ -->
-<div class="section-header">
-  <div class="section-title">// VANDAAG</div>
-  <div class="section-header-line"></div>
-</div>
+<div id="tab-today" class="tab-pane active">
+  <div class="action-bar">
+    <div class="action-bar-label">SUPPLEMENTEN</div>
+    <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
+  </div>
 
-<div class="action-bar">
-  <div class="action-bar-label">SUPPLEMENTEN</div>
-  <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
-</div>
+  <div class="supp-list" id="supp-grid"></div>
 
-<div class="supp-list" id="supp-grid"></div>
-
-<div class="panel" style="margin-top:14px;">
-  <div class="cd tl"></div><div class="cd tr"></div>
-  <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
-  <div class="notes-wrap">
-    <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
+  <div class="panel" style="margin-top:14px;">
+    <div class="cd tl"></div><div class="cd tr"></div>
+    <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
+    <div class="notes-wrap">
+      <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
+    </div>
   </div>
 </div>
 
 <!-- ══ OVERZICHT ══ -->
-<div class="section-header">
-  <div class="section-title">// OVERZICHT</div>
-  <div class="section-header-line"></div>
-</div>
-
-<div class="panel">
-  <div class="cd tl"></div><div class="cd tr"></div>
-  <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
-  <div id="overview-content"></div>
-  <div class="overlap-note">
-    <strong>// OVERLAP</strong><br/>
-    • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
-    • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
-    • <strong>Creatine:</strong> geen overlap met Opti-Men.
+<div id="tab-overview" class="tab-pane">
+  <div class="panel">
+    <div class="cd tl"></div><div class="cd tr"></div>
+    <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
+    <div id="overview-content"></div>
+    <div class="overlap-note">
+      <strong>// OVERLAP</strong><br/>
+      • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
+      • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
+      • <strong>Creatine:</strong> geen overlap met Opti-Men.
+    </div>
   </div>
 </div>
 
 <!-- ══ GESCHIEDENIS ══ -->
-<div class="section-header">
-  <div class="section-title">// GESCHIEDENIS</div>
-  <div class="section-header-line"></div>
-</div>
-
-<div class="panel">
-  <div class="cd tl"></div><div class="cd tr"></div>
-  <div class="panel-title">&#9658; LOGBOEK</div>
-  <div class="history-toolbar">
-    <span class="toolbar-label">VAN</span>
-    <input type="date" class="hist-date" id="filter-from" onchange="renderHistory()"/>
-    <span class="toolbar-label">TOT</span>
-    <input type="date" class="hist-date" id="filter-to" onchange="renderHistory()"/>
-    <button class="export-btn" onclick="exportCSV()">&#11015; EXPORT CSV</button>
-  </div>
-  <div class="history-table-wrap">
-    <table class="history-tbl">
-      <thead><tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr></thead>
-      <tbody id="history-body"></tbody>
-    </table>
-    <div id="no-history" class="no-data" style="display:none">// GEEN LOGS GEVONDEN</div>
+<div id="tab-history" class="tab-pane">
+  <div class="panel">
+    <div class="cd tl"></div><div class="cd tr"></div>
+    <div class="panel-title">&#9658; LOGBOEK</div>
+    <div class="history-toolbar">
+      <span class="toolbar-label">VAN</span>
+      <input type="date" class="hist-date" id="filter-from" onchange="renderHistory()"/>
+      <span class="toolbar-label">TOT</span>
+      <input type="date" class="hist-date" id="filter-to" onchange="renderHistory()"/>
+      <button class="export-btn" onclick="exportCSV()">&#11015; EXPORT CSV</button>
+    </div>
+    <div class="history-table-wrap">
+      <table class="history-tbl">
+        <thead><tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+      <div id="no-history" class="no-data" style="display:none">// GEEN LOGS GEVONDEN</div>
+    </div>
   </div>
 </div>
 
@@ -612,7 +611,7 @@ async function quickLog(id){
     await saveLogs(filtered);
   }
   renderToday();
-  renderHistory();
+  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
 }
 
 function selectTime(id,t){
@@ -656,7 +655,7 @@ async function toggleLog(id){
     await saveLogs(filtered);
   }
   renderToday();
-  renderHistory();
+  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
 }
 
 // ════════════════════════════════════════════
@@ -875,8 +874,17 @@ function exportCSV(){
 }
 
 // ════════════════════════════════════════════
-// SETTINGS
+// TABS & SETTINGS
 // ════════════════════════════════════════════
+function switchTab(tab,el){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(el) el.classList.add('active');
+  if(tab==='overview') renderOverview();
+  if(tab==='history')  renderHistory();
+}
+
 function openSettings(){ document.getElementById('token-input').value=GH.token; document.getElementById('settings-modal').classList.add('open'); }
 function closeSettings(){ document.getElementById('settings-modal').classList.remove('open'); }
 async function saveToken(){
@@ -899,8 +907,6 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
   if(!GH.token){setSyncStatus('error','⚠ TOKEN ONTBREEKT');openSettings();}
   else{await loadLogsFromGitHub();}
   renderToday();
-  renderOverview();
-  renderHistory();
 })();
 </script>
 </body>
