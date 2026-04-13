@@ -1,46 +1,36 @@
 [
   {
-    "date": "2026-03-31",
-    "id": "magnesium",
-    "name": "Magnesium Bisglycinaat 375 mg",
-    "brand": "Lucovitaal",
+    "date": "2026-04-09",
+    "id": "custom_1775025982432",
+    "name": "Cetirizine",
+    "brand": "EG",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-09",
+    "id": "custom_1775072955268",
+    "name": "Zma",
+    "brand": "Body fit",
     "dose": 2,
     "unit": "tablets",
-    "time": "middag Ã°ÂÂÂ½Ã¯Â¸Â",
+    "time": "avond",
     "notes": ""
   },
   {
-    "date": "2026-03-31",
-    "id": "optimen",
-    "name": "Opti-Men Multivitamine",
-    "brand": "Optimum Nutrition",
-    "dose": 1,
-    "unit": "tablets",
-    "time": "ochtend Ã¢ÂÂÃ¯Â¸Â",
-    "notes": ""
-  },
-  {
-    "date": "2026-03-31",
-    "id": "omega3",
-    "name": "Omega-3 + Vitamine D3",
-    "brand": "Body&Fit",
-    "dose": 1,
-    "unit": "capsules",
-    "time": "ochtend Ã¢ÂÂÃ¯Â¸Â",
-    "notes": ""
-  },
-  {
-    "date": "2026-03-31",
+    "date": "2026-04-10",
     "id": "creatine",
     "name": "Creatine Monohydrate",
     "brand": "Body&Fit",
-    "dose": 10,
+    "dose": 6,
     "unit": "gram",
-    "time": "pre-workout Ã°ÂÂÂª",
+    "time": "pre-workout",
     "notes": ""
   },
   {
-    "date": "2026-04-01",
+    "date": "2026-04-10",
     "id": "optimen",
     "name": "Opti-Men Multivitamine",
     "brand": "Optimum Nutrition",
@@ -50,13 +40,123 @@
     "notes": ""
   },
   {
-    "date": "2026-04-01",
+    "date": "2026-04-10",
+    "id": "omega3",
+    "name": "Omega-3 + Vitamine D3",
+    "brand": "Body&Fit",
+    "dose": 2,
+    "unit": "capsules",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "optimen",
+    "name": "Opti-Men Multivitamine",
+    "brand": "Optimum Nutrition",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "omega3",
+    "name": "Omega-3 + Vitamine D3",
+    "brand": "Body&Fit",
+    "dose": 1,
+    "unit": "capsules",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-11",
     "id": "creatine",
     "name": "Creatine Monohydrate",
     "brand": "Body&Fit",
-    "dose": 10,
+    "dose": 6,
     "unit": "gram",
     "time": "pre-workout",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "custom_1775072955268",
+    "name": "Zma",
+    "brand": "Body fit",
+    "dose": 2,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-11",
+    "id": "custom_1775025982432",
+    "name": "Cetirizine",
+    "brand": "EG",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-12",
+    "id": "creatine",
+    "name": "Creatine Monohydrate",
+    "brand": "Body&Fit",
+    "dose": 6,
+    "unit": "gram",
+    "time": "pre-workout",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-12",
+    "id": "optimen",
+    "name": "Opti-Men Multivitamine",
+    "brand": "Optimum Nutrition",
+    "dose": 1,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-12",
+    "id": "omega3",
+    "name": "Omega-3 + Vitamine D3",
+    "brand": "Body&Fit",
+    "dose": 2,
+    "unit": "capsules",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-13",
+    "id": "creatine",
+    "name": "Creatine Monohydrate",
+    "brand": "Body&Fit",
+    "dose": 6,
+    "unit": "gram",
+    "time": "pre-workout",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-13",
+    "id": "optimen",
+    "name": "Opti-Men Multivitamine",
+    "brand": "Optimum Nutrition",
+    "dose": 3,
+    "unit": "tablets",
+    "time": "middag",
+    "notes": ""
+  },
+  {
+    "date": "2026-04-13",
+    "id": "omega3",
+    "name": "Omega-3 + Vitamine D3",
+    "brand": "Body&Fit",
+    "dose": 2,
+    "unit": "capsules",
+    "time": "middag",
     "notes": ""
   }
 ]
