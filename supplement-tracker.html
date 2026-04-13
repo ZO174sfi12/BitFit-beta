@@ -27,13 +27,14 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
 header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--green),transparent);animation:pulse-line 4s ease-in-out infinite;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;}
-.logo-bit{color:var(--accent);animation:neon-a 5s ease-in-out infinite;}
-.logo-supp{color:var(--green);animation:neon-g 5s ease-in-out infinite;}
+.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;}
+.logo-bit{color:var(--accent);}
+.logo-supp{color:var(--green);}
+.logo-fit-mini{color:var(--cyan);font-size:.85em;}
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.back-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);text-decoration:none;transition:all .2s;white-space:nowrap;}
-.back-btn:hover{background:#7b5cff20;box-shadow:var(--glow-a);}
-.back-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.back-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:transparent;border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);text-decoration:none;transition:all .2s;white-space:nowrap;}
+.back-btn:hover{background:#ffffff08;border-color:var(--accent);box-shadow:var(--glow-a);}
+.back-btn svg{width:12px;height:12px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 #date-display{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);}
 .sync-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .3s;}
 .sync-badge.ok{color:var(--green);border-color:#00ffb333;background:#00ffb30a;}
@@ -42,13 +43,10 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .settings-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;font-family:monospace;font-size:8px;letter-spacing:1px;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .15s;}
 .settings-btn:hover{border-color:var(--accent);color:var(--text);}
 
-/* ── Tabs ── */
-.tabs{display:flex;padding:10px 18px 0;gap:5px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:10;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab-btn{padding:7px 16px;font-family:monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;border:1px solid var(--muted);background:transparent;color:var(--muted);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;user-select:none;}
-.tab-btn:hover{color:var(--green);border-color:var(--green);}
-.tab-btn.active{color:var(--green);border-color:var(--green);background:#00ffb311;box-shadow:0 0 12px #00ffb322;}
-.tab-pane{display:none;}.tab-pane.active{display:block;}
+/* ── Section headers ── */
+.section-header{display:flex;align-items:center;gap:12px;padding:12px 0 6px;margin-top:8px;}
+.section-header-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.section-title{font-family:monospace;font-size:9px;letter-spacing:3px;color:var(--muted);white-space:nowrap;}
 
 /* ── Main ── */
 .main{padding:14px 14px 28px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1;}
@@ -64,11 +62,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .cd.bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.cd.br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
 .cd.g{border-color:var(--green);}
 
-/* ── Progress ── */
-.progress-wrap{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.progress-bar{flex:1;height:5px;background:var(--border);overflow:hidden;}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .4s ease;box-shadow:0 0 8px var(--green);}
-.progress-label{font-family:'Space Mono',monospace;font-size:12px;color:var(--green);white-space:nowrap;font-weight:700;}
+/* ── Progress (hidden) ── */
+.progress-wrap{display:none;}
 
 /* ── Action bar ── */
 .action-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
@@ -222,7 +217,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
       <button class="settings-btn" onclick="openSettings()">⚙ GITHUB</button>
       <a href="index.html" class="back-btn">
         <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
-        BITFIT
+        <span style="color:var(--accent)">BIT</span><span style="color:var(--cyan)">FIT</span>
       </a>
     </div>
   </div>
@@ -296,75 +291,69 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 </div>
 
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('today',this)">VANDAAG</button>
-  <button class="tab-btn" onclick="switchTab('overview',this)">OVERZICHT</button>
-  <button class="tab-btn" onclick="switchTab('history',this)">GESCHIEDENIS</button>
-</div>
-
 <div class="main">
 
 <!-- ══ VANDAAG ══ -->
-<div id="tab-today" class="tab-pane active">
-  <div class="panel g">
-    <div class="cd tl g"></div><div class="cd tr g"></div>
-    <div class="panel-title">&#9658; VOORTGANG VANDAAG</div>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-      <div class="progress-label" id="progress-text">0 / 0</div>
-    </div>
-  </div>
+<div class="section-header">
+  <div class="section-title">// VANDAAG</div>
+  <div class="section-header-line"></div>
+</div>
 
-  <div class="action-bar">
-    <div class="action-bar-label">SUPPLEMENTEN</div>
-    <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
-  </div>
+<div class="action-bar">
+  <div class="action-bar-label">SUPPLEMENTEN</div>
+  <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
+</div>
 
-  <div class="supp-list" id="supp-grid"></div>
+<div class="supp-list" id="supp-grid"></div>
 
-  <div class="panel" style="margin-top:14px;">
-    <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
-    <div class="notes-wrap">
-      <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
-    </div>
+<div class="panel" style="margin-top:14px;">
+  <div class="cd tl"></div><div class="cd tr"></div>
+  <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
+  <div class="notes-wrap">
+    <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
   </div>
 </div>
 
 <!-- ══ OVERZICHT ══ -->
-<div id="tab-overview" class="tab-pane">
-  <div class="panel">
-    <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
-    <div id="overview-content"></div>
-    <div class="overlap-note">
-      <strong>// OVERLAP</strong><br/>
-      • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
-      • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
-      • <strong>Creatine:</strong> geen overlap met Opti-Men.
-    </div>
+<div class="section-header">
+  <div class="section-title">// OVERZICHT</div>
+  <div class="section-header-line"></div>
+</div>
+
+<div class="panel">
+  <div class="cd tl"></div><div class="cd tr"></div>
+  <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
+  <div id="overview-content"></div>
+  <div class="overlap-note">
+    <strong>// OVERLAP</strong><br/>
+    • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
+    • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
+    • <strong>Creatine:</strong> geen overlap met Opti-Men.
   </div>
 </div>
 
 <!-- ══ GESCHIEDENIS ══ -->
-<div id="tab-history" class="tab-pane">
-  <div class="panel">
-    <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="panel-title">&#9658; LOGBOEK</div>
-    <div class="history-toolbar">
-      <span class="toolbar-label">VAN</span>
-      <input type="date" class="hist-date" id="filter-from" onchange="renderHistory()"/>
-      <span class="toolbar-label">TOT</span>
-      <input type="date" class="hist-date" id="filter-to" onchange="renderHistory()"/>
-      <button class="export-btn" onclick="exportCSV()">&#11015; EXPORT CSV</button>
-    </div>
-    <div class="history-table-wrap">
-      <table class="history-tbl">
-        <thead><tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr></thead>
-        <tbody id="history-body"></tbody>
-      </table>
-      <div id="no-history" class="no-data" style="display:none">// GEEN LOGS GEVONDEN</div>
-    </div>
+<div class="section-header">
+  <div class="section-title">// GESCHIEDENIS</div>
+  <div class="section-header-line"></div>
+</div>
+
+<div class="panel">
+  <div class="cd tl"></div><div class="cd tr"></div>
+  <div class="panel-title">&#9658; LOGBOEK</div>
+  <div class="history-toolbar">
+    <span class="toolbar-label">VAN</span>
+    <input type="date" class="hist-date" id="filter-from" onchange="renderHistory()"/>
+    <span class="toolbar-label">TOT</span>
+    <input type="date" class="hist-date" id="filter-to" onchange="renderHistory()"/>
+    <button class="export-btn" onclick="exportCSV()">&#11015; EXPORT CSV</button>
+  </div>
+  <div class="history-table-wrap">
+    <table class="history-tbl">
+      <thead><tr><th>DATUM</th><th>SUPPLEMENT</th><th>MERK</th><th>DOSIS</th><th>TIJDSTIP</th><th>NOTITIES</th><th></th></tr></thead>
+      <tbody id="history-body"></tbody>
+    </table>
+    <div id="no-history" class="no-data" style="display:none">// GEEN LOGS GEVONDEN</div>
   </div>
 </div>
 
@@ -593,9 +582,6 @@ function renderToday(){
     grid.appendChild(card);
   });
 
-  const pct=SUPPS.length?Math.round(loggedCount/SUPPS.length*100):0;
-  document.getElementById('progress-text').textContent=loggedCount+' / '+SUPPS.length;
-  document.getElementById('progress-fill').style.width=pct+'%';
   document.getElementById('day-notes-input').value=loadDayNotes();
 }
 
@@ -626,7 +612,7 @@ async function quickLog(id){
     await saveLogs(filtered);
   }
   renderToday();
-  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
+  renderHistory();
 }
 
 function selectTime(id,t){
@@ -670,7 +656,7 @@ async function toggleLog(id){
     await saveLogs(filtered);
   }
   renderToday();
-  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
+  renderHistory();
 }
 
 // ════════════════════════════════════════════
@@ -889,17 +875,8 @@ function exportCSV(){
 }
 
 // ════════════════════════════════════════════
-// TABS & SETTINGS
+// SETTINGS
 // ════════════════════════════════════════════
-function switchTab(tab,el){
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(el) el.classList.add('active');
-  if(tab==='overview') renderOverview();
-  if(tab==='history')  renderHistory();
-}
-
 function openSettings(){ document.getElementById('token-input').value=GH.token; document.getElementById('settings-modal').classList.add('open'); }
 function closeSettings(){ document.getElementById('settings-modal').classList.remove('open'); }
 async function saveToken(){
@@ -922,6 +899,8 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
   if(!GH.token){setSyncStatus('error','⚠ TOKEN ONTBREEKT');openSettings();}
   else{await loadLogsFromGitHub();}
   renderToday();
+  renderOverview();
+  renderHistory();
 })();
 </script>
 </body>
