@@ -378,6 +378,10 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 const TIME_ORDER = ['ochtend','pre-workout','middag','met maaltijd','post-workout','avond'];
 function timeRank(t){ const i=TIME_ORDER.indexOf(t); return i<0?99:i; }
 
+// Fase check — sync met index.html fases
+const RECOVERY_START = '2026-04-03';
+function isRecoveryPhase(){ return todayStr() >= RECOVERY_START; }
+
 // ════════════════════════════════════════════
 // SUPPLEMENT DATA
 // ════════════════════════════════════════════
@@ -387,7 +391,7 @@ const DEFAULT_SUPPLEMENTS = [
     info:{'Werkzame stof':'Magnesiumbisglycinaat','Per dagdosering':'375 mg elementair Mg',
           'Opname':'Hoge biologische beschikbaarheid','Aanbeveling':"'s Avonds → glycine bevordert slaap"} },
   { id:'optimen', name:'Opti-Men Multivitamine', brand:'Optimum Nutrition', type:'Tablet',
-    badge:'MULTI', badgeClass:'badge-multi', defaultDose:1, unit:'tablets', defaultTime:'middag',
+    badge:'MULTI', badgeClass:'badge-multi', defaultDose:3, unit:'tablets', defaultTime:'middag',
     info:{'Werkzame stoffen':'75+ ingrediënten','Vitamine C':'300 mg (500% ADH)',
           'Vitamine D':'300 IU','B-vitamines':'tot 5000% ADH','Zink':'30 mg (200% ADH)',
           'Aanbeveling':'Bij lunch of avondmaaltijd'} },
@@ -430,6 +434,28 @@ function getAllSupps(){
 }
 
 function isCustom(id){ return !DEFAULT_SUPPLEMENTS.find(s=>s.id===id); }
+
+// ── Streak: aantal aaneengesloten dagen dat een supp gelogd is ──
+function getStreak(id) {
+  const logs = loadLogs();
+  const days = [...new Set(logs.filter(l => l.id === id).map(l => l.date))].sort().reverse();
+  if (!days.length) return 0;
+  let streak = 0, cur = new Date(todayStr());
+  // tel ook vandaag mee als gelogd
+  for (const d of days) {
+    const diff = Math.round((cur - new Date(d)) / 86400000);
+    if (diff <= 1) { streak++; cur = new Date(d); }
+    else break;
+  }
+  return streak;
+}
+
+// ── Recovery check: is RECOVERY de huidige fase? ──
+function isRecoveryPhase() {
+  const today = todayStr();
+  return typeof BITFIT_PHASES !== 'undefined' &&
+    BITFIT_PHASES.some(p => p.track === 1 && p.label === 'RECOVERY' && p.start <= today && p.end >= today);
+}
 
 // ════════════════════════════════════════════
 // GITHUB
@@ -519,13 +545,20 @@ function renderToday(){
     const timeBtns = TIME_ORDER.map(t=>`<button class="time-btn${time===t?' selected':''}" onclick="selectTime('${s.id}','${t}')">${t}</button>`).join('');
     const doseStep = s.unit==='gram'?0.5:1;
 
+    const streak = getStreak(s.id);
+    const streakHtml = streak >= 2 ? `<span style="font-family:monospace;font-size:9px;color:var(--green);margin-left:4px" title="${streak} dagen op rij">🔥${streak}d</span>` : '';
+    const isStimulant = s.id === 'stacker';
+    const recoveryWarn = isStimulant && isRecoveryPhase();
+    const warnHtml = recoveryWarn ? `<div style="font-family:monospace;font-size:9px;color:var(--red);padding:3px 0 0;letter-spacing:1px">⚠ PAUZEER TIJDENS RECOVERY</div>` : '';
+
     card.innerHTML=`
+      ${warnHtml ? `<div style="background:#ff3d6b11;border-left:2px solid var(--red);padding:4px 10px">${warnHtml}</div>` : ''}
       <div class="card-row">
         <div class="card-check" onclick="quickLog('${s.id}')" title="${isLogged?'Ongedaan maken':'Direct indienen met standaard waarden'}">
           ${isLogged?'✓':''}
         </div>
         <div class="card-info">
-          <div class="card-name">${s.name}</div>
+          <div class="card-name">${s.name}${streakHtml}</div>
           <div class="card-meta">
             <span class="card-meta-dose">${dose} ${s.unit}</span>
             <span class="card-time-pill">${time}</span>
