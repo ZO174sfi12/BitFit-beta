@@ -27,15 +27,15 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
 header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--green),transparent);animation:pulse-line 4s ease-in-out infinite;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;}
+.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;display:flex;align-items:baseline;gap:0;}
 .logo-bit{color:var(--accent);}
 .logo-supp{color:var(--green);}
+.logo-sep{color:var(--border);font-size:.6em;letter-spacing:0;margin:0 6px;align-self:center;}
+.logo-fit-link{text-decoration:none;font-family:'Oxanium',sans-serif;font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite 2.5s;}
 .logo-fit-mini{color:var(--cyan);font-size:.85em;}
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .gear-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:3px 8px;font-family:monospace;font-size:11px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
 .gear-btn:hover{border-color:var(--accent);color:var(--text);}
-.bitfit-link{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:3px 8px;border:1px solid #00e5ff33;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
-.bitfit-link:hover{background:#00e5ff10;border-color:var(--cyan);}
 .sync-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .3s;}
 .sync-badge.ok{color:var(--green);border-color:#00ffb333;background:#00ffb30a;}
 .sync-badge.syncing{color:var(--yellow);border-color:#ffd60033;background:#ffd6000a;}
@@ -182,9 +182,12 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 
 <header>
   <div class="header-inner">
-    <div class="logo"><span class="logo-bit">BIT</span><span class="logo-supp">SUPP</span></div>
+    <div class="logo">
+      <span class="logo-bit">BIT</span><span class="logo-supp">SUPP</span>
+      <span class="logo-sep">/</span>
+      <a href="index.html" class="logo-fit-link"><span class="logo-bit">BIT</span><span class="logo-fit-mini">FIT</span></a>
+    </div>
     <div class="header-right">
-      <a href="index.html" class="bitfit-link">BITFIT &#8594;</a>
       <div id="sync-status" class="sync-badge syncing">↻</div>
       <button class="gear-btn" onclick="openSettings()" title="GitHub sync instellen">⚙</button>
     </div>
@@ -452,9 +455,6 @@ function saveTodayState(s){ localStorage.setItem('supp_today_'+todayStr(),JSON.s
 // RENDER: VANDAAG — compact rows
 // ════════════════════════════════════════════
 function renderToday(){
-  const grid0 = document.getElementById('supp-grid');
-  if(grid0) grid0.innerHTML='<div style="color:orange;font-family:monospace;font-size:10px;padding:8px">// RENDER GESTART…</div>';
-  try{
   const state = loadTodayState();
   const SUPPS = getAllSupps().slice().sort((a,b)=>{
     const ta = state[a.id]?.time || a.defaultTime;
@@ -502,10 +502,6 @@ function renderToday(){
     `;
     wrap.appendChild(row);
   });
-  }catch(err){
-    const g=document.getElementById('supp-grid');
-    if(g) g.innerHTML=`<div style="color:red;font-family:monospace;font-size:10px;padding:8px">// FOUT: ${err.message}<br/>${err.stack||''}</div>`;
-  }
 }
 
 function goToOverview(id){
