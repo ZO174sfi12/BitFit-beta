@@ -110,6 +110,19 @@
     "dip": {
       "weight": 84.6,
       "date": "2026-03-16"
-    }
+    },
+    "db_bench": {
+      "weight": 64.0,
+      "date": "2026-04-07"
+    },
+    "lat_pd": {
+      "weight": 60.0,
+      "date": "2026-03-13"
+    },
+    "front_squat": {
+      "weight": 60.0,
+      "date": "2026-01-24"
+    },
+    "db_clean": null
   }
 }
