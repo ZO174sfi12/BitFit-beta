@@ -162,7 +162,6 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <button class="lift-mode-btn wt-active" id="btn-weight" onclick="toggleWeight()">GEWICHT</button>
     </div>
-    <div class="lift-filters" id="lift-filters"></div>
     <div style="position:relative;height:clamp(220px,55vw,320px);">
       <canvas id="liftChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
     </div>
@@ -320,7 +319,7 @@ function renderLiftSelector() {
       const w = getTopWeightYear(key);
       const wLabel = w != null ? w + '\u202fkg' : '—';
       const active = activeLiftFilter.has(key);
-      return `<div class="lift-tile${active?' active':''}" style="--tc:${color}">` +
+      return `<div class="lift-tile${active?' active':''}" style="--tc:${color};cursor:pointer" onclick="toggleLiftTile('${key}')">` +
         `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
         `<div class="lift-tile-weight">${wLabel}</div></div>`;
     }).join('');
@@ -331,6 +330,16 @@ function renderLiftSelector() {
       lbl.classList.toggle('group-active', allActive);
     }
   });
+}
+
+function toggleLiftTile(key) {
+  if (activeLiftFilter.has(key)) {
+    if (activeLiftFilter.size > 1) activeLiftFilter.delete(key);
+  } else {
+    activeLiftFilter.add(key);
+  }
+  renderLiftSelector();
+  if (radarStart) renderRadar(radarStart);
 }
 
 function selectLiftGroup(group) {
@@ -673,27 +682,6 @@ function update(arg) {
         tooltip: {backgroundColor:'#0a0a15',borderColor:'#1c1c30',borderWidth:1,titleColor:'#7b5cff',bodyColor:'#c0c0d8',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+'kg'}}
       }
     }
-  });
-  const filtersEl = document.getElementById('lift-filters');
-  filtersEl.innerHTML = '';
-  liftDs.forEach((ds, i) => {
-    if (ds.label === 'Gewicht') return;
-    const hasData = ds.data.some(v => v !== null);
-    const btn = document.createElement('button');
-    btn.className = 'lift-btn' + (hasData ? ' active' : '');
-    btn.textContent = ds.label;
-    btn.style.color = ds.borderColor;
-    btn.style.borderColor = ds.borderColor;
-    btn.style.backgroundColor = hasData ? ds.borderColor + '15' : 'transparent';
-    btn.addEventListener('click', () => {
-      const meta = liftChart.getDatasetMeta(i);
-      const hidden = meta.hidden === true;
-      meta.hidden = !hidden;
-      btn.classList.toggle('active', hidden);
-      btn.style.backgroundColor = hidden ? ds.borderColor + '15' : 'transparent';
-      liftChart.update();
-    });
-    filtersEl.appendChild(btn);
   });
   renderStats(stats);
   renderNewEx(start);
