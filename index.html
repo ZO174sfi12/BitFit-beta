@@ -95,7 +95,9 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .lift-group{display:grid;gap:3px;margin-bottom:3px;}
 .lift-group-p{grid-template-columns:repeat(4,1fr);}
 .lift-group-s{grid-template-columns:repeat(5,1fr);}
-.lift-group-label{font-family:monospace;font-size:7px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;padding-left:2px;}
+.lift-group-label{font-family:monospace;font-size:7px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;padding:2px 4px;cursor:pointer;display:inline-block;border:1px solid transparent;transition:color .15s,border-color .15s;}
+.lift-group-label:hover{color:var(--text);}
+.lift-group-label.group-active{color:var(--green);border-color:#00ffb333;background:#00ffb308;}
 .lift-tile{background:#0a0a15;border:1px solid var(--border);padding:5px 2px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent;user-select:none;}
 .lift-tile:active{opacity:.7;}
 .lift-tile.active{border-color:var(--tc,var(--cyan));background:color-mix(in srgb, var(--tc,var(--cyan)) 8%, transparent);}
@@ -174,9 +176,9 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       <div class="cd tr" style="border-color:var(--cyan)"></div>
       <div class="panel-title" id="radar-title">&#9658; SETS / OEFENING</div>
       <div class="lift-selector">
-        <div class="lift-group-label">// PRIMARY</div>
+        <div class="lift-group-label group-active" id="lbl-primary" onclick="selectLiftGroup('primary')">// PRIMARY</div>
         <div class="lift-group lift-group-p" id="primary-tiles"></div>
-        <div class="lift-group-label" style="margin-top:5px">// SECONDARY</div>
+        <div class="lift-group-label" id="lbl-secondary" onclick="selectLiftGroup('secondary')" style="margin-top:5px">// SECONDARY</div>
         <div class="lift-group lift-group-s" id="secondary-tiles"></div>
       </div>
       <div class="radar-wrap" style="height:160px"><canvas id="radarChart"></canvas></div>
@@ -311,7 +313,7 @@ function getTopWeightYear(key) {
 }
 
 function renderLiftSelector() {
-  [['primary-tiles', PRIMARY_LIFTS], ['secondary-tiles', SECONDARY_LIFTS]].forEach(([id, keys]) => {
+  [['primary-tiles', PRIMARY_LIFTS, 'lbl-primary'], ['secondary-tiles', SECONDARY_LIFTS, 'lbl-secondary']].forEach(([id, keys, lblId]) => {
     const el = document.getElementById(id); if (!el) return;
     el.innerHTML = keys.map(key => {
       const lift = DATA.lifts[key];
@@ -323,7 +325,20 @@ function renderLiftSelector() {
         `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
         `<div class="lift-tile-weight">${wLabel}</div></div>`;
     }).join('');
+    // highlight group label when all tiles in group are active
+    const lbl = document.getElementById(lblId);
+    if (lbl) {
+      const allActive = keys.every(k => activeLiftFilter.has(k));
+      lbl.classList.toggle('group-active', allActive);
+    }
   });
+}
+
+function selectLiftGroup(group) {
+  const keys = group === 'primary' ? PRIMARY_LIFTS : SECONDARY_LIFTS;
+  activeLiftFilter = new Set(keys);
+  renderLiftSelector();
+  if (radarStart) renderRadar(radarStart);
 }
 
 function toggleLiftTile(key) {
