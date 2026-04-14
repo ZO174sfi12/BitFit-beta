@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-13",
+  "updated": "2026-04-14",
   "phase": "RECOVERY",
   "squat": {
     "weight": 70.0,
@@ -39,13 +39,12 @@
   "bodyweight": {
     "current": 85.0,
     "recent_avg": 85.33,
-    "old_avg": 84.85,
-    "delta_10d": 0.48,
-    "delta_label": "+0.48 (3d gem) \u26a1creatine"
+    "old_avg": 84.6,
+    "delta_10d": 0.73,
+    "delta_label": "+0.73 (3d gem) \u26a1creatine"
   },
   "gym_days_10d": 2,
   "days_10d": [
-    false,
     false,
     false,
     true,
@@ -54,40 +53,41 @@
     false,
     false,
     false,
-    true
+    true,
+    false
   ],
   "muscle_rest": {
     "Biceps": {
       "last": "2026-03-13",
-      "rest": 31
+      "rest": 32
     },
     "Glutes": {
       "last": "2026-03-16",
-      "rest": 28
+      "rest": 29
     },
     "Core": {
       "last": "2026-03-17",
-      "rest": 27
+      "rest": 28
     },
     "Schouders": {
       "last": "2026-03-31",
-      "rest": 13
+      "rest": 14
     },
     "Rug": {
       "last": "2026-04-07",
-      "rest": 6
+      "rest": 7
     },
     "Benen": {
       "last": "2026-04-13",
-      "rest": 0
+      "rest": 1
     },
     "Borst": {
       "last": "2026-04-13",
-      "rest": 0
+      "rest": 1
     },
     "Triceps": {
       "last": "2026-04-13",
-      "rest": 0
+      "rest": 1
     }
   },
   "year_records": {
