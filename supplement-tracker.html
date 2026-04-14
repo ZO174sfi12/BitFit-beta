@@ -34,7 +34,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .gear-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:3px 8px;font-family:monospace;font-size:11px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
 .gear-btn:hover{border-color:var(--accent);color:var(--text);}
-#date-display{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);}
+.bitfit-link{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:3px 8px;border:1px solid #00e5ff33;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
+.bitfit-link:hover{background:#00e5ff10;border-color:var(--cyan);}
 .sync-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .3s;}
 .sync-badge.ok{color:var(--green);border-color:#00ffb333;background:#00ffb30a;}
 .sync-badge.syncing{color:var(--yellow);border-color:#ffd60033;background:#ffd6000a;}
@@ -82,10 +83,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .supp-row{display:flex;align-items:center;min-height:44px;border-bottom:1px solid var(--border);background:#0a0a15;transition:background .1s;-webkit-tap-highlight-color:transparent;}
 .supp-row:last-child{border-bottom:none;}
 .supp-row.logged{background:#00ffb306;}
-.row-check{width:48px;min-height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-right:1px solid var(--border);cursor:pointer;font-size:16px;color:transparent;transition:all .15s;}
+.row-check{width:48px;min-height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-left:1px solid var(--border);cursor:pointer;font-size:16px;color:transparent;transition:all .15s;order:2;}
 .supp-row.logged .row-check{color:var(--green);background:#00ffb310;}
 .row-check:active{background:#00ffb322;}
-.row-body{flex:1;padding:8px 10px;cursor:pointer;min-width:0;overflow:hidden;}
+.row-body{flex:1;padding:8px 10px;cursor:pointer;min-width:0;overflow:hidden;order:0;}
+.row-badge-wrap{order:1;}
 .row-name{font-family:'Oxanium',sans-serif;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;}
 .supp-row.logged .row-name{color:var(--green);}
 .row-sub{font-family:monospace;font-size:8px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:5px;}
@@ -93,18 +95,6 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .row-streak{color:var(--green);font-size:8px;}
 .row-badge-wrap{padding:0 10px;flex-shrink:0;}
 
-/* ── Change Request Panel ── */
-.cr-panel{border:1px solid var(--accent);background:#08080d;position:relative;overflow:hidden;margin-top:8px;}
-.cr-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 8px var(--accent);}
-.cr-title{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--accent);padding:8px 10px 6px;}
-.notes-inline{width:100%;background:transparent;border:none;border-top:1px solid var(--border);color:var(--text);padding:10px;font-family:'Space Mono',monospace;font-size:11px;resize:none;min-height:60px;line-height:1.6;display:block;}
-.notes-inline:focus{outline:none;}
-.cr-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-top:1px solid var(--border);}
-.cr-status{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--muted);}
-.cr-status.ok{color:var(--green);}
-.cr-status.err{color:var(--red);}
-.cr-submit{background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:monospace;font-size:9px;letter-spacing:1.5px;padding:5px 14px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.cr-submit:hover{background:#7b5cff20;box-shadow:var(--glow-a);}
 
 /* ── info table ── */
 .supp-info-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 12px;}
@@ -194,7 +184,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   <div class="header-inner">
     <div class="logo"><span class="logo-bit">BIT</span><span class="logo-supp">SUPP</span></div>
     <div class="header-right">
-      <span id="date-display"></span>
+      <a href="index.html" class="bitfit-link">BITFIT &#8594;</a>
       <div id="sync-status" class="sync-badge syncing">↻</div>
       <button class="gear-btn" onclick="openSettings()" title="GitHub sync instellen">⚙</button>
     </div>
@@ -280,14 +270,6 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 <!-- ══ VANDAAG ══ -->
 <div id="tab-today" class="tab-pane active">
   <div id="supp-grid"></div>
-  <div class="cr-panel">
-    <div class="cr-title">&#9658; DAGNOTITIES &amp; CHANGE REQUESTS</div>
-    <textarea id="day-notes-input" class="notes-inline" placeholder="Notities, opmerkingen of change requests voor Claude…" oninput="saveDayNotes()"></textarea>
-    <div class="cr-footer">
-      <span id="cr-status" class="cr-status"></span>
-      <button class="cr-submit" onclick="submitChangeRequest()">VERSTUUR &#10148;</button>
-    </div>
-  </div>
 </div>
 
 <!-- ══ OVERZICHT ══ -->
@@ -465,71 +447,6 @@ function loadLogs(){ return _logs; }
 async function saveLogs(logs){ _logs=logs; await saveLogsToGitHub(); }
 function loadTodayState(){ try{return JSON.parse(localStorage.getItem('supp_today_'+todayStr())||'{}');}catch{return {};} }
 function saveTodayState(s){ localStorage.setItem('supp_today_'+todayStr(),JSON.stringify(s)); }
-function loadDayNotes(){ return localStorage.getItem('supp_notes_'+todayStr())||''; }
-function saveDayNotes(){ localStorage.setItem('supp_notes_'+todayStr(),document.getElementById('day-notes-input').value); }
-
-// ════════════════════════════════════════════
-// CHANGE REQUESTS — independent GitHub sync
-// ════════════════════════════════════════════
-const CR_API = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/change-requests.json`;
-
-async function crFetch(method, body){
-  const opts={method,headers:{'Authorization':`Bearer ${GH.token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'}};
-  if(body) opts.body=JSON.stringify(body);
-  return fetch(CR_API, opts);
-}
-
-function setCrStatus(state, msg){
-  const el=document.getElementById('cr-status');
-  if(!el) return;
-  el.className='cr-status '+(state==='ok'?'ok':state==='err'?'err':'');
-  el.textContent=msg;
-}
-
-async function submitChangeRequest(){
-  const ta=document.getElementById('day-notes-input');
-  const text=(ta?.value||'').trim();
-  if(!text){ setCrStatus('err','⚠ LEEG'); return; }
-
-  setCrStatus('','↻ VERSTUREN…');
-  const btn=document.querySelector('.cr-submit');
-  if(btn) btn.disabled=true;
-
-  try{
-    // Read existing file (may not exist yet)
-    let entries=[], sha=null;
-    const get=await crFetch('GET');
-    if(get.ok){
-      const d=await get.json();
-      sha=d.sha;
-      entries=JSON.parse(atob(d.content.replace(/\n/g,'')));
-    } else if(get.status!==404){
-      throw new Error(get.status);
-    }
-
-    // Append new entry
-    entries.push({
-      date: todayStr(),
-      submitted_at: new Date().toISOString(),
-      text,
-      processed: false
-    });
-
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(entries,null,2))));
-    const body={message:`Change request ${todayStr()}`,content,...(sha?{sha}:{})};
-    const put=await crFetch('PUT',body);
-    if(!put.ok) throw new Error(put.status);
-
-    setCrStatus('ok','✓ VERSTUURD');
-    // Keep textarea so user can reference it, just mark it sent
-    ta.style.opacity='0.5';
-    setTimeout(()=>{ ta.style.opacity=''; },2000);
-  } catch(e){
-    setCrStatus('err','⚠ FOUT: '+e.message);
-  } finally {
-    if(btn) btn.disabled=false;
-  }
-}
 
 // ════════════════════════════════════════════
 // RENDER: VANDAAG — compact rows
@@ -616,7 +533,7 @@ async function quickLog(id){
     state[id]={...state[id],logged:true,dose,time};
     saveTodayState(state);
     const filtered=loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id));
-    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose,unit:s.unit,time,notes:loadDayNotes()});
+    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose,unit:s.unit,time,notes:''});
     await saveLogs(filtered);
   }
   renderToday();
