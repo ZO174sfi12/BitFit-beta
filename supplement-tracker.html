@@ -452,6 +452,9 @@ function saveTodayState(s){ localStorage.setItem('supp_today_'+todayStr(),JSON.s
 // RENDER: VANDAAG — compact rows
 // ════════════════════════════════════════════
 function renderToday(){
+  const grid0 = document.getElementById('supp-grid');
+  if(grid0) grid0.innerHTML='<div style="color:orange;font-family:monospace;font-size:10px;padding:8px">// RENDER GESTART…</div>';
+  try{
   const state = loadTodayState();
   const SUPPS = getAllSupps().slice().sort((a,b)=>{
     const ta = state[a.id]?.time || a.defaultTime;
@@ -499,6 +502,10 @@ function renderToday(){
     `;
     wrap.appendChild(row);
   });
+  }catch(err){
+    const g=document.getElementById('supp-grid');
+    if(g) g.innerHTML=`<div style="color:red;font-family:monospace;font-size:10px;padding:8px">// FOUT: ${err.message}<br/>${err.stack||''}</div>`;
+  }
 }
 
 function goToOverview(id){
