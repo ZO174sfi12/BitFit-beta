@@ -98,8 +98,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .lift-group-label{font-family:monospace;font-size:7px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;padding:2px 4px;cursor:pointer;display:inline-block;border:1px solid transparent;transition:color .15s,border-color .15s;}
 .lift-group-label:hover{color:var(--text);}
 .lift-group-label.group-active{color:var(--green);border-color:#00ffb333;background:#00ffb308;}
-.lift-tile{background:#0a0a15;border:1px solid var(--border);padding:5px 2px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent;user-select:none;}
-.lift-tile:active{opacity:.7;}
+.lift-tile{background:#0a0a15;border:1px solid var(--border);padding:5px 2px;text-align:center;user-select:none;}
 .lift-tile.active{border-color:var(--tc,var(--cyan));background:color-mix(in srgb, var(--tc,var(--cyan)) 8%, transparent);}
 .lift-tile-name{font-family:monospace;font-size:7px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;line-height:1.2;}
 .lift-tile.active .lift-tile-name{color:var(--tc,var(--cyan));}
@@ -321,7 +320,7 @@ function renderLiftSelector() {
       const w = getTopWeightYear(key);
       const wLabel = w != null ? w + '\u202fkg' : '—';
       const active = activeLiftFilter.has(key);
-      return `<div class="lift-tile${active?' active':''}" style="--tc:${color}" onclick="toggleLiftTile('${key}')">` +
+      return `<div class="lift-tile${active?' active':''}" style="--tc:${color}">` +
         `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
         `<div class="lift-tile-weight">${wLabel}</div></div>`;
     }).join('');
@@ -341,15 +340,6 @@ function selectLiftGroup(group) {
   if (radarStart) renderRadar(radarStart);
 }
 
-function toggleLiftTile(key) {
-  if (activeLiftFilter.has(key)) {
-    if (activeLiftFilter.size > 1) activeLiftFilter.delete(key);
-  } else {
-    activeLiftFilter.add(key);
-  }
-  renderLiftSelector();
-  if (radarStart) renderRadar(radarStart);
-}
 // ──────────────────────────────────────────────────────────
 
 let liftChart = null;
