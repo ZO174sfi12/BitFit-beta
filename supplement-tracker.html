@@ -32,16 +32,16 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .logo-supp{color:var(--green);}
 .logo-fit-mini{color:var(--cyan);font-size:.85em;}
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.back-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:transparent;border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);text-decoration:none;transition:all .2s;white-space:nowrap;}
-.back-btn:hover{background:#ffffff08;border-color:var(--accent);box-shadow:var(--glow-a);}
-.back-btn svg{width:12px;height:12px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+/* back-link: same style as BitFit's link to BitSupp */
+.back-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:3px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:color .2s,border-color .2s;white-space:nowrap;}
+.back-btn:hover{color:var(--cyan);border-color:var(--cyan);}
+.gear-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:3px 8px;font-family:monospace;font-size:11px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
+.gear-btn:hover{border-color:var(--accent);color:var(--text);}
 #date-display{font-family:monospace;font-size:9px;letter-spacing:1px;color:var(--muted);}
 .sync-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:4px 10px;border:1px solid var(--border);clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .3s;}
 .sync-badge.ok{color:var(--green);border-color:#00ffb333;background:#00ffb30a;}
 .sync-badge.syncing{color:var(--yellow);border-color:#ffd60033;background:#ffd6000a;}
 .sync-badge.error{color:var(--red);border-color:#ff3d6b33;background:#ff3d6b0a;}
-.settings-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;font-family:monospace;font-size:8px;letter-spacing:1px;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .15s;}
-.settings-btn:hover{border-color:var(--accent);color:var(--text);}
 
 /* ── Tabs ── */
 .tabs{display:flex;padding:10px 18px 0;gap:5px;position:relative;z-index:10;}
@@ -67,70 +67,44 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 /* ── Progress (hidden) ── */
 .progress-wrap{display:none;}
 
-/* ── Action bar ── */
-.action-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
-.action-bar-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);}
+/* ── Add button ── */
 .add-supp-btn{display:flex;align-items:center;gap:7px;padding:7px 16px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 .add-supp-btn:hover{background:#00ffb315;box-shadow:var(--glow-g);}
 
 /* ── TIME GROUP LABEL ── */
-.time-group-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);padding:6px 0 4px;margin-top:4px;border-bottom:1px solid var(--border);margin-bottom:8px;}
-.time-group-label:first-child{margin-top:0;}
+.time-group-label{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);padding:5px 10px 3px;background:var(--panel);border-bottom:1px solid var(--border);}
 
-/* ── SUPPLEMENT CARD — COLLAPSED ── */
-.supp-list{display:flex;flex-direction:column;gap:6px;}
-.supp-card{background:#0a0a15;border:1px solid var(--border);transition:border-color .2s;}
-.supp-card.logged{border-color:#00ffb344;}
-
-/* collapsed header row */
-.card-row{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:default;}
-.card-check{width:20px;height:20px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .2s;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.card-check:hover{border-color:var(--green);}
-.supp-card.logged .card-check{border-color:var(--green);background:#00ffb318;color:var(--green);}
-.card-info{flex:1;min-width:0;}
-.card-name{font-family:'Oxanium',sans-serif;font-weight:700;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.supp-card.logged .card-name{color:var(--green);}
-.card-meta{font-family:monospace;font-size:9px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;}
-.card-meta-dose{color:var(--text);}
-.card-time-pill{font-family:monospace;font-size:8px;padding:2px 8px;border:1px solid var(--border);color:var(--muted);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);white-space:nowrap;flex-shrink:0;}
-.supp-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;white-space:nowrap;border:1px solid;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);flex-shrink:0;}
+/* ── COMPACT SUPPLEMENT ROWS ── */
+.supp-rows-wrap{border:1px solid var(--border);overflow:hidden;margin-bottom:0;}
+.supp-badge{font-family:monospace;font-size:7px;letter-spacing:1px;padding:2px 6px;white-space:nowrap;border:1px solid;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);flex-shrink:0;}
 .badge-mineral{color:var(--cyan);border-color:var(--cyan);background:#00e5ff11;}
 .badge-multi{color:var(--yellow);border-color:var(--yellow);background:#ffd60011;}
 .badge-oil{color:var(--accent);border-color:var(--accent);background:#7b5cff11;}
 .badge-kracht{color:var(--green);border-color:var(--green);background:#00ffb311;}
 .badge-custom{color:var(--muted);border-color:var(--muted);background:#45456011;}
-.card-expand-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:monospace;font-size:9px;letter-spacing:1px;padding:4px 8px;white-space:nowrap;transition:color .15s;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
-.card-expand-btn:hover{color:var(--cyan);}
-.card-expand-btn.open{color:var(--cyan);}
+.supp-row{display:flex;align-items:center;min-height:44px;border-bottom:1px solid var(--border);background:#0a0a15;transition:background .1s;-webkit-tap-highlight-color:transparent;}
+.supp-row:last-child{border-bottom:none;}
+.supp-row.logged{background:#00ffb306;}
+.row-check{width:48px;min-height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-right:1px solid var(--border);cursor:pointer;font-size:16px;color:transparent;transition:all .15s;}
+.supp-row.logged .row-check{color:var(--green);background:#00ffb310;}
+.row-check:active{background:#00ffb322;}
+.row-body{flex:1;padding:8px 10px;cursor:pointer;min-width:0;overflow:hidden;}
+.row-name{font-family:'Oxanium',sans-serif;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;}
+.supp-row.logged .row-name{color:var(--green);}
+.row-sub{font-family:monospace;font-size:8px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:5px;}
+.row-time-pill{border:1px solid var(--border);padding:1px 5px;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
+.row-streak{color:var(--green);font-size:8px;}
+.row-badge-wrap{padding:0 10px;flex-shrink:0;}
 
-/* collapsed details */
-.card-details{display:none;padding:0 14px 14px;border-top:1px solid var(--border);animation:slide-down .15s ease;}
-.card-details.open{display:block;}
+/* ── Notes compact ── */
+.notes-inline{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 10px;font-family:'Space Mono',monospace;font-size:11px;resize:none;height:36px;transition:border-color .2s,height .2s;line-height:1.4;display:block;}
+.notes-inline:focus{outline:none;border-color:var(--accent);height:80px;}
 
-/* ── info table inside card ── */
+/* ── info table ── */
 .supp-info-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 12px;}
 .supp-info-table td{padding:4px 6px;border-bottom:1px solid #1a1a2a;vertical-align:top;line-height:1.5;}
 .supp-info-table td:first-child{font-family:monospace;font-size:9px;color:var(--muted);width:36%;}
 .supp-info-table tr:last-child td{border-bottom:none;}
-
-/* ── controls inside card ── */
-.ctrl-label{font-family:monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:4px;}
-.ctrl-input{background:#08080f;border:1px solid var(--border);color:var(--text);padding:7px 10px;font-family:'Space Mono',monospace;font-size:13px;width:100%;transition:border-color .2s;}
-.ctrl-input:focus{outline:none;border-color:var(--green);}
-.time-btns{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
-.time-btn{padding:5px 10px;border:1px solid var(--border);background:transparent;color:var(--muted);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);font-family:monospace;font-size:9px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
-.time-btn:hover{border-color:var(--green);color:var(--text);}
-.time-btn.selected{background:#00ffb315;border-color:var(--green);color:var(--green);}
-.card-actions{display:flex;gap:8px;align-items:center;}
-.log-btn{flex:1;padding:9px;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.log-btn:hover{background:#00ffb315;box-shadow:0 0 12px #00ffb333;}
-.log-btn.logged-state{background:#00ffb320;color:var(--green);}
-.del-card-btn{padding:9px 12px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:monospace;font-size:9px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:color .15s;}
-.del-card-btn:hover{color:var(--red);border-color:var(--red);}
-
-/* ── Notes ── */
-.notes-wrap textarea{width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'Space Mono',monospace;font-size:12px;resize:vertical;min-height:65px;transition:border-color .2s;line-height:1.5;}
-.notes-wrap textarea:focus{outline:none;border-color:var(--accent);}
 
 /* ── OVERVIEW ── */
 .overview-card{background:#0a0a15;border:1px solid var(--border);padding:16px;margin-bottom:10px;position:relative;}
@@ -215,12 +189,9 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
     <div class="logo"><span class="logo-bit">BIT</span><span class="logo-supp">SUPP</span></div>
     <div class="header-right">
       <span id="date-display"></span>
-      <div id="sync-status" class="sync-badge syncing">↻ LADEN</div>
-      <button class="settings-btn" onclick="openSettings()">⚙ GITHUB</button>
-      <a href="index.html" class="back-btn">
-        <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
-        <span style="color:var(--accent)">BIT</span><span style="color:var(--cyan)">FIT</span>
-      </a>
+      <div id="sync-status" class="sync-badge syncing">↻</div>
+      <button class="gear-btn" onclick="openSettings()" title="GitHub sync instellen">⚙</button>
+      <a href="index.html" class="back-btn">BIT<span style="color:var(--cyan)">FIT</span></a>
     </div>
   </div>
 </header>
@@ -229,7 +200,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 <div class="modal-overlay" id="settings-modal">
   <div class="modal gh-modal">
     <div class="cd tl"></div><div class="cd tr"></div>
-    <h3>// GITHUB TOKEN</h3>
+    <h3>// SYNC TOKEN</h3>
     <p>Token wordt lokaal opgeslagen — nooit in de code of op GitHub.<br/>
     Maak aan via <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> met <strong style="color:var(--text)">repo</strong>-rechten.</p>
     <input type="password" id="token-input" placeholder="ghp_…" style="width:100%;background:#08080f;border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'Space Mono',monospace;font-size:12px;margin-bottom:12px;"/>
@@ -303,27 +274,18 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 
 <!-- ══ VANDAAG ══ -->
 <div id="tab-today" class="tab-pane active">
-  <div class="action-bar">
-    <div class="action-bar-label">SUPPLEMENTEN</div>
-    <button class="add-supp-btn" onclick="openAddModal()">+ SUPP TOEVOEGEN</button>
-  </div>
-
-  <div class="supp-list" id="supp-grid"></div>
-
-  <div class="panel" style="margin-top:14px;">
-    <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="panel-title">&#9658; NOTITIES VANDAAG</div>
-    <div class="notes-wrap">
-      <textarea id="day-notes-input" placeholder="Training, gevoel, bijzonderheden…" oninput="saveDayNotes()"></textarea>
-    </div>
-  </div>
+  <div id="supp-grid"></div>
+  <textarea id="day-notes-input" class="notes-inline" placeholder="Notities…" oninput="saveDayNotes()"></textarea>
 </div>
 
 <!-- ══ OVERZICHT ══ -->
 <div id="tab-overview" class="tab-pane">
   <div class="panel">
     <div class="cd tl"></div><div class="cd tr"></div>
-    <div class="panel-title">&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</div>
+    <div class="panel-title" style="display:flex;align-items:center;justify-content:space-between;">
+      <span>&#9658; SUPPLEMENT SPECS &amp; BEWERKEN</span>
+      <button class="add-supp-btn" onclick="openAddModal()" style="font-size:9px;padding:5px 12px;">+ TOEVOEGEN</button>
+    </div>
     <div id="overview-content"></div>
     <div class="overlap-note">
       <strong>// OVERLAP</strong><br/>
@@ -357,7 +319,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 </div>
 
 </div>
-<footer>BITSUPP // DATA IN BROWSER (localStorage) // SYNC VIA GITHUB</footer>
+<footer>BITSUPP // DATA IN BROWSER (localStorage)</footer>
 
 <script>
 // ════════════════════════════════════════════
@@ -446,7 +408,7 @@ function isRecoveryPhase() {
 }
 
 // ════════════════════════════════════════════
-// GITHUB
+// SYNC
 // ════════════════════════════════════════════
 const GH = {
   get token(){ return localStorage.getItem('gh_token')||''; },
@@ -455,7 +417,8 @@ const GH = {
 const GH_API = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
 let _logs=[], _fileSha=null;
 
-function setSyncStatus(state,msg){ const el=document.getElementById('sync-status'); if(!el)return; el.className='sync-badge '+state; el.textContent=msg; }
+const SYNC_ICONS={ok:'✓',syncing:'↻',error:'⚠'};
+function setSyncStatus(state,msg){ const el=document.getElementById('sync-status'); if(!el)return; el.className='sync-badge '+state; el.textContent=SYNC_ICONS[state]||msg; el.title=msg; }
 async function ghFetch(method,body){
   const opts={method,headers:{'Authorization':`Bearer ${GH.token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'}};
   if(body) opts.body=JSON.stringify(body);
@@ -471,7 +434,7 @@ async function loadLogsFromGitHub(){
     _fileSha=data.sha;
     _logs=JSON.parse(atob(data.content.replace(/\n/g,'')));
     setSyncStatus('ok','✓ GESYNCHRONISEERD');
-  }catch(e){setSyncStatus('error','⚠ GITHUB FOUT');}
+  }catch(e){setSyncStatus('error','⚠ SYNC FOUT');}
 }
 async function saveLogsToGitHub(){
   setSyncStatus('syncing','↻ OPSLAAN');
@@ -494,7 +457,7 @@ function loadDayNotes(){ return localStorage.getItem('supp_notes_'+todayStr())||
 function saveDayNotes(){ localStorage.setItem('supp_notes_'+todayStr(),document.getElementById('day-notes-input').value); }
 
 // ════════════════════════════════════════════
-// RENDER: VANDAAG — collapsed cards
+// RENDER: VANDAAG — compact rows
 // ════════════════════════════════════════════
 function renderToday(){
   const state = loadTodayState();
@@ -505,91 +468,62 @@ function renderToday(){
   });
   const grid = document.getElementById('supp-grid');
   grid.innerHTML='';
-  let loggedCount=0;
 
-  // group by time
-  let lastGroup='';
+  let lastGroup='', wrap=null;
   SUPPS.forEach(s=>{
     const entry = state[s.id]||{};
     const isLogged = !!entry.logged;
-    if(isLogged) loggedCount++;
-    const dose  = entry.dose!==undefined ? entry.dose : s.defaultDose;
-    const time  = entry.time || s.defaultTime;
+    const dose = entry.dose!==undefined ? entry.dose : s.defaultDose;
+    const time = entry.time || s.defaultTime;
 
-    // time group label
     if(time!==lastGroup){
       lastGroup=time;
       const lbl=document.createElement('div');
       lbl.className='time-group-label';
       lbl.textContent='// '+time.toUpperCase();
       grid.appendChild(lbl);
+      wrap=document.createElement('div');
+      wrap.className='supp-rows-wrap';
+      grid.appendChild(wrap);
     }
 
-    const card=document.createElement('div');
-    card.className='supp-card'+(isLogged?' logged':'');
-    card.id='card-'+s.id;
-
-    const infoRows = s.info ? Object.entries(s.info).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('') : '';
-    const timeBtns = TIME_ORDER.map(t=>`<button class="time-btn${time===t?' selected':''}" onclick="selectTime('${s.id}','${t}')">${t}</button>`).join('');
-    const doseStep = s.unit==='gram'?0.5:1;
-
     const streak = getStreak(s.id);
-    const streakHtml = streak >= 2 ? `<span style="font-family:monospace;font-size:9px;color:var(--green);margin-left:4px" title="${streak} dagen op rij">🔥${streak}d</span>` : '';
-    const isStimulant = s.id === 'stacker';
-    const recoveryWarn = isStimulant && isRecoveryPhase();
-    const warnHtml = recoveryWarn ? `<div style="font-family:monospace;font-size:9px;color:var(--red);padding:3px 0 0;letter-spacing:1px">⚠ PAUZEER TIJDENS RECOVERY</div>` : '';
+    const streakHtml = streak >= 2 ? `<span class="row-streak"> 🔥${streak}d</span>` : '';
+    const warnHtml = (s.id==='stacker' && isRecoveryPhase()) ? `<span style="color:var(--red)"> ⚠</span>` : '';
 
-    card.innerHTML=`
-      ${warnHtml ? `<div style="background:#ff3d6b11;border-left:2px solid var(--red);padding:4px 10px">${warnHtml}</div>` : ''}
-      <div class="card-row">
-        <div class="card-check" onclick="quickLog('${s.id}')" title="${isLogged?'Ongedaan maken':'Direct indienen met standaard waarden'}">
-          ${isLogged?'✓':''}
-        </div>
-        <div class="card-info">
-          <div class="card-name">${s.name}${streakHtml}</div>
-          <div class="card-meta">
-            <span class="card-meta-dose">${dose} ${s.unit}</span>
-            <span class="card-time-pill">${time}</span>
-            <span style="color:var(--muted)">${s.brand}</span>
-          </div>
-        </div>
-        <span class="supp-badge ${s.badgeClass}">${s.badge}</span>
-        <button class="card-expand-btn" onclick="toggleCard('${s.id}')" id="expand-btn-${s.id}">&#9660; WIJZIG</button>
-      </div>
-      <div class="card-details" id="details-${s.id}">
-        ${infoRows?`<table class="supp-info-table">${infoRows}</table>`:''}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-          <div>
-            <div class="ctrl-label">DOSIS (${s.unit})</div>
-            <input type="number" class="ctrl-input" id="dose-${s.id}" value="${dose}" min="0" step="${doseStep}" onchange="updateEntry('${s.id}')"/>
-          </div>
-          <div>
-            <div class="ctrl-label">TIJDSTIP</div>
-            <div style="padding-top:2px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text)">${time}</div>
-          </div>
-        </div>
-        <div class="ctrl-label">TIJDSTIP WIJZIGEN</div>
-        <div class="time-btns" id="timebtns-${s.id}">${timeBtns}</div>
-        <div class="card-actions">
-          <button class="log-btn ${isLogged?'logged-state':''}" onclick="toggleLog('${s.id}')">
-            ${isLogged?'✓ GELOGD — ONGEDAAN MAKEN':'LOG MET BOVENSTAANDE WAARDEN'}
-          </button>
-          ${isCustom(s.id)?`<button class="del-card-btn" onclick="removeCustomSupp('${s.id}')">DEL</button>`:''}
+    const row=document.createElement('div');
+    row.className='supp-row'+(isLogged?' logged':'');
+    row.id='row-'+s.id;
+    row.innerHTML=`
+      <div class="row-check" onclick="quickLog('${s.id}')">${isLogged?'✓':''}</div>
+      <div class="row-body" onclick="goToOverview('${s.id}')">
+        <div class="row-name">${s.name}${streakHtml}${warnHtml}</div>
+        <div class="row-sub">
+          <span class="row-time-pill">${time}</span>
+          <span>${dose}&thinsp;${s.unit}</span>
         </div>
       </div>
+      <div class="row-badge-wrap"><span class="supp-badge ${s.badgeClass}">${s.badge}</span></div>
     `;
-    grid.appendChild(card);
+    wrap.appendChild(row);
   });
 
   document.getElementById('day-notes-input').value=loadDayNotes();
 }
 
-function toggleCard(id){
-  const det=document.getElementById('details-'+id);
-  const btn=document.getElementById('expand-btn-'+id);
-  const open=det.classList.toggle('open');
-  btn.classList.toggle('open',open);
-  btn.innerHTML=open?'&#9650; SLUITEN':'&#9660; WIJZIG';
+function goToOverview(id){
+  const btn=document.querySelector('.tab-btn:nth-child(2)');
+  switchTab('overview', btn);
+  setTimeout(()=>{
+    const card=document.getElementById('ov-'+id);
+    if(card){ card.scrollIntoView({behavior:'smooth',block:'start'}); }
+    const form=document.getElementById('ov-form-'+id);
+    const ebtn=document.getElementById('editbtn-'+id);
+    if(form && !form.classList.contains('open')){
+      form.classList.add('open');
+      if(ebtn){ ebtn.classList.add('active'); ebtn.textContent='SLUITEN'; }
+    }
+  },60);
 }
 
 // quick-log: log met de huidige opgeslagen defaults (geen expand nodig)
@@ -614,49 +548,6 @@ async function quickLog(id){
   if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
 }
 
-function selectTime(id,t){
-  document.querySelectorAll(`#timebtns-${id} .time-btn`).forEach(b=>b.classList.toggle('selected',b.textContent===t));
-  // update display
-  const row=document.querySelector(`#card-${id} .card-time-pill`);
-  if(row) row.textContent=t;
-  updateEntry(id);
-  // re-sort check — just update entry
-}
-
-function getSelectedTime(id){
-  const sel=document.querySelector(`#timebtns-${id} .time-btn.selected`);
-  return sel?sel.textContent:'';
-}
-
-function updateEntry(id){
-  const state=loadTodayState();
-  if(!state[id]) state[id]={};
-  const doseEl=document.getElementById('dose-'+id);
-  if(doseEl) state[id].dose=parseFloat(doseEl.value)||0;
-  const t=getSelectedTime(id);
-  if(t) state[id].time=t;
-  saveTodayState(state);
-}
-
-async function toggleLog(id){
-  updateEntry(id);
-  const state=loadTodayState();
-  if(!state[id]) state[id]={};
-  const s=getAllSupps().find(x=>x.id===id);
-  if(state[id].logged){
-    state[id].logged=false;
-    saveTodayState(state);
-    await saveLogs(loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id)));
-  } else {
-    state[id].logged=true;
-    saveTodayState(state);
-    const filtered=loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id));
-    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose:state[id].dose||s.defaultDose,unit:s.unit,time:state[id].time||s.defaultTime,notes:loadDayNotes()});
-    await saveLogs(filtered);
-  }
-  renderToday();
-  if(document.getElementById('tab-history').classList.contains('active')) renderHistory();
-}
 
 // ════════════════════════════════════════════
 // CUSTOM SUPPLEMENTS
