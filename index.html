@@ -338,15 +338,12 @@ function toggleLiftTile(key) {
   } else {
     activeLiftFilter.add(key);
   }
-  renderLiftSelector();
-  if (radarStart) renderRadar(radarStart);
+  if (radarStart) update(radarStart);
 }
 
 function selectLiftGroup(group) {
-  const keys = group === 'primary' ? PRIMARY_LIFTS : SECONDARY_LIFTS;
-  activeLiftFilter = new Set(keys);
-  renderLiftSelector();
-  if (radarStart) renderRadar(radarStart);
+  activeLiftFilter = new Set(group === 'primary' ? PRIMARY_LIFTS : SECONDARY_LIFTS);
+  if (radarStart) update(radarStart);
 }
 
 // ──────────────────────────────────────────────────────────
@@ -488,7 +485,7 @@ function buildLiftDatasets(start) {
   const lastWDate = allWSorted.length ? allWSorted[allWSorted.length-1].date : null;
   if (lastWDate && lastWDate >= s) allDatesSet.add(lastWDate);
   const allDates = Array.from(allDatesSet).sort();
-  const datasets = Object.entries(DATA.lifts).map(([key, lift]) => {
+  const datasets = Object.entries(DATA.lifts).filter(([key]) => activeLiftFilter.has(key)).map(([key, lift]) => {
     const byDate = {};
     lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => byDate[p.date] = p);
     return {
