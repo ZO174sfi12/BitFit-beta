@@ -781,7 +781,6 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
 // ════════════════════════════════════════════
 (async function init(){
   const now=new Date();
-  document.getElementById('date-display').textContent=now.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).toUpperCase();
   const today=todayStr(), month=new Date(); month.setDate(month.getDate()-30);
   document.getElementById('filter-to').value=today;
   document.getElementById('filter-from').value=month.toISOString().slice(0,10);
