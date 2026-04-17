@@ -368,5 +368,15 @@
     "unit": "tablets",
     "time": "avond",
     "notes": ""
+  },
+  {
+    "date": "2026-04-17",
+    "id": "custom_1775072955268",
+    "name": "Zma",
+    "brand": "Body fit",
+    "dose": 2,
+    "unit": "tablets",
+    "time": "avond",
+    "notes": ""
   }
 ]
