@@ -128,11 +128,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">84.5</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">85.9</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-04-16</span>
+        <span class="meta-value" style="color:var(--muted)">2026-04-19</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -304,6 +304,12 @@ const DATA = {
           "date": "2026-04-15",
           "weight": 40.0,
           "volume": 1400.0,
+          "pr": false
+        },
+        {
+          "date": "2026-04-19",
+          "weight": 60.0,
+          "volume": 2160.0,
           "pr": false
         }
       ]
@@ -526,6 +532,12 @@ const DATA = {
           "date": "2026-04-14",
           "weight": 45.0,
           "volume": 1465.0,
+          "pr": false
+        },
+        {
+          "date": "2026-04-19",
+          "weight": 40.0,
+          "volume": 1240.0,
           "pr": false
         }
       ]
@@ -910,6 +922,10 @@ const DATA = {
     {
       "date": "2026-04-16",
       "weight": 84.5
+    },
+    {
+      "date": "2026-04-19",
+      "weight": 85.9
     }
   ],
   "muscle_daily": [
@@ -1677,6 +1693,21 @@ const DATA = {
       "date": "2026-04-15",
       "muscle": "Back (Lats)",
       "volume": 1250.0
+    },
+    {
+      "date": "2026-04-19",
+      "muscle": "Quads/Glutes",
+      "volume": 2160.0
+    },
+    {
+      "date": "2026-04-19",
+      "muscle": "Shoulders",
+      "volume": 1240.0
+    },
+    {
+      "date": "2026-04-19",
+      "muscle": "Back",
+      "volume": 1490.0
     }
   ],
   "training_days": [
@@ -1744,7 +1775,9 @@ const DATA = {
     "2026-04-13",
     "2026-04-14",
     "2026-04-15",
-    "2026-04-16"
+    "2026-04-16",
+    "2026-04-18",
+    "2026-04-19"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -2015,7 +2048,7 @@ const DATA = {
     }
   ]
 };
-const TODAY = new Date('2026-04-16');
+const TODAY = new Date('2026-04-19');
 
 const PHASES = [
   {label:"ORIENTATIE",short:"ORI",start:"2026-01-01",end:"2026-01-31",color:"#7c6fff",track:0,desc:"<b>1 jan - 31 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell."},
