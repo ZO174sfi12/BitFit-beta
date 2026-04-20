@@ -118,6 +118,44 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
   .analysis-blocks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
   .panel{padding:16px 18px;}
 }
+
+/* ── GZCLP ─────────────────────────────────────── */
+.gzclp-wrap{padding:0 14px 32px;}
+.gzclp-divider{border:none;border-top:1px solid var(--border);margin:20px 0 14px;}
+.gzclp-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.gzclp-title{font-family:monospace;font-size:10px;letter-spacing:3px;color:var(--accent);}
+.gzclp-sub{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--muted);}
+.gzclp-recovery-badge{font-family:monospace;font-size:8px;letter-spacing:1px;padding:3px 10px;border:1px solid var(--yellow);color:var(--yellow);background:#ffd6000a;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);}
+.gzclp-day-row{display:flex;gap:6px;margin-bottom:12px;align-items:center;}
+.gzclp-day-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;padding:6px 18px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+.gzclp-day-btn.active{color:var(--accent);border-color:var(--accent);background:#7b5cff11;box-shadow:0 0 10px #7b5cff22;}
+.gzclp-day-desc{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);margin-left:6px;}
+.gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+@media(max-width:600px){.gzclp-tiers{grid-template-columns:1fr;}}
+.gzclp-tier{border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 10px;}
+.gzclp-tier::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.gzclp-tier.t1::before{background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 6px var(--accent);}
+.gzclp-tier.t2::before{background:linear-gradient(90deg,var(--cyan),transparent 60%);}
+.gzclp-tier.t3::before{background:linear-gradient(90deg,var(--green),transparent 60%);}
+.gzclp-badge{font-family:monospace;font-size:8px;letter-spacing:2px;padding:2px 8px;border:1px solid;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);display:inline-block;margin-bottom:7px;}
+.t1 .gzclp-badge{color:var(--accent);border-color:var(--accent);background:#7b5cff11;}
+.t2 .gzclp-badge{color:var(--cyan);border-color:var(--cyan);background:#00e5ff11;}
+.t3 .gzclp-badge{color:var(--green);border-color:var(--green);background:#00ffb311;}
+.gzclp-exname{font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.gzclp-scheme{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:5px;}
+.gzclp-wt{font-family:monospace;font-size:10px;margin-bottom:2px;}
+.gzclp-prog{font-family:monospace;font-size:8px;letter-spacing:.3px;color:#444;margin-top:4px;line-height:1.4;}
+.gzclp-tier-note{font-family:monospace;font-size:8px;color:var(--yellow);margin-top:5px;padding:3px 7px;background:#ffd60009;border-left:2px solid var(--yellow);}
+.gzclp-fb-wrap{border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
+.gzclp-fb-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
+.gzclp-fb-row{padding:7px 12px;border-bottom:1px solid #0f0f1a;font-family:monospace;font-size:10px;line-height:1.5;display:flex;gap:8px;align-items:flex-start;}
+.gzclp-fb-row:last-child{border-bottom:none;}
+.fb-ok{color:var(--green);}
+.fb-warn{color:var(--yellow);}
+.fb-crit{color:var(--red);}
+.fb-info{color:var(--cyan);}
+.gzclp-period{font-family:monospace;font-size:8px;color:#333;padding:5px 12px;background:#080810;border-top:1px solid var(--border);}
+
 </style>
 </head>
 <body>
@@ -2526,6 +2564,261 @@ window.addEventListener('resize', () => {
   resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
 });
 update(30);
+
+// ══ GZCLP ════════════════════════════════════════════════════════════════════
+(function(){
+const RECOVERY_END = '2026-04-20';
+
+// Programme definition (Bert's GZCLP variant)
+const DAYS = {
+  A: {
+    desc: 'BENCH · FRONT SQUAT · PULL',
+    tiers: [
+      { t:'T1', key:'Bench',      name:'BARBELL BENCH PRESS',    scheme:'2 × 5  +  AMRAP',
+        prog:'+2.5 kg als AMRAP ≥ 5 reps · 2 fails → reset −10%', note:null },
+      { t:'T2', key:'Front Squat',name:'FRONT SQUAT',            scheme:'3 × 10',
+        prog:'+2.5 kg als alle 3 sets compleet', note:null },
+      { t:'T3', key:'Lat PD',     name:'LAT PULLDOWN / CABLE ROW',scheme:'3 × 15+',
+        prog:'reps ↑ eerst, dan gewicht +5 kg', note:null },
+    ]
+  },
+  B: {
+    desc: 'OHP · DEADLIFT · ROW',
+    tiers: [
+      { t:'T1', key:'OHP',        name:'OVERHEAD PRESS',         scheme:'2 × 5  +  AMRAP',
+        prog:'+2.5 kg als AMRAP ≥ 5 reps · 2 fails → reset −10%', note:null },
+      { t:'T2', key:'Deadlift',   name:'DEADLIFT / ROMANIAN DL', scheme:'3 × 10',
+        prog:'+5 kg als alle 3 sets compleet', note:'Opbouw post-recovery — been voorzichtig' },
+      { t:'T3', key:null,         name:'CABLE ROW / FACE PULL',  scheme:'3 × 15+',
+        prog:'reps ↑ eerst, dan gewicht +5 kg', note:null },
+    ]
+  },
+  C: {
+    desc: 'SQUAT · BENCH · DIPS',
+    tiers: [
+      { t:'T1', key:'Front Squat',name:'FRONT SQUAT',            scheme:'2 × 5  +  AMRAP',
+        prog:'+2.5 kg als AMRAP ≥ 5 reps · 2 fails → reset −10%', note:'Been opbouw — start conservatief' },
+      { t:'T2', key:'Bench',      name:'BARBELL BENCH PRESS',    scheme:'3 × 10',
+        prog:'+2.5 kg als alle 3 sets compleet', note:null },
+      { t:'T3', key:'DIP-BW',     name:'DIPS',                   scheme:'3 × 15+',
+        prog:'reps ↑, voeg gewicht toe als >15 reps makkelijk', note:null },
+    ]
+  }
+};
+
+// Weight suggestions per tier per lift (T1=current, T2=lighter)
+function suggestWeight(key, tier) {
+  if (!key || !DATA.lifts[key]) return null;
+  const pts = DATA.lifts[key].points;
+  if (!pts || !pts.length) return null;
+  const last = pts[pts.length - 1].weight;
+  if (tier === 'T1') return last;
+  // T2 = same lift but at ~70% for high-rep work
+  if (tier === 'T2') return Math.round(last * 0.70 / 2.5) * 2.5;
+  return null;
+}
+
+// Special case: T2 Bench in Day C should be lighter than T1 Bench in Day A
+// T1 Front Squat in C should be slightly above T2 Front Squat in A
+function getWeight(key, tier, day) {
+  const w = suggestWeight(key, tier);
+  if (w === null) return null;
+  // Day C: T1 Front Squat — use T2 day A weight + slight bump
+  if (day === 'C' && key === 'Front Squat' && tier === 'T1') {
+    const t2w = suggestWeight('Front Squat', 'T2');
+    return t2w !== null ? t2w + 2.5 : w;
+  }
+  // Day C: T2 Bench — use T1 × 0.75 (since T2 here is accessory work)
+  if (day === 'C' && key === 'Bench' && tier === 'T2') {
+    const t1w = suggestWeight('Bench', 'T1');
+    return t1w !== null ? Math.round(t1w * 0.75 / 2.5) * 2.5 : w;
+  }
+  return w;
+}
+
+function renderDay(day) {
+  const d = DAYS[day];
+  document.getElementById('gzclp-day-desc').textContent = d.desc;
+  const container = document.getElementById('gzclp-tiers');
+  container.innerHTML = d.tiers.map(tier => {
+    const w = getWeight(tier.key, tier.t, day);
+    const wHtml = w !== null
+      ? `<div class="gzclp-wt" style="color:var(--accent)">SUGGESTIE: <strong>${w} kg</strong> <span style="color:#444;font-size:8px">→ opbouw +2.5/sessie</span></div>`
+      : `<div class="gzclp-wt" style="color:#444">— geen data</div>`;
+    const noteHtml = tier.note
+      ? `<div class="gzclp-tier-note">⚠ ${tier.note}</div>`
+      : '';
+    return `<div class="gzclp-tier ${tier.t.toLowerCase()}">
+      <div class="gzclp-badge">${tier.t}</div>
+      <div class="gzclp-exname">${tier.name}</div>
+      <div class="gzclp-scheme">${tier.scheme}</div>
+      ${wHtml}
+      <div class="gzclp-prog">${tier.prog}</div>
+      ${noteHtml}
+    </div>`;
+  }).join('');
+}
+
+// ── Feedback engine ───────────────────────────────────────────────────────────
+function buildFeedback() {
+  const today = TODAY.toISOString().slice(0,10);
+
+  // Determine analysis period: from last 28 days or last 10 sessions, whichever earlier
+  const allDays = (DATA.training_days || []).filter(d => d <= today).slice(-12);
+  if (!allDays.length) return;
+  const periodStart = allDays[0];
+
+  // Build session map: date → [lift names with data]
+  const sessions = {};
+  for (const [nm, lift] of Object.entries(DATA.lifts || {})) {
+    for (const pt of (lift.points || [])) {
+      if (pt.date >= periodStart && pt.date <= today) {
+        (sessions[pt.date] = sessions[pt.date] || []).push({ nm, w: pt.weight, vol: pt.volume });
+      }
+    }
+  }
+
+  const T1_LIFTS = new Set(['Bench','OHP','Squat','Front Squat']);
+  const T2_LIFTS = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
+  const T3_LIFTS = new Set(['Lat PD','DIP-BW']);
+
+  const sortedDates = Object.keys(sessions).sort();
+  const fb = [];
+  let goodSessions = 0, warnSessions = 0;
+  const sessionDetails = [];
+
+  for (const date of sortedDates) {
+    const lifts = sessions[date];
+    const names = lifts.map(l => l.nm);
+    const hasT1 = names.some(n => T1_LIFTS.has(n));
+    const compounds = names.filter(n => T2_LIFTS.has(n));
+    const hasT3 = names.some(n => T3_LIFTS.has(n));
+    const compoundCount = new Set(compounds).size;
+    const issues = [];
+    if (compoundCount < 2) issues.push('slechts 1 compound');
+    if (!hasT3) issues.push('geen T3');
+    if (!hasT1 && compoundCount > 0) issues.push('geen duidelijke T1');
+    if (issues.length === 0) goodSessions++;
+    else warnSessions++;
+    sessionDetails.push({ date, names, issues });
+  }
+
+  // Global stats feedback
+  const total = sortedDates.length;
+  if (total === 0) return;
+
+  // Score
+  const scoreColor = goodSessions / total >= 0.7 ? 'fb-ok' : goodSessions / total >= 0.4 ? 'fb-warn' : 'fb-crit';
+  fb.push({ cls: scoreColor, icon: goodSessions/total>=0.7?'✓':'△',
+    msg: `${goodSessions}/${total} sessies met volledige T1+T2+T3 structuur (${periodStart} → ${today})` });
+
+  // T3 missing
+  const noT3 = sessionDetails.filter(s => s.issues.includes('geen T3'));
+  if (noT3.length > 0) {
+    fb.push({ cls:'fb-warn', icon:'△',
+      msg:`T3 ontbreekt in ${noT3.length}/${total} sessies — voeg altijd een pull/accessoire toe (lat pulldown, cable row of dips)` });
+  }
+
+  // Sessions with only 1 compound
+  const sparse = sessionDetails.filter(s => s.issues.includes('slechts 1 compound'));
+  if (sparse.length > 0) {
+    fb.push({ cls:'fb-warn', icon:'△',
+      msg:`${sparse.length} sessie(s) met slechts 1 compound: ${sparse.map(s=>s.date.slice(5)).join(', ')} — GZCLP vereist T1+T2 per sessie` });
+  }
+
+  // Best session highlight
+  const best = sessionDetails.filter(s => s.issues.length === 0);
+  if (best.length > 0) {
+    const b = best[best.length - 1];
+    fb.push({ cls:'fb-info', icon:'◈',
+      msg:`Model sessie: ${b.date} — ${b.names.join(' · ')} — dit is het GZCLP patroon` });
+  }
+
+  // Recovery context
+  if (today <= RECOVERY_END) {
+    fb.push({ cls:'fb-warn', icon:'↺',
+      msg:`Recovery loopt tot ${RECOVERY_END} — been-werk licht houden, bench en OHP kunnen gewoon doorgaan` });
+  } else {
+    fb.push({ cls:'fb-ok', icon:'✓',
+      msg:`Recovery afgerond (${RECOVERY_END}) — been-werk kan voorzichtig opbouwen, +2.5 kg/sessie op Front Squat T1` });
+  }
+
+  // Specific lift feedback
+  const benchPts = (DATA.lifts.Bench?.points || []).filter(p => p.date >= periodStart);
+  if (benchPts.length >= 2) {
+    const first = benchPts[0].weight, last = benchPts[benchPts.length-1].weight;
+    if (last > first) fb.push({ cls:'fb-ok', icon:'↗', msg:`Bench progressie: ${first} → ${last} kg (+${(last-first).toFixed(1)} kg) — ga zo door` });
+    else if (last === first) fb.push({ cls:'fb-info', icon:'→', msg:`Bench stabiel op ${last} kg — klaar voor volgende stap?` });
+    else fb.push({ cls:'fb-warn', icon:'↘', msg:`Bench gedaald: ${first} → ${last} kg — recovery of technisch?` });
+  }
+
+  // Front Squat note
+  const fsPts = (DATA.lifts['Front Squat']?.points || []).filter(p => p.date >= periodStart);
+  const sqPts = (DATA.lifts['Squat']?.points || []).filter(p => p.date >= periodStart);
+  if (fsPts.length || sqPts.length) {
+    fb.push({ cls:'fb-info', icon:'ℹ',
+      msg:`Front Squat ipv Back Squat: valide T1/T2 keuze, maar houdt je maximale belasting lager. Overweeg een reguliere Back Squat voor T1 na volledig herstel.` });
+  }
+
+  // OHP progression
+  const ohpPts = (DATA.lifts.OHP?.points || []).filter(p => p.date >= periodStart);
+  if (ohpPts.length >= 2) {
+    const weights = ohpPts.map(p => p.weight);
+    const mn = Math.min(...weights), mx = Math.max(...weights);
+    if (mx - mn > 5) fb.push({ cls:'fb-warn', icon:'△',
+      msg:`OHP fluctueert tussen ${mn}–${mx} kg — probeer consistenter te progresseren, kies één werkgewicht als T1 basis` });
+  }
+
+  // Render
+  const wrap = document.getElementById('gzclp-feedback');
+  wrap.innerHTML = `
+    <div class="gzclp-fb-head">
+      <span>▸ ANALYSE & FEEDBACK</span>
+      <span style="color:#333">${total} sessies · ${periodStart} → ${today}</span>
+    </div>
+    ${fb.map(f => `<div class="gzclp-fb-row"><span class="${f.cls}">${f.icon}</span><span style="color:#aaa">${f.msg}</span></div>`).join('')}
+    <div class="gzclp-period">analyse periode: laatste ${total} sessies · upload nieuwe CSV voor bijgewerkte feedback</div>`;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+let _currentDay = 'A';
+window.gzclpSelect = function(day) {
+  _currentDay = day;
+  document.querySelectorAll('.gzclp-day-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.gzclp-day-btn')[{A:0,B:1,C:2}[day]].classList.add('active');
+  renderDay(day);
+};
+
+const todayStr = TODAY.toISOString().slice(0,10);
+if (todayStr <= RECOVERY_END) {
+  document.getElementById('gzclp-recovery-badge').style.display = 'block';
+}
+
+renderDay('A');
+buildFeedback();
+})();
+
 </script>
+
+<!-- ══ GZCLP LEIDRAAD ══════════════════════════════════════════════════════ -->
+<div class="gzclp-wrap">
+  <hr class="gzclp-divider">
+  <div class="gzclp-topbar">
+    <div>
+      <div class="gzclp-title">◈ GZCLP LEIDRAAD</div>
+      <div class="gzclp-sub" style="margin-top:2px;">GREYSKULL LP VARIANT · REFERENTIE, GEEN LOG</div>
+    </div>
+    <div id="gzclp-recovery-badge" class="gzclp-recovery-badge" style="display:none;">↺ RECOVERY</div>
+  </div>
+  <div class="gzclp-day-row">
+    <button class="gzclp-day-btn active" onclick="gzclpSelect('A')">DAG A</button>
+    <button class="gzclp-day-btn" onclick="gzclpSelect('B')">DAG B</button>
+    <button class="gzclp-day-btn" onclick="gzclpSelect('C')">DAG C</button>
+    <span id="gzclp-day-desc" class="gzclp-day-desc"></span>
+  </div>
+  <div class="gzclp-tiers" id="gzclp-tiers"></div>
+  <div class="gzclp-fb-wrap" id="gzclp-feedback"></div>
+</div>
+
 </body>
 </html>
