@@ -27,11 +27,12 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
 header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--green),transparent);animation:pulse-line 4s ease-in-out infinite;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.logo{font-family:'Oxanium',sans-serif;font-size:clamp(16px,5vw,24px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;display:flex;align-items:baseline;gap:0;}
+.logo{font-family:'Oxanium',sans-serif;font-size:clamp(18px,5.5vw,26px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;display:flex;align-items:center;gap:0;}
 .logo-bit{color:var(--accent);}
 .logo-supp{color:var(--green);}
-.logo-sep{color:var(--border);font-size:.6em;letter-spacing:0;margin:0 8px;align-self:center;}
-.logo-fit-link{text-decoration:none;font-family:'Oxanium',sans-serif;font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite 2.5s;}
+.logo-sep{color:var(--border);font-size:.55em;letter-spacing:0;margin:0 8px;}
+.logo-fit-link{text-decoration:none;font-family:'Oxanium',sans-serif;font-weight:800;letter-spacing:4px;font-size:.62em;opacity:.55;display:flex;align-items:baseline;gap:0;transition:opacity .2s;}
+.logo-fit-link:hover{opacity:.85;}
 .logo-fit-mini{color:var(--cyan);}
 .header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .gear-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:3px 8px;font-family:monospace;font-size:11px;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:all .15s;}
