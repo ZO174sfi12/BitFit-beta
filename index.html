@@ -140,12 +140,9 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
 .gzclp-title{font-family:monospace;font-size:10px;letter-spacing:3px;color:var(--accent);}
 .gzclp-sub{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--muted);margin-top:2px;}
-.gzclp-rotation{font-family:monospace;font-size:9px;color:var(--muted);margin-bottom:12px;padding:7px 10px;border:1px solid var(--border);background:#08080f;line-height:1.8;}
-.gzclp-rotation .rhl{color:var(--text);}
-.gzclp-rotation .rrest{color:#3a3a50;}
 .gzclp-day-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
 .gzclp-day-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.gzclp-day-btn.active{color:var(--accent);border-color:var(--accent);background:#7b5cff11;box-shadow:0 0 10px #7b5cff22;font-size:10px;padding:6px 16px;}
+.gzclp-day-btn.active{font-size:10px;padding:6px 16px;}
 .gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
 @media(max-width:600px){.gzclp-tiers{grid-template-columns:1fr;}}
 .gzclp-tier{border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
@@ -171,6 +168,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .fb-crit{color:var(--red);}
 .fb-info{color:var(--cyan);}
 .gzclp-period{font-family:monospace;font-size:8px;color:var(--muted);padding:5px 12px;background:#080810;border-top:1px solid var(--border);}
+
+.gzclp-t3-full{grid-column:1/-1;border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
+.gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+@media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
+.gzclp-t3-item{padding:7px 10px;border:1px solid var(--border);background:#0d0d18;}
 
 </style>
 </head>
@@ -2600,26 +2602,54 @@ update(30);
 
 // ══ GZCLP ════════════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
+
+  // Lift colors (from DATA)
+  const LC = {};
+  for (const [k,v] of Object.entries(DATA.lifts||{})) LC[k] = v.color || '#888';
+
+  const T3_OPTIONS = {
+    SQUAT: [
+      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
+      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
+      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'licht gewicht · schouderhealth' },
+    ],
+    BENCH: [
+      { name:'DIPS',           reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
+      { name:'TRICEP PUSHDOWN',reps:'3 × 15–20',  note:'touw of bar · ellebogen vast' },
+      { name:'CABLE ROW',      reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder balans' },
+    ],
+    DEADLIFT: [
+      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
+      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
+      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
+    ],
+    OHP: [
+      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'antagonist na overhead · lats' },
+      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'of pulldowns als vermoeid' },
+      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale balans' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid · altijd goed' },
+    ],
+  };
+
   const DAYS = [
-    { key:'SQUAT', tiers:[
-      { t:'T1', lk:'Squat',       name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   prog:'2 fails → −10% reset' },
-      { t:'T2', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, prog:'compleet → +2.5 kg' },
-      { t:'T3', lk:'Lat PD',      name:'LAT PULLDOWN / CABLE ROW',scheme:'3 × 15+',          step:5,   prog:'reps eerst · dan gewicht' },
+    { key:'SQUAT', t1color: LC['Squat']||'#b388ff', tiers:[
+      { t:'T1', lk:'Squat',       name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
-    { key:'BENCH', tiers:[
-      { t:'T1', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, prog:'2 fails → −10% reset' },
-      { t:'T2', lk:'Front Squat', name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, prog:'compleet → +2.5 kg' },
-      { t:'T3', lk:'DIP-BW',      name:'DIPS',                    scheme:'3 × 15+',          step:0,   prog:'reps · BW + gewicht als >15 makkelijk' },
+    { key:'BENCH', t1color: LC['Bench']||'#64b5f6', tiers:[
+      { t:'T1', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'Front Squat', name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
-    { key:'DEADLIFT', tiers:[
-      { t:'T1', lk:'Deadlift',    name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   prog:'2 fails → −10% reset' },
-      { t:'T2', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, prog:'compleet → +2.5 kg' },
-      { t:'T3', lk:null,          name:'CABLE ROW / FACE PULL',   scheme:'3 × 15+',          step:5,   prog:'reps eerst · dan gewicht' },
+    { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
+      { t:'T1', lk:'Deadlift',    name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
-    { key:'OHP', tiers:[
-      { t:'T1', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'2 × 5  +  AMRAP', step:2.5, prog:'2 fails → −10% reset' },
-      { t:'T2', lk:'Squat',       name:'BACK SQUAT (volume)',      scheme:'3 × 10',           step:2.5, prog:'compleet → +2.5 kg' },
-      { t:'T3', lk:'Lat PD',      name:'LAT PULLDOWN',            scheme:'3 × 15+',          step:5,   prog:'reps eerst · dan gewicht' },
+    { key:'OHP', t1color: LC['OHP']||'#00ffb3', tiers:[
+      { t:'T1', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'Squat',       name:'BACK SQUAT (volume)',      scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
   ];
 
@@ -2629,15 +2659,9 @@ document.addEventListener('DOMContentLoaded', function() {
     return pts && pts.length ? pts[pts.length-1].weight : null;
   }
 
-  // Rotation row
-  const rotEl = document.getElementById('gzclp-rotation');
-  if (rotEl) {
-    const parts = DAYS.map((d,i) =>
-      `<span class="rhl">${d.key}</span>${i<DAYS.length-1?'<span class="rrest"> · rust · </span>':''}`
-    ).join('');
-    rotEl.innerHTML = parts + '<span class="rrest"> · rust · </span><span class="rhl">SQUAT</span><span class="rrest"> · …</span>' +
-      '&nbsp;&nbsp;<span style="color:var(--border)">│</span>&nbsp;&nbsp;3× per week &nbsp;·&nbsp; 1 rustdag tussen elke sessie';
-  }
+  function liftColor(lk) { return LC[lk] || '#888'; }
+  function hex20(hex) { return hex + '20'; }
+  function hex15(hex) { return hex + '15'; }
 
   // Day buttons
   let activeIdx = 0;
@@ -2647,38 +2671,70 @@ document.addEventListener('DOMContentLoaded', function() {
       const b = document.createElement('button');
       b.className = 'gzclp-day-btn' + (i===0 ? ' active' : '');
       b.textContent = d.key;
-      b.onclick = () => selectDay(i);
+      const c = d.t1color;
+      const applyActive = () => {
+        b.style.color = c;
+        b.style.borderColor = c;
+        b.style.background = hex20(c);
+        b.style.boxShadow = `0 0 10px ${hex20(c)}`;
+      };
+      const applyInactive = () => {
+        b.style.color = '';
+        b.style.borderColor = '';
+        b.style.background = '';
+        b.style.boxShadow = '';
+      };
+      if (i === 0) applyActive();
+      b.onclick = () => {
+        document.querySelectorAll('.gzclp-day-btn').forEach((btn, j) => {
+          if (j === i) { btn.classList.add('active'); applyActive(); }
+          else { btn.classList.remove('active'); applyInactive(); }
+          // reapply other buttons' inactive style correctly
+        });
+        renderDay(i);
+      };
       btnRow.appendChild(b);
     });
   }
 
-  function selectDay(idx) {
-    activeIdx = idx;
-    document.querySelectorAll('.gzclp-day-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-    renderTiers(idx);
-  }
-
-  function renderTiers(idx) {
+  function renderDay(idx) {
+    const day = DAYS[idx];
     const c = document.getElementById('gzclp-tiers');
     if (!c) return;
-    const day = DAYS[idx];
-    c.innerHTML = day.tiers.map(tier => {
+    const t3opts = T3_OPTIONS[day.key] || [];
+
+    const tierHtml = day.tiers.map(tier => {
+      const liftC = liftColor(tier.lk);
       const w = lastW(tier.lk);
-      const t1w = tier.t==='T2' ? lastW(tier.lk) : null;
-      // T2 weight: use own last weight (already lower in practice) or estimate
-      const dispW = tier.t==='T1' ? w : (w !== null ? Math.round(w*0.75/2.5)*2.5 : null);
+      const dispW = tier.t === 'T1' ? w : (w !== null ? Math.round(w*0.75/2.5)*2.5 : null);
       const wHtml = dispW !== null
-        ? `<div class="gzclp-wt"><span style="color:var(--muted)">START</span> <strong style="color:var(--accent)">${dispW} kg</strong>` +
-          (tier.step > 0 ? ` <span style="color:var(--muted);font-size:8px">→ +${tier.step}/sessie</span>` : '') + `</div>`
-        : `<div class="gzclp-wt" style="color:var(--muted)">— geen data</div>`;
-      return `<div class="gzclp-tier ${tier.t.toLowerCase()}">
-        <span class="gzclp-badge">${tier.t}</span>
-        <div class="gzclp-exname">${tier.name}</div>
+        ? `<div class="gzclp-wt"><span style="color:#888">START</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:#888;font-size:8px">→ ${tier.stepLabel}</span></div>`
+        : `<div class="gzclp-wt" style="color:#888">— geen data</div>`;
+      return `<div class="gzclp-tier" style="border-color:${liftC}33">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
+        <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
+        <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
         <div class="gzclp-scheme">${tier.scheme}</div>
         ${wHtml}
         <div class="gzclp-prog">${tier.prog}</div>
       </div>`;
     }).join('');
+
+    // T3 block spanning full width
+    const t3Html = `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
+      <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
+      <div class="gzclp-exname" style="color:var(--green);margin-bottom:8px">ACCESSOIRES — kies 1 of 2</div>
+      <div class="gzclp-t3-grid">
+        ${t3opts.map(o => `<div class="gzclp-t3-item">
+          <span style="color:var(--text);font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700">${o.name}</span>
+          <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:10px;margin-left:8px">${o.reps}</span>
+          <div style="color:var(--muted);font-family:monospace;font-size:8px;margin-top:2px">${o.note}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+
+    c.innerHTML = tierHtml + t3Html;
   }
 
   // Feedback
@@ -2712,14 +2768,15 @@ document.addEventListener('DOMContentLoaded', function() {
       msg:`${good}/${total} sessies met T1+T2+T3 structuur`});
     const noT3 = det.filter(d=>d.iss.includes('geen T3'));
     if (noT3.length) fb.push({cls:'fb-warn',icon:'△',
-      msg:`T3 ontbreekt in ${noT3.length}/${total} — voeg altijd een pull/push accessoire toe`});
+      msg:`T3 ontbreekt in ${noT3.length}/${total} — voeg altijd 1 of 2 accessoires toe`});
     const sparse = det.filter(d=>d.iss.includes('1 compound'));
     if (sparse.length) fb.push({cls:'fb-warn',icon:'△',
       msg:`${sparse.length} sessie(s) met 1 compound (${sparse.map(s=>s.dt.slice(5)).join(', ')}) — GZCLP = T1+T2 per sessie`});
     const best = det.filter(d=>!d.iss.length);
     if (best.length) {
       const b = best[best.length-1];
-      fb.push({cls:'fb-info',icon:'◈',msg:`Model sessie: ${b.dt} — ${b.ns.join(' · ')}`});
+      fb.push({cls:'fb-info',icon:'◈',
+        msg:`Model sessie: ${b.dt} — ${b.ns.join(' · ')}`});
     }
     const bPts=(DATA.lifts.Bench?.points||[]).filter(p=>p.date>=from);
     if (bPts.length>=2) {
@@ -2737,7 +2794,7 @@ document.addEventListener('DOMContentLoaded', function() {
       `<div class="gzclp-period">vernieuwt automatisch bij elke CSV-upload</div>`;
   })();
 
-  renderTiers(0);
+  renderDay(0);
 });
 // ══ END GZCLP ════════════════════════════════════════════════════════════════
 
@@ -2753,7 +2810,6 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gzclp-sub">GREYSKULL LP VARIANT &nbsp;·&nbsp; REFERENTIE, GEEN LOG</div>
     </div>
   </div>
-  <div class="gzclp-rotation" id="gzclp-rotation"></div>
   <div class="gzclp-day-row" id="gzclp-day-btns"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
   <div class="gzclp-fb-wrap" id="gzclp-feedback"></div>
