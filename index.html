@@ -2626,18 +2626,12 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
       { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
     ],
-    OHP: [
-      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'antagonist na overhead · lats' },
-      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'of pulldowns als vermoeid' },
-      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale balans' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid · altijd goed' },
-    ],
   };
 
   const DAYS = [
     { key:'SQUAT', t1color: LC['Squat']||'#b388ff', tiers:[
       { t:'T1', lk:'Squat',       name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T2', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
     { key:'BENCH', t1color: LC['Bench']||'#64b5f6', tiers:[
       { t:'T1', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
@@ -2645,11 +2639,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ]},
     { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
       { t:'T1', lk:'Deadlift',    name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
-    ]},
-    { key:'OHP', t1color: LC['OHP']||'#00ffb3', tiers:[
-      { t:'T1', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Squat',       name:'BACK SQUAT (volume)',      scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T2', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
   ];
 
@@ -2664,32 +2654,32 @@ document.addEventListener('DOMContentLoaded', function() {
   function hex15(hex) { return hex + '15'; }
 
   // Day buttons
-  let activeIdx = 0;
   const btnRow = document.getElementById('gzclp-day-btns');
+  function applyBtnStyle(btn, day, active) {
+    const c = day.t1color;
+    if (active) {
+      btn.style.color = c;
+      btn.style.borderColor = c;
+      btn.style.background = hex20(c);
+      btn.style.boxShadow = `0 0 10px ${hex20(c)}`;
+    } else {
+      btn.style.color = '';
+      btn.style.borderColor = '';
+      btn.style.background = '';
+      btn.style.boxShadow = '';
+    }
+  }
   if (btnRow) {
     DAYS.forEach((d, i) => {
       const b = document.createElement('button');
       b.className = 'gzclp-day-btn' + (i===0 ? ' active' : '');
       b.textContent = d.key;
-      const c = d.t1color;
-      const applyActive = () => {
-        b.style.color = c;
-        b.style.borderColor = c;
-        b.style.background = hex20(c);
-        b.style.boxShadow = `0 0 10px ${hex20(c)}`;
-      };
-      const applyInactive = () => {
-        b.style.color = '';
-        b.style.borderColor = '';
-        b.style.background = '';
-        b.style.boxShadow = '';
-      };
-      if (i === 0) applyActive();
+      applyBtnStyle(b, d, i === 0);
       b.onclick = () => {
-        document.querySelectorAll('.gzclp-day-btn').forEach((btn, j) => {
-          if (j === i) { btn.classList.add('active'); applyActive(); }
-          else { btn.classList.remove('active'); applyInactive(); }
-          // reapply other buttons' inactive style correctly
+        const allBtns = document.querySelectorAll('.gzclp-day-btn');
+        allBtns.forEach((btn, j) => {
+          btn.classList.toggle('active', j === i);
+          applyBtnStyle(btn, DAYS[j], j === i);
         });
         renderDay(i);
       };
@@ -2785,7 +2775,7 @@ document.addEventListener('DOMContentLoaded', function() {
         msg:`Bench: ${bPts[0].weight} → ${bPts[bPts.length-1].weight} kg (${d>=0?'+':''}${d.toFixed(1)} kg)`});
     }
     fb.push({cls:'fb-info',icon:'ℹ',
-      msg:`Front Squat / Zercher als T2 BENCH-dag ✓ — Back Squat als T1 op SQUAT- en OHP-dag voor maximale belasting`});
+      msg:`Front Squat / Zercher als T2 BENCH-dag ✓ — OHP als T2 op SQUAT- en DEADLIFT-dag`});
     const wrap = document.getElementById('gzclp-feedback');
     if (!wrap) return;
     wrap.innerHTML =
