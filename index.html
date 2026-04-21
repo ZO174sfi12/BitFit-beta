@@ -2651,13 +2651,13 @@ document.addEventListener('DOMContentLoaded', function() {
       { t:'T1', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
       { t:'T2', lk:'Front Squat',  name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
-    { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
-      { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'DB Bench x2',  name:'DB BENCH ×2',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
-    ]},
     { key:'SQUAT B', t1color: LC['Squat']||'#b388ff', tiers:[
       { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
       { t:'T2', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+    ]},
+    { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
+      { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'DB Bench x2',  name:'DB BENCH ×2',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
   ];
 
@@ -2863,7 +2863,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--green)">FREQUENTIE &amp; RUST</div>
-        <div class="gzclp-rule-body">3–4× per week. Rustdag verplicht tussen elke sessie. Cyclus van 4: SQUAT → BENCH → DEADLIFT → SQUAT B → herhaal. Week 1: dag 1-2-3 · Week 2: dag 4-1-2 · enz. Squat gemiddeld ~1.5× per week.</div>
+        <div class="gzclp-rule-body">3–4× per week. Rustdag verplicht tussen elke sessie. Cyclus van 4: SQUAT → BENCH → SQUAT B → DEADLIFT → herhaal. Week 1: dag 1-2-3 · Week 2: dag 4-1-2 · enz. Squat alterneert tussen Bench en Deadlift.</div>
       </div>
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--yellow)">GREYSKULL VS STARTING STRENGTH</div>
