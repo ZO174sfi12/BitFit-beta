@@ -139,10 +139,10 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-divider{border:none;border-top:1px solid var(--border);margin:20px 0 16px;}
 .gzclp-topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
 .gzclp-title{font-family:monospace;font-size:10px;letter-spacing:3px;color:var(--accent);}
-.gzclp-sub{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--muted);margin-top:2px;}
+.gzclp-sub{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--cyan);margin-top:2px;opacity:.7;}
 .gzclp-day-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.gzclp-day-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.gzclp-day-btn.active{font-size:10px;padding:6px 16px;}
+.gzclp-day-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--text);opacity:.5;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.gzclp-day-btn.active{font-size:10px;padding:6px 16px;opacity:1;}
 .gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
 @media(max-width:600px){.gzclp-tiers{grid-template-columns:1fr;}}
 .gzclp-tier{border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
@@ -157,22 +157,30 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-exname{font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.3;}
 .gzclp-scheme{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);margin-bottom:5px;}
 .gzclp-wt{font-family:monospace;font-size:10px;margin-bottom:2px;}
-.gzclp-prog{font-family:monospace;font-size:8px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.gzclp-prog{font-family:monospace;font-size:8px;color:var(--text);opacity:.65;margin-top:5px;line-height:1.5;}
 .gzclp-tier-note{font-family:monospace;font-size:8px;color:var(--yellow);margin-top:5px;padding:3px 7px;background:#ffd60009;border-left:2px solid var(--yellow);}
 .gzclp-fb-wrap{border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
-.gzclp-fb-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
+.gzclp-fb-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
 .gzclp-fb-row{padding:7px 12px;border-bottom:1px solid #0f0f1a;font-family:monospace;font-size:10px;line-height:1.5;display:flex;gap:8px;align-items:flex-start;}
 .gzclp-fb-row:last-child{border-bottom:none;}
 .fb-ok{color:var(--green);}
 .fb-warn{color:var(--yellow);}
 .fb-crit{color:var(--red);}
 .fb-info{color:var(--cyan);}
-.gzclp-period{font-family:monospace;font-size:8px;color:var(--muted);padding:5px 12px;background:#080810;border-top:1px solid var(--border);}
+.gzclp-period{font-family:monospace;font-size:8px;color:var(--text);opacity:.55;padding:5px 12px;background:#080810;border-top:1px solid var(--border);}
 
 .gzclp-t3-full{grid-column:1/-1;border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
 .gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
 .gzclp-t3-item{padding:7px 10px;border:1px solid var(--border);background:#0d0d18;}
+.gzclp-rules{margin-top:14px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
+.gzclp-rules-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;}
+.gzclp-rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+@media(max-width:600px){.gzclp-rules-grid{grid-template-columns:1fr;}}
+.gzclp-rule{padding:9px 13px;border-bottom:1px solid #0f0f1a;border-right:1px solid #0f0f1a;}
+.gzclp-rule:nth-child(even){border-right:none;}
+.gzclp-rule-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;margin-bottom:3px;}
+.gzclp-rule-body{font-family:monospace;font-size:9px;color:var(--text);opacity:.75;line-height:1.55;}
 
 </style>
 </head>
@@ -2623,8 +2631,8 @@ document.addEventListener('DOMContentLoaded', function() {
     DEADLIFT: [
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
+      { name:'DB BENCH ×2',    reps:'3 × 15–20',  note:'horizontale push · jij logt dit al' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
-      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
     ],
   };
 
@@ -2696,10 +2704,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const tierHtml = day.tiers.map(tier => {
       const liftC = liftColor(tier.lk);
       const w = lastW(tier.lk);
-      const dispW = tier.t === 'T1' ? w : (w !== null ? Math.round(w*0.75/2.5)*2.5 : null);
+      // T1: use last recorded weight directly
+      // T2: use last recorded weight of that lift itself; fallback to 75% of T1 if no data
+      const t1w = lastW(day.tiers[0].lk);
+      const dispW = tier.t === 'T1' ? w : (w !== null ? w : (t1w !== null ? Math.round(t1w*0.75/2.5)*2.5 : null));
+      const srcLabel = tier.t === 'T2' && w !== null ? 'LAATSTE LOG' : tier.t === 'T2' ? 'SCHATTING' : 'LAATSTE LOG';
       const wHtml = dispW !== null
-        ? `<div class="gzclp-wt"><span style="color:#888">START</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:#888;font-size:8px">→ ${tier.stepLabel}</span></div>`
-        : `<div class="gzclp-wt" style="color:#888">— geen data</div>`;
+        ? `<div class="gzclp-wt"><span style="color:${liftC};opacity:.6;font-size:8px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};opacity:.6;font-size:8px">→ ${tier.stepLabel}</span></div>`
+        : `<div class="gzclp-wt" style="color:var(--text);opacity:.5">— geen data</div>`;
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
         <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
@@ -2719,7 +2731,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ${t3opts.map(o => `<div class="gzclp-t3-item">
           <span style="color:var(--text);font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700">${o.name}</span>
           <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:10px;margin-left:8px">${o.reps}</span>
-          <div style="color:var(--muted);font-family:monospace;font-size:8px;margin-top:2px">${o.note}</div>
+          <div style="color:var(--text);opacity:.6;font-family:monospace;font-size:8px;margin-top:2px">${o.note}</div>
         </div>`).join('')}
       </div>
     </div>`;
@@ -2803,6 +2815,44 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="gzclp-day-row" id="gzclp-day-btns"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
   <div class="gzclp-fb-wrap" id="gzclp-feedback"></div>
+
+  <div class="gzclp-rules">
+    <div class="gzclp-rules-head">◈ GZCLP HANDLEIDING — GREYSKULL LP VARIANT</div>
+    <div class="gzclp-rules-grid">
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PLUS SET (GREYSKULL)</div>
+        <div class="gzclp-rule-body">Set 1 × 5, Set 2 × 5, Set 3 × AMRAP — alle drie op hetzelfde gewicht. De AMRAP-set is de kern van Greyskull: je test jezelf elke sessie. Minimaal 5 reps nodig om te progresseren.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PROGRESSIE &amp; DELOAD</div>
+        <div class="gzclp-rule-body">AMRAP ≥ 5 reps → volgende sessie +gewicht. Minder dan 5 → zelfde gewicht herhalen. Twee opeenvolgende mislukkingen → −10% deload (afronden naar beneden op 2,5 kg). Daarna gewoon lineair verder.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--cyan)">T2 — ALL-OR-NOTHING REGEL</div>
+        <div class="gzclp-rule-body">3 × 10 = alle 30 reps. Eén rep mislukt → zelfde gewicht volgende sessie. Geen "bijna compleet". Pas als alle sets voltooid zijn ga je omhoog met +2,5 kg.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--cyan)">T2 — GEWICHT &amp; KOPPELING</div>
+        <div class="gzclp-rule-body">Start op je laatste gelogde gewicht voor die oefening. T2 traint een antagonist of secundaire lift — nooit dezelfde bewegingspatroon als T1 op die dag. Squat dag → OHP T2. Bench dag → Front Squat T2. Deadlift dag → Bench T2.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--green)">T3 — REP RANGE</div>
+        <div class="gzclp-rule-body">3 sets van 15–25 reps. Kies 1 of 2 oefeningen per sessie. Als je de bovengrens (25) comfortabel haalt → klein gewicht omhoog (+2,5 kg). T3 is niet optioneel — het bouwt de basis voor T2 progressie.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--green)">FREQUENTIE &amp; RUST</div>
+        <div class="gzclp-rule-body">3× per week. Rustdag verplicht tussen elke sessie — geen twee sessies op rij. Cyclus: SQUAT → BENCH → DEADLIFT → herhaal. Sla een dag over → noteer dat en ga verder in de cyclus.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--yellow)">GREYSKULL VS STARTING STRENGTH</div>
+        <div class="gzclp-rule-body">SS: 3 × 5 vaste sets, deload na 3 mislukkingen. Greyskull vervangt de 3e set door AMRAP en deloadt al na 2 mislukkingen. Voordeel: je weet elke sessie of je vooruitgaat en bouwt meer volume op goede dagen.</div>
+      </div>
+      <div class="gzclp-rule">
+        <div class="gzclp-rule-title" style="color:var(--yellow)">AFWIJKINGEN IN DIT SCHEMA</div>
+        <div class="gzclp-rule-body">OHP is hier altijd T2 (standaard GZCLP heeft OHP ook als T1). Front Squat als T2 ipv Back Squat op Bench-dag is een persoonlijke aanpassing. Squat frequentie is lager dan in het 4-daagse origineel.</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>
