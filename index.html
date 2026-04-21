@@ -173,6 +173,17 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
 .gzclp-t3-item{padding:7px 10px;border:1px solid var(--border);background:#0d0d18;}
+.gzclp-rest-line{font-family:monospace;font-size:8px;margin-top:7px;padding-top:6px;border-top:1px solid #1a1a2e;}
+.gzclp-details{margin-top:8px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
+.gzclp-coll-head{font-family:monospace;font-size:8px;letter-spacing:2px;padding:8px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;list-style:none;user-select:none;background:#0d0d18;}
+.gzclp-coll-head::-webkit-details-marker{display:none;}
+.gzclp-details[open] .gzclp-coll-head{border-bottom:1px solid var(--border);}
+.gzclp-details-body{padding:10px 13px;}
+.gzclp-wu-section{margin-bottom:4px;}
+.gzclp-wu-title{font-family:monospace;font-size:8px;letter-spacing:1px;margin-bottom:5px;}
+.gzclp-wu-row{display:flex;gap:10px;font-family:monospace;font-size:9px;padding:3px 0;border-bottom:1px solid #0f0f1a;align-items:baseline;}
+.gzclp-wu-work{border-top:1px solid #1a1a2e;margin-top:2px;padding-top:4px;border-bottom:none;}
+.gzclp-stretch-item{font-family:monospace;font-size:9px;padding:4px 0;border-bottom:1px solid #0f0f1a;color:var(--text);line-height:1.45;}
 .gzclp-rules{margin-top:14px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
 .gzclp-rules-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;}
 .gzclp-rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
@@ -2665,7 +2676,7 @@ document.addEventListener('DOMContentLoaded', function() {
   for (const [k,v] of Object.entries(DATA.lifts||{})) LC[k] = v.color || '#888';
 
   const T3_OPTIONS = {
-    SQUAT: [
+    'SQUAT A': [
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
       { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
@@ -2677,36 +2688,95 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'CABLE ROW',      reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder balans' },
     ],
-    DEADLIFT: [
-      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
-      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
-      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
-    ],
     'SQUAT B': [
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'rug breed houden na squat' },
       { name:'DIPS',           reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
     ],
+    DEADLIFT: [
+      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
+      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
+      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
+    ],
+  };
+
+  const STRETCHES = {
+    'SQUAT A': {
+      pre: [
+        'Hip flexor stretch  ·  60 sec/zijde  ·  lunge positie, bekken neutraal',
+        'Ankle circles  ·  10×/zijde  ·  vergroot dorsaalflexie voor squat diepte',
+        'Thoracic rotatie  ·  10 reps  ·  zittend op hiel, arm achter hoofd',
+        'Arm circles + shoulder warmup  ·  2×10  ·  voorbereiding OHP T2',
+      ],
+      post: [
+        'Deep squat hold  ·  60 sec  ·  hakken op de grond, handen gespreid',
+        'Pigeon pose  ·  60 sec/zijde  ·  heupflexoren en glutes',
+        'Quad stretch staand  ·  45 sec/zijde  ·  knie naar achter, niet intrekken',
+        'Overhead reach  ·  30 sec/zijde  ·  lat en tricep, arm achter oor trekken',
+      ],
+    },
+    BENCH: {
+      pre: [
+        'Thoracic extension  ·  60 sec  ·  foam roller of vloer, borst open',
+        'Wrist circles  ·  10×/zijde  ·  essentieel voor front squat rack positie',
+        'Band pull-apart of arm circles  ·  2×15  ·  schouder activering',
+        'Hip flexor stretch  ·  45 sec/zijde  ·  voorbereiding front squat T2',
+      ],
+      post: [
+        'Doorway chest stretch  ·  45 sec/zijde  ·  elleboog op 90°, voet voor voet',
+        'Cross-body shoulder stretch  ·  30 sec/zijde  ·  arm over borst',
+        'Deep squat hold  ·  45 sec  ·  herstel na front squat T2',
+        'Wrist extensor stretch  ·  30 sec/zijde  ·  handpalm van zich af drukken',
+      ],
+    },
+    'SQUAT B': {
+      pre: [
+        'Hip flexor stretch  ·  60 sec/zijde  ·  lunge positie, bekken neutraal',
+        'Ankle circles  ·  10×/zijde  ·  vergroot dorsaalflexie voor squat diepte',
+        'Thoracic rotatie  ·  10 reps  ·  zittend op hiel, arm achter hoofd',
+        'Schouder/chest open  ·  2×10  ·  armen naar achter, borst vooruit — bench T2',
+      ],
+      post: [
+        'Pigeon pose  ·  60 sec/zijde  ·  heupflexoren en glutes',
+        'Quad stretch staand  ·  45 sec/zijde',
+        'Doorway chest stretch  ·  45 sec/zijde  ·  na bench T2',
+        'Schouder cross-body  ·  30 sec/zijde',
+      ],
+    },
+    DEADLIFT: {
+      pre: [
+        'Cat-cow  ·  2×10  ·  langzaam, wervelkolom mobiliseren',
+        'BW Romanian Deadlift  ·  2×8  ·  hip scharnier activeren, rug recht',
+        'Hamstring doorstap  ·  10 reps  ·  been gestrekt voor, romp naar voren',
+        'Schouder circles  ·  2×10  ·  voorbereiding DB bench T2',
+      ],
+      post: [
+        'Hamstring stretch liggend  ·  60 sec/zijde  ·  been omhoog, handdoek of band',
+        'Pigeon / glute stretch  ·  60 sec/zijde',
+        'Child\'s pose  ·  60 sec  ·  armen gestrekt, rug ontspannen',
+        'Chest opener  ·  30 sec  ·  handen op onderrug, borst omhoog',
+      ],
+    },
   };
 
   const DAYS = [
-    { key:'SQUAT', t1color: LC['Squat']||'#b388ff', tiers:[
-      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'OHP',          name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+    { key:'SQUAT A', t1color: LC['Squat']||'#b388ff', tiers:[
+      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
+      { t:'T2', lk:'OHP',          name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
     ]},
     { key:'BENCH', t1color: LC['Bench']||'#64b5f6', tiers:[
-      { t:'T1', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Front Squat',  name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
+      { t:'T2', lk:'Front Squat',  name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
     ]},
     { key:'SQUAT B', t1color: LC['Squat']||'#b388ff', tiers:[
-      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
+      { t:'T2', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
     ]},
     { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
-      { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'DB Bench x2',  name:'DB BENCH ×2',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
+      { t:'T2', lk:'DB Bench x2',  name:'DB BENCH ×2',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
     ]},
   ];
 
@@ -2715,25 +2785,65 @@ document.addEventListener('DOMContentLoaded', function() {
     const pts = DATA.lifts[lk].points;
     return pts && pts.length ? pts[pts.length-1].weight : null;
   }
-
   function liftColor(lk) { return LC[lk] || '#888'; }
   function hex20(hex) { return hex + '20'; }
-  function hex15(hex) { return hex + '15'; }
+
+  // Warmup sets helpers
+  function r25(v) { return Math.round(v / 2.5) * 2.5; }
+  function t1Warmup(w, lk) {
+    if (!w || w <= 0) return [];
+    const bar = 20, isDL = lk === 'Deadlift';
+    const rows = [];
+    if (isDL) {
+      const s1 = Math.max(bar + 20, r25(w * 0.5));
+      const s2 = r25(w * 0.70);
+      const s3 = r25(w * 0.87);
+      if (s1 < w)              rows.push({w: s1, reps: 5});
+      if (s2 < w && s2 > s1)   rows.push({w: s2, reps: 3});
+      if (s3 < w && s3 > s2 && w > 70) rows.push({w: s3, reps: 1});
+    } else {
+      if (w > 35) rows.push({w: bar, reps: 5, note:'lege stang'});
+      const s2 = r25(w * 0.50); if (s2 > bar && s2 < w) rows.push({w: s2, reps: 5});
+      const s3 = r25(w * 0.67); if (s3 > (rows[rows.length-1]?.w||0) && s3 < w) rows.push({w: s3, reps: 3});
+      const s4 = r25(w * 0.85); if (s4 > (rows[rows.length-1]?.w||0) && s4 < w && w > 55) rows.push({w: s4, reps: 1, note:'last warmup'});
+    }
+    return rows;
+  }
+  function t2Warmup(w, lk) {
+    if (!w || w <= 0) return [];
+    const bar = 20;
+    const rows = [];
+    if (w > 32) rows.push({w: bar, reps: 10, note:'lege stang'});
+    const s2 = r25(w * 0.65); if (s2 > bar && s2 < w) rows.push({w: s2, reps: 8});
+    return rows;
+  }
+  function warmupTableHtml(rows, workW, liftC) {
+    if (!rows.length && !workW) return '<span style="opacity:.5">geen data</span>';
+    const rowsHtml = rows.map(r =>
+      `<div class="gzclp-wu-row">
+        <span style="color:${liftC};min-width:52px">${r.w} kg</span>
+        <span style="color:var(--text);opacity:.7">× ${r.reps}</span>
+        ${r.note ? `<span style="opacity:.5;font-size:8px">${r.note}</span>` : ''}
+      </div>`
+    ).join('');
+    const workHtml = workW
+      ? `<div class="gzclp-wu-row gzclp-wu-work">
+           <span style="color:${liftC};min-width:52px;font-weight:700">${workW} kg</span>
+           <span style="color:${liftC};opacity:.8">werkgewicht</span>
+         </div>` : '';
+    return rowsHtml + workHtml;
+  }
 
   // Day buttons
   const btnRow = document.getElementById('gzclp-day-btns');
   function applyBtnStyle(btn, day, active) {
     const c = day.t1color;
     if (active) {
-      btn.style.color = c;
-      btn.style.borderColor = c;
-      btn.style.background = hex20(c);
-      btn.style.boxShadow = `0 0 10px ${hex20(c)}`;
+      btn.style.color = c; btn.style.borderColor = c;
+      btn.style.background = hex20(c); btn.style.boxShadow = `0 0 10px ${hex20(c)}`;
     } else {
-      btn.style.color = '';
-      btn.style.borderColor = '';
-      btn.style.background = '';
-      btn.style.boxShadow = '';
+      btn.style.color = ''; btn.style.borderColor = '';
+      btn.style.background = ''; btn.style.boxShadow = '';
     }
   }
   if (btnRow) {
@@ -2743,8 +2853,7 @@ document.addEventListener('DOMContentLoaded', function() {
       b.textContent = d.key;
       applyBtnStyle(b, d, i === 0);
       b.onclick = () => {
-        const allBtns = document.querySelectorAll('.gzclp-day-btn');
-        allBtns.forEach((btn, j) => {
+        document.querySelectorAll('.gzclp-day-btn').forEach((btn, j) => {
           btn.classList.toggle('active', j === i);
           applyBtnStyle(btn, DAYS[j], j === i);
         });
@@ -2759,30 +2868,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const c = document.getElementById('gzclp-tiers');
     if (!c) return;
     const t3opts = T3_OPTIONS[day.key] || [];
+    const str = STRETCHES[day.key] || {pre:[], post:[]};
+    const t1lk = day.tiers[0].lk;
+    const t1w  = lastW(t1lk);
 
     const tierHtml = day.tiers.map(tier => {
       const liftC = liftColor(tier.lk);
       const w = lastW(tier.lk);
-      const t1lk = day.tiers[0].lk;
-      const t1w = lastW(t1lk);
-      // T2 weight logic:
-      //   same exercise as T1 (e.g. Bench T1 + Bench T2) → 75% of T1 last weight
-      //   different exercise → last logged weight of that lift; fallback 75% of T1
       const sameAsT1 = tier.t === 'T2' && tier.lk === t1lk;
       let dispW, srcLabel;
       if (tier.t === 'T1') {
-        dispW = w;
-        srcLabel = 'LAATSTE LOG';
+        dispW = w; srcLabel = 'LAATSTE LOG';
       } else if (sameAsT1) {
-        dispW = t1w !== null ? Math.round(t1w * 0.75 / 2.5) * 2.5 : null;
-        srcLabel = 'T2 = 75% VAN T1';
+        dispW = t1w !== null ? r25(t1w * 0.75) : null; srcLabel = 'T2 = 75% VAN T1';
       } else {
-        dispW = w !== null ? w : (t1w !== null ? Math.round(t1w * 0.75 / 2.5) * 2.5 : null);
+        dispW = w !== null ? w : (t1w !== null ? r25(t1w * 0.75) : null);
         srcLabel = w !== null ? 'LAATSTE LOG' : 'SCHATTING';
       }
       const wHtml = dispW !== null
         ? `<div class="gzclp-wt"><span style="color:${liftC};opacity:.6;font-size:8px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};opacity:.6;font-size:8px">→ ${tier.stepLabel}</span></div>`
-        : `<div class="gzclp-wt" style="color:var(--text);opacity:.5">— geen data</div>`;
+        : `<div class="gzclp-wt" style="opacity:.5">— geen data</div>`;
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
         <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
@@ -2790,14 +2895,18 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="gzclp-scheme">${tier.scheme}</div>
         ${wHtml}
         <div class="gzclp-prog">${tier.prog}</div>
+        <div class="gzclp-rest-line" style="color:${liftC};opacity:.7">⏱ ${tier.rest}</div>
       </div>`;
     }).join('');
 
-    // T3 block spanning full width
+    // T3 block
     const t3Html = `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
       <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
-      <div class="gzclp-exname" style="color:var(--green);margin-bottom:8px">ACCESSOIRES — kies 1 of 2</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+        <div class="gzclp-exname" style="color:var(--green)">ACCESSOIRES — kies 1 of 2</div>
+        <div style="font-family:monospace;font-size:8px;color:var(--green);opacity:.7">⏱ 60–90 sec</div>
+      </div>
       <div class="gzclp-t3-grid">
         ${t3opts.map(o => `<div class="gzclp-t3-item">
           <span style="color:var(--text);font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700">${o.name}</span>
@@ -2807,7 +2916,42 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>`;
 
-    c.innerHTML = tierHtml + t3Html;
+    // Warmup collapsible
+    const t1wu = t1Warmup(t1w, t1lk);
+    const t2tier = day.tiers[1];
+    const t2dispW = (() => {
+      const w2 = lastW(t2tier.lk);
+      if (t2tier.lk === t1lk) return t1w !== null ? r25(t1w * 0.75) : null;
+      return w2 !== null ? w2 : (t1w !== null ? r25(t1w * 0.75) : null);
+    })();
+    const t2wu = t2Warmup(t2dispW, t2tier.lk);
+    const t1C = liftColor(t1lk), t2C = liftColor(t2tier.lk);
+    const warmupHtml = `<details class="gzclp-details">
+      <summary class="gzclp-coll-head" style="color:${t1C}">▸ OPWARMING &nbsp;<span style="opacity:.5;font-size:7px;letter-spacing:1px">klik om te openen</span></summary>
+      <div class="gzclp-details-body">
+        <div class="gzclp-wu-section">
+          <div class="gzclp-wu-title" style="color:${t1C}">T1 — ${day.tiers[0].name}</div>
+          ${warmupTableHtml(t1wu, t1w, t1C)}
+        </div>
+        <div class="gzclp-wu-section" style="margin-top:10px">
+          <div class="gzclp-wu-title" style="color:${t2C}">T2 — ${t2tier.name}</div>
+          ${warmupTableHtml(t2wu, t2dispW, t2C)}
+        </div>
+      </div>
+    </details>`;
+
+    // Stretch collapsible
+    const stretchHtml = `<details class="gzclp-details">
+      <summary class="gzclp-coll-head" style="color:var(--cyan)">▸ STRETCH &nbsp;<span style="opacity:.5;font-size:7px;letter-spacing:1px">klik om te openen</span></summary>
+      <div class="gzclp-details-body">
+        <div class="gzclp-wu-title" style="color:var(--cyan);margin-bottom:6px">VOOR — activerend</div>
+        ${str.pre.map(s => `<div class="gzclp-stretch-item">${s}</div>`).join('')}
+        <div class="gzclp-wu-title" style="color:var(--green);margin-top:12px;margin-bottom:6px">NA — statisch</div>
+        ${str.post.map(s => `<div class="gzclp-stretch-item">${s}</div>`).join('')}
+      </div>
+    </details>`;
+
+    c.innerHTML = tierHtml + t3Html + warmupHtml + stretchHtml;
   }
 
   // Feedback
@@ -2848,8 +2992,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const best = det.filter(d=>!d.iss.length);
     if (best.length) {
       const b = best[best.length-1];
-      fb.push({cls:'fb-info',icon:'◈',
-        msg:`Model sessie: ${b.dt} — ${b.ns.join(' · ')}`});
+      fb.push({cls:'fb-info',icon:'◈', msg:`Model sessie: ${b.dt} — ${b.ns.join(' · ')}`});
     }
     const bPts=(DATA.lifts.Bench?.points||[]).filter(p=>p.date>=from);
     if (bPts.length>=2) {
@@ -2858,7 +3001,7 @@ document.addEventListener('DOMContentLoaded', function() {
         msg:`Bench: ${bPts[0].weight} → ${bPts[bPts.length-1].weight} kg (${d>=0?'+':''}${d.toFixed(1)} kg)`});
     }
     fb.push({cls:'fb-info',icon:'ℹ',
-      msg:`Front Squat / Zercher als T2 BENCH-dag ✓ — OHP als T2 op SQUAT- en DEADLIFT-dag`});
+      msg:`OHP als T2 op SQUAT A-dag · Front Squat als T2 op BENCH-dag · DB Bench als T2 op DEADLIFT-dag`});
     const wrap = document.getElementById('gzclp-feedback');
     if (!wrap) return;
     wrap.innerHTML =
