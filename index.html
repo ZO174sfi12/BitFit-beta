@@ -2631,23 +2631,33 @@ document.addEventListener('DOMContentLoaded', function() {
     DEADLIFT: [
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
-      { name:'DB BENCH ×2',    reps:'3 × 15–20',  note:'horizontale push · jij logt dit al' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
+      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
+    ],
+    'SQUAT B': [
+      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
+      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'rug breed houden na squat' },
+      { name:'DIPS',           reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
+      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
     ],
   };
 
   const DAYS = [
     { key:'SQUAT', t1color: LC['Squat']||'#b388ff', tiers:[
-      { t:'T1', lk:'Squat',       name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'OHP',         name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'OHP',          name:'OVERHEAD PRESS',          scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
     { key:'BENCH', t1color: LC['Bench']||'#64b5f6', tiers:[
-      { t:'T1', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Front Squat', name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'2 × 5  +  AMRAP', step:2.5, stepLabel:'+2.5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'Front Squat',  name:'FRONT SQUAT / ZERCHER',   scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
     { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
-      { t:'T1', lk:'Deadlift',    name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg', prog:'2 fails op AMRAP → gewicht −10%' },
-      { t:'T2', lk:'Bench',       name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+      { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'DB Bench x2',  name:'DB BENCH ×2',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
+    ]},
+    { key:'SQUAT B', t1color: LC['Squat']||'#b388ff', tiers:[
+      { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%' },
+      { t:'T2', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog' },
     ]},
   ];
 
@@ -2704,11 +2714,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const tierHtml = day.tiers.map(tier => {
       const liftC = liftColor(tier.lk);
       const w = lastW(tier.lk);
-      // T1: use last recorded weight directly
-      // T2: use last recorded weight of that lift itself; fallback to 75% of T1 if no data
-      const t1w = lastW(day.tiers[0].lk);
-      const dispW = tier.t === 'T1' ? w : (w !== null ? w : (t1w !== null ? Math.round(t1w*0.75/2.5)*2.5 : null));
-      const srcLabel = tier.t === 'T2' && w !== null ? 'LAATSTE LOG' : tier.t === 'T2' ? 'SCHATTING' : 'LAATSTE LOG';
+      const t1lk = day.tiers[0].lk;
+      const t1w = lastW(t1lk);
+      // T2 weight logic:
+      //   same exercise as T1 (e.g. Bench T1 + Bench T2) → 75% of T1 last weight
+      //   different exercise → last logged weight of that lift; fallback 75% of T1
+      const sameAsT1 = tier.t === 'T2' && tier.lk === t1lk;
+      let dispW, srcLabel;
+      if (tier.t === 'T1') {
+        dispW = w;
+        srcLabel = 'LAATSTE LOG';
+      } else if (sameAsT1) {
+        dispW = t1w !== null ? Math.round(t1w * 0.75 / 2.5) * 2.5 : null;
+        srcLabel = 'T2 = 75% VAN T1';
+      } else {
+        dispW = w !== null ? w : (t1w !== null ? Math.round(t1w * 0.75 / 2.5) * 2.5 : null);
+        srcLabel = w !== null ? 'LAATSTE LOG' : 'SCHATTING';
+      }
       const wHtml = dispW !== null
         ? `<div class="gzclp-wt"><span style="color:${liftC};opacity:.6;font-size:8px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};opacity:.6;font-size:8px">→ ${tier.stepLabel}</span></div>`
         : `<div class="gzclp-wt" style="color:var(--text);opacity:.5">— geen data</div>`;
@@ -2841,7 +2863,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--green)">FREQUENTIE &amp; RUST</div>
-        <div class="gzclp-rule-body">3× per week. Rustdag verplicht tussen elke sessie — geen twee sessies op rij. Cyclus: SQUAT → BENCH → DEADLIFT → herhaal. Sla een dag over → noteer dat en ga verder in de cyclus.</div>
+        <div class="gzclp-rule-body">3–4× per week. Rustdag verplicht tussen elke sessie. Cyclus van 4: SQUAT → BENCH → DEADLIFT → SQUAT B → herhaal. Week 1: dag 1-2-3 · Week 2: dag 4-1-2 · enz. Squat gemiddeld ~1.5× per week.</div>
       </div>
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--yellow)">GREYSKULL VS STARTING STRENGTH</div>
@@ -2849,7 +2871,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--yellow)">AFWIJKINGEN IN DIT SCHEMA</div>
-        <div class="gzclp-rule-body">OHP is hier altijd T2 (standaard GZCLP heeft OHP ook als T1). Front Squat als T2 ipv Back Squat op Bench-dag is een persoonlijke aanpassing. Squat frequentie is lager dan in het 4-daagse origineel.</div>
+        <div class="gzclp-rule-body">OHP altijd T2 — nooit T1 (schouderrisico + lagere opbrengst vs andere T1-liften). Front Squat als T2 op Bench-dag ipv Back Squat. DB Bench als T2 op Deadlift-dag: arm-onafhankelijk, minder CNS-overlap.</div>
       </div>
     </div>
   </div>
