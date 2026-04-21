@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>BITFIT BETA</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 :root {
@@ -2211,7 +2210,6 @@ const PHASES = [
   {label:"ZIEKTE",short:"ZK",start:"2026-03-09",end:"2026-03-12",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
   {label:"ZIEKTE",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
   {label:"FULL BODY",short:"FB",start:"2026-03-30",end:"2026-04-02",color:"#00e5ff",track:0,desc:"<b>Full Body</b><br>Compound lifts full body per sessie."},
-  {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2099-12-31",color:"#7b5cff",track:0,desc:"<b>13 apr \u2192</b><br>GZCLP Greyskull LP. T1 2\u00d75+AMRAP \u00b7 T2 3\u00d710 \u00b7 T3 3\u00d715\u201325. 4-daagse cyclus."},
   {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2099-12-31",color:"#ff8a65",track:1,desc:"<b>3 apr \u2192</b><br>Operatie. Herstelperiode \u2014 geen training."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
@@ -2336,7 +2334,6 @@ function setLiftMode(mode) {
 }
 let showWeight = true;
 let _customStart = null; // Date | null — ingesteld via fase-klik
-let _customEnd   = null; // Date | null — ingesteld via fase-klik (null = TODAY)
 let radarChart = null;
 
 function fmt(d) { return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}); }
@@ -2349,7 +2346,6 @@ function getActiveStart() {
   const tab = document.querySelector('.tab.active');
   return tab ? getPeriodStart(parseInt(tab.dataset.period)) : getPeriodStart(30);
 }
-function getActiveEnd() { return _customEnd || TODAY; }
 
 function toggleWeight() {
   showWeight = !showWeight;
@@ -2380,7 +2376,7 @@ function renderTimeline(start) {
       const width = (pE - pS) / totalMs * 100;
       if (width < 0.3) return '';
       const isSelected = selectedStart && p.start === selectedStart;
-      const clickable = true;
+      const clickable = ti === 0;
       const lbl = width > 12 ? (width > 22 ? p.label : p.short) : '';
       return `<div class="phase-block${clickable?' clickable':''}${isSelected?' phase-selected':''}"
         style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%;background:${p.color}18;border-color:${p.color}88;color:${p.color};"
@@ -2394,15 +2390,13 @@ function renderTimeline(start) {
 
 function selectPhase(startStr, endStr) {
   _customStart = new Date(startStr);
-  const todayStr = TODAY.toISOString().slice(0,10);
-  _customEnd = (endStr && endStr < todayStr) ? new Date(endStr) : null;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   update(_customStart);
 }
 
 // ── Sets per oefening ──
 function renderRadar(start) {
-  const s = start.toISOString().slice(0,10), t = getActiveEnd().toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   // Sets per oefening: gebruik p.sets uit DATA (gezet door process_jefit.py)
   const exercises = Object.entries(DATA.lifts).filter(([key]) => activeLiftFilter.has(key)).map(([key, lift]) => {
     const pts = lift.points.filter(p => p.date >= s && p.date <= t);
@@ -2450,15 +2444,15 @@ function renderRadar(start) {
 }
 
 function buildLiftDatasets(start) {
-  const end = getActiveEnd();
-  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const allDatesSet = new Set();
   Object.values(DATA.lifts).forEach(lift => lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date)));
   DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date));
   // Altijd uitbreiden tot het laatste weegpunt — ook als dat na de laatste trainingssessie valt
+  // (bv. na operatie: geen training meer maar wel dagelijks wegen)
   const allWSorted = DATA.weight.slice().sort((a,b) => a.date.localeCompare(b.date));
   const lastWDate = allWSorted.length ? allWSorted[allWSorted.length-1].date : null;
-  if (lastWDate && lastWDate >= s && lastWDate <= t) allDatesSet.add(lastWDate);
+  if (lastWDate && lastWDate >= s) allDatesSet.add(lastWDate);
   const allDates = Array.from(allDatesSet).sort();
   const datasets = Object.entries(DATA.lifts).filter(([key]) => activeLiftFilter.has(key)).map(([key, lift]) => {
     const byDate = {};
@@ -2478,7 +2472,7 @@ function buildLiftDatasets(start) {
   });
   if (showWeight) {
     const wByDate = {};
-    DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => wByDate[p.date] = p.weight);
+    DATA.weight.filter(p => p.date >= s).forEach(p => wByDate[p.date] = p.weight);
     datasets.push({
       label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
       borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
@@ -2491,9 +2485,8 @@ function buildLiftDatasets(start) {
 }
 
 function computeStats(start) {
-  const end = getActiveEnd();
-  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
-  const totalDays = Math.round((end - start) / 86400000) + 1;
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const totalDays = Math.round((TODAY - start) / 86400000) + 1;
   const td = (DATA.all_active_days || DATA.training_days).filter(d => d >= s && d <= t).length;
   const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wFirst = wPts.length ? wPts[0].weight : null;
@@ -2543,7 +2536,7 @@ function renderStats(stats) {
 }
 
 function renderNewEx(start) {
-  const s = start.toISOString().slice(0,10), t = getActiveEnd().toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const filtered = DATA.new_exercises.filter(e => e.date >= s && e.date <= t);
   const container = document.getElementById('new-ex-container');
   if (!filtered.length) { container.innerHTML = ''; return; }
@@ -2556,42 +2549,49 @@ function renderNewEx(start) {
 const MC = {Benen:'#b388ff',Rug:'#ffd600',Borst:'#64b5f6',Schouders:'#00ffb3',Glutes:'#ce93d8',Triceps:'#f48fb1',Biceps:'#80cbc4',Core:'#ff8a65'};
 
 function renderAnalysis(start) {
-  const end = getActiveEnd();
-  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
   const overlapping = PHASES.filter(p => (p.track || 0) === 0 && p.start <= t && p.end >= s);
 
-  // ── Special phase detection (track 1) ──
+  // ── Recovery / Ziekte detectie ──
   const track1Active = PHASES.filter(p => (p.track||0) === 1 && p.start <= t && p.end >= t);
   const recPhase = track1Active.find(p => p.label === 'RECOVERY');
   const ziektePhase = !recPhase && track1Active.find(p => p.label === 'ZIEKTE');
   const specialPhase = recPhase || ziektePhase;
 
-  // ── Recovery-only mode (geen actieve trainingsfase) ──
   if (specialPhase && overlapping.length === 0) {
-    const daysSince = Math.round((end - new Date(specialPhase.start)) / 86400000);
+    // Geen actieve trainingsfase → toon herstelmodus
+    const daysSince = Math.round((TODAY - new Date(specialPhase.start)) / 86400000);
+
+    // Spierhersteltabel
     const lastByMuscle = {};
     DATA.muscle_daily.filter(d => d.date <= t).forEach(d => {
       if (!lastByMuscle[d.muscle] || d.date > lastByMuscle[d.muscle]) lastByMuscle[d.muscle] = d.date;
     });
     const restRows = Object.entries(lastByMuscle)
-      .map(([m,d]) => ({m, rest: Math.round((end - new Date(d)) / 86400000)}))
+      .map(([m,d]) => ({m, rest: Math.round((TODAY - new Date(d)) / 86400000)}))
       .sort((a,b) => b.rest - a.rest)
       .map(r => `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #1a1a2a;font-size:11px"><span style="color:${MC[r.m]||'#c0c0d8'}">${r.m}</span><span style="color:${r.rest>=7?'var(--red)':r.rest>=4?'var(--yellow)':'var(--green)'}">${r.rest}d rust</span></div>`).join('');
+
+    // Sessies + PRs tijdens herstel
     const recSess = DATA.training_days.filter(d => d >= specialPhase.start && d <= t);
-    const recPRs = Object.entries(DATA.lifts).flatMap(([k,l]) => l.points.filter(p => p.date >= specialPhase.start && p.date <= t && p.pr).map(p => `${k} ${p.weight}kg`));
+    const recPRs  = Object.entries(DATA.lifts).flatMap(([k,l]) => l.points.filter(p => p.date >= specialPhase.start && p.date <= t && p.pr).map(p => `${k} ${p.weight}kg`));
     const lastTrain = DATA.training_days.filter(d => d <= t).slice(-1)[0];
-    const daysSinceTrain = lastTrain ? Math.round((end - new Date(lastTrain)) / 86400000) : null;
+    const daysSinceTrain = lastTrain ? Math.round((TODAY - new Date(lastTrain)) / 86400000) : null;
+
     const label = recPhase ? 'RECOVERY' : 'ZIEKTE';
     document.getElementById('analysis-title').innerHTML = `&#9658; ${label} &mdash; dag ${daysSince}`;
-    const evoElR = document.getElementById('evolution-title');
-    if (evoElR) evoElR.innerHTML = '&#9670; SESSIES TIJDENS ' + label;
+    const evoEl = document.getElementById('evolution-title');
+    if (evoEl) evoEl.innerHTML = '&#9670; SESSIES TIJDENS ' + label;
+
     document.getElementById('a-focus').innerHTML = restRows || '—';
+
     const evoText = recSess.length
       ? `<b>${recSess.length} sessie${recSess.length>1?'s':''} in ${daysSince} hersteldag${daysSince===1?'':'en'}.</b>` +
         (recPRs.length ? ` ${recPRs.length} PR${recPRs.length>1?'s':''}: ${recPRs.slice(0,3).join(', ')}.` : ' Geen PRs — focus op herstel.') +
         (daysSinceTrain !== null ? ` Laatste training: ${daysSinceTrain}d geleden.` : '')
       : `<b>Geen training in ${daysSince} dag${daysSince===1?'':'en'}.</b> Volledig rust.`;
     document.getElementById('a-evolution').innerHTML = evoText;
+
     const tipsText = recPhase
       ? '<b>Herstelprioriteit:</b> slaap, eiwitten, geen zware compounds. &mdash; <b>Creatine doorgaan</b> — ondersteunt spierbehoud tijdens inactiviteit. &mdash; <b>Wacht chirurg-goedkeuring</b> voor hervatten krachtsport.'
       : '<b>Rust volledig uit</b> bij ziekte — geen krachtsport. Lichte wandelingen ok. &mdash; <b>Eiwitten en hydratatie</b> prioriteit voor herstel.';
@@ -2599,101 +2599,30 @@ function renderAnalysis(start) {
     return;
   }
 
-  // ── Dynamische trainingsanalyse ──
-  const LIFT_MUSCLE = {Squat:'Benen',Deadlift:'Rug',Bench:'Borst',OHP:'Schouders','DB Bench x2':'Borst','Lat PD':'Rug','DIP-BW':'Borst','Front Squat':'Benen','DB Clean':'Schouders'};
-
-  const td = DATA.training_days.filter(d => d >= s && d <= t).length;
-  const totalDays = Math.round((end - start) / 86400000) + 1;
-  const density = totalDays ? Math.round(td / totalDays * 100) : 0;
-
-  // PRs, lift-deltas en spiervolume
-  let prCount = 0;
-  const liftDeltas = [];
-  const muscleVol = {};
-  Object.entries(DATA.lifts).forEach(([key, lift]) => {
-    const pts = lift.points.filter(p => p.date >= s && p.date <= t);
-    if (!pts.length) return;
-    prCount += pts.filter(p => p.pr).length;
-    const first = pts[0].weight, last = pts[pts.length-1].weight;
-    liftDeltas.push({key, first, last, delta: Math.round((last - first) * 10) / 10});
-    const muscle = LIFT_MUSCLE[key];
-    if (muscle) muscleVol[muscle] = (muscleVol[muscle] || 0) + pts.reduce((acc, p) => acc + (p.sets || 1), 0);
-  });
-
-  // Gewicht delta
-  const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
-  const wDeltaStr = wPts.length >= 2
-    ? ` Gewicht: ${wPts[0].weight}→${wPts[wPts.length-1].weight}kg (${(wPts[wPts.length-1].weight - wPts[0].weight) >= 0 ? '+' : ''}${Math.round((wPts[wPts.length-1].weight - wPts[0].weight) * 10) / 10}kg).`
-    : '';
-
-  // Spierbalans
-  const totalSets = Object.values(muscleVol).reduce((a,b) => a+b, 0) || 1;
-  const musclesSorted = Object.entries(muscleVol).sort((a,b) => b[1]-a[1]);
-  const top3muscles = musclesSorted.slice(0,3).map(([m,v]) => `<span style="color:${MC[m]||'#c0c0d8'}">${m}</span> (${Math.round(v/totalSets*100)}%)`).join(', ');
-  const absentMuscles = Object.keys(MC).filter(m => !muscleVol[m]);
-  const balanceLabel = absentMuscles.length === 0
-    ? `<b style="color:var(--green)">GEBALANCEERD</b>`
-    : absentMuscles.length <= 2
-    ? `<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b>`
-    : `<b style="color:var(--red)">ONGEBALANCEERD</b>`;
-  const focusHtml = `${balanceLabel} &mdash; Volume: ${top3muscles || '—'}.` +
-    (absentMuscles.length ? ` <b style="color:var(--yellow)">Afwezig:</b> ${absentMuscles.map(m => `<span style="color:${MC[m]}">${m}</span>`).join(', ')}.` : '');
-
-  // Training evolutie (compact)
-  const mainLifts = ['Squat','Deadlift','Bench','OHP'];
-  const deltaStr = liftDeltas
-    .filter(d => mainLifts.includes(d.key))
-    .map(d => `${d.key} ${d.first}→${d.last}kg (${d.delta >= 0 ? '+' : ''}${d.delta}kg)`)
-    .join(' · ');
-  const evolutionHtml = `<b>${td} sessie${td !== 1 ? 's' : ''} / ${totalDays}d (${density}%). ${prCount} PR${prCount !== 1 ? 's' : ''}.</b>` +
-    (deltaStr ? ` ${deltaStr}.` : '') + wDeltaStr;
-
-  // GZCLP compliance (alleen als GREYSKULL fase actief is in periode)
-  const gzPhase = overlapping.find(p => p.label === 'GREYSKULL');
-  let tipsHtml = '';
-  if (gzPhase) {
-    const gzStart = gzPhase.start > s ? gzPhase.start : s;
-    const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
-    const T3S = new Set(['Lat PD','DIP-BW']);
-    const sessions = {};
-    for (const [nm, lift] of Object.entries(DATA.lifts || {}))
-      for (const pt of lift.points || [])
-        if (pt.date >= gzStart && pt.date <= t)
-          (sessions[pt.date] = sessions[pt.date] || []).push(nm);
-    const dates = Object.keys(sessions).sort();
-    if (dates.length) {
-      let good = 0;
-      const noT3days = [];
-      dates.forEach(dt => {
-        const ns = sessions[dt];
-        const hasT2 = new Set(ns.filter(n => T2S.has(n))).size >= 2;
-        const hasT3 = ns.some(n => T3S.has(n));
-        if (hasT2 && hasT3) good++;
-        if (!hasT3) noT3days.push(dt.slice(5));
-      });
-      const rate = Math.round(good / dates.length * 100);
-      const complianceClr = rate >= 60 ? 'var(--green)' : rate >= 30 ? 'var(--yellow)' : 'var(--red)';
-      tipsHtml = `<b>GZCLP compliance:</b> <span style="color:${complianceClr}">${good}/${dates.length} sessies (${rate}%) met T1+T2+T3.</span>`;
-      if (noT3days.length) tipsHtml += ` T3 afwezig: ${noT3days.join(', ')}.`;
-    }
-    if (recPhase) tipsHtml += (tipsHtml ? ' &mdash; ' : '') + '<b style="color:var(--yellow)">Training tijdens herstelperiode</b> — voorzichtig opbouwen.';
+  // ── Normale trainingsanalyse ──
+  let a;
+  if (overlapping.length === 1) { a = PHASE_ANALYSIS[overlapping[0].label] || PHASE_ANALYSIS['multi']; }
+  else if (!overlapping.length) { a = PHASE_ANALYSIS['multi']; }
+  else if (overlapping.length >= 3) { a = PHASE_ANALYSIS['multi']; }
+  else {
+    let best = overlapping[0], bestDays = 0;
+    overlapping.forEach(p => {
+      const ps = new Date(Math.max(new Date(p.start), start));
+      const pe = new Date(Math.min(new Date(p.end), TODAY));
+      const days = (pe - ps) / 86400000;
+      if (days > bestDays) { bestDays = days; best = p; }
+    });
+    a = PHASE_ANALYSIS[best.label] || PHASE_ANALYSIS['multi'];
   }
-  if (!tipsHtml) {
-    const rugBorst = (muscleVol['Rug'] || 0) / ((muscleVol['Borst'] || 0.001));
-    if (rugBorst > 2.5) tipsHtml = `<b>Rug/Borst ${Math.round(rugBorst * 10) / 10}×.</b> Trek domineert over duw — meer Bench-frequentie.`;
-    else tipsHtml = absentMuscles.length ? `<b>Afwezige spiergroepen:</b> ${absentMuscles.join(', ')}.` : 'Goede balans — structuur vasthouden.';
-  }
-
-  // Titels
   const phaseNames = overlapping.length
     ? ' <span style="font-family:monospace;color:var(--muted);font-size:8px">(' + overlapping.map(p => p.label).join(' + ') + ')</span>'
     : '';
   document.getElementById('analysis-title').innerHTML = '&#9658; ANALYSE PERIODE' + phaseNames;
   const evoEl = document.getElementById('evolution-title');
   if (evoEl) evoEl.innerHTML = '&#9670; TRAINING EVOLUTIE' + phaseNames;
-  document.getElementById('a-focus').innerHTML = focusHtml;
-  document.getElementById('a-evolution').innerHTML = evolutionHtml;
-  document.getElementById('a-tips').innerHTML = tipsHtml;
+  document.getElementById('a-focus').innerHTML = a.focus;
+  document.getElementById('a-evolution').innerHTML = a.evolution;
+  document.getElementById('a-tips').innerHTML = a.tips || '-';
 }
 
 function update(arg) {
@@ -2734,18 +2663,13 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     _customStart = null;
-    _customEnd = null;
     update(parseInt(tab.dataset.period));
   });
 });
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    const activeTab = document.querySelector('.tab.active');
-    if (activeTab) update(parseInt(activeTab.dataset.period));
-    else update(getActiveStart());
-  }, 200);
+  resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
 });
 update(30);
 
@@ -3056,11 +2980,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Feedback
   (function() {
     const today = TODAY.toISOString().slice(0,10);
-    const gsPhase = PHASES.find(p => p.label === 'GREYSKULL');
-    const from = gsPhase ? gsPhase.start : (DATA.training_days||[]).filter(d=>d<=today).slice(-12)[0];
-    if (!from) return;
-    const recent = (DATA.training_days||[]).filter(d=>d>=from && d<=today);
+    const allDays = (DATA.training_days||[]).filter(d=>d<=today);
+    const recent = allDays.slice(-12);
     if (!recent.length) return;
+    const from = recent[0];
     const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
     const T3S = new Set(['Lat PD','DIP-BW']);
     const sessions = {};
