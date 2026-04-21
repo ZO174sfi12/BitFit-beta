@@ -138,60 +138,64 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-wrap{padding:0 14px 32px;}
 .gzclp-divider{border:none;border-top:1px solid var(--border);margin:20px 0 16px;}
 .gzclp-topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
-.gzclp-title{font-family:monospace;font-size:10px;letter-spacing:3px;color:var(--accent);}
-.gzclp-sub{font-family:monospace;font-size:8px;letter-spacing:1px;color:var(--cyan);margin-top:2px;opacity:.7;}
-.gzclp-day-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.gzclp-day-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--text);opacity:.5;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.gzclp-day-btn.active{font-size:10px;padding:6px 16px;opacity:1;}
-.gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+.gzclp-title{font-family:monospace;font-size:11px;letter-spacing:3px;color:var(--accent);}
+.gzclp-sub{font-family:monospace;font-size:10px;letter-spacing:1px;color:var(--cyan);margin-top:2px;opacity:.7;}
+.gzclp-day-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.gzclp-day-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--text);opacity:.5;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.gzclp-day-btn.active{font-size:11px;padding:6px 16px;opacity:1;}
+.gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
 @media(max-width:600px){.gzclp-tiers{grid-template-columns:1fr;}}
 .gzclp-tier{border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
 .gzclp-tier::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
 .gzclp-tier.t1::before{background:linear-gradient(90deg,var(--accent),transparent 60%);box-shadow:0 0 6px var(--accent);}
 .gzclp-tier.t2::before{background:linear-gradient(90deg,var(--cyan),transparent 60%);}
 .gzclp-tier.t3::before{background:linear-gradient(90deg,var(--green),transparent 60%);}
-.gzclp-badge{font-family:monospace;font-size:8px;letter-spacing:2px;padding:2px 8px;border:1px solid;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);display:inline-block;margin-bottom:7px;}
+.gzclp-badge{font-family:monospace;font-size:10px;letter-spacing:2px;padding:2px 8px;border:1px solid;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);display:inline-block;margin-bottom:7px;}
 .t1 .gzclp-badge{color:var(--accent);border-color:var(--accent);background:#7b5cff11;}
 .t2 .gzclp-badge{color:var(--cyan);border-color:var(--cyan);background:#00e5ff11;}
 .t3 .gzclp-badge{color:var(--green);border-color:var(--green);background:#00ffb311;}
 .gzclp-exname{font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.3;}
 .gzclp-scheme{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);margin-bottom:5px;}
 .gzclp-wt{font-family:monospace;font-size:10px;margin-bottom:2px;}
-.gzclp-prog{font-family:monospace;font-size:8px;color:var(--text);opacity:.65;margin-top:5px;line-height:1.5;}
-.gzclp-tier-note{font-family:monospace;font-size:8px;color:var(--yellow);margin-top:5px;padding:3px 7px;background:#ffd60009;border-left:2px solid var(--yellow);}
+.gzclp-prog{font-family:monospace;font-size:10px;color:var(--text);opacity:.65;margin-top:5px;line-height:1.5;}
+.gzclp-tier-note{font-family:monospace;font-size:10px;color:var(--yellow);margin-top:5px;padding:3px 7px;background:#ffd60009;border-left:2px solid var(--yellow);}
 .gzclp-fb-wrap{border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
-.gzclp-fb-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
-.gzclp-fb-row{padding:7px 12px;border-bottom:1px solid #0f0f1a;font-family:monospace;font-size:10px;line-height:1.5;display:flex;gap:8px;align-items:flex-start;}
+.gzclp-fb-head{font-family:monospace;font-size:10px;letter-spacing:2px;color:var(--accent);padding:6px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
+.gzclp-fb-row{padding:4px 12px;border-bottom:1px solid #0f0f1a;font-family:monospace;font-size:10px;line-height:1.4;display:flex;gap:8px;align-items:flex-start;}
 .gzclp-fb-row:last-child{border-bottom:none;}
 .fb-ok{color:var(--green);}
 .fb-warn{color:var(--yellow);}
 .fb-crit{color:var(--red);}
 .fb-info{color:var(--cyan);}
-.gzclp-period{font-family:monospace;font-size:8px;color:var(--text);opacity:.55;padding:5px 12px;background:#080810;border-top:1px solid var(--border);}
-
+.gzclp-period{font-family:monospace;font-size:10px;color:var(--text);opacity:.55;padding:4px 12px;background:#080810;border-top:1px solid var(--border);}
 .gzclp-t3-full{grid-column:1/-1;border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
 .gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
 .gzclp-t3-item{padding:7px 10px;border:1px solid var(--border);background:#0d0d18;}
-.gzclp-rest-line{font-family:monospace;font-size:8px;margin-top:7px;padding-top:6px;border-top:1px solid #1a1a2e;}
+.gzclp-rest-line{font-family:monospace;font-size:10px;margin-top:7px;padding-top:6px;border-top:1px solid #1a1a2e;}
+.gzclp-wu-inline{margin-top:9px;padding-top:8px;border-top:1px solid #1a1a2e;}
+.gzclp-wu-inline-title{font-family:monospace;font-size:9px;letter-spacing:1px;opacity:.55;margin-bottom:4px;}
+.gzclp-wu-inline-row{display:flex;gap:10px;font-family:monospace;font-size:10px;padding:2px 0;align-items:baseline;}
+.gzclp-wu-inline-work{font-weight:700;padding-top:4px;margin-top:2px;border-top:1px solid #1a1a2e;}
 .gzclp-details{margin-top:8px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
-.gzclp-coll-head{font-family:monospace;font-size:8px;letter-spacing:2px;padding:8px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;list-style:none;user-select:none;background:#0d0d18;}
+.gzclp-coll-head{font-family:monospace;font-size:10px;letter-spacing:2px;padding:7px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;list-style:none;user-select:none;background:#0d0d18;}
 .gzclp-coll-head::-webkit-details-marker{display:none;}
 .gzclp-details[open] .gzclp-coll-head{border-bottom:1px solid var(--border);}
 .gzclp-details-body{padding:10px 13px;}
-.gzclp-wu-section{margin-bottom:4px;}
-.gzclp-wu-title{font-family:monospace;font-size:8px;letter-spacing:1px;margin-bottom:5px;}
-.gzclp-wu-row{display:flex;gap:10px;font-family:monospace;font-size:9px;padding:3px 0;border-bottom:1px solid #0f0f1a;align-items:baseline;}
+.gzclp-wu-title{font-family:monospace;font-size:10px;letter-spacing:1px;margin-bottom:5px;}
+.gzclp-wu-row{display:flex;gap:10px;font-family:monospace;font-size:10px;padding:3px 0;border-bottom:1px solid #0f0f1a;align-items:baseline;}
 .gzclp-wu-work{border-top:1px solid #1a1a2e;margin-top:2px;padding-top:4px;border-bottom:none;}
-.gzclp-stretch-item{font-family:monospace;font-size:9px;padding:4px 0;border-bottom:1px solid #0f0f1a;color:var(--text);line-height:1.45;}
+.gzclp-stretch-item{font-family:monospace;font-size:10px;padding:4px 0;border-bottom:1px solid #0f0f1a;color:var(--text);line-height:1.45;}
 .gzclp-rules{margin-top:14px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
-.gzclp-rules-head{font-family:monospace;font-size:8px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border-bottom:1px solid var(--border);background:#0d0d18;}
+.gzclp-rules-head{font-family:monospace;font-size:10px;letter-spacing:2px;color:var(--accent);padding:8px 12px;cursor:pointer;list-style:none;user-select:none;background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
+.gzclp-rules-head::-webkit-details-marker{display:none;}
+.gzclp-rules[open] .gzclp-rules-head{border-bottom:1px solid var(--border);}
 .gzclp-rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
 @media(max-width:600px){.gzclp-rules-grid{grid-template-columns:1fr;}}
 .gzclp-rule{padding:9px 13px;border-bottom:1px solid #0f0f1a;border-right:1px solid #0f0f1a;}
 .gzclp-rule:nth-child(even){border-right:none;}
-.gzclp-rule-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;margin-bottom:3px;}
-.gzclp-rule-body{font-family:monospace;font-size:9px;color:var(--text);opacity:.75;line-height:1.55;}
+.gzclp-rule-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;margin-bottom:3px;}
+.gzclp-rule-body{font-family:monospace;font-size:10px;color:var(--text);opacity:.75;line-height:1.55;}
 
 </style>
 </head>
@@ -2872,6 +2876,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const t1lk = day.tiers[0].lk;
     const t1w  = lastW(t1lk);
 
+    // Warmup rows helper (inline in tier box)
+    function inlineWarmupHtml(rows, workW, liftC) {
+      if (!rows.length) return '';
+      const rowsHtml = rows.map(r =>
+        `<div class="gzclp-wu-inline-row">
+          <span style="color:${liftC};min-width:48px">${r.w} kg</span>
+          <span style="opacity:.7">× ${r.reps}</span>
+          ${r.note ? `<span style="opacity:.45;font-size:9px">${r.note}</span>` : ''}
+        </div>`
+      ).join('');
+      const workHtml = workW
+        ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
+             <span style="min-width:48px">${workW} kg</span>
+             <span style="opacity:.7">werkgewicht</span>
+           </div>` : '';
+      return `<div class="gzclp-wu-inline">
+        <div class="gzclp-wu-inline-title">OPWARMING</div>
+        ${rowsHtml}${workHtml}
+      </div>`;
+    }
+
+    const t2tier = day.tiers[1];
+    const t2dispW = (() => {
+      const w2 = lastW(t2tier.lk);
+      if (t2tier.lk === t1lk) return t1w !== null ? r25(t1w * 0.75) : null;
+      return w2 !== null ? w2 : (t1w !== null ? r25(t1w * 0.75) : null);
+    })();
+
     const tierHtml = day.tiers.map(tier => {
       const liftC = liftColor(tier.lk);
       const w = lastW(tier.lk);
@@ -2886,8 +2918,11 @@ document.addEventListener('DOMContentLoaded', function() {
         srcLabel = w !== null ? 'LAATSTE LOG' : 'SCHATTING';
       }
       const wHtml = dispW !== null
-        ? `<div class="gzclp-wt"><span style="color:${liftC};opacity:.6;font-size:8px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};opacity:.6;font-size:8px">→ ${tier.stepLabel}</span></div>`
+        ? `<div class="gzclp-wt"><span style="color:${liftC};opacity:.6;font-size:10px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};opacity:.6;font-size:10px">→ ${tier.stepLabel}</span></div>`
         : `<div class="gzclp-wt" style="opacity:.5">— geen data</div>`;
+      const thisDW = tier.t === 'T1' ? dispW : t2dispW;
+      const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
+      const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC);
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
         <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
@@ -2896,6 +2931,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ${wHtml}
         <div class="gzclp-prog">${tier.prog}</div>
         <div class="gzclp-rest-line" style="color:${liftC};opacity:.7">⏱ ${tier.rest}</div>
+        ${wuHtml}
       </div>`;
     }).join('');
 
@@ -2905,53 +2941,36 @@ document.addEventListener('DOMContentLoaded', function() {
       <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
         <div class="gzclp-exname" style="color:var(--green)">ACCESSOIRES — kies 1 of 2</div>
-        <div style="font-family:monospace;font-size:8px;color:var(--green);opacity:.7">⏱ 60–90 sec</div>
+        <div style="font-family:monospace;font-size:10px;color:var(--green);opacity:.7">⏱ 60–90 sec</div>
       </div>
       <div class="gzclp-t3-grid">
         ${t3opts.map(o => `<div class="gzclp-t3-item">
           <span style="color:var(--text);font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700">${o.name}</span>
           <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:10px;margin-left:8px">${o.reps}</span>
-          <div style="color:var(--text);opacity:.6;font-family:monospace;font-size:8px;margin-top:2px">${o.note}</div>
+          <div style="color:var(--text);opacity:.6;font-family:monospace;font-size:10px;margin-top:2px">${o.note}</div>
         </div>`).join('')}
       </div>
     </div>`;
 
-    // Warmup collapsible
-    const t1wu = t1Warmup(t1w, t1lk);
-    const t2tier = day.tiers[1];
-    const t2dispW = (() => {
-      const w2 = lastW(t2tier.lk);
-      if (t2tier.lk === t1lk) return t1w !== null ? r25(t1w * 0.75) : null;
-      return w2 !== null ? w2 : (t1w !== null ? r25(t1w * 0.75) : null);
-    })();
-    const t2wu = t2Warmup(t2dispW, t2tier.lk);
-    const t1C = liftColor(t1lk), t2C = liftColor(t2tier.lk);
-    const warmupHtml = `<details class="gzclp-details">
-      <summary class="gzclp-coll-head" style="color:${t1C}">▸ OPWARMING &nbsp;<span style="opacity:.5;font-size:7px;letter-spacing:1px">klik om te openen</span></summary>
+    // Pre-stretch collapsible (before tiers)
+    const preStretchEl = document.getElementById('gzclp-pre-stretch');
+    if (preStretchEl) preStretchEl.innerHTML = `<details class="gzclp-details" style="margin-top:0;margin-bottom:8px">
+      <summary class="gzclp-coll-head" style="color:var(--cyan)">▸ VOOR — activerende stretch</summary>
       <div class="gzclp-details-body">
-        <div class="gzclp-wu-section">
-          <div class="gzclp-wu-title" style="color:${t1C}">T1 — ${day.tiers[0].name}</div>
-          ${warmupTableHtml(t1wu, t1w, t1C)}
-        </div>
-        <div class="gzclp-wu-section" style="margin-top:10px">
-          <div class="gzclp-wu-title" style="color:${t2C}">T2 — ${t2tier.name}</div>
-          ${warmupTableHtml(t2wu, t2dispW, t2C)}
-        </div>
+        ${str.pre.map(s => `<div class="gzclp-stretch-item">${s}</div>`).join('')}
       </div>
     </details>`;
 
-    // Stretch collapsible
-    const stretchHtml = `<details class="gzclp-details">
-      <summary class="gzclp-coll-head" style="color:var(--cyan)">▸ STRETCH &nbsp;<span style="opacity:.5;font-size:7px;letter-spacing:1px">klik om te openen</span></summary>
+    // Post-stretch collapsible (after T3)
+    const postStretchEl = document.getElementById('gzclp-post-stretch');
+    if (postStretchEl) postStretchEl.innerHTML = `<details class="gzclp-details">
+      <summary class="gzclp-coll-head" style="color:var(--green)">▸ NA — statische stretch</summary>
       <div class="gzclp-details-body">
-        <div class="gzclp-wu-title" style="color:var(--cyan);margin-bottom:6px">VOOR — activerend</div>
-        ${str.pre.map(s => `<div class="gzclp-stretch-item">${s}</div>`).join('')}
-        <div class="gzclp-wu-title" style="color:var(--green);margin-top:12px;margin-bottom:6px">NA — statisch</div>
         ${str.post.map(s => `<div class="gzclp-stretch-item">${s}</div>`).join('')}
       </div>
     </details>`;
 
-    c.innerHTML = tierHtml + t3Html + warmupHtml + stretchHtml;
+    c.innerHTML = tierHtml + t3Html;
   }
 
   // Feedback
@@ -3023,15 +3042,17 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="gzclp-topbar">
     <div>
       <div class="gzclp-title">◈ GZCLP LEIDRAAD</div>
-      <div class="gzclp-sub">GREYSKULL LP VARIANT &nbsp;·&nbsp; REFERENTIE, GEEN LOG</div>
+      <div class="gzclp-sub">GREYSKULL LINEAR PROGRESSION &nbsp;·&nbsp; REFERENTIE</div>
     </div>
   </div>
   <div class="gzclp-day-row" id="gzclp-day-btns"></div>
+  <div id="gzclp-pre-stretch"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
+  <div id="gzclp-post-stretch"></div>
   <div class="gzclp-fb-wrap" id="gzclp-feedback"></div>
 
-  <div class="gzclp-rules">
-    <div class="gzclp-rules-head">◈ GZCLP HANDLEIDING — GREYSKULL LP VARIANT</div>
+  <details class="gzclp-rules">
+    <summary class="gzclp-rules-head">◈ GZCLP GREYSKULL <span style="opacity:.5;font-size:9px">klik om te openen</span></summary>
     <div class="gzclp-rules-grid">
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PLUS SET (GREYSKULL)</div>
@@ -3066,7 +3087,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="gzclp-rule-body">OHP altijd T2 — nooit T1 (schouderrisico + lagere opbrengst vs andere T1-liften). Front Squat als T2 op Bench-dag ipv Back Squat. DB Bench als T2 op Deadlift-dag: arm-onafhankelijk, minder CNS-overlap.</div>
       </div>
     </div>
-  </div>
+  </details>
 </div>
 
 </body>
