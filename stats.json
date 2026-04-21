@@ -1,128 +1,65 @@
 {
-  "updated": "2026-04-14",
-  "phase": "RECOVERY",
-  "squat": {
-    "weight": 70.0,
-    "est1rm": 79.3,
-    "pr": false
-  },
-  "deadlift": {
-    "weight": 50.0,
-    "est1rm": 63.3,
-    "pr": false
-  },
-  "bench": {
-    "weight": 70.0,
-    "est1rm": 84.0,
-    "pr": true
-  },
-  "ohp": {
-    "weight": 45.0,
-    "est1rm": 52.5,
-    "pr": false
-  },
-  "db_bench": {
-    "weight": 64.0,
-    "est1rm": 76.8,
-    "pr": true
-  },
-  "lat_pd": {
-    "weight": 50.0,
-    "est1rm": 63.3,
-    "pr": false
-  },
-  "dip": {
-    "weight": 84.0,
-    "est1rm": 100.8,
-    "pr": false
-  },
-  "bodyweight": {
-    "current": 85.8,
-    "recent_avg": 85.7,
-    "old_avg": 84.6,
-    "delta_10d": 1.1,
-    "delta_label": "+1.1 (3d gem) \u26a1creatine"
-  },
-  "gym_days_10d": 3,
-  "days_10d": [
-    false,
-    false,
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    true,
-    true
-  ],
-  "muscle_rest": {
-    "Biceps": {
-      "last": "2026-03-13",
-      "rest": 32
+  "updated": "2026-04-21T09:42:36",
+  "weight": 85.9,
+  "weight_date": "2026-04-19",
+  "training_days_total": 68,
+  "last_training_day": "2026-04-20",
+  "lifts": {
+    "Squat": {
+      "last_date": "2026-04-19",
+      "last_weight": 60.0,
+      "last_volume": 2160.0,
+      "pr": false,
+      "pr_weight": 82.5
     },
-    "Glutes": {
-      "last": "2026-03-16",
-      "rest": 29
+    "Deadlift": {
+      "last_date": "2026-04-14",
+      "last_weight": 50.0,
+      "last_volume": 1820.0,
+      "pr": false,
+      "pr_weight": 80.0
     },
-    "Core": {
-      "last": "2026-03-17",
-      "rest": 28
+    "Bench": {
+      "last_date": "2026-04-20",
+      "last_weight": 70.0,
+      "last_volume": 2295.0,
+      "pr": false,
+      "pr_weight": 70.0
     },
-    "Benen": {
-      "last": "2026-04-13",
-      "rest": 1
+    "DB Bench x2": {
+      "last_date": "2026-04-07",
+      "last_weight": 64.0,
+      "last_volume": 2736.0,
+      "pr": true,
+      "pr_weight": 64.0
     },
-    "Borst": {
-      "last": "2026-04-13",
-      "rest": 1
+    "OHP": {
+      "last_date": "2026-04-19",
+      "last_weight": 40.0,
+      "last_volume": 1240.0,
+      "pr": false,
+      "pr_weight": 45.0
     },
-    "Triceps": {
-      "last": "2026-04-13",
-      "rest": 1
+    "Lat PD": {
+      "last_date": "2026-04-15",
+      "last_weight": 45.0,
+      "last_volume": 1250.0,
+      "pr": false,
+      "pr_weight": 60.0
     },
-    "Schouders": {
-      "last": "2026-04-14",
-      "rest": 0
+    "DIP-BW": {
+      "last_date": "2026-04-13",
+      "last_weight": 84.0,
+      "last_volume": 1512.0,
+      "pr": false,
+      "pr_weight": 84.6
     },
-    "Rug": {
-      "last": "2026-04-14",
-      "rest": 0
+    "Front Squat": {
+      "last_date": "2026-04-13",
+      "last_weight": 40.0,
+      "last_volume": 1040.0,
+      "pr": false,
+      "pr_weight": 60.0
     }
-  },
-  "year_records": {
-    "squat": {
-      "weight": 82.5,
-      "date": "2026-03-23"
-    },
-    "deadlift": {
-      "weight": 80.0,
-      "date": "2026-02-04"
-    },
-    "bench": {
-      "weight": 70.0,
-      "date": "2026-04-13"
-    },
-    "ohp": {
-      "weight": 45.0,
-      "date": "2026-03-18"
-    },
-    "dip": {
-      "weight": 84.6,
-      "date": "2026-03-16"
-    },
-    "db_bench": {
-      "weight": 64.0,
-      "date": "2026-04-07"
-    },
-    "lat_pd": {
-      "weight": 60.0,
-      "date": "2026-03-13"
-    },
-    "front_squat": {
-      "weight": 60.0,
-      "date": "2026-01-24"
-    },
-    "db_clean": null
   }
 }
