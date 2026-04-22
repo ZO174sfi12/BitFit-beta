@@ -410,7 +410,7 @@ function isRecoveryPhase() {
 // ════════════════════════════════════════════
 const GH = {
   get token(){ return localStorage.getItem('gh_token')||''; },
-  owner:'ZO174sfi12', repo:'BitFit-beta', file:'supplement-log.json'
+  owner:'ZO174sfi12', repo:'bitfit-data', file:'supplement-log.json'
 };
 const GH_API = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
 let _logs=[], _fileSha=null;
