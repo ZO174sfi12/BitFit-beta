@@ -213,6 +213,43 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-rule-title{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:3px;}
 .gzclp-rule-body{font-family:monospace;font-size:11px;color:var(--text);line-height:1.55;}
 
+/* ── NOTES PANEL ──────────────────────────────────────────────────── */
+#notes-panel{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:var(--card);border-top:2px solid var(--accent);padding:16px;
+  box-shadow:0 -4px 24px rgba(0,0,0,.6);}
+#notes-panel-inner{max-width:680px;margin:0 auto;}
+#notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+#notes-header-title{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--accent);}
+#notes-close-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0 4px;}
+#notes-close-btn:hover{color:var(--text);}
+#notes-committed{display:none;background:#0d0d1a;border:1px solid #2a2a4a;border-radius:4px;
+  padding:10px 12px;margin-bottom:10px;font-size:12px;color:var(--muted);white-space:pre-wrap;}
+#notes-committed-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;
+  color:var(--accent);margin-bottom:5px;}
+#notes-input{width:100%;min-height:90px;background:#0d0d1a;border:1px solid #2a2a4a;
+  border-radius:4px;color:var(--text);font-family:monospace;font-size:13px;
+  padding:10px 12px;resize:vertical;box-sizing:border-box;outline:none;}
+#notes-input:focus{border-color:var(--accent);}
+#notes-actions{display:flex;gap:8px;margin-top:8px;}
+.notes-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;
+  padding:7px 14px;border:1px solid;border-radius:3px;cursor:pointer;background:none;}
+#notes-copy-btn{color:var(--accent);border-color:var(--accent);}
+#notes-copy-btn:hover{background:var(--accent);color:#000;}
+#notes-clear-btn{color:var(--muted);border-color:#2a2a4a;}
+#notes-clear-btn:hover{color:var(--text);border-color:var(--text);}
+#coach-section{margin-top:18px;border-top:1px solid #ff6b3520;padding-top:14px;display:none;}
+#coach-section-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;
+  color:#ff6b35;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+#coach-section-label::after{content:'';flex:1;height:1px;background:#ff6b3530;}
+.coach-request{background:#1a0e08;border:1px solid #ff6b3540;border-left:3px solid #ff6b35;
+  border-radius:4px;padding:10px 13px;margin-bottom:8px;font-size:12px;
+  color:var(--text);white-space:pre-wrap;line-height:1.6;}
+.coach-request-meta{font-family:'Space Mono',monospace;font-size:9px;color:#ff6b3599;
+  margin-bottom:5px;letter-spacing:0.5px;}
+#coach-pending-label{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b35;
+  background:#ff6b3515;border:1px solid #ff6b3530;border-radius:3px;
+  padding:6px 12px;margin-bottom:10px;text-align:center;}
+
 </style>
 </head>
 <body>
@@ -2247,7 +2284,9 @@ const DATA = {
       "exercise": "Barbell Squat (Wide Stance)",
       "date": "2026-04-14"
     }
-  ]
+  ],
+  "notes": "",
+  "coach_notes": ""
 };
 const TODAY = new Date();
 
@@ -3196,6 +3235,84 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // ══ END GZCLP ════════════════════════════════════════════════════════════════
 
+// ══ NOTES ════════════════════════════════════════════════════════════════════
+(function(){
+  const NOTES_HASH = '4913a15fd501c82f4b21dd3327f4ea646c3d73990e8a522f7db9031b0c4da250';
+  let _nClicks = 0, _nTimer;
+
+  document.querySelector('.logo')?.addEventListener('click', () => {
+    _nClicks++;
+    clearTimeout(_nTimer);
+    _nTimer = setTimeout(() => { _nClicks = 0; }, 700);
+    if (_nClicks >= 3) { _nClicks = 0; _unlockNotes(); }
+  });
+
+  async function _sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function _unlockNotes() {
+    if (localStorage.getItem('bf_notes_unlocked') === '1') { _showNotes(); return; }
+    const pin = prompt('');
+    if (!pin) return;
+    if (await _sha256(pin) === NOTES_HASH) {
+      localStorage.setItem('bf_notes_unlocked', '1');
+      _showNotes();
+    }
+  }
+
+  function _showNotes() {
+    const panel = document.getElementById('notes-panel');
+    panel.style.display = 'block';
+    const ta = document.getElementById('notes-input');
+    ta.value = localStorage.getItem('bf_notes') || '';
+    ta.oninput = () => localStorage.setItem('bf_notes', ta.value);
+    if (DATA.notes && DATA.notes.trim()) {
+      document.getElementById('notes-committed').style.display = 'block';
+      document.getElementById('notes-committed-text').textContent = DATA.notes.trim();
+    }
+    // Coach Yani section
+    if (DATA.coach_notes && DATA.coach_notes.trim()) {
+      const section = document.getElementById('coach-section');
+      section.style.display = 'block';
+      const list = document.getElementById('coach-requests-list');
+      list.innerHTML = '';
+      // Split on numbered items (1. / 2. etc.) or double newlines
+      const raw = DATA.coach_notes.trim();
+      const items = raw.split(/\n(?=\d+\.\s)/).map(s => s.trim()).filter(Boolean);
+      const blocks = items.length > 1 ? items : [raw];
+      blocks.forEach((block, i) => {
+        const div = document.createElement('div');
+        div.className = 'coach-request';
+        const meta = document.createElement('div');
+        meta.className = 'coach-request-meta';
+        meta.textContent = `REQUEST ${i + 1} — bevestig in Cowork chat`;
+        div.appendChild(meta);
+        const txt = document.createTextNode(block);
+        div.appendChild(txt);
+        list.appendChild(div);
+      });
+    }
+  }
+
+  window.copyNotes = function() {
+    const ta = document.getElementById('notes-input');
+    if (!ta?.value.trim()) return;
+    navigator.clipboard.writeText('[NOTITIES]\n' + ta.value.trim()).then(() => {
+      const btn = document.getElementById('notes-copy-btn');
+      btn.textContent = 'GEKOPIEERD ✓';
+      setTimeout(() => btn.textContent = 'KOPIEER VOOR COWORK', 2000);
+    });
+  };
+
+  window.clearNotes = function() {
+    document.getElementById('notes-input').value = '';
+    localStorage.removeItem('bf_notes');
+  };
+})();
+// ══ END NOTES ════════════════════════════════════════════════════════════════
+
 </script>
 
 
@@ -3244,6 +3361,30 @@ document.addEventListener('DOMContentLoaded', function() {
   <div id="gzclp-pre-stretch"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
   <div id="gzclp-post-stretch"></div>
+</div>
+
+<!-- ══ NOTES PANEL ══════════════════════════════════════════════════════════ -->
+<div id="notes-panel">
+  <div id="notes-panel-inner">
+    <div id="notes-header">
+      <span id="notes-header-title">NOTITIES</span>
+      <button id="notes-close-btn" onclick="document.getElementById('notes-panel').style.display='none'">✕</button>
+    </div>
+    <div id="notes-committed">
+      <div id="notes-committed-label">OPGESLAGEN IN REPO</div>
+      <div id="notes-committed-text"></div>
+    </div>
+    <textarea id="notes-input" placeholder="Notities, instructies, opmerkingen…"></textarea>
+    <div id="notes-actions">
+      <button class="notes-btn" id="notes-copy-btn" onclick="copyNotes()">KOPIEER VOOR COWORK</button>
+      <button class="notes-btn" id="notes-clear-btn" onclick="clearNotes()">WISSEN</button>
+    </div>
+    <div id="coach-section">
+      <div id="coach-section-label">COACH YANI</div>
+      <div id="coach-pending-label">⚠ CHANGE REQUESTS — nog niet bevestigd</div>
+      <div id="coach-requests-list"></div>
+    </div>
+  </div>
 </div>
 
 </body>
