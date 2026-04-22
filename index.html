@@ -3275,25 +3275,45 @@ document.addEventListener('DOMContentLoaded', function() {
       : current.trimEnd() + `\n\n[${section}]\n` + line;
     await _ghWrite(updated, sha);
   }
-  // Render coach Yani's change requests from DATA.coach_notes (array of {date,text})
-  function renderCoachFeed() {
+  // Parse [YANI] lines from notes.txt content string
+  function _parseYani(raw) {
+    const m = raw.match(/\[YANI\]([\s\S]*?)(?=\[BERT\]|$)/i);
+    if (!m) return [];
+    return m[1].split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+      const dm = l.match(/^(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2})\s*\|\s*(.+)$/);
+      return dm ? { date: dm[1], text: dm[2] } : { date: '', text: l };
+    });
+  }
+
+  // Render items into coach-feed div
+  function renderCoachFeed(items) {
     const feed = document.getElementById('coach-feed');
     if (!feed) return;
-    const items = Array.isArray(DATA.coach_notes) ? DATA.coach_notes : [];
-    if (!items.length) {
+    if (!items || !items.length) {
       feed.innerHTML = '<div class="coach-empty">— geen openstaande coach requests —</div>';
       return;
     }
-    feed.innerHTML = items.map((item, i) =>
+    feed.innerHTML = items.map(item =>
       `<div class="coach-request">
         <div class="coach-request-meta">
           <span class="coach-request-label">YANI</span>
           <span>${item.date || ''}</span>
-          <span>· bevestig in Cowork voor actie</span>
         </div>
         <div class="coach-request-text">${item.text || ''}</div>
       </div>`
     ).join('');
+  }
+
+  // Fetch notes.txt live from GitHub and render coach feed
+  async function refreshCoachFeed() {
+    try {
+      const { content: b64 } = await _ghRead();
+      const raw = decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+      renderCoachFeed(_parseYani(raw));
+    } catch(e) {
+      // Fallback: use DATA embedded at last CSV run
+      renderCoachFeed(Array.isArray(DATA.coach_notes) ? DATA.coach_notes : []);
+    }
   }
 
   window.submitComment = function() {
@@ -3302,7 +3322,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('comment-submit');
     const text = ta.value.trim();
     if (!text) return;
-    // "vegeta" → Bert's note ([BERT]); everyone else → Yani section ([YANI])
     const section = /vegeta/i.test(text) ? 'BERT' : 'YANI';
     btn.disabled = true;
     fb.textContent = 'Opslaan…';
@@ -3310,6 +3329,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(() => {
         ta.value = '';
         fb.textContent = 'Opgeslagen ✓';
+        if (section === 'YANI') refreshCoachFeed(); // update feed onmiddellijk
         setTimeout(() => { fb.textContent = ''; btn.disabled = false; }, 3000);
       })
       .catch(err => {
@@ -3320,7 +3340,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    renderCoachFeed();
+    refreshCoachFeed(); // laad live uit GitHub bij pagina-open
     const ta = document.getElementById('comment-input');
     ta?.addEventListener('keydown', e => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); submitComment(); }
