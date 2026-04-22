@@ -166,7 +166,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .fb-warn{color:var(--yellow);}
 .fb-crit{color:var(--red);}
 .fb-info{color:var(--cyan);}
-.gzclp-period{font-family:monospace;font-size:11px;color:var(--muted);padding:4px 12px;background:#080810;border-top:1px solid var(--border);}
+.gzclp-period{font-family:monospace;font-size:11px;color:var(--text);padding:4px 12px;background:#080810;border-top:1px solid var(--border);}
 .gzclp-t3-full{grid-column:1/-1;border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
 .gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
@@ -176,8 +176,21 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-wu-inline-title{font-family:monospace;font-size:11px;letter-spacing:1px;color:var(--cyan);margin-bottom:4px;}
 .gzclp-wu-inline-row{display:flex;gap:10px;font-family:monospace;font-size:11px;padding:2px 0;align-items:baseline;}
 .gzclp-wu-inline-work{font-weight:700;padding-top:4px;margin-top:2px;border-top:1px solid #1a1a2e;}
-.gzclp-wu-rest{font-family:monospace;font-size:10px;color:var(--muted);padding:1px 0 1px 4px;letter-spacing:.5px;}
+.gzclp-wu-rest{font-family:monospace;font-size:10px;color:var(--text);padding:1px 0 1px 4px;letter-spacing:.5px;}
 .gzclp-wu-rest-work{color:var(--accent);font-size:10px;padding-bottom:3px;}
+/* Tier body flex layout */
+.gzclp-tier-body{display:flex;gap:12px;flex-direction:column;}
+@media(min-width:600px){.gzclp-tier-body{flex-direction:row;align-items:flex-start;}}
+.gzclp-tier-main{flex:1;min-width:0;}
+.gzclp-wu-details{flex:0 0 auto;min-width:140px;max-width:180px;}
+@media(max-width:599px){.gzclp-wu-details{max-width:100%;}}
+.gzclp-wu-summary{font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;list-style:none;padding:4px 0;text-transform:uppercase;}
+.gzclp-wu-summary::-webkit-details-marker{display:none;}
+/* Lift tile sets */
+.lift-tile-sets{font-family:monospace;font-size:9px;color:var(--text);margin-top:1px;line-height:1;}
+/* Analysis panel collapsible */
+#analysis-details summary::-webkit-details-marker{display:none;}
+#analysis-details summary{list-style:none;}
 .gzclp-details{margin-top:8px;border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
 .gzclp-coll-head{font-family:monospace;font-size:11px;letter-spacing:2px;padding:7px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;list-style:none;user-select:none;background:#0d0d18;}
 .gzclp-coll-head::-webkit-details-marker{display:none;}
@@ -291,22 +304,23 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
   <div class="panel g analysis-panel">
     <div class="cd tl" style="border-color:var(--green)"></div>
     <div class="cd tr" style="border-color:var(--green)"></div>
-    <div class="panel-title" id="analysis-title">&#9658; ANALYSE PERIODE</div>
-    <div class="analysis-blocks">
-      <div class="analysis-block">
-        <div class="analysis-title a">&#9670; SPIERGROEP BALANS</div>
-        <div class="analysis-text" id="a-focus">—</div>
+    <details id="analysis-details" open>
+      <summary class="panel-title" id="analysis-title" style="cursor:pointer;list-style:none;display:block">&#9658; ANALYSE PERIODE</summary>
+      <div class="analysis-blocks">
+        <div class="analysis-block">
+          <div class="analysis-title a">&#9670; SPIERGROEP BALANS</div>
+          <div class="analysis-text" id="a-focus">—</div>
+        </div>
+        <div class="analysis-block">
+          <div class="analysis-title c" id="adherence-title">&#9670; GREYSKULL ADHERENCE</div>
+          <div class="analysis-text" id="a-adherence">—</div>
+        </div>
+        <div class="analysis-block">
+          <div class="analysis-title r">&#9670; FEEDBACK</div>
+          <div class="analysis-text" id="a-tips">—</div>
+        </div>
       </div>
-      <div class="analysis-block">
-        <div class="analysis-title g" id="evolution-title">&#9670; TRAINING EVOLUTIE</div>
-        <div class="analysis-text" id="a-evolution">—</div>
-        <div style="margin-top:10px" id="new-ex-container"></div>
-      </div>
-      <div class="analysis-block">
-        <div class="analysis-title r">&#9670; FEEDBACK</div>
-        <div class="analysis-text" id="a-tips">—</div>
-      </div>
-    </div>
+    </details>
   </div>
 
 </div>
@@ -2241,8 +2255,8 @@ const PHASES = [
   {label:"5x5",short:"5x5",start:"2026-02-04",end:"2026-03-29",color:"#ff3d6b",track:0,desc:"<b>Barbell 5x5</b><br>Progressief lineair programma."},
   {label:"ZIEKTE",short:"ZK",start:"2026-03-09",end:"2026-03-12",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
   {label:"ZIEKTE",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
-  {label:"FULL BODY",short:"FB",start:"2026-03-30",end:"2026-04-02",color:"#00e5ff",track:0,desc:"<b>Full Body</b><br>Compound lifts full body per sessie."},
-  {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2099-12-31",color:"#ff8a65",track:1,desc:"<b>3 apr \u2192</b><br>Operatie. Herstelperiode \u2014 geen training."},
+  {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2026-04-19",color:"#ff8a65",track:1,desc:"<b>3 apr → 19 apr</b><br>Operatie. Herstelperiode afgerond."},
+  {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2099-12-31",color:"#7b5cff",track:0,desc:"<b>13 apr →</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
 
@@ -2304,6 +2318,13 @@ const LIFT_LABELS = {
 let activeLiftFilter = new Set(PRIMARY_LIFTS);
 let radarStart = null;
 
+function getLastSets(key) {
+  const lift = DATA.lifts[key];
+  if (!lift || !lift.points.length) return null;
+  const last = lift.points[lift.points.length - 1];
+  return last.sets || null;
+}
+
 function getTopWeightYear(key) {
   const lift = DATA.lifts[key];
   if (!lift || !lift.points.length) return null;
@@ -2322,10 +2343,12 @@ function renderLiftSelector() {
       const color = lift ? lift.color : '#454560';
       const w = getTopWeightYear(key);
       const wLabel = w != null ? w + '\u202fkg' : '—';
+      const sets = getLastSets(key);
       const active = activeLiftFilter.has(key);
       return `<div class="lift-tile${active?' active':''}" style="--tc:${color};cursor:pointer" onclick="toggleLiftTile('${key}')">` +
         `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
-        `<div class="lift-tile-weight">${wLabel}</div></div>`;
+        `<div class="lift-tile-weight">${wLabel}</div>` +
+        `<div class="lift-tile-sets">${sets != null ? sets + ' sets' : ''}</div></div>`;
     }).join('');
     // highlight group label when all tiles in group are active
     const lbl = document.getElementById(lblId);
@@ -2366,6 +2389,8 @@ function setLiftMode(mode) {
 }
 let showWeight = true;
 let _customStart = null; // Date | null — ingesteld via fase-klik
+let _customEnd   = null;
+function getActiveEnd() { return _customEnd || TODAY; }
 let radarChart = null;
 
 function fmt(d) { return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}); }
@@ -2408,7 +2433,7 @@ function renderTimeline(start) {
       const width = (pE - pS) / totalMs * 100;
       if (width < 0.3) return '';
       const isSelected = selectedStart && p.start === selectedStart;
-      const clickable = ti === 0;
+      const clickable = true;
       const lbl = width > 12 ? (width > 22 ? p.label : p.short) : '';
       return `<div class="phase-block${clickable?' clickable':''}${isSelected?' phase-selected':''}"
         style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%;background:${p.color}18;border-color:${p.color}88;color:${p.color};"
@@ -2422,13 +2447,15 @@ function renderTimeline(start) {
 
 function selectPhase(startStr, endStr) {
   _customStart = new Date(startStr);
+  const todayStr = TODAY.toISOString().slice(0,10);
+  _customEnd = (endStr && endStr < todayStr) ? new Date(endStr) : null;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   update(_customStart);
 }
 
 // ── Sets per oefening ──
 function renderRadar(start) {
-  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const s = start.toISOString().slice(0,10), t = getActiveEnd().toISOString().slice(0,10);
   // Sets per oefening: gebruik p.sets uit DATA (gezet door process_jefit.py)
   const exercises = Object.entries(DATA.lifts).filter(([key]) => activeLiftFilter.has(key)).map(([key, lift]) => {
     const pts = lift.points.filter(p => p.date >= s && p.date <= t);
@@ -2476,7 +2503,8 @@ function renderRadar(start) {
 }
 
 function buildLiftDatasets(start) {
-  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const end = getActiveEnd();
+  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
   const allDatesSet = new Set();
   Object.values(DATA.lifts).forEach(lift => lift.points.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date)));
   DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => allDatesSet.add(p.date));
@@ -2484,7 +2512,7 @@ function buildLiftDatasets(start) {
   // (bv. na operatie: geen training meer maar wel dagelijks wegen)
   const allWSorted = DATA.weight.slice().sort((a,b) => a.date.localeCompare(b.date));
   const lastWDate = allWSorted.length ? allWSorted[allWSorted.length-1].date : null;
-  if (lastWDate && lastWDate >= s) allDatesSet.add(lastWDate);
+  if (lastWDate && lastWDate >= s && lastWDate <= t) allDatesSet.add(lastWDate);
   const allDates = Array.from(allDatesSet).sort();
   const datasets = Object.entries(DATA.lifts).filter(([key]) => activeLiftFilter.has(key)).map(([key, lift]) => {
     const byDate = {};
@@ -2504,7 +2532,7 @@ function buildLiftDatasets(start) {
   });
   if (showWeight) {
     const wByDate = {};
-    DATA.weight.filter(p => p.date >= s).forEach(p => wByDate[p.date] = p.weight);
+    DATA.weight.filter(p => p.date >= s && p.date <= t).forEach(p => wByDate[p.date] = p.weight);
     datasets.push({
       label: 'Gewicht', data: allDates.map(d => wByDate[d] ?? null),
       borderColor: 'rgba(255,255,255,0.35)', backgroundColor: 'transparent',
@@ -2517,8 +2545,9 @@ function buildLiftDatasets(start) {
 }
 
 function computeStats(start) {
-  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
-  const totalDays = Math.round((TODAY - start) / 86400000) + 1;
+  const end = getActiveEnd();
+  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
+  const totalDays = Math.round((end - start) / 86400000) + 1;
   const td = (DATA.all_active_days || DATA.training_days).filter(d => d >= s && d <= t).length;
   const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wFirst = wPts.length ? wPts[0].weight : null;
@@ -2567,94 +2596,106 @@ function renderStats(stats) {
   }
 }
 
-function renderNewEx(start) {
-  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
-  const filtered = DATA.new_exercises.filter(e => e.date >= s && e.date <= t);
-  const container = document.getElementById('new-ex-container');
-  if (!filtered.length) { container.innerHTML = ''; return; }
-  const show = filtered.slice(0,5);
-  const extra = filtered.length > 5 ? '<div style="color:var(--muted);font-size:10px;padding:3px 0">+ ' + (filtered.length-5) + ' meer</div>' : '';
-  container.innerHTML = '<div style="font-size:8px;color:var(--red);letter-spacing:2px;margin-bottom:5px;">NIEUW IN PERIODE</div>' +
-    show.map(e => '<div class="new-ex-item"><span>' + e.exercise + '</span><span class="new-ex-date">' + e.date.slice(5).replace('-','/') + '</span></div>').join('') + extra;
-}
 
 const MC = {Benen:'#b388ff',Rug:'#ffd600',Borst:'#64b5f6',Schouders:'#00ffb3',Glutes:'#ce93d8',Triceps:'#f48fb1',Biceps:'#80cbc4',Core:'#ff8a65'};
 
 function renderAnalysis(start) {
-  const s = start.toISOString().slice(0,10), t = TODAY.toISOString().slice(0,10);
+  const end = getActiveEnd();
+  const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
   const overlapping = PHASES.filter(p => (p.track || 0) === 0 && p.start <= t && p.end >= s);
-
-  // ── Recovery / Ziekte detectie ──
   const track1Active = PHASES.filter(p => (p.track||0) === 1 && p.start <= t && p.end >= t);
   const recPhase = track1Active.find(p => p.label === 'RECOVERY');
   const ziektePhase = !recPhase && track1Active.find(p => p.label === 'ZIEKTE');
-  const specialPhase = recPhase || ziektePhase;
+  const gzPhase = overlapping.find(p => p.label === 'GREYSKULL');
 
-  if (specialPhase && overlapping.length === 0) {
-    // Geen actieve trainingsfase → toon herstelmodus
-    const daysSince = Math.round((TODAY - new Date(specialPhase.start)) / 86400000);
+  const LIFT_MUSCLE = {Squat:'Benen',Deadlift:'Rug',Bench:'Borst',OHP:'Schouders','DB Bench x2':'Borst','Lat PD':'Rug','DIP-BW':'Borst','Front Squat':'Benen','DB Clean':'Schouders'};
 
-    // Spierhersteltabel
-    const lastByMuscle = {};
-    DATA.muscle_daily.filter(d => d.date <= t).forEach(d => {
-      if (!lastByMuscle[d.muscle] || d.date > lastByMuscle[d.muscle]) lastByMuscle[d.muscle] = d.date;
+  // ── Muscle balance ──
+  const muscleVol = {};
+  Object.entries(DATA.lifts).forEach(([key, lift]) => {
+    const pts = lift.points.filter(p => p.date >= s && p.date <= t);
+    const muscle = LIFT_MUSCLE[key];
+    if (muscle && pts.length) muscleVol[muscle] = (muscleVol[muscle] || 0) + pts.reduce((acc, p) => acc + (p.sets || 1), 0);
+  });
+  const totalSets = Object.values(muscleVol).reduce((a,b) => a+b, 0) || 1;
+  const musclesSorted = Object.entries(muscleVol).sort((a,b) => b[1]-a[1]);
+  const top3m = musclesSorted.slice(0,3).map(([m,v]) => `<span style="color:${MC[m]||'#c0c0d8'}">${m}</span> (${Math.round(v/totalSets*100)}%)`).join(', ');
+  const absentMuscles = Object.keys(MC).filter(m => !muscleVol[m]);
+  const balanceLbl = absentMuscles.length === 0 ? `<b style="color:var(--green)">GEBALANCEERD</b>`
+    : absentMuscles.length <= 2 ? `<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b>`
+    : `<b style="color:var(--red)">ONGEBALANCEERD</b>`;
+  const focusHtml = `${balanceLbl} &mdash; Volume: ${top3m || '—'}.` +
+    (absentMuscles.length ? ` <b style="color:var(--yellow)">Afwezig:</b> ${absentMuscles.map(m=>`<span style="color:${MC[m]}">${m}</span>`).join(', ')}.` : '');
+
+  // ── GZCLP Adherence ──
+  const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
+  const T3S = new Set(['Lat PD','DIP-BW']);
+  const gzStart = gzPhase ? (gzPhase.start > s ? gzPhase.start : s) : s;
+  const sessions = {};
+  for (const [nm, lift] of Object.entries(DATA.lifts || {}))
+    for (const pt of lift.points || [])
+      if (pt.date >= gzStart && pt.date <= t)
+        (sessions[pt.date] = sessions[pt.date] || []).push(nm);
+  const dates = Object.keys(sessions).sort();
+  let adherenceHtml = '—';
+  if (dates.length && gzPhase) {
+    let good = 0;
+    const issues = [];
+    dates.forEach(dt => {
+      const ns = sessions[dt];
+      const hasT2 = new Set(ns.filter(n => T2S.has(n))).size >= 2;
+      const hasT3 = ns.some(n => T3S.has(n));
+      const miss = [];
+      if (!hasT2) miss.push('T2 incompleet');
+      if (!hasT3) miss.push('geen T3');
+      if (!miss.length) good++;
+      else issues.push(`${dt.slice(5)}: ${miss.join(', ')}`);
     });
-    const restRows = Object.entries(lastByMuscle)
-      .map(([m,d]) => ({m, rest: Math.round((TODAY - new Date(d)) / 86400000)}))
-      .sort((a,b) => b.rest - a.rest)
-      .map(r => `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #1a1a2a;font-size:11px"><span style="color:${MC[r.m]||'#c0c0d8'}">${r.m}</span><span style="color:${r.rest>=7?'var(--red)':r.rest>=4?'var(--yellow)':'var(--green)'}">${r.rest}d rust</span></div>`).join('');
-
-    // Sessies + PRs tijdens herstel
-    const recSess = DATA.training_days.filter(d => d >= specialPhase.start && d <= t);
-    const recPRs  = Object.entries(DATA.lifts).flatMap(([k,l]) => l.points.filter(p => p.date >= specialPhase.start && p.date <= t && p.pr).map(p => `${k} ${p.weight}kg`));
-    const lastTrain = DATA.training_days.filter(d => d <= t).slice(-1)[0];
-    const daysSinceTrain = lastTrain ? Math.round((TODAY - new Date(lastTrain)) / 86400000) : null;
-
-    const label = recPhase ? 'RECOVERY' : 'ZIEKTE';
-    document.getElementById('analysis-title').innerHTML = `&#9658; ${label} &mdash; dag ${daysSince}`;
-    const evoEl = document.getElementById('evolution-title');
-    if (evoEl) evoEl.innerHTML = '&#9670; SESSIES TIJDENS ' + label;
-
-    document.getElementById('a-focus').innerHTML = restRows || '—';
-
-    const evoText = recSess.length
-      ? `<b>${recSess.length} sessie${recSess.length>1?'s':''} in ${daysSince} hersteldag${daysSince===1?'':'en'}.</b>` +
-        (recPRs.length ? ` ${recPRs.length} PR${recPRs.length>1?'s':''}: ${recPRs.slice(0,3).join(', ')}.` : ' Geen PRs — focus op herstel.') +
-        (daysSinceTrain !== null ? ` Laatste training: ${daysSinceTrain}d geleden.` : '')
-      : `<b>Geen training in ${daysSince} dag${daysSince===1?'':'en'}.</b> Volledig rust.`;
-    document.getElementById('a-evolution').innerHTML = evoText;
-
-    const tipsText = recPhase
-      ? '<b>Herstelprioriteit:</b> slaap, eiwitten, geen zware compounds. &mdash; <b>Creatine doorgaan</b> — ondersteunt spierbehoud tijdens inactiviteit. &mdash; <b>Wacht chirurg-goedkeuring</b> voor hervatten krachtsport.'
-      : '<b>Rust volledig uit</b> bij ziekte — geen krachtsport. Lichte wandelingen ok. &mdash; <b>Eiwitten en hydratatie</b> prioriteit voor herstel.';
-    document.getElementById('a-tips').innerHTML = tipsText;
-    return;
+    const rate = Math.round(good / dates.length * 100);
+    const clr = rate >= 70 ? 'var(--green)' : rate >= 40 ? 'var(--yellow)' : 'var(--red)';
+    adherenceHtml = `<b style="color:${clr}">${good}/${dates.length} sessies (${rate}%)</b> met T1+T2+T3.`;
+    if (issues.length) adherenceHtml += `<br><span style="font-size:10px">${issues.join(' · ')}</span>`;
+    if (absentMuscles.length && rate < 70) adherenceHtml += ` <b style="color:var(--yellow)">Non-adherence brengt balans buiten.</b>`;
+  } else if (dates.length) {
+    adherenceHtml = `<b>${dates.length} sessies</b> in periode — geen GREYSKULL-fase actief.`;
   }
 
-  // ── Normale trainingsanalyse ──
-  let a;
-  if (overlapping.length === 1) { a = PHASE_ANALYSIS[overlapping[0].label] || PHASE_ANALYSIS['multi']; }
-  else if (!overlapping.length) { a = PHASE_ANALYSIS['multi']; }
-  else if (overlapping.length >= 3) { a = PHASE_ANALYSIS['multi']; }
-  else {
-    let best = overlapping[0], bestDays = 0;
-    overlapping.forEach(p => {
-      const ps = new Date(Math.max(new Date(p.start), start));
-      const pe = new Date(Math.min(new Date(p.end), TODAY));
-      const days = (pe - ps) / 86400000;
-      if (days > bestDays) { bestDays = days; best = p; }
-    });
-    a = PHASE_ANALYSIS[best.label] || PHASE_ANALYSIS['multi'];
+  // ── Training density & body weight ──
+  const td = DATA.training_days.filter(d => d >= s && d <= t).length;
+  const totalDays = Math.round((end - start) / 86400000) + 1;
+  const density = totalDays ? Math.round(td / totalDays * 100) : 0;
+  const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
+  const wDelta = wPts.length >= 2 ? Math.round((wPts[wPts.length-1].weight - wPts[0].weight) * 10) / 10 : null;
+
+  // ── FEEDBACK (body weight + adherence + sessions) ──
+  const parts = [];
+  parts.push(`<b>${td} sessie${td!==1?'s':''} / ${totalDays}d (${density}%)</b>.`);
+  if (wDelta !== null) {
+    const wClr = wDelta > 1.5 ? 'var(--red)' : wDelta < -1 ? 'var(--yellow)' : 'var(--green)';
+    parts.push(`Gewicht: ${wPts[0].weight}→${wPts[wPts.length-1].weight}kg (<span style="color:${wClr}">${wDelta>=0?'+':''}${wDelta}kg</span>).`);
   }
+  if (gzPhase && dates.length) {
+    const rate = dates.length ? Math.round(Object.keys(sessions).filter(dt => {
+      const ns = sessions[dt];
+      return new Set(ns.filter(n=>T2S.has(n))).size >= 2 && ns.some(n=>T3S.has(n));
+    }).length / dates.length * 100) : 0;
+    if (rate < 70) parts.push(`<b style="color:var(--yellow)">Adherence ${rate}%</b> — T3 ontbreekt regelmatig. Non-adherence verstoort spierbalans.`);
+    else parts.push(`<b style="color:var(--green)">Adherence ${rate}%</b> — schema goed gevolgd.`);
+  }
+  const rugBorst = (muscleVol['Rug']||0) / ((muscleVol['Borst']||0.001));
+  if (rugBorst > 2.5) parts.push(`Rug/Borst ${Math.round(rugBorst*10)/10}× — meer Bench-frequentie.`);
+  if (absentMuscles.length) parts.push(`Afwezige groepen: ${absentMuscles.join(', ')}.`);
+
+  // ── Phase label ──
   const phaseNames = overlapping.length
-    ? ' <span style="font-family:monospace;color:var(--muted);font-size:8px">(' + overlapping.map(p => p.label).join(' + ') + ')</span>'
+    ? ' <span style="font-family:monospace;color:var(--text);font-size:8px">(' + overlapping.map(p=>p.label).join(' + ') + ')</span>'
     : '';
   document.getElementById('analysis-title').innerHTML = '&#9658; ANALYSE PERIODE' + phaseNames;
-  const evoEl = document.getElementById('evolution-title');
-  if (evoEl) evoEl.innerHTML = '&#9670; TRAINING EVOLUTIE' + phaseNames;
-  document.getElementById('a-focus').innerHTML = a.focus;
-  document.getElementById('a-evolution').innerHTML = a.evolution;
-  document.getElementById('a-tips').innerHTML = a.tips || '-';
+  const adhEl = document.getElementById('adherence-title');
+  if (adhEl) adhEl.innerHTML = '&#9670; GREYSKULL ADHERENCE' + (gzPhase ? '' : ' <span style="font-size:9px;color:var(--text)">(geen GS fase)</span>');
+  document.getElementById('a-focus').innerHTML = focusHtml;
+  document.getElementById('a-adherence').innerHTML = adherenceHtml;
+  document.getElementById('a-tips').innerHTML = parts.join(' ') || '—';
 }
 
 function update(arg) {
@@ -2682,7 +2723,6 @@ function update(arg) {
     }
   });
   renderStats(stats);
-  renderNewEx(start);
   renderAnalysis(start);
   renderTimeline(start);
   radarStart = start;
@@ -2695,13 +2735,18 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     _customStart = null;
+    _customEnd = null;
     update(parseInt(tab.dataset.period));
   });
 });
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => { update(parseInt(document.querySelector('.tab.active').dataset.period)); }, 200);
+  resizeTimer = setTimeout(() => {
+    const activeTab = document.querySelector('.tab.active');
+    if (activeTab) update(parseInt(activeTab.dataset.period));
+    else update(getActiveStart());
+  }, 200);
 });
 update(30);
 
@@ -2855,7 +2900,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return rows;
   }
   function warmupTableHtml(rows, workW, liftC) {
-    if (!rows.length && !workW) return '<span style="color:var(--muted)">geen data</span>';
+    if (!rows.length && !workW) return '<span style="color:var(--text)">geen data</span>';
     const rowsHtml = rows.map(r =>
       `<div class="gzclp-wu-row">
         <span style="color:${liftC};min-width:52px">${r.w} kg</span>
@@ -2911,7 +2956,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Warmup rows helper (inline in tier box)
     function inlineWarmupHtml(rows, workW, liftC) {
-      if (!rows.length) return '';
+      if (!rows.length && !workW) return '';
       const restRow = `<div class="gzclp-wu-rest">— 60 sec</div>`;
       const rowsHtml = rows.map((r, i) =>
         `<div class="gzclp-wu-inline-row">
@@ -2920,17 +2965,17 @@ document.addEventListener('DOMContentLoaded', function() {
           ${r.note ? `<span style="color:var(--cyan);font-size:11px">${r.note}</span>` : ''}
         </div>${i < rows.length - 1 ? restRow : ''}`
       ).join('');
-      const preWorkRest = workW
-        ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
-      const workHtml = workW
-        ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
-             <span style="min-width:48px">${workW} kg</span>
-             <span style="color:var(--text)">werkgewicht</span>
-           </div>` : '';
-      return `<div class="gzclp-wu-inline">
-        <div class="gzclp-wu-inline-title">OPWARMING</div>
-        ${rowsHtml}${preWorkRest}${workHtml}
-      </div>`;
+      const preWorkRest = workW ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
+      const workHtml = workW ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
+           <span style="min-width:48px">${workW} kg</span>
+           <span style="color:var(--text)">werkgewicht</span>
+         </div>` : '';
+      return `<details class="gzclp-wu-details" open>
+    <summary class="gzclp-wu-summary" style="color:${liftC}">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary>
+    <div class="gzclp-wu-inline">
+      ${rowsHtml}${preWorkRest}${workHtml}
+    </div>
+  </details>`;
     }
 
     const t2tier = day.tiers[1];
@@ -2955,20 +3000,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const wHtml = dispW !== null
         ? `<div class="gzclp-wt"><span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
-        : `<div class="gzclp-wt" style="color:var(--muted)">— geen data</div>`;
+        : `<div class="gzclp-wt" style="color:var(--text)">— geen data</div>`;
       const thisDW = tier.t === 'T1' ? dispW : t2dispW;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
       const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC);
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
-        <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
-        <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
-        <div class="gzclp-scheme">${tier.scheme}</div>
-        ${wHtml}
-        <div class="gzclp-prog">${tier.prog}</div>
-        <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
-        ${wuHtml}
-      </div>`;
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
+  <div class="gzclp-tier-body">
+    <div class="gzclp-tier-main">
+      <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
+      <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
+      <div class="gzclp-scheme">${tier.scheme}</div>
+      ${wHtml}
+      <div class="gzclp-prog">${tier.prog}</div>
+      <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
+    </div>
+    ${wuHtml}
+  </div>
+</div>`;
     }).join('');
 
     // T3 block
@@ -3013,9 +3062,9 @@ document.addEventListener('DOMContentLoaded', function() {
   (function() {
     const today = TODAY.toISOString().slice(0,10);
     const allDays = (DATA.training_days||[]).filter(d=>d<=today);
-    const recent = allDays.slice(-12);
-    if (!recent.length) return;
-    const from = recent[0];
+    const gsPhase = PHASES.find(p => p.label === 'GREYSKULL');
+    const from = gsPhase ? gsPhase.start : allDays.slice(-12)[0];
+    if (!from) return;
     const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
     const T3S = new Set(['Lat PD','DIP-BW']);
     const sessions = {};
@@ -3077,7 +3126,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <hr class="gzclp-divider">
 
   <details class="gzclp-rules">
-    <summary class="gzclp-rules-head">◈ GZCLP GREYSKULL LP HANDLEIDING <span style="color:var(--muted);font-size:10px">klik om te openen</span></summary>
+    <summary class="gzclp-rules-head">◈ GZCLP GREYSKULL LP HANDLEIDING (klik open)</summary>
     <div class="gzclp-rules-grid">
       <div class="gzclp-rule">
         <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PLUS SET (GREYSKULL)</div>
@@ -3113,8 +3162,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </details>
-  <div class="gzclp-sub" style="margin-bottom:12px">GREYSKULL LP VARIANT &nbsp;·&nbsp; REFERENTIE, GEEN LOG</div>
-
   <div class="gzclp-day-row" id="gzclp-day-btns"></div>
   <div id="gzclp-pre-stretch"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
