@@ -3007,7 +3007,7 @@ document.addEventListener('DOMContentLoaded', function() {
            <span style="min-width:48px">${wLabel}</span>
            <span style="color:var(--text)">werkgewicht</span>
          </div>` : '';
-      return `<details class="gzclp-wu-details" open>
+      return `<details class="gzclp-wu-details">
     <summary class="gzclp-wu-summary" style="color:${liftC}">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary>
     <div class="gzclp-wu-inline">
       ${rowsHtml}${preWorkRest}${workHtml}
@@ -3100,61 +3100,6 @@ document.addEventListener('DOMContentLoaded', function() {
     c.innerHTML = tierHtml + t3Html;
   }
 
-  // Feedback
-  (function() {
-    const today = TODAY.toISOString().slice(0,10);
-    const allDays = (DATA.training_days||[]).filter(d=>d<=today);
-    const gsPhase = PHASES.find(p => p.label === 'GREYSKULL');
-    const from = gsPhase ? gsPhase.start : allDays.slice(-12)[0];
-    if (!from) return;
-    const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
-    const T3S = new Set(['Lat PD','DIP-BW']);
-    const sessions = {};
-    for (const [nm,lift] of Object.entries(DATA.lifts||{}))
-      for (const pt of lift.points||[])
-        if (pt.date>=from && pt.date<=today)
-          (sessions[pt.date]=sessions[pt.date]||[]).push(nm);
-    const dates = Object.keys(sessions).sort();
-    if (!dates.length) return;
-    let good=0;
-    const det = dates.map(dt => {
-      const ns = sessions[dt];
-      const iss = [];
-      if (new Set(ns.filter(n=>T2S.has(n))).size < 2) iss.push('1 compound');
-      if (!ns.some(n=>T3S.has(n))) iss.push('geen T3');
-      if (!iss.length) good++;
-      return {dt, ns, iss};
-    });
-    const total = dates.length;
-    const fb = [];
-    fb.push({cls:good/total>=.6?'fb-ok':'fb-warn', icon:good/total>=.6?'✓':'△',
-      msg:`${good}/${total} sessies met T1+T2+T3 structuur`});
-    const noT3 = det.filter(d=>d.iss.includes('geen T3'));
-    if (noT3.length) fb.push({cls:'fb-warn',icon:'△',
-      msg:`T3 ontbreekt in ${noT3.length}/${total} — voeg altijd 1 of 2 accessoires toe`});
-    const sparse = det.filter(d=>d.iss.includes('1 compound'));
-    if (sparse.length) fb.push({cls:'fb-warn',icon:'△',
-      msg:`${sparse.length} sessie(s) met 1 compound (${sparse.map(s=>s.dt.slice(5)).join(', ')}) — GZCLP = T1+T2 per sessie`});
-    const best = det.filter(d=>!d.iss.length);
-    if (best.length) {
-      const b = best[best.length-1];
-      fb.push({cls:'fb-info',icon:'◈', msg:`Model sessie: ${b.dt} — ${b.ns.join(' · ')}`});
-    }
-    const bPts=(DATA.lifts.Bench?.points||[]).filter(p=>p.date>=from);
-    if (bPts.length>=2) {
-      const d=bPts[bPts.length-1].weight-bPts[0].weight;
-      fb.push({cls:d>=0?'fb-ok':'fb-warn',icon:d>=0?'↗':'↘',
-        msg:`Bench: ${bPts[0].weight} → ${bPts[bPts.length-1].weight} kg (${d>=0?'+':''}${d.toFixed(1)} kg)`});
-    }
-    fb.push({cls:'fb-info',icon:'ℹ',
-      msg:`OHP als T2 op SQUAT A-dag · Front Squat als T2 op BENCH-dag · DB Bench als T2 op DEADLIFT-dag`});
-    const wrap = document.getElementById('gzclp-feedback');
-    if (!wrap) return;
-    wrap.innerHTML =
-      `<div class="gzclp-fb-head"><span>▸ ANALYSE &amp; FEEDBACK</span><span>${total} sessies · ${from} → ${today}</span></div>` +
-      fb.map(f=>`<div class="gzclp-fb-row"><span class="${f.cls}">${f.icon}</span><span style="color:var(--text)">${f.msg}</span></div>`).join('') +
-      `<div class="gzclp-period">vernieuwt automatisch bij elke CSV-upload</div>`;
-  })();
 
   renderDay(0);
 });
@@ -3208,7 +3153,6 @@ document.addEventListener('DOMContentLoaded', function() {
   <div id="gzclp-pre-stretch"></div>
   <div class="gzclp-tiers" id="gzclp-tiers"></div>
   <div id="gzclp-post-stretch"></div>
-  <div class="gzclp-fb-wrap" id="gzclp-feedback"></div>
 </div>
 
 </body>
