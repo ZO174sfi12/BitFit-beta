@@ -3228,6 +3228,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ══ COMMENTS ═════════════════════════════════════════════════════════════════
 (function(){
+  // ── GitHub API config ──────────────────────────────────────────────────────
+  const GH = {
+    token : 'GITHUB_PAT_HERE',   // Fine-Grained PAT: Contents R/W on BitFit-beta
+    owner : 'ZO174sfi12',
+    repo  : 'BitFit-beta',
+    file  : 'notes.txt'
+  };
+
+  async function _ghRead() {
+    const r = await fetch(
+      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
+      { headers: { Authorization: `token ${GH.token}` } }
+    );
+    if (!r.ok) throw new Error(`GitHub GET ${r.status}`);
+    return r.json();
+  }
+
+  async function _ghWrite(content, sha) {
+    // btoa needs Latin-1 — encode UTF-8 first
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const r = await fetch(
+      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`,
+      {
+        method : 'PUT',
+        headers: { Authorization: `token ${GH.token}`, 'Content-Type': 'application/json' },
+        body   : JSON.stringify({ message: `notitie [${_section}]`, content: encoded, sha })
+      }
+    );
+    if (!r.ok) throw new Error(`GitHub PUT ${r.status}`);
+  }
+
+  let _section = 'BERT'; // set before each call
+
+  async function _appendNote(section, text) {
+    _section = section;
+    const { content: b64, sha } = await _ghRead();
+    // GitHub returns base64 with newlines — strip before decode
+    const current = decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+    const ts  = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    const line = `${ts} | ${text}\n`;
+    // Append inside the right section, or create it
+    const re  = new RegExp(`(\\[${section}\\][^\\[]*)`, 's');
+    const updated = re.test(current)
+      ? current.replace(re, m => m.trimEnd() + '\n' + line)
+      : current.trimEnd() + `\n\n[${section}]\n` + line;
+    await _ghWrite(updated, sha);
+  }
   // Render coach Yani's change requests from DATA.coach_notes (array of {date,text})
   function renderCoachFeed() {
     const feed = document.getElementById('coach-feed');
@@ -3249,39 +3296,27 @@ document.addEventListener('DOMContentLoaded', function() {
     ).join('');
   }
 
-  function _copyText(text) {
-    // Works on all browsers incl. mobile Safari on HTTPS
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-    // execCommand fallback
-    const el = document.createElement('textarea');
-    el.value = text;
-    el.style.cssText = 'position:fixed;opacity:0;';
-    document.body.appendChild(el);
-    el.focus(); el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    return Promise.resolve();
-  }
-
   window.submitComment = function() {
-    const ta = document.getElementById('comment-input');
-    const fb = document.getElementById('comment-feedback');
+    const ta  = document.getElementById('comment-input');
+    const fb  = document.getElementById('comment-feedback');
+    const btn = document.getElementById('comment-submit');
     const text = ta.value.trim();
     if (!text) return;
-    if (!/vegeta/i.test(text)) {
-      fb.textContent = 'Vergeet het codewoord niet.';
-      setTimeout(()=>{fb.textContent='';},3000);
-      return;
-    }
-    const ts = new Date().toISOString().slice(0,16).replace('T',' ');
-    const payload = `[NOTITIES]\n${ts}\n${text}`;
-    _copyText(payload).then(() => {
-      ta.value = '';
-      fb.textContent = 'GEKOPIEERD ✓ — plak in Cowork chat';
-      setTimeout(()=>{fb.textContent='';},4000);
-    });
+    // "vegeta" → Bert's note ([BERT]); everyone else → Yani section ([YANI])
+    const section = /vegeta/i.test(text) ? 'BERT' : 'YANI';
+    btn.disabled = true;
+    fb.textContent = 'Opslaan…';
+    _appendNote(section, text)
+      .then(() => {
+        ta.value = '';
+        fb.textContent = 'Opgeslagen ✓';
+        setTimeout(() => { fb.textContent = ''; btn.disabled = false; }, 3000);
+      })
+      .catch(err => {
+        console.error(err);
+        fb.textContent = 'Fout — controleer verbinding en probeer opnieuw.';
+        btn.disabled = false;
+      });
   };
 
   document.addEventListener('DOMContentLoaded', () => {
