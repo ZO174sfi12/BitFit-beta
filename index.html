@@ -3249,26 +3249,50 @@ document.addEventListener('DOMContentLoaded', function() {
     ).join('');
   }
 
-  // Submit: if "vegeta" in text → Bert's private note, copy to clipboard, don't show
-  // Otherwise ignore (open site, no storage for anonymous)
+  function _showPayload(payload, fb, ta) {
+    // Fallback: show copyable textarea overlay when clipboard API unavailable
+    let overlay = document.getElementById('copy-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'copy-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+      overlay.innerHTML = `<div style="background:#0d0d1a;border:1px solid #2a2a4a;border-radius:6px;padding:16px;width:100%;max-width:480px;">
+        <div style="font-family:monospace;font-size:10px;color:#888;margin-bottom:8px;">Kopieer dit en plak in Cowork:</div>
+        <textarea id="copy-overlay-ta" style="width:100%;height:120px;background:#000;color:#fff;font-family:monospace;font-size:12px;border:1px solid #333;padding:8px;box-sizing:border-box;" readonly></textarea>
+        <button onclick="document.getElementById('copy-overlay').remove()" style="margin-top:10px;font-family:monospace;font-size:10px;padding:6px 14px;border:1px solid #333;background:none;color:#888;cursor:pointer;">SLUITEN</button>
+      </div>`;
+      document.body.appendChild(overlay);
+    }
+    const ota = document.getElementById('copy-overlay-ta');
+    ota.value = payload;
+    overlay.style.display = 'flex';
+    ota.focus();
+    ota.select();
+    fb.textContent = 'Kopieer de tekst uit het venster ↑';
+    ta.value = '';
+  }
+
   window.submitComment = function() {
     const ta = document.getElementById('comment-input');
     const fb = document.getElementById('comment-feedback');
     const text = ta.value.trim();
-    if (!text) return;
-    const isBert = /vegeta/i.test(text);
-    if (isBert) {
-      const ts = new Date().toISOString().slice(0,16).replace('T',' ');
-      const payload = `[NOTITIES]\n${ts}\n${text}`;
-      navigator.clipboard.writeText(payload).then(() => {
-        fb.textContent = 'GEKOPIEERD → plak in Cowork chat ✓';
-        setTimeout(() => { fb.textContent = ''; }, 3000);
-      }).catch(() => {
-        fb.textContent = 'Kopieer handmatig: ' + payload.slice(0,40) + '…';
-      });
-      ta.value = '';
+    if (!text) { fb.textContent = 'Typ eerst iets.'; setTimeout(()=>{fb.textContent='';},2000); return; }
+    if (!/vegeta/i.test(text)) {
+      fb.textContent = 'Gebruik het codewoord in je bericht.';
+      setTimeout(()=>{fb.textContent='';},3000);
+      return;
     }
-    // Non-Bert submissions: silently ignore (static site, no backend)
+    const ts = new Date().toISOString().slice(0,16).replace('T',' ');
+    const payload = `[NOTITIES]\n${ts}\n${text}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(payload).then(() => {
+        fb.textContent = 'GEKOPIEERD ✓ — plak in Cowork chat';
+        ta.value = '';
+        setTimeout(()=>{fb.textContent='';},4000);
+      }).catch(() => _showPayload(payload, fb, ta));
+    } else {
+      _showPayload(payload, fb, ta);
+    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {
