@@ -142,6 +142,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-day-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
 .gzclp-day-btn{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--text);opacity:.5;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 .gzclp-day-btn.active{font-size:12px;padding:6px 16px;opacity:1;}
+.gzclp-day-btn.next-day{border-style:dashed;opacity:.8;}
+.next-indicator{color:var(--accent);font-weight:700;}
 .gzclp-tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
 @media(max-width:600px){.gzclp-tiers{grid-template-columns:1fr;}}
 .gzclp-tier{border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
@@ -2635,15 +2637,39 @@ function renderAnalysis(start) {
       if (mapping.secondary) musclePresent.add(mapping.secondary);
     }
   });
-  const totalSets = Object.values(muscleVol).reduce((a,b) => a+b, 0) || 1;
-  const musclesSorted = Object.entries(muscleVol).sort((a,b) => b[1]-a[1]);
-  const top3m = musclesSorted.slice(0,3).map(([m,v]) => `<span style="color:${MC[m]||'#c0c0d8'}">${m}</span> (${Math.round(v/totalSets*100)}%)`).join(', ');
   const absentMuscles = Object.keys(MC).filter(m => !musclePresent.has(m));
-  const balanceLbl = absentMuscles.length === 0 ? `<b style="color:var(--green)">GEBALANCEERD</b>`
-    : absentMuscles.length <= 2 ? `<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b>`
-    : `<b style="color:var(--red)">ONGEBALANCEERD</b>`;
-  const focusHtml = `${balanceLbl} &mdash; Volume: ${top3m || '—'}.` +
-    (absentMuscles.length ? ` <b style="color:var(--yellow)">Afwezig:</b> ${absentMuscles.map(m=>`<span style="color:${MC[m]}">${m}</span>`).join(', ')}.` : '');
+
+  // ── Push / pull balans ──
+  const LIFT_CAT = {
+    Squat:'legs', Deadlift:'hinge', 'Front Squat':'legs', 'Hip Thrust':'glutes',
+    Bench:'push-h', OHP:'push-v', 'DB Bench x2':'push-h', 'DIP-BW':'push-v',
+    'Lat PD':'pull-v', 'DB Clean':'pull-v',
+  };
+  const catS = {};
+  Object.entries(DATA.lifts).forEach(([key, lift]) => {
+    const pts = lift.points.filter(p => p.date >= s && p.date <= t);
+    if (pts.length && LIFT_CAT[key]) {
+      const sc = pts.reduce((a,p) => a+(p.sets||1), 0);
+      catS[LIFT_CAT[key]] = (catS[LIFT_CAT[key]]||0) + sc;
+    }
+  });
+  const pushH = catS['push-h']||0, pushV = catS['push-v']||0;
+  const pullV = catS['pull-v']||0;
+  const pushTot = pushH + pushV;
+  const ppRatio = pullV > 0 ? Math.round(pushTot/pullV*10)/10 : null;
+  let focusHtml;
+  if (!pushTot && !pullV) {
+    focusHtml = '— geen data';
+  } else if (!pullV) {
+    focusHtml = `<b style="color:var(--red)">Alleen push — pull volledig afwezig.</b> Geen verticale of horizontale pull getrackt.`;
+  } else {
+    const ppClr = ppRatio > 2 ? 'var(--red)' : ppRatio > 1.4 ? 'var(--yellow)' : 'var(--green)';
+    const ppLbl = ppRatio > 2 ? `Push domineert ${ppRatio}×` : ppRatio > 1.4 ? `Meer push dan pull (${ppRatio}×)` : `Push/pull in balans (${ppRatio}×)`;
+    focusHtml = `<b style="color:${ppClr}">${ppLbl}</b> — ${pushTot} push vs ${pullV} pull sets.`;
+    if (!pushV) focusHtml += ` Verticale push (OHP) afwezig.`;
+    if (pushH && !pullV) focusHtml += ` Horizontale pull niet getrackt (Cable Row).`;
+  }
+  if (absentMuscles.length) focusHtml += ` <span style="color:var(--text)">Niet getrackt: ${absentMuscles.join(', ')}.</span>`;
 
   // ── GZCLP Adherence ──
   const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
@@ -2678,31 +2704,44 @@ function renderAnalysis(start) {
     adherenceHtml = `<b>${dates.length} sessies</b> in periode — geen GREYSKULL-fase actief.`;
   }
 
-  // ── Training density & body weight ──
-  const td = DATA.training_days.filter(d => d >= s && d <= t).length;
-  const totalDays = Math.round((end - start) / 86400000) + 1;
-  const density = totalDays ? Math.round(td / totalDays * 100) : 0;
+  // ── Gewicht ──
   const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wDelta = wPts.length >= 2 ? Math.round((wPts[wPts.length-1].weight - wPts[0].weight) * 10) / 10 : null;
 
-  // ── FEEDBACK (body weight + adherence + sessions) ──
+  // ── Progressie per lift ──
+  const progressData = Object.entries(DATA.lifts).map(([key, lift]) => {
+    const pts = lift.points.filter(p => p.date >= s && p.date <= t && p.weight > 0);
+    if (pts.length < 2) return null;
+    const delta = Math.round((pts[pts.length-1].weight - pts[0].weight) * 10) / 10;
+    return { key, delta, first: pts[0].weight, last: pts[pts.length-1].weight };
+  }).filter(Boolean);
+  const gains = progressData.filter(l => l.delta > 0).sort((a,b) => b.delta - a.delta);
+  const nUp = gains.length, nTot = progressData.length;
+
+  // ── FEEDBACK ──
   const parts = [];
-  parts.push(`<b>${td} sessie${td!==1?'s':''} / ${totalDays}d (${density}%)</b>.`);
+  // Beste lift
+  if (gains.length) {
+    const b = gains[0];
+    parts.push(`<b style="color:var(--green)">${b.key}: ${b.first}→${b.last}kg (+${b.delta}kg)</b> — beste progressie.`);
+  }
+  // Progressie-oordeel
+  if (nTot > 0) {
+    if (nUp >= Math.ceil(nTot * 0.6))
+      parts.push(`${nUp}/${nTot} liften stijgen — <b style="color:var(--green)">progressief schema</b>.`);
+    else if (nUp > 0)
+      parts.push(`${nUp}/${nTot} liften stijgen — <b style="color:var(--yellow)">gedeeltelijk progressief</b>.`);
+    else
+      parts.push(`<b style="color:var(--yellow)">Geen gewichtsstijging</b> in deze periode — check progressie of deload.`);
+  }
+  // Gewicht
   if (wDelta !== null) {
     const wClr = wDelta > 1.5 ? 'var(--red)' : wDelta < -1 ? 'var(--yellow)' : 'var(--green)';
     parts.push(`Gewicht: ${wPts[0].weight}→${wPts[wPts.length-1].weight}kg (<span style="color:${wClr}">${wDelta>=0?'+':''}${wDelta}kg</span>).`);
   }
-  if (gzPhase && dates.length) {
-    const rate = dates.length ? Math.round(Object.keys(sessions).filter(dt => {
-      const ns = sessions[dt];
-      return new Set(ns.filter(n=>T2S.has(n))).size >= 2 && ns.some(n=>T3S.has(n));
-    }).length / dates.length * 100) : 0;
-    if (rate < 70) parts.push(`<b style="color:var(--yellow)">Adherence ${rate}%</b> — T3 ontbreekt regelmatig. Non-adherence verstoort spierbalans.`);
-    else parts.push(`<b style="color:var(--green)">Adherence ${rate}%</b> — schema goed gevolgd.`);
-  }
-  const rugBorst = (muscleVol['Rug']||0) / ((muscleVol['Borst']||0.001));
-  if (rugBorst > 2.5) parts.push(`Rug/Borst ${Math.round(rugBorst*10)/10}× — meer Bench-frequentie.`);
-  if (absentMuscles.length) parts.push(`Afwezige groepen: ${absentMuscles.join(', ')}.`);
+  // Push/pull advies
+  if (ppRatio !== null && ppRatio > 1.4) parts.push(`Voeg horizontale pull toe (Cable Row, Chest Row).`);
+  if (absentMuscles.includes('Biceps')) parts.push(`Biceps: 0 sessies — Chin-ups of curls als T3.`);
 
   // ── Phase label ──
   const phaseNames = overlapping.length
@@ -2892,6 +2931,52 @@ document.addEventListener('DOMContentLoaded', function() {
   function liftColor(lk) { return LC[lk] || '#888'; }
   function hex20(hex) { return hex + '20'; }
 
+  // ── Volgende dag in cyclus ──
+  const todayStr = TODAY.toISOString().slice(0,10);
+  const recentDates = DATA.training_days.filter(d => d <= todayStr).slice(-5);
+  const lastTrainingDate = recentDates[recentDates.length - 1] || null;
+  function identifyDayIdx(date) {
+    if (!date) return -1;
+    const liftsOn = Object.entries(DATA.lifts)
+      .filter(([,v]) => v.points.some(p => p.date === date)).map(([k]) => k);
+    if (liftsOn.includes('Deadlift') || (liftsOn.includes('DB Bench x2') && !liftsOn.includes('Bench'))) return 3;
+    if (liftsOn.includes('Bench') && !liftsOn.includes('Squat')) return 1;
+    if (liftsOn.includes('Squat') && liftsOn.includes('Bench')) return 2;
+    if (liftsOn.includes('Squat')) return 0;
+    return -1;
+  }
+  const lastDayIdx = identifyDayIdx(lastTrainingDate);
+  const nextDayIdx = lastDayIdx >= 0 ? (lastDayIdx + 1) % 4 : 0;
+
+  // ── T3 prioriteit (obv push/pull saldo + recency) ──
+  const last7 = new Date(TODAY); last7.setDate(last7.getDate()-7);
+  const last7Str = last7.toISOString().slice(0,10);
+  const recentLifts7 = new Set(
+    Object.entries(DATA.lifts).filter(([,v]) => v.points.some(p => p.date >= last7Str)).map(([k]) => k)
+  );
+  // Push/pull saldo laatste 7 dagen
+  const _pushCat = new Set(['Bench','DB Bench x2','OHP','DIP-BW']);
+  const _pullCat = new Set(['Lat PD','DB Clean']);
+  let _pushSets7 = 0, _pullSets7 = 0;
+  for (const [k,v] of Object.entries(DATA.lifts)) {
+    const sc = v.points.filter(p => p.date >= last7Str).reduce((a,p) => a+(p.sets||1), 0);
+    if (_pushCat.has(k)) _pushSets7 += sc;
+    if (_pullCat.has(k)) _pullSets7 += sc;
+  }
+  const _needsPull = _pushSets7 > _pullSets7 * 1.4;
+  const _needsGlutes = !recentLifts7.has('Hip Thrust');
+  const T3_PRIO_CAT = {
+    'HIP THRUST':'glutes','LAT PULLDOWN':'pull','CABLE ROW':'pull',
+    'CHIN-UPS':'pull','FACE PULL':'pull','DB CLEAN':'pull',
+    'DIPS':'push','TRICEP PUSHDOWN':'push',
+  };
+  function isT3Priority(name) {
+    const cat = T3_PRIO_CAT[name];
+    if (cat === 'glutes' && _needsGlutes) return true;
+    if (cat === 'pull' && _needsPull) return true;
+    return false;
+  }
+
   // Warmup sets helpers
   function r25(v) { return Math.round(v / 2.5) * 2.5; }
   function t1Warmup(w, lk) {
@@ -2965,8 +3050,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (btnRow) {
     DAYS.forEach((d, i) => {
       const b = document.createElement('button');
-      b.className = 'gzclp-day-btn' + (i===0 ? ' active' : '');
-      b.textContent = d.key;
+      const isNext = i === nextDayIdx;
+      b.className = 'gzclp-day-btn' + (i===0 ? ' active' : '') + (isNext ? ' next-day' : '');
+      b.innerHTML = (isNext ? '<span class="next-indicator">!</span> ' : '') + d.key;
       applyBtnStyle(b, d, i === 0);
       b.onclick = () => {
         document.querySelectorAll('.gzclp-day-btn').forEach((btn, j) => {
@@ -3071,11 +3157,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60–90 sec</div>
       </div>
       <div class="gzclp-t3-grid">
-        ${t3opts.map(o => `<div class="gzclp-t3-item">
-          <span style="color:var(--text);font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700">${o.name}</span>
-          <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
-          <div style="color:var(--text);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
-        </div>`).join('')}
+        ${t3opts.map(o => {
+          const prio = isT3Priority(o.name);
+          const nameClr = prio ? 'var(--accent)' : 'var(--text)';
+          const border = prio ? `;border-color:var(--accent)44` : '';
+          return `<div class="gzclp-t3-item" style="${border}">
+            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${prio?'! ':''}${o.name}</span>
+            <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
+            <div style="color:var(--text);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
+          </div>`;
+        }).join('')}
       </div>
     </div>`;
 
