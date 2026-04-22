@@ -2608,19 +2608,37 @@ function renderAnalysis(start) {
   const ziektePhase = !recPhase && track1Active.find(p => p.label === 'ZIEKTE');
   const gzPhase = overlapping.find(p => p.label === 'GREYSKULL');
 
-  const LIFT_MUSCLE = {Squat:'Benen',Deadlift:'Rug',Bench:'Borst',OHP:'Schouders','DB Bench x2':'Borst','Lat PD':'Rug','DIP-BW':'Borst','Front Squat':'Benen','DB Clean':'Schouders'};
+  // primary = telt mee in volume%; secondary = markeert spiergroep als aanwezig (nooit "afwezig")
+  const LIFT_MUSCLE = {
+    Squat:         { primary:'Benen',     secondary:'Glutes'  },
+    Deadlift:      { primary:'Rug',       secondary:'Glutes'  },
+    Bench:         { primary:'Borst'                          },
+    OHP:           { primary:'Schouders'                      },
+    'DB Bench x2': { primary:'Borst'                          },
+    'Lat PD':      { primary:'Rug'                            },
+    'DIP-BW':      { primary:'Borst',     secondary:'Triceps' },
+    'Front Squat': { primary:'Benen',     secondary:'Glutes'  },
+    'DB Clean':    { primary:'Schouders'                      },
+    'Hip Thrust':  { primary:'Glutes'                         },
+  };
 
   // ── Muscle balance ──
   const muscleVol = {};
+  const musclePresent = new Set();
   Object.entries(DATA.lifts).forEach(([key, lift]) => {
     const pts = lift.points.filter(p => p.date >= s && p.date <= t);
-    const muscle = LIFT_MUSCLE[key];
-    if (muscle && pts.length) muscleVol[muscle] = (muscleVol[muscle] || 0) + pts.reduce((acc, p) => acc + (p.sets || 1), 0);
+    const mapping = LIFT_MUSCLE[key];
+    if (mapping && pts.length) {
+      const setCount = pts.reduce((acc, p) => acc + (p.sets || 1), 0);
+      muscleVol[mapping.primary] = (muscleVol[mapping.primary] || 0) + setCount;
+      musclePresent.add(mapping.primary);
+      if (mapping.secondary) musclePresent.add(mapping.secondary);
+    }
   });
   const totalSets = Object.values(muscleVol).reduce((a,b) => a+b, 0) || 1;
   const musclesSorted = Object.entries(muscleVol).sort((a,b) => b[1]-a[1]);
   const top3m = musclesSorted.slice(0,3).map(([m,v]) => `<span style="color:${MC[m]||'#c0c0d8'}">${m}</span> (${Math.round(v/totalSets*100)}%)`).join(', ');
-  const absentMuscles = Object.keys(MC).filter(m => !muscleVol[m]);
+  const absentMuscles = Object.keys(MC).filter(m => !musclePresent.has(m));
   const balanceLbl = absentMuscles.length === 0 ? `<b style="color:var(--green)">GEBALANCEERD</b>`
     : absentMuscles.length <= 2 ? `<b style="color:var(--yellow)">LICHT ONGEBALANCEERD</b>`
     : `<b style="color:var(--red)">ONGEBALANCEERD</b>`;
@@ -2759,28 +2777,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const T3_OPTIONS = {
     'SQUAT A': [
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · volle extensie bovenaan · bekken neutraal' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
       { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'licht gewicht · schouderhealth' },
     ],
     BENCH: [
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · volle extensie bovenaan · geen hyper-extensie' },
       { name:'DIPS',           reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
       { name:'TRICEP PUSHDOWN',reps:'3 × 15–20',  note:'touw of bar · ellebogen vast' },
       { name:'CABLE ROW',      reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder balans' },
     ],
     'SQUAT B': [
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'rug breed houden na squat' },
       { name:'DIPS',           reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
     ],
     DEADLIFT: [
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · perfect na DL — heupen al warm · glutes maximaal' },
+      { name:'DB CLEAN',       reps:'3 × 8–12',   note:'explosief · heupen door · schouders/traps · startgewicht ~' + ((() => { const p = DATA.lifts['DB Clean']?.points; return p && p.length ? (p[p.length-1].weight / 2) + 'kg/arm' : '12–15kg/arm'; })()) },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
-      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'optioneel als energie over' },
     ],
   };
 
@@ -2893,10 +2915,22 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   function t2Warmup(w, lk) {
     if (!w || w <= 0) return [];
+    if (lk === 'DB Bench x2') return dbWarmup(w);
     const bar = 20;
     const rows = [];
     if (w > 32) rows.push({w: bar, reps: 10, note:'lege stang'});
     const s2 = r25(w * 0.65); if (s2 > bar && s2 < w) rows.push({w: s2, reps: 8});
+    return rows;
+  }
+  // Dumbbell warmup: w is totaal (beide armen). Toon per-arm gewichten.
+  function dbWarmup(totalW) {
+    if (!totalW || totalW <= 0) return [];
+    const perArm = totalW / 2;
+    const rows = [];
+    const s1 = Math.max(8, r25(perArm * 0.5));
+    const s2 = r25(perArm * 0.75);
+    if (s1 < perArm)              rows.push({w: s1, reps: 12, note:'per arm'});
+    if (s2 < perArm && s2 > s1)   rows.push({w: s2, reps: 8,  note:'per arm'});
     return rows;
   }
   function warmupTableHtml(rows, workW, liftC) {
@@ -2955,8 +2989,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const t1w  = lastW(t1lk);
 
     // Warmup rows helper (inline in tier box)
-    function inlineWarmupHtml(rows, workW, liftC) {
-      if (!rows.length && !workW) return '';
+    // workWLabel: optionele string override voor het werkgewicht-label (bv. "30 kg/arm")
+    function inlineWarmupHtml(rows, workW, liftC, workWLabel) {
+      if (!rows.length && !workW && !workWLabel) return '';
       const restRow = `<div class="gzclp-wu-rest">— 60 sec</div>`;
       const rowsHtml = rows.map((r, i) =>
         `<div class="gzclp-wu-inline-row">
@@ -2965,9 +3000,11 @@ document.addEventListener('DOMContentLoaded', function() {
           ${r.note ? `<span style="color:var(--cyan);font-size:11px">${r.note}</span>` : ''}
         </div>${i < rows.length - 1 ? restRow : ''}`
       ).join('');
-      const preWorkRest = workW ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
-      const workHtml = workW ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
-           <span style="min-width:48px">${workW} kg</span>
+      const showWork = workW || workWLabel;
+      const wLabel = workWLabel || (workW + ' kg');
+      const preWorkRest = showWork ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
+      const workHtml = showWork ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
+           <span style="min-width:48px">${wLabel}</span>
            <span style="color:var(--text)">werkgewicht</span>
          </div>` : '';
       return `<details class="gzclp-wu-details" open>
@@ -2998,12 +3035,17 @@ document.addEventListener('DOMContentLoaded', function() {
         dispW = w !== null ? w : (t1w !== null ? r25(t1w * 0.75) : null);
         srcLabel = w !== null ? 'LAATSTE LOG' : 'SCHATTING';
       }
-      const wHtml = dispW !== null
-        ? `<div class="gzclp-wt"><span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispW} kg</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
+      const isDB = tier.lk === 'DB Bench x2';
+      const dispWStr = (dispW !== null && isDB)
+        ? `2 × ${r25(dispW/2)}\u202fkg <span style="font-family:monospace;font-size:10px;color:${liftC}aa">(${r25(dispW/2)} kg/arm)</span>`
+        : dispW !== null ? `${dispW} kg` : null;
+      const wHtml = dispWStr !== null
+        ? `<div class="gzclp-wt"><span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispWStr}</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
         : `<div class="gzclp-wt" style="color:var(--text)">— geen data</div>`;
-      const thisDW = tier.t === 'T1' ? dispW : t2dispW;
+      const thisDW = tier.t === 'T1' ? dispW : (isDB ? null : t2dispW);
+      const dbWorkLabel = (isDB && t2dispW) ? `${r25(t2dispW/2)}\u202fkg/arm` : null;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
-      const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC);
+      const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC, dbWorkLabel);
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
   <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
   <div class="gzclp-tier-body">
