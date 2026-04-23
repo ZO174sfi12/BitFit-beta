@@ -2756,7 +2756,7 @@ function renderAnalysis(start) {
 
   // ── GZCLP Adherence ──
   const T2S = new Set(['Bench','OHP','Squat','Front Squat','Deadlift','DB Bench x2']);
-  const T3S = new Set(['Lat PD','DIP-BW']);
+  // T3: elke oefening die geen T1/T2 is telt mee voor adherence
   const gzStart = gzPhase ? (gzPhase.start > s ? gzPhase.start : s) : s;
   const sessions = {};
   for (const [nm, lift] of Object.entries(DATA.lifts || {}))
@@ -2771,7 +2771,7 @@ function renderAnalysis(start) {
     dates.forEach(dt => {
       const ns = sessions[dt];
       const hasT2 = new Set(ns.filter(n => T2S.has(n))).size >= 2;
-      const hasT3 = ns.some(n => T3S.has(n));
+      const hasT3 = ns.some(n => !T2S.has(n));
       const miss = [];
       if (!hasT2) miss.push('T2 incompleet');
       if (!hasT3) miss.push('geen T3');
@@ -2899,28 +2899,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const T3_OPTIONS = {
     'SQUAT A': [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · volle extensie bovenaan · bekken neutraal' },
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · bekken neutraal' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
       { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'licht gewicht · schouderhealth' },
     ],
     BENCH: [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · volle extensie bovenaan · geen hyper-extensie' },
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · geen hyper-extensie' },
       { name:'DIPS',           reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
       { name:'TRICEP PUSHDOWN',reps:'3 × 15–20',  note:'touw of bar · ellebogen vast' },
       { name:'CABLE ROW',      reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder balans' },
     ],
     'SQUAT B': [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'rug breed houden na squat' },
       { name:'DIPS',           reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
       { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
     ],
     DEADLIFT: [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'barbell of smith · perfect na DL — heupen al warm · glutes maximaal' },
+      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · perfect na DL — heupen al warm' },
       { name:'DB CLEAN',       reps:'3 × 8–12',   note:'explosief · heupen door · schouders/traps · startgewicht ~' + ((() => { const p = DATA.lifts['DB Clean']?.points; return p && p.length ? (p[p.length-1].weight / 2) + 'kg/arm' : '12–15kg/arm'; })()) },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
@@ -3154,6 +3154,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!c) return;
     const t3opts = T3_OPTIONS[day.key] || [];
     const str = STRETCHES[day.key] || {pre:[], post:[]};
+    // Één aanbevolen T3 voor deze dag
+    const _optNames = t3opts.map(o => o.name);
+    let _bestT3 = null;
+    if (_needsGlutes && _optNames.includes('HIP THRUST')) _bestT3 = 'HIP THRUST';
+    else if (_needsPull) {
+      _bestT3 = ['LAT PULLDOWN','CABLE ROW','CHIN-UPS','DB CLEAN'].find(p => _optNames.includes(p)) || null;
+    }
+    if (!_bestT3) _bestT3 = _optNames.includes('HIP THRUST') ? 'HIP THRUST' : (_optNames[0] || null);
     const t1lk = day.tiers[0].lk;
     const t1w  = lastW(t1lk);
 
@@ -3241,7 +3249,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="gzclp-t3-grid">
         ${t3opts.map(o => {
-          const prio = isT3Priority(o.name);
+          const prio = o.name === _bestT3;
           const nameClr = prio ? 'var(--accent)' : 'var(--text)';
           const border = prio ? `;border-color:var(--accent)44` : '';
           return `<div class="gzclp-t3-item" style="${border}">
