@@ -2936,29 +2936,33 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · bekken neutraal' },
       { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
       { name:'CABLE ROW',      reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
-      { name:'CHIN-UPS',       reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'licht gewicht · schouderhealth' },
+      { name:'CHIN-UPS',            reps:'3 × AMRAP',  note:'BW · als 3×8 → toevoegen gewicht' },
+      { name:'ABDUCTOR MACHINE',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
+      { name:'FACE PULL',           reps:'3 × 20–25',  note:'licht gewicht · schouderhealth' },
     ],
     BENCH: [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · geen hyper-extensie' },
-      { name:'DIPS',           reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
-      { name:'TRICEP PUSHDOWN',reps:'3 × 15–20',  note:'touw of bar · ellebogen vast' },
-      { name:'CABLE ROW',      reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder balans' },
+      { name:'HIP THRUST',          reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · geen hyper-extensie' },
+      { name:'DIPS',                reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
+      { name:'TRICEP PUSHDOWN',     reps:'3 × 15–20',  note:'touw of bar · ellebogen vast' },
+      { name:'CABLE ROW',           reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
+      { name:'ABDUCTOR MACHINE',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
+      { name:'FACE PULL',           reps:'3 × 20–25',  note:'schouder balans' },
     ],
     'SQUAT B': [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
-      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'brede grip · focus op lats' },
-      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'rug breed houden na squat' },
-      { name:'DIPS',           reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
+      { name:'HIP THRUST',          reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
+      { name:'LAT PULLDOWN',        reps:'3 × 15–20',  note:'brede grip · focus op lats' },
+      { name:'CABLE ROW',           reps:'3 × 15–20',  note:'rug breed houden na squat' },
+      { name:'DIPS',                reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
+      { name:'ABDUCTOR MACHINE',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
+      { name:'FACE PULL',           reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
     ],
     DEADLIFT: [
-      { name:'HIP THRUST',     reps:'3 × 15–20',  note:'plate-loaded machine · glutes · perfect na DL — heupen al warm' },
-      { name:'DB CLEAN',       reps:'3 × 8–12',   note:'explosief · heupen door · schouders/traps · startgewicht ~' + ((() => { const p = DATA.lifts['DB Clean']?.points; return p && p.length ? (p[p.length-1].weight / 2) + 'kg/arm' : '12–15kg/arm'; })()) },
-      { name:'CABLE ROW',      reps:'3 × 15–20',  note:'horizontale pull · upper back' },
-      { name:'LAT PULLDOWN',   reps:'3 × 15–20',  note:'verticale pull · lats' },
-      { name:'FACE PULL',      reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
+      { name:'HIP THRUST',          reps:'3 × 15–20',  note:'plate-loaded machine · glutes · perfect na DL — heupen al warm' },
+      { name:'DB CLEAN',            reps:'3 × 8–12',   note:'explosief · heupen door · schouders/traps · startgewicht ~' + ((() => { const p = DATA.lifts['DB Clean']?.points; return p && p.length ? (p[p.length-1].weight / 2) + 'kg/arm' : '12–15kg/arm'; })()) },
+      { name:'CABLE ROW',           reps:'3 × 15–20',  note:'horizontale pull · upper back' },
+      { name:'LAT PULLDOWN',        reps:'3 × 15–20',  note:'verticale pull · lats' },
+      { name:'ABDUCTOR MACHINE',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
+      { name:'FACE PULL',           reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
     ],
   };
 
@@ -3044,6 +3048,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!lk || !DATA.lifts[lk]) return null;
     const pts = DATA.lifts[lk].points;
     return pts && pts.length ? pts[pts.length-1].weight : null;
+  }
+  // Greyskull progressie: bereken aanbevolen gewicht voor volgende sessie
+  function nextW(lk, t) {
+    if (!lk || !DATA.lifts[lk]) return null;
+    const pts = DATA.lifts[lk].points;
+    if (!pts || !pts.length) return null;
+    const last = pts[pts.length - 1];
+    const w = last.weight, vol = last.volume;
+    if (!w) return null;
+    if (t === 'T1' && vol) {
+      const amrap = Math.round(vol / w) - 10; // 2×5 + AMRAP → amrap = totalReps - 10
+      return amrap >= 5 ? r25(w + 2.5) : w;
+    }
+    if (t === 'T2' && vol) {
+      const totalReps = Math.round(vol / w);
+      return totalReps >= 30 ? r25(w + 2.5) : w;
+    }
+    return w;
   }
   function liftColor(lk) { return LC[lk] || '#888'; }
   function hex20(hex) { return hex + '20'; }
@@ -3164,13 +3186,14 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.style.background = ''; btn.style.boxShadow = '';
     }
   }
+  const startDayIdx = nextDayIdx >= 0 ? nextDayIdx : 0;
   if (btnRow) {
     DAYS.forEach((d, i) => {
       const b = document.createElement('button');
       const isNext = i === nextDayIdx;
-      b.className = 'gzclp-day-btn' + (i===0 ? ' active' : '') + (isNext ? ' next-day' : '');
+      b.className = 'gzclp-day-btn' + (i===startDayIdx ? ' active' : '') + (isNext ? ' next-day' : '');
       b.innerHTML = (isNext ? '<span class="next-indicator">!</span> ' : '') + d.key;
-      applyBtnStyle(b, d, i === 0);
+      applyBtnStyle(b, d, i === startDayIdx);
       b.onclick = () => {
         document.querySelectorAll('.gzclp-day-btn').forEach((btn, j) => {
           btn.classList.toggle('active', j === i);
@@ -3188,16 +3211,27 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!c) return;
     const t3opts = T3_OPTIONS[day.key] || [];
     const str = STRETCHES[day.key] || {pre:[], post:[]};
-    // Één aanbevolen T3 voor deze dag
-    const _optNames = t3opts.map(o => o.name);
-    let _bestT3 = null;
-    if (_needsGlutes && _optNames.includes('HIP THRUST')) _bestT3 = 'HIP THRUST';
-    else if (_needsPull) {
-      _bestT3 = ['LAT PULLDOWN','CABLE ROW','CHIN-UPS','DB CLEAN'].find(p => _optNames.includes(p)) || null;
+    // Rank T3 opties obv push/pull saldo + recency
+    const _PULL_NAMES = new Set(['LAT PULLDOWN','CABLE ROW','CHIN-UPS','DB CLEAN','FACE PULL']);
+    const _GLUTE_NAMES = new Set(['HIP THRUST','ABDUCTOR MACHINE']);
+    function _t3Score(name) {
+      let s = 0;
+      if (name === 'HIP THRUST' && _needsGlutes)    s += 100;
+      else if (_GLUTE_NAMES.has(name) && _needsGlutes) s += 80;
+      else if (_PULL_NAMES.has(name) && _needsPull)  s += 70;
+      else if (name === 'HIP THRUST')                s += 50;
+      else if (_GLUTE_NAMES.has(name))               s += 40;
+      else if (_PULL_NAMES.has(name))                s += 30;
+      else s += 10;
+      // Recency penalty: in last 7 days → lagere prioriteit
+      if (recentLifts7.has(name.split(' ').map((w,i)=>i?w[0].toUpperCase()+w.slice(1):w).join(''))) s -= 15;
+      return s;
     }
-    if (!_bestT3) _bestT3 = _optNames.includes('HIP THRUST') ? 'HIP THRUST' : (_optNames[0] || null);
+    const rankedT3 = [...t3opts].sort((a,b) => _t3Score(b.name) - _t3Score(a.name));
+    const top4 = rankedT3.slice(0, 4);
+    const rest = rankedT3.slice(4);
     const t1lk = day.tiers[0].lk;
-    const t1w  = lastW(t1lk);
+    const t1w  = nextW(t1lk, 'T1') ?? lastW(t1lk);
 
     // Warmup rows helper (inline in tier box)
     // workWLabel: optionele string override voor het werkgewicht-label (bv. "30 kg/arm")
@@ -3239,12 +3273,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const sameAsT1 = tier.t === 'T2' && tier.lk === t1lk;
       let dispW, srcLabel;
       if (tier.t === 'T1') {
-        dispW = w; srcLabel = 'LAATSTE LOG';
+        const suggested = nextW(tier.lk, 'T1');
+        const last = lastW(tier.lk);
+        dispW = suggested ?? last;
+        srcLabel = (suggested !== null && suggested !== last) ? '+2.5 KG ✓' : 'HERHAAL';
       } else if (sameAsT1) {
         dispW = t1w !== null ? r25(t1w * 0.75) : null; srcLabel = 'T2 = 75% VAN T1';
       } else {
-        dispW = w !== null ? w : (t1w !== null ? r25(t1w * 0.75) : null);
-        srcLabel = w !== null ? 'LAATSTE LOG' : 'SCHATTING';
+        const suggested = nextW(tier.lk, 'T2');
+        const last = lastW(tier.lk);
+        dispW = suggested ?? last ?? (t1w !== null ? r25(t1w * 0.75) : null);
+        srcLabel = suggested !== null ? ((suggested !== last) ? '+2.5 KG ✓' : 'HERHAAL') : 'SCHATTING';
       }
       const isDB = tier.lk === 'DB Bench x2';
       const dispWStr = (dispW !== null && isDB)
@@ -3273,7 +3312,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>`;
     }).join('');
 
-    // T3 block
+    // T3 block — top 4 ranked + opvouwbare rest
+    const rankColors = ['var(--accent)','var(--text)','var(--text)','var(--text)'];
     const t3Html = `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
       <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
@@ -3282,17 +3322,28 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60–90 sec</div>
       </div>
       <div class="gzclp-t3-grid">
-        ${t3opts.map(o => {
-          const prio = o.name === _bestT3;
-          const nameClr = prio ? 'var(--accent)' : 'var(--text)';
-          const border = prio ? `;border-color:var(--accent)44` : '';
+        ${top4.map((o, i) => {
+          const isTop = i === 0;
+          const nameClr = rankColors[i];
+          const border = isTop ? `;border-color:var(--accent)44` : '';
+          const rank = i === 0 ? '! ' : `${i+1}. `;
           return `<div class="gzclp-t3-item" style="${border}">
-            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${prio?'! ':''}${o.name}</span>
+            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${rank}${o.name}</span>
             <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
-            <div style="color:var(--text);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
+            <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
           </div>`;
         }).join('')}
       </div>
+      ${rest.length ? `<details style="margin-top:8px">
+        <summary style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);cursor:pointer;list-style:none">▸ ALLE OPTIES (${rest.length} meer)</summary>
+        <div class="gzclp-t3-grid" style="margin-top:6px;opacity:.7">
+          ${rest.map(o => `<div class="gzclp-t3-item">
+            <span style="font-family:'Oxanium',sans-serif;font-size:11px;color:var(--muted)">${o.name}</span>
+            <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
+            <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
+          </div>`).join('')}
+        </div>
+      </details>` : ''}
     </div>`;
 
     // Pre-stretch collapsible (before tiers)
@@ -3317,7 +3368,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  renderDay(0);
+  renderDay(startDayIdx);
 });
 // ══ END GZCLP ════════════════════════════════════════════════════════════════
 
