@@ -255,11 +255,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">88.8</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">86.9</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-04-27</span>
+        <span class="meta-value" style="color:var(--muted)">2026-04-29</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -457,6 +457,13 @@ const DATA = {
           "date": "2026-04-22",
           "weight": 70.0,
           "volume": 1630.0,
+          "sets": 6,
+          "pr": false
+        },
+        {
+          "date": "2026-04-29",
+          "weight": 72.5,
+          "volume": 2130.0,
           "sets": 6,
           "pr": false
         }
@@ -952,7 +959,43 @@ const DATA = {
     "Row": {
       "color": "#ffcc80",
       "name": "Row",
-      "points": []
+      "points": [
+        {
+          "date": "2026-02-18",
+          "weight": 50.0,
+          "volume": 1290.0,
+          "sets": 4,
+          "pr": true
+        },
+        {
+          "date": "2026-03-03",
+          "weight": 50.0,
+          "volume": 1440.0,
+          "sets": 4,
+          "pr": false
+        },
+        {
+          "date": "2026-03-30",
+          "weight": 35.0,
+          "volume": 1260.0,
+          "sets": 3,
+          "pr": false
+        },
+        {
+          "date": "2026-04-19",
+          "weight": 50.0,
+          "volume": 1490.0,
+          "sets": 4,
+          "pr": false
+        },
+        {
+          "date": "2026-04-29",
+          "weight": 40.0,
+          "volume": 1520.0,
+          "sets": 4,
+          "pr": false
+        }
+      ]
     }
   },
   "weight": [
@@ -1187,6 +1230,10 @@ const DATA = {
     {
       "date": "2026-04-27",
       "weight": 88.8
+    },
+    {
+      "date": "2026-04-29",
+      "weight": 86.9
     }
   ],
   "muscle_daily": [
@@ -2024,6 +2071,16 @@ const DATA = {
       "date": "2026-04-27",
       "muscle": "Hamstrings",
       "volume": 1140.0
+    },
+    {
+      "date": "2026-04-29",
+      "muscle": "Quads/Glutes",
+      "volume": 2130.0
+    },
+    {
+      "date": "2026-04-29",
+      "muscle": "Back",
+      "volume": 1520.0
     }
   ],
   "training_days": [
@@ -2098,7 +2155,8 @@ const DATA = {
     "2026-04-21",
     "2026-04-22",
     "2026-04-24",
-    "2026-04-27"
+    "2026-04-27",
+    "2026-04-29"
   ],
   "all_active_days": [
     "2026-01-03",
