@@ -948,6 +948,11 @@ const DATA = {
       "color": "#a5d6a7",
       "name": "DB Clean",
       "points": []
+    },
+    "Row": {
+      "color": "#ffcc80",
+      "name": "Row",
+      "points": []
     }
   },
   "weight": [
@@ -2428,11 +2433,11 @@ Chart.defaults.font.size = 9;
 
 // ── Lift Selector ─────────────────────────────────────────
 const PRIMARY_LIFTS   = ['Squat','Deadlift','Bench','OHP'];
-const SECONDARY_LIFTS = ['DB Bench x2','Lat PD','DIP-BW','Front Squat','DB Clean'];
+const SECONDARY_LIFTS = ['DB Bench x2','Lat PD','DIP-BW','Front Squat','DB Clean','Row'];
 const LIFT_LABELS = {
   'Squat':'SQUAT','Deadlift':'DEADLIFT','Bench':'BENCH','OHP':'OHP',
   'DB Bench x2':'DB BENCH','Lat PD':'LAT PD','DIP-BW':'DIP',
-  'Front Squat':'FRONT SQ.','DB Clean':'DB CLEAN'
+  'Front Squat':'FRONT SQ.','DB Clean':'DB CLEAN','Row':'ROW'
 };
 let activeLiftFilter = new Set(PRIMARY_LIFTS);
 let radarStart = null;
@@ -2667,7 +2672,8 @@ function computeStats(start) {
   const end = getActiveEnd();
   const s = start.toISOString().slice(0,10), t = end.toISOString().slice(0,10);
   const totalDays = Math.round((end - start) / 86400000) + 1;
-  const td = (DATA.all_active_days || DATA.training_days).filter(d => d >= s && d <= t).length;
+  const _allDays = [...new Set([...(DATA.training_days||[]), ...(DATA.all_active_days||[])])];
+  const td = _allDays.filter(d => d >= s && d <= t).length;
   const wPts = DATA.weight.filter(p => p.date >= s && p.date <= t);
   const wFirst = wPts.length ? wPts[0].weight : null;
   const wLast  = wPts.length ? wPts[wPts.length-1].weight : null;
@@ -2950,11 +2956,11 @@ document.addEventListener('DOMContentLoaded', function() {
     ],
     'SQUAT B': [
       { name:'HIP THRUST',          reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A — zelfde sessie kan ook' },
-      { name:'LAT PULLDOWN',        reps:'3 × 15–20',  note:'brede grip · focus op lats' },
-      { name:'CABLE ROW',           reps:'3 × 15–20',  note:'rug breed houden na squat' },
-      { name:'DIPS',                reps:'3 × 15–20',  note:'push na bench T2 · synergisch' },
+      { name:'CABLE CHEST FLY',     reps:'3 × 15–20',  note:'borst isolatie na rows T2 · kabel · push-pull balans' },
+      { name:'DIPS',                reps:'3 × 15–20',  note:'compound push · borst + triceps · aanvulling op rows' },
+      { name:'LAT PULLDOWN',        reps:'3 × 15–20',  note:'verticale pull · lats · aanvullen als rows te zwaar waren' },
       { name:'ABDUCTOR MACHINE',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
-      { name:'FACE PULL',           reps:'3 × 20–25',  note:'schouder gezondheid altijd nuttig' },
+      { name:'FACE PULL',           reps:'3 × 20–25',  note:'rotator cuff · schouder gezondheid altijd nuttig' },
     ],
     DEADLIFT: [
       { name:'HIP THRUST',          reps:'3 × 15–20',  note:'plate-loaded machine · glutes · perfect na DL — heupen al warm' },
@@ -3000,13 +3006,13 @@ document.addEventListener('DOMContentLoaded', function() {
         'Hip flexor stretch  ·  60 sec/zijde  ·  lunge positie, bekken neutraal',
         'Ankle circles  ·  10×/zijde  ·  vergroot dorsaalflexie voor squat diepte',
         'Thoracic rotatie  ·  10 reps  ·  zittend op hiel, arm achter hoofd',
-        'Schouder/chest open  ·  2×10  ·  armen naar achter, borst vooruit — bench T2',
+        'Band pull-apart of face pull  ·  2×15  ·  upper back activering — voorbereiding barbell row T2',
       ],
       post: [
         'Pigeon pose  ·  60 sec/zijde  ·  heupflexoren en glutes',
         'Quad stretch staand  ·  45 sec/zijde',
-        'Doorway chest stretch  ·  45 sec/zijde  ·  na bench T2',
-        'Schouder cross-body  ·  30 sec/zijde',
+        'Child's pose  ·  60 sec  ·  lats en lage rug losrekken na rows',
+        'Thoracic extension  ·  45 sec  ·  foam roller onder mid-rug — rug openen na rows',
       ],
     },
     DEADLIFT: {
@@ -3036,7 +3042,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ]},
     { key:'SQUAT B', t1color: LC['Squat']||'#b388ff', tiers:[
       { t:'T1', lk:'Squat',        name:'BACK SQUAT',              scheme:'2 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
-      { t:'T2', lk:'Bench',        name:'BARBELL BENCH PRESS',     scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
+      { t:'T2', lk:'Row',          name:'BARBELL ROW',             scheme:'3 × 10',           step:2.5, stepLabel:'+2.5 kg', prog:'alle sets compleet → volgende sessie omhoog', rest:'2–3 min tussen sets' },
     ]},
     { key:'DEADLIFT', t1color: LC['Deadlift']||'#ffd600', tiers:[
       { t:'T1', lk:'Deadlift',     name:'DEADLIFT',                scheme:'1 × 5  +  AMRAP', step:5,   stepLabel:'+5 kg',   prog:'2 fails op AMRAP → gewicht −10%', rest:'3–5 min tussen sets' },
@@ -3080,7 +3086,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .filter(([,v]) => v.points.some(p => p.date === date)).map(([k]) => k);
     if (liftsOn.includes('Deadlift') || (liftsOn.includes('DB Bench x2') && !liftsOn.includes('Bench'))) return 3;
     if (liftsOn.includes('Bench') && !liftsOn.includes('Squat')) return 1;
-    if (liftsOn.includes('Squat') && liftsOn.includes('Bench')) return 2;
+    if (liftsOn.includes('Squat') && (liftsOn.includes('Bench') || liftsOn.includes('Row'))) return 2;
     if (liftsOn.includes('Squat')) return 0;
     return -1;
   }
@@ -3095,7 +3101,7 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   // Push/pull saldo laatste 7 dagen
   const _pushCat = new Set(['Bench','DB Bench x2','OHP','DIP-BW']);
-  const _pullCat = new Set(['Lat PD','DB Clean']);
+  const _pullCat = new Set(['Lat PD','DB Clean','Row']);
   let _pushSets7 = 0, _pullSets7 = 0;
   for (const [k,v] of Object.entries(DATA.lifts)) {
     const sc = v.points.filter(p => p.date >= last7Str).reduce((a,p) => a+(p.sets||1), 0);
