@@ -42,7 +42,7 @@ Het script leest automatisch `mnt/bitfit-data/notes.txt` en verwerkt `[BERT]` en
 4. Commit `index.html` in `BitFit-beta` → Bert doet `git push`
 5. Als notes.txt gewijzigd: commit in `bitfit-data` → Bert doet `git push`
 
-**Bert pusht altijd zelf. Claude pusht nooit.**
+**Bert pusht altijd zelf via een git GUI-app (geen terminal). Claude pusht nooit en geeft geen `cd`/`git`-commando's.**
 
 ---
 
