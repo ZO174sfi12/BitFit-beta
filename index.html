@@ -255,11 +255,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">86.2</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.6</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-05-01</span>
+        <span class="meta-value" style="color:var(--muted)">2026-05-04</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -465,6 +465,13 @@ const DATA = {
           "weight": 72.5,
           "volume": 2130.0,
           "sets": 6,
+          "pr": false
+        },
+        {
+          "date": "2026-05-04",
+          "weight": 75.0,
+          "volume": 1662.5,
+          "sets": 7,
           "pr": false
         }
       ]
@@ -761,6 +768,13 @@ const DATA = {
           "date": "2026-04-22",
           "weight": 40.0,
           "volume": 1450.0,
+          "sets": 5,
+          "pr": false
+        },
+        {
+          "date": "2026-05-04",
+          "weight": 40.0,
+          "volume": 1580.0,
           "sets": 5,
           "pr": false
         }
@@ -1263,6 +1277,14 @@ const DATA = {
     {
       "date": "2026-05-01",
       "weight": 86.2
+    },
+    {
+      "date": "2026-05-03",
+      "weight": 87.2
+    },
+    {
+      "date": "2026-05-04",
+      "weight": 87.6
     }
   ],
   "muscle_daily": [
@@ -2125,6 +2147,21 @@ const DATA = {
       "date": "2026-05-01",
       "muscle": "Back (Lats)",
       "volume": 1680.0
+    },
+    {
+      "date": "2026-05-04",
+      "muscle": "Quads/Glutes",
+      "volume": 1662.5
+    },
+    {
+      "date": "2026-05-04",
+      "muscle": "Shoulders",
+      "volume": 1580.0
+    },
+    {
+      "date": "2026-05-04",
+      "muscle": "Glutes",
+      "volume": 800.0
     }
   ],
   "training_days": [
@@ -2202,7 +2239,9 @@ const DATA = {
     "2026-04-27",
     "2026-04-29",
     "2026-04-30",
-    "2026-05-01"
+    "2026-05-01",
+    "2026-05-03",
+    "2026-05-04"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -2545,7 +2584,9 @@ const DATA = {
     "2026-04-27": 3,
     "2026-04-29": 1,
     "2026-04-30": 0,
-    "2026-05-01": 2
+    "2026-05-01": 2,
+    "2026-05-03": 0,
+    "2026-05-04": 2
   }
 };
 const TODAY = new Date();

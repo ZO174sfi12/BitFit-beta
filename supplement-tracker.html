@@ -535,7 +535,8 @@ async function quickLog(id){
     state[id]={...state[id],logged:true,dose,time};
     saveTodayState(state);
     const filtered=loadLogs().filter(l=>!(l.date===todayStr()&&l.id===id));
-    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose,unit:s.unit,time,notes:''});
+    const loggedAt=new Date().toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'});
+    filtered.push({date:todayStr(),id,name:s.name,brand:s.brand,dose,unit:s.unit,time,loggedAt,notes:''});
     await saveLogs(filtered);
   }
   renderToday();
@@ -724,7 +725,7 @@ function renderHistory(){
   noData.style.display='none';
   tbody.innerHTML=logs.map((l,i)=>`
     <tr>
-      <td style="font-family:monospace;font-size:11px;color:var(--muted)">${l.date}</td>
+      <td style="font-family:monospace;font-size:11px;color:var(--muted)">${l.date}<br><span style="font-size:9px;color:var(--accent);opacity:.7">${l.loggedAt||''}</span></td>
       <td style="font-size:13px">${l.name}</td>
       <td style="font-family:monospace;font-size:10px;color:var(--muted)">${l.brand}</td>
       <td><span class="badge-unit">${l.dose} ${l.unit}</span></td>
