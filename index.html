@@ -3342,6 +3342,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   function liftColor(lk) { return LC[lk] || '#888'; }
   function hex20(hex) { return hex + '20'; }
+  function lastDate(lk) {
+    const pts = DATA.lifts[lk]?.points;
+    if (!pts || !pts.length) return null;
+    const d = pts[pts.length-1].date;
+    return new Date(d + 'T00:00').toLocaleDateString('nl-BE', {day:'numeric', month:'short'});
+  }
+  // Platen per zijde voor een barbellgewicht (bar = 20 kg)
+  function platesPerSide(totalKg) {
+    const perSide = (totalKg - 20) / 2;
+    if (perSide < 0) return null;
+    if (perSide < 0.01) return 'lege stang';
+    const denoms = [20, 15, 10, 5, 2.5, 1.25];
+    let rem = Math.round(perSide * 100) / 100;
+    const parts = [];
+    for (const d of denoms) {
+      const n = Math.floor(rem / d + 0.001);
+      if (n > 0) { parts.push(n > 1 ? `${n}×${d}` : `${d}`); rem = Math.round((rem - n*d)*100)/100; }
+    }
+    return parts.length ? parts.join(' + ') + ' kg/z' : 'lege stang';
+  }
 
   // ── Volgende dag in cyclus ──
   const todayStr = TODAY.toISOString().slice(0,10);
@@ -3363,8 +3383,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // ── T3 prioriteit (obv push/pull saldo + recency) ──
   const last7 = new Date(TODAY); last7.setDate(last7.getDate()-7);
   const last7Str = last7.toISOString().slice(0,10);
+  // Lift keys die de laatste 7 dagen gelogd zijn (uit DATA.lifts)
   const recentLifts7 = new Set(
     Object.entries(DATA.lifts).filter(([,v]) => v.points.some(p => p.date >= last7Str)).map(([k]) => k)
+  );
+  // Spiergroepen die de laatste 7 dagen getraind zijn (uit muscle_daily)
+  const recentMuscles7 = new Set(
+    (DATA.muscle_daily||[]).filter(e => e.date >= last7Str).map(e => e.muscle)
   );
   // Push/pull saldo laatste 7 dagen
   const _pushCat = new Set(['Bench','DB Bench x2','OHP','DIP-BW']);
@@ -3376,17 +3401,33 @@ document.addEventListener('DOMContentLoaded', function() {
     if (_pullCat.has(k)) _pullSets7 += sc;
   }
   const _needsPull = _pushSets7 > _pullSets7 * 1.4;
-  const _needsGlutes = !recentLifts7.has('Hip Thrust');
-  const T3_PRIO_CAT = {
-    'HIP THRUST':'glutes','LAT PULLDOWN':'pull','CABLE ROW':'pull',
-    'CHIN-UPS':'pull','FACE PULL':'pull','DB CLEAN':'pull',
-    'DIPS':'push','TRICEP PUSHDOWN':'push',
+  // Glutes: gebruik muscle_daily (Hip Thrust staat niet als lift-key in DATA.lifts)
+  const _needsGlutes = !recentMuscles7.has('Glutes');
+  // T3 naam → DATA.lifts key (voor recency via tracked lifts)
+  const T3_TO_LIFT = {
+    'LAT PULLDOWN':'Lat PD', 'DIPS':'DIP-BW', 'DB CLEAN':'DB Clean', 'CABLE ROW':'Row',
   };
-  function isT3Priority(name) {
-    const cat = T3_PRIO_CAT[name];
-    if (cat === 'glutes' && _needsGlutes) return true;
-    if (cat === 'pull' && _needsPull) return true;
+  // T3 naam → spiergroep (voor recency via muscle_daily)
+  const T3_TO_MUSCLE = {
+    'HIP THRUST':'Glutes', 'ABDUCTOR MACHINE':'Glutes', 'FACE PULL':'Schouders',
+  };
+  function t3RecentlyDone(name) {
+    const lk = T3_TO_LIFT[name];
+    if (lk && recentLifts7.has(lk)) return true;
+    const muscle = T3_TO_MUSCLE[name];
+    if (muscle && recentMuscles7.has(muscle)) return true;
     return false;
+  }
+  const T3_PRIO_CAT = {
+    'HIP THRUST':'glutes','ABDUCTOR MACHINE':'glutes',
+    'LAT PULLDOWN':'pull','CABLE ROW':'pull','CHIN-UPS':'pull','FACE PULL':'pull','DB CLEAN':'pull',
+    'DIPS':'push','CABLE CHEST FLY':'push','TRICEP PUSHDOWN':'push',
+  };
+  // Een T3-oefening krijgt ! als ze past bij de dag én recent niet gedaan is
+  function t3IsHighlighted(name) {
+    const cat = T3_PRIO_CAT[name];
+    const needed = (cat === 'glutes' && _needsGlutes) || (cat === 'pull' && _needsPull);
+    return needed && !t3RecentlyDone(name);
   }
 
   // Warmup sets helpers
@@ -3485,45 +3526,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const t3opts = T3_OPTIONS[day.key] || [];
     const str = STRETCHES[day.key] || {pre:[], post:[]};
     // Rank T3 opties obv push/pull saldo + recency
-    const _PULL_NAMES = new Set(['LAT PULLDOWN','CABLE ROW','CHIN-UPS','DB CLEAN','FACE PULL']);
-    const _GLUTE_NAMES = new Set(['HIP THRUST','ABDUCTOR MACHINE']);
     function _t3Score(name) {
-      let s = 0;
-      if (name === 'HIP THRUST' && _needsGlutes)    s += 100;
-      else if (_GLUTE_NAMES.has(name) && _needsGlutes) s += 80;
-      else if (_PULL_NAMES.has(name) && _needsPull)  s += 70;
-      else if (name === 'HIP THRUST')                s += 50;
-      else if (_GLUTE_NAMES.has(name))               s += 40;
-      else if (_PULL_NAMES.has(name))                s += 30;
-      else s += 10;
-      // Recency penalty: in last 7 days → lagere prioriteit
-      if (recentLifts7.has(name.split(' ').map((w,i)=>i?w[0].toUpperCase()+w.slice(1):w).join(''))) s -= 15;
+      const cat = T3_PRIO_CAT[name];
+      let s = 20; // basis
+      if (cat === 'glutes' && _needsGlutes) s += 60;
+      if (cat === 'pull'   && _needsPull)   s += 50;
+      if (t3RecentlyDone(name)) s -= 30; // recency penalty (correct mapped)
       return s;
     }
     const rankedT3 = [...t3opts].sort((a,b) => _t3Score(b.name) - _t3Score(a.name));
-    const top4 = rankedT3.slice(0, 4);
-    const rest = rankedT3.slice(4);
     const t1lk = day.tiers[0].lk;
     const t1w  = nextW(t1lk, 'T1') ?? lastW(t1lk);
 
     // Warmup rows helper (inline in tier box)
     // workWLabel: optionele string override voor het werkgewicht-label (bv. "30 kg/arm")
-    function inlineWarmupHtml(rows, workW, liftC, workWLabel) {
+    // lk: lift key — voor barbellgewichten worden platen per zijde getoond
+    const _BARBELL_LKS = new Set(['Squat','Deadlift','Bench','OHP','Front Squat','Row']);
+    function inlineWarmupHtml(rows, workW, liftC, workWLabel, lk) {
       if (!rows.length && !workW && !workWLabel) return '';
+      const isBarbell = _BARBELL_LKS.has(lk);
       const restRow = `<div class="gzclp-wu-rest">— 60 sec</div>`;
-      const rowsHtml = rows.map((r, i) =>
-        `<div class="gzclp-wu-inline-row">
+      const rowsHtml = rows.map((r, i) => {
+        const plts = isBarbell ? platesPerSide(r.w) : null;
+        const pltsHtml = plts ? `<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[${plts}]</span>` : '';
+        return `<div class="gzclp-wu-inline-row">
           <span style="color:${liftC};min-width:48px">${r.w} kg</span>
           <span style="color:var(--text)">× ${r.reps}</span>
           ${r.note ? `<span style="color:var(--cyan);font-size:11px">${r.note}</span>` : ''}
-        </div>${i < rows.length - 1 ? restRow : ''}`
-      ).join('');
+          ${pltsHtml}
+        </div>${i < rows.length - 1 ? restRow : ''}`;
+      }).join('');
       const showWork = workW || workWLabel;
       const wLabel = workWLabel || (workW + ' kg');
+      const workPlts = (isBarbell && workW) ? platesPerSide(workW) : null;
+      const workPltsHtml = workPlts ? `<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[${workPlts}]</span>` : '';
       const preWorkRest = showWork ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
       const workHtml = showWork ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
            <span style="min-width:48px">${wLabel}</span>
            <span style="color:var(--text)">werkgewicht</span>
+           ${workPltsHtml}
          </div>` : '';
       return `<details class="gzclp-wu-details">
     <summary class="gzclp-wu-summary" style="color:${liftC}">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary>
@@ -3562,13 +3603,20 @@ document.addEventListener('DOMContentLoaded', function() {
       const dispWStr = (dispW !== null && isDB)
         ? `2 × ${r25(dispW/2)}\u202fkg <span style="font-family:monospace;font-size:10px;color:${liftC}aa">(${r25(dispW/2)} kg/arm)</span>`
         : dispW !== null ? `${dispW} kg` : null;
+      // Vorig werkgewicht + datum tonen bij progressie
+      const _prevW = lastW(tier.lk);
+      const _prevDate = lastDate(tier.lk);
+      const _isProgressing = srcLabel === '+2.5 KG ✓';
+      const _prevWStr = _prevW !== null ? (isDB ? `${r25(_prevW/2)} kg/arm` : `${_prevW} kg`) : null;
+      const _prevLine = (_isProgressing && _prevWStr)
+        ? `<div style="font-size:10px;color:${liftC}88;margin-bottom:3px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''}</div>` : '';
       const wHtml = dispWStr !== null
-        ? `<div class="gzclp-wt"><span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispWStr}</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
+        ? `<div class="gzclp-wt">${_prevLine}<span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispWStr}</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
         : `<div class="gzclp-wt" style="color:var(--text)">— geen data</div>`;
       const thisDW = tier.t === 'T1' ? dispW : (isDB ? null : t2dispW);
       const dbWorkLabel = (isDB && t2dispW) ? `${r25(t2dispW/2)}\u202fkg/arm` : null;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
-      const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC, dbWorkLabel);
+      const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC, dbWorkLabel, tier.lk);
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
   <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
   <div class="gzclp-tier-body">
@@ -3585,8 +3633,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>`;
     }).join('');
 
-    // T3 block — top 4 ranked + opvouwbare rest
-    const rankColors = ['var(--accent)','var(--text)','var(--text)','var(--text)'];
+    // T3 block — alle opties in 2 kolommen, ! op aanbevolen
     const t3Html = `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
       <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
@@ -3595,28 +3642,18 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60–90 sec</div>
       </div>
       <div class="gzclp-t3-grid">
-        ${top4.map((o, i) => {
-          const isTop = i === 0;
-          const nameClr = rankColors[i];
-          const border = isTop ? `;border-color:var(--accent)44` : '';
-          const rank = i === 0 ? '! ' : `${i+1}. `;
+        ${rankedT3.map((o, i) => {
+          const hl = t3IsHighlighted(o.name);
+          const border = hl ? `;border-color:var(--accent)55;background:#0d0d20` : '';
+          const nameClr = hl ? 'var(--accent)' : 'var(--text)';
+          const prefix = hl ? '! ' : `${i+1}. `;
           return `<div class="gzclp-t3-item" style="${border}">
-            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${rank}${o.name}</span>
+            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${prefix}${o.name}</span>
             <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
             <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
           </div>`;
         }).join('')}
       </div>
-      ${rest.length ? `<details style="margin-top:8px">
-        <summary style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);cursor:pointer;list-style:none">▸ ALLE OPTIES (${rest.length} meer)</summary>
-        <div class="gzclp-t3-grid" style="margin-top:6px;opacity:.7">
-          ${rest.map(o => `<div class="gzclp-t3-item">
-            <span style="font-family:'Oxanium',sans-serif;font-size:11px;color:var(--muted)">${o.name}</span>
-            <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
-            <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
-          </div>`).join('')}
-        </div>
-      </details>` : ''}
     </div>`;
 
     // Pre-stretch collapsible (before tiers)
