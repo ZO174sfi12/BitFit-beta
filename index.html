@@ -299,11 +299,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="panel c">
       <div class="cd tl" style="border-color:var(--cyan)"></div>
       <div class="cd tr" style="border-color:var(--cyan)"></div>
-      <div class="panel-title" id="radar-title">&#9658; SETS / OEFENING</div>
+
       <div class="lift-selector">
-        <div class="lift-group-label group-active" id="lbl-primary" onclick="selectLiftGroup('primary')">// PRIMARY</div>
+        <div class="lift-group-label group-active" id="lbl-primary" onclick="selectLiftGroup('primary')">PRIMARY</div>
         <div class="lift-group lift-group-p" id="primary-tiles"></div>
-        <div class="lift-group-label" id="lbl-secondary" onclick="selectLiftGroup('secondary')" style="margin-top:5px">// SECONDARY</div>
+        <div class="lift-group-label" id="lbl-secondary" onclick="selectLiftGroup('secondary')" style="margin-top:5px">SECONDARY</div>
         <div class="lift-group lift-group-s" id="secondary-tiles"></div>
       </div>
       <div class="radar-wrap" style="height:160px"><canvas id="radarChart"></canvas></div>
@@ -326,16 +326,15 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
           <div class="stat-sub" id="s-wrange">—</div>
         </div>
       </div>
-      <div class="pr-section-label">&#9658; TOP 3 GESCHATTE 1RM</div>
-      <div id="pr-top3"></div>
+
     </div>
   </div>
 
   <div class="panel g analysis-panel">
     <div class="cd tl" style="border-color:var(--green)"></div>
     <div class="cd tr" style="border-color:var(--green)"></div>
-    <details id="analysis-details" open>
-      <summary class="panel-title" id="analysis-title" style="cursor:pointer;list-style:none;display:block">&#9658; ANALYSE PERIODE</summary>
+    <details id="analysis-details">
+      <summary class="panel-title" id="analysis-title" style="cursor:pointer;list-style:none;display:block">&#9658; ANALYSE PERIODE <span style="font-size:8px;color:var(--muted);letter-spacing:1px">(klik open)</span></summary>
       <div class="analysis-blocks">
         <div class="analysis-block">
           <div class="analysis-title a">&#9670; SPIERGROEP BALANS</div>
@@ -2888,13 +2887,41 @@ function renderRadar(start) {
     const pts = lift.points.filter(p => p.date >= s && p.date <= t);
     const sets = pts.reduce((acc, p) => acc + (p.sets || 0), 0);
     const vol = pts.reduce((acc, p) => acc + p.volume, 0);
-    return {key, sets, vol, color: lift.color};
+    const rm1 = pts.length ? Math.max(...pts.map(p => p.est1rm || 0)) : 0;
+    const gain = pts.length > 1 ? Math.round((pts[pts.length-1].weight - pts[0].weight) * 10) / 10 : 0;
+    return {key, sets, vol, rm1, gain, color: lift.color};
   }).filter(e => e.sets > 0).sort((a, b) => b.sets - a.sets);
   if (radarChart) radarChart.destroy();
   if (!exercises.length) { radarChart = null; return; }
   const ctx = document.getElementById('radarChart').getContext('2d');
+  const gainLabelPlugin = {
+    id: 'gainLabels',
+    afterDatasetsDraw(chart) {
+      const ds = chart.data.datasets[0];
+      if (!ds || !ds._gains) return;
+      const cctx = chart.ctx;
+      const meta = chart.getDatasetMeta(0);
+      cctx.save();
+      cctx.font = 'bold 9px monospace';
+      cctx.textBaseline = 'middle';
+      ds._gains.forEach((gain, i) => {
+        if (!gain) return;
+        const bar = meta.data[i];
+        if (!bar) return;
+        const label = gain > 0 ? `+${gain} kg` : `${gain} kg`;
+        const textW = cctx.measureText(label).width;
+        // Teken alleen als de balk breed genoeg is
+        if (bar.x < textW + 10) return;
+        cctx.fillStyle = gain > 0 ? '#00ffb3cc' : '#ff6b6bcc';
+        cctx.textAlign = 'right';
+        cctx.fillText(label, bar.x - 5, bar.y);
+      });
+      cctx.restore();
+    }
+  };
   radarChart = new Chart(ctx, {
     type: 'bar',
+    plugins: [gainLabelPlugin],
     data: {
       labels: exercises.map(e => e.key),
       datasets: [{
@@ -2904,6 +2931,8 @@ function renderRadar(start) {
         borderWidth: 1,
         borderRadius: 2,
         _vols: exercises.map(e => e.vol),
+        _rm1s: exercises.map(e => e.rm1),
+        _gains: exercises.map(e => e.gain),
       }]
     },
     options: {
@@ -2920,7 +2949,11 @@ function renderRadar(start) {
           callbacks: {
             label: ctx => {
               const vol = ctx.dataset._vols[ctx.dataIndex];
-              return ` ${ctx.raw} sets  |  ${Math.round(vol/1000*10)/10}k kg vol`;
+              const rm1 = ctx.dataset._rm1s[ctx.dataIndex];
+              const gain = ctx.dataset._gains[ctx.dataIndex];
+              const rmStr = rm1 ? `  |  ~${rm1} kg 1RM` : '';
+              const gainStr = gain > 0 ? `  |  +${gain} kg` : gain < 0 ? `  |  ${gain} kg` : '';
+              return ` ${ctx.raw} sets  |  ${Math.round(vol/1000*10)/10}k kg vol${gainStr}${rmStr}`;
             }
           }
         }
@@ -3013,15 +3046,7 @@ function renderStats(stats) {
     $('s-wdelta').className = 'stat-value ' + (stats.wDelta <= 0 ? 'g' : 'r');
     $('s-wrange').textContent = stats.wDeltaLabel || (stats.wFirst + ' -> ' + stats.wLast + ' kg');
   }
-  const top3El = $('pr-top3');
-  top3El.innerHTML = '';
-  if (!stats.top3.length) {
-    top3El.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:4px 0">Geen PRs in deze periode</div>';
-  } else {
-    stats.top3.forEach(([key, info]) => {
-      top3El.innerHTML += '<div class="pr-row"><div class="pr-dot" style="background:' + info.color + ';box-shadow:0 0 5px ' + info.color + '"></div><div class="pr-lift">' + key + '</div><div class="pr-vals">~' + info.est1rm + 'kg 1RM</div><div class="pr-gain">+' + info.rm_gain + 'kg</div></div>';
-    });
-  }
+
 }
 
 
@@ -3362,6 +3387,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return pts && pts.length ? pts[pts.length-1].weight : null;
   }
   // Greyskull progressie: bereken aanbevolen gewicht voor volgende sessie
+  // Lower body (Squat, Deadlift): +5 kg per sessie. Upper body: +2.5 kg.
+  // Deadlift: 1×5+AMRAP → fixed = 5. Overige T1: 2×5+AMRAP → fixed = 10.
   function nextW(lk, t) {
     if (!lk || !DATA.lifts[lk]) return null;
     const pts = DATA.lifts[lk].points;
@@ -3369,9 +3396,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const last = pts[pts.length - 1];
     const w = last.weight, vol = last.volume;
     if (!w) return null;
+    const _step  = (lk === 'Squat' || lk === 'Deadlift') ? 5 : 2.5;
+    const _fixed = lk === 'Deadlift' ? 5 : 10;
     if (t === 'T1' && vol) {
-      const amrap = Math.round(vol / w) - 10; // 2×5 + AMRAP → amrap = totalReps - 10
-      return amrap >= 5 ? r25(w + 2.5) : w;
+      const amrap = Math.round(vol / w) - _fixed;
+      return amrap >= 5 ? r25(w + _step) : w;
     }
     if (t === 'T2' && vol) {
       const totalReps = Math.round(vol / w);
