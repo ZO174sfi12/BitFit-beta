@@ -3954,7 +3954,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (liftsOn.includes('Squat')) return 0;
     return -1;
   }
-  const lastDayIdx = identifyDayIdx(lastTrainingDate);
+  // Zoek de meest recente dag waarvoor een dag-type bepaald kan worden
+  let lastDayIdx = -1;
+  for (const d of [...recentDates].reverse()) {
+    const idx = identifyDayIdx(d);
+    if (idx >= 0) { lastDayIdx = idx; break; }
+  }
   const nextDayIdx = lastDayIdx >= 0 ? (lastDayIdx + 1) % 4 : 0;
 
   // ── T3 prioriteit (obv push/pull saldo + recency) ──
