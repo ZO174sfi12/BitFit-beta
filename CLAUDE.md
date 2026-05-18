@@ -1,6 +1,12 @@
 # BitFit – Claude briefing (volledig)
 
-Laatste update: 2026-04-28
+Laatste update: 2026-05-18
+
+## Designregels (ALTIJD toepassen)
+
+- **Geen grijze tekst**: `--muted` staat op `#8888aa` (leesbaar op donkere achtergrond). Nooit `opacity` gebruiken om tekst te dimmen. Hex-alpha suffixen (`88`, `99`) op tekstkleuren minimaal op `cc` houden.
+- **Minimale fontgrootte**: 10px voor labels/meta, 11px voor body-tekst. Nooit 7px of 8px.
+- **Alle drie de bestanden** (index.html, bitstats.html, supplement-tracker.html) volgen dezelfde CSS-variabelen en designregels.
 
 ---
 

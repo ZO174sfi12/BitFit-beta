@@ -9,7 +9,7 @@
 :root {
   --bg:#08080f; --panel:#0d0d18; --border:#1c1c30;
   --accent:#7b5cff; --cyan:#00e5ff; --green:#00ffb3;
-  --red:#ff3d6b; --yellow:#ffd600; --text:#c0c0d8; --muted:#454560;
+  --red:#ff3d6b; --yellow:#ffd600; --text:#c0c0d8; --muted:#8888aa;
   --glow-a:0 0 12px #7b5cff88,0 0 30px #7b5cff33;
   --glow-g:0 0 12px #00ffb388,0 0 30px #00ffb333;
 }
@@ -177,6 +177,16 @@ table.history-tbl td{padding:9px 12px;border-bottom:1px solid #12121e;line-heigh
 footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;letter-spacing:2px;margin-top:40px;padding-top:16px;border-top:1px solid var(--border);position:relative;z-index:1;}
 
 @media(min-width:900px){.main{padding:14px 24px 28px;}}
+
+/* ── Page nav ──────────────────────────────────────────────────────── */
+.page-nav{display:flex;padding:0 18px;background:#090910;border-bottom:1px solid var(--border);position:relative;z-index:10;overflow-x:auto;scrollbar-width:none;}
+.page-nav::-webkit-scrollbar{display:none;}
+.nav-item{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2.5px;padding:11px 20px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0;}
+.nav-item:hover{color:var(--text);}
+.nav-item.nav-active{color:var(--accent);border-bottom-color:var(--accent);}
+.nav-item.nav-stats-active{color:var(--cyan);border-bottom-color:var(--cyan);}
+.nav-item.nav-supp-active{color:var(--green);border-bottom-color:var(--green);}
+
 </style>
 </head>
 <body>
@@ -194,6 +204,8 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
     </div>
   </div>
 </header>
+
+<nav class="page-nav"><a href="bitstats.html" class="nav-item ">BITSTATS</a><a href="index.html" class="nav-item ">BITFIT</a><a href="supplement-tracker.html" class="nav-item nav-supp-active">BITSUPP</a></nav>
 
 <!-- GitHub modal -->
 <div class="modal-overlay" id="settings-modal">
