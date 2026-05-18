@@ -155,10 +155,10 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .t1 .gzclp-badge{color:var(--accent);border-color:var(--accent);background:#7b5cff11;}
 .t2 .gzclp-badge{color:var(--cyan);border-color:var(--cyan);background:#00e5ff11;}
 .t3 .gzclp-badge{color:var(--green);border-color:var(--green);background:#00ffb311;}
-.gzclp-exname{font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text);margin-bottom:4px;line-height:1.3;}
-.gzclp-scheme{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);margin-bottom:5px;}
-.gzclp-wt{font-family:monospace;font-size:11px;margin-bottom:2px;}
-.gzclp-prog{font-family:monospace;font-size:11px;color:var(--text);margin-top:5px;line-height:1.5;}
+.gzclp-exname{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;color:var(--text);margin-bottom:5px;line-height:1.3;}
+.gzclp-scheme{font-family:'Space Mono',monospace;font-size:12px;color:var(--text);margin-bottom:6px;}
+.gzclp-wt{font-family:monospace;font-size:12px;margin-bottom:2px;}
+.gzclp-prog{font-family:monospace;font-size:12px;color:var(--text);margin-top:6px;line-height:1.5;}
 .gzclp-tier-note{font-family:monospace;font-size:11px;color:var(--yellow);margin-top:5px;padding:3px 7px;background:#ffd60009;border-left:2px solid var(--yellow);}
 .gzclp-fb-wrap{border:1px solid var(--border);background:#0a0a15;overflow:hidden;}
 .gzclp-fb-head{font-family:monospace;font-size:11px;letter-spacing:2px;color:var(--accent);padding:6px 12px;border-bottom:1px solid var(--border);background:#0d0d18;display:flex;justify-content:space-between;align-items:center;}
@@ -242,13 +242,13 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
   min-height:14px;text-align:right;}
 
 /* ── Page nav ──────────────────────────────────────────────────────── */
-.page-nav{display:flex;padding:0 18px;background:#090910;border-bottom:1px solid var(--border);position:relative;z-index:10;overflow-x:auto;scrollbar-width:none;}
+.page-nav{display:flex;justify-content:center;gap:8px;padding:10px 18px;background:#090910;border-bottom:1px solid var(--border);position:relative;z-index:10;flex-wrap:wrap;}
 .page-nav::-webkit-scrollbar{display:none;}
-.nav-item{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2.5px;padding:11px 20px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0;}
-.nav-item:hover{color:var(--text);}
-.nav-item.nav-active{color:var(--accent);border-bottom-color:var(--accent);}
-.nav-item.nav-stats-active{color:var(--cyan);border-bottom-color:var(--cyan);}
-.nav-item.nav-supp-active{color:var(--green);border-bottom-color:var(--green);}
+.nav-item{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;padding:7px 20px;color:var(--muted);text-decoration:none;border:1px solid var(--border);background:transparent;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;}
+.nav-item:hover{color:var(--text);border-color:var(--muted);}
+.nav-item.nav-active{color:var(--accent);border-color:var(--accent);background:#7b5cff18;box-shadow:0 0 10px #7b5cff22;}
+.nav-item.nav-stats-active{color:var(--cyan);border-color:var(--cyan);background:#00e5ff18;box-shadow:0 0 10px #00e5ff22;}
+.nav-item.nav-supp-active{color:var(--green);border-color:var(--green);background:#00ffb318;box-shadow:0 0 10px #00ffb322;}
 
 </style>
 </head>
@@ -3338,6 +3338,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const d = pts[pts.length-1].date;
     return new Date(d + 'T00:00').toLocaleDateString('nl-BE', {day:'numeric', month:'short'});
   }
+  // T3 kwaliteitskleur op basis van gemiddelde reps/set in de laatste sessie
+  // T3 doelbereik = 3×15–25. Kleur reflecteert hoe goed de hoge reps lukten.
+  function lastT3Quality(lk) {
+    if (!lk || !DATA.lifts[lk]) return null;
+    const pts = DATA.lifts[lk].points;
+    if (!pts || !pts.length) return null;
+    const last = pts[pts.length - 1];
+    if (!last.volume || !last.weight || !last.sets) return null;
+    const avg = last.volume / last.weight / last.sets;
+    if (avg >= 20) return '#00ffb3';   // groen  — top van range, makkelijk
+    if (avg >= 15) return null;        // null   — in range → valt terug op lift-kleur
+    if (avg >= 10) return '#ffd600';   // geel   — net onder, zwaar
+    return '#ff3d6b';                   // rood   — te zwaar voor hoge reps
+  }
   // Platen per zijde voor een barbellgewicht (bar = 20 kg)
   function platesPerSide(totalKg) {
     const perSide = (totalKg - 20) / 2;
@@ -3610,16 +3624,66 @@ document.addEventListener('DOMContentLoaded', function() {
       const dispWStr = (dispW !== null && isDB)
         ? `2 × ${r25(dispW/2)}\u202fkg <span style="font-family:monospace;font-size:10px;color:${liftC}aa">(${r25(dispW/2)} kg/arm)</span>`
         : dispW !== null ? `${dispW} kg` : null;
-      // Vorig werkgewicht + datum tonen bij progressie
-      const _prevW = lastW(tier.lk);
+      // Vorig gewicht + datum + pass/fail
+      const _prevW    = lastW(tier.lk);
       const _prevDate = lastDate(tier.lk);
       const _isProgressing = srcLabel === '+2.5 KG ✓';
+      const _isFail        = srcLabel === 'HERHAAL';
       const _prevWStr = _prevW !== null ? (isDB ? `${r25(_prevW/2)} kg/arm` : `${_prevW} kg`) : null;
-      const _prevLine = (_isProgressing && _prevWStr)
-        ? `<div style="font-size:10px;color:${liftC}cc;margin-bottom:3px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''}</div>` : '';
-      const wHtml = dispWStr !== null
-        ? `<div class="gzclp-wt">${_prevLine}<span style="color:${liftC};font-size:11px">${srcLabel}</span> <strong style="color:${liftC}">${dispWStr}</strong> <span style="color:${liftC};font-size:11px">→ ${tier.stepLabel}</span></div>`
-        : `<div class="gzclp-wt" style="color:var(--text)">— geen data</div>`;
+
+      // Pass/fail bepalen op basis van laatste punt in data
+      let _lastPass = null;
+      let _consecFails = 0;
+      if ((tier.t === 'T1' || tier.t === 'T2') && tier.lk && DATA.lifts[tier.lk]) {
+        const _pts = DATA.lifts[tier.lk].points;
+        if (_pts && _pts.length) {
+          const _lp = _pts[_pts.length - 1];
+          if (_lp.volume && _lp.weight) {
+            if (tier.t === 'T1') {
+              const _fx = tier.lk === 'Deadlift' ? 5 : 10;
+              _lastPass = (Math.round(_lp.volume / _lp.weight) - _fx) >= 5;
+            } else {
+              _lastPass = Math.round(_lp.volume / _lp.weight) >= 30;
+            }
+          }
+          // Tel opeenvolgende fails voor reset-regel
+          const _fx2 = tier.t === 'T1' ? (tier.lk === 'Deadlift' ? 5 : 10) : 0;
+          const _thr = tier.t === 'T1' ? 5 : 30;
+          for (let _i = _pts.length - 1; _i >= 0; _i--) {
+            const _p = _pts[_i];
+            if (!_p.volume || !_p.weight) break;
+            if ((Math.round(_p.volume / _p.weight) - _fx2) < _thr) _consecFails++;
+            else break;
+          }
+        }
+      }
+
+      const _passInd = _lastPass === true  ? ` <span style="color:#00ffb3;font-size:11px">pass</span>`
+                     : _lastPass === false ? ` <span style="color:#ff3d6b;font-size:11px">fail</span>`
+                     : '';
+      const _prevLine = _prevWStr
+        ? `<div style="font-size:11px;color:${liftC}cc;margin-bottom:5px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''}${_passInd}</div>` : '';
+
+      let wHtml;
+      if (dispWStr === null) {
+        wHtml = `<div class="gzclp-wt" style="color:var(--muted)">— geen data</div>`;
+      } else if (_isProgressing) {
+        const _delta = (_prevW !== null && dispW !== null) ? `+${Math.round((dispW - _prevW)*10)/10}` : '+2.5';
+        wHtml = `<div class="gzclp-wt">${_prevLine}<strong style="color:${liftC};font-size:16px">${dispWStr}</strong> <span style="color:${liftC}cc;font-size:12px">${_delta} kg</span></div>`;
+      } else if (_isFail) {
+        if (_consecFails >= 2) {
+          // 2× gefaald → reset −10%
+          const _resetW  = r25(_prevW * 0.9);
+          const _resetStr = isDB ? `2 × ${r25(_resetW/2)} kg` : `${_resetW} kg`;
+          wHtml = `<div class="gzclp-wt">${_prevLine}<span style="color:#ff3d6b;font-size:12px">−10%</span> <strong style="color:${liftC};font-size:16px">${_resetStr}</strong></div>`;
+        } else {
+          wHtml = `<div class="gzclp-wt">${_prevLine}<span style="color:var(--yellow);font-size:12px">herhaal</span> <strong style="color:${liftC};font-size:16px">${dispWStr}</strong></div>`;
+        }
+      } else if (srcLabel === 'T2 = 75% VAN T1') {
+        wHtml = `<div class="gzclp-wt"><strong style="color:${liftC};font-size:16px">${dispWStr}</strong></div>`;
+      } else {
+        wHtml = `<div class="gzclp-wt">${_prevLine}<strong style="color:${liftC};font-size:16px">${dispWStr}</strong> <span style="color:var(--muted);font-size:11px">(schatting)</span></div>`;
+      }
       const thisDW = tier.t === 'T1' ? dispW : (isDB ? null : t2dispW);
       const dbWorkLabel = (isDB && t2dispW) ? `${r25(t2dispW/2)}\u202fkg/arm` : null;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
@@ -3632,7 +3696,6 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
       <div class="gzclp-scheme">${tier.scheme}</div>
       ${wHtml}
-      <div class="gzclp-prog">${tier.prog}</div>
       <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
     </div>
     ${wuHtml}
@@ -3656,8 +3719,10 @@ document.addEventListener('DOMContentLoaded', function() {
           const prefix = hl ? '! ' : `${i+1}. `;
           const prevW = o.lk ? lastW(o.lk) : null;
           const lkColor = o.lk ? (LC[o.lk] || 'var(--muted)') : 'var(--muted)';
+          const qualColor = o.lk ? (lastT3Quality(o.lk) ?? lkColor) : lkColor;
+          const prevDate  = o.lk ? lastDate(o.lk) : null;
           const prevWLine = prevW !== null
-            ? `<div style="font-size:10px;color:${lkColor}cc;margin-top:2px">vorig: ${prevW} kg</div>`
+            ? `<div style="font-size:11px;color:${qualColor};margin-top:3px">vorig: ${prevW} kg${prevDate ? ` · ${prevDate}` : ''}</div>`
             : '';
           return `<div class="gzclp-t3-item" style="${border}">
             <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${prefix}${o.name}</span>
