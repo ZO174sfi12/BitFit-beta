@@ -334,6 +334,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
           <div class="stat-label">GEWICHT &Delta;</div>
           <div class="stat-value g" id="s-wdelta">—</div>
           <div class="stat-sub" id="s-wrange">—</div>
+          <div id="s-wcomp" style="font-family:monospace;font-size:11px;margin-top:3px;line-height:1.6;"></div>
         </div>
       </div>
 
@@ -3535,6 +3536,7 @@ function renderRadar(start) {
       plugins: {
         legend: { display: false },
         tooltip: {
+          position: 'nearest', yAlign: 'bottom',
           backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1, bodyColor: '#c0c0d8', titleColor: '#7b5cff',
           callbacks: {
             label: ctx => {
@@ -3612,6 +3614,15 @@ function computeStats(start) {
   const oldAvg    = oldW.length    ? Math.round(oldW.reduce((a,b) => a+b,0)    / oldW.length    * 100) / 100 : null;
   const wDelta = (recentAvg !== null && oldAvg !== null) ? Math.round((recentAvg - oldAvg) * 100) / 100 : null;
   const wDeltaLabel = wDelta !== null ? (wDelta >= 0 ? '+' : '') + wDelta + ' kg (' + wPts[0].date.slice(5) + '→' + wPts[wPts.length-1].date.slice(5) + ')' : null;
+  // Vet/lean breakdown via Deurenberg (inlined)
+  const _bfEst = kg => { const bmi = kg / (1.93*1.93); return Math.max(5, (1.2*bmi + 0.23*37 - 10.8 - 5.4)); };
+  let fatDelta = null, leanDelta = null;
+  if (oldAvg !== null && recentAvg !== null) {
+    const fatOld  = oldAvg    * _bfEst(oldAvg)    / 100;
+    const fatNew  = recentAvg * _bfEst(recentAvg) / 100;
+    fatDelta  = Math.round((fatNew  - fatOld)              * 10) / 10;
+    leanDelta = Math.round((wDelta  - fatDelta)            * 10) / 10;
+  }
 
   const epley = w => Math.round(w * 1.1 * 10) / 10;
   const prs = {};
@@ -3624,7 +3635,7 @@ function computeStats(start) {
     prs[key] = {weight: maxW, est1rm: epley(maxW), firstWeight: firstW, rm_gain: Math.round((epley(maxW)-epley(firstW))*10)/10, color: lift.color};
   });
   const top3 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
-  return {td, totalDays, wFirst, wLast, wDelta, wDeltaLabel, top3};
+  return {td, totalDays, wFirst, wLast, wDelta, wDeltaLabel, fatDelta, leanDelta, top3};
 }
 
 function renderStats(stats) {
@@ -3635,6 +3646,14 @@ function renderStats(stats) {
     $('s-wdelta').textContent = (stats.wDelta >= 0 ? '+' : '') + stats.wDelta + ' kg';
     $('s-wdelta').className = 'stat-value ' + (stats.wDelta <= 0 ? 'g' : 'r');
     $('s-wrange').textContent = stats.wDeltaLabel || (stats.wFirst + ' -> ' + stats.wLast + ' kg');
+    const comp = $('s-wcomp');
+    if (comp && stats.fatDelta !== null) {
+      const sign = v => (v >= 0 ? '+' : '') + v;
+      comp.innerHTML =
+        `<span style="color:#ff8a65">${sign(stats.fatDelta)} kg vet</span>` +
+        `<span style="color:var(--muted)"> · </span>` +
+        `<span style="color:#80deea">${sign(stats.leanDelta)} kg lean</span>`;
+    }
   }
 
 }
@@ -3888,11 +3907,12 @@ function renderBodyComp(startDate, endDate) {
   const fatData  = pts.map(p => p.fatMass);
   const leanData = pts.map(p => p.leanMass);
 
-  // Smart Y axes
-  function smartAxis(data, pad=1.5) {
+  // Smart Y axes — strak ingezoomd op de variatie
+  function smartAxis(data, pad=0.3) {
     const mn = Math.min(...data), mx = Math.max(...data);
-    const range = mx - mn || 2;
-    return { min: Math.floor(mn - range*0.15 - pad), max: Math.ceil(mx + range*0.15 + pad) };
+    const range = mx - mn || 1;
+    return { min: Math.floor((mn - range*0.06 - pad) * 10) / 10,
+             max: Math.ceil( (mx + range*0.06 + pad) * 10) / 10 };
   }
   const fatAxis  = smartAxis(fatData);
   const leanAxis = smartAxis(leanData);
@@ -3941,6 +3961,8 @@ function renderBodyComp(startDate, endDate) {
       plugins: {
         legend: { display: false },
         tooltip: {
+          position: 'nearest',
+          yAlign: 'bottom',
           callbacks: {
             title: items => items[0].label,
             afterBody: items => {
