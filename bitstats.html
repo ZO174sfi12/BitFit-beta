@@ -263,11 +263,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.0</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">86.9</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-05-19</span>
+        <span class="meta-value" style="color:var(--muted)">2026-05-20</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -519,6 +519,13 @@ const DATA = {
           "date": "2026-05-18",
           "weight": 85.0,
           "volume": 2050.0,
+          "sets": 7,
+          "pr": true
+        },
+        {
+          "date": "2026-05-20",
+          "weight": 90.0,
+          "volume": 1990.0,
           "sets": 7,
           "pr": true
         }
@@ -874,6 +881,13 @@ const DATA = {
           "volume": 1530.0,
           "sets": 5,
           "pr": false
+        },
+        {
+          "date": "2026-05-20",
+          "weight": 45.0,
+          "volume": 1460.0,
+          "sets": 5,
+          "pr": false
         }
       ]
     },
@@ -984,6 +998,13 @@ const DATA = {
           "weight": 35.0,
           "volume": 1680.0,
           "sets": 3,
+          "pr": false
+        },
+        {
+          "date": "2026-05-20",
+          "weight": 35.0,
+          "volume": 2180.0,
+          "sets": 4,
           "pr": false
         }
       ]
@@ -1826,6 +1847,10 @@ const DATA = {
     {
       "date": "2026-05-19",
       "weight": 87.0
+    },
+    {
+      "date": "2026-05-20",
+      "weight": 86.9
     }
   ],
   "muscle_daily": [
@@ -2863,6 +2888,26 @@ const DATA = {
       "date": "2026-05-19",
       "muscle": "Glutes",
       "volume": 810.0
+    },
+    {
+      "date": "2026-05-20",
+      "muscle": "Quads/Glutes",
+      "volume": 1990.0
+    },
+    {
+      "date": "2026-05-20",
+      "muscle": "Shoulders",
+      "volume": 1460.0
+    },
+    {
+      "date": "2026-05-20",
+      "muscle": "Chest",
+      "volume": 720.0
+    },
+    {
+      "date": "2026-05-20",
+      "muscle": "Back (Lats)",
+      "volume": 2180.0
     }
   ],
   "training_days": [
@@ -2950,7 +2995,8 @@ const DATA = {
     "2026-05-15",
     "2026-05-17",
     "2026-05-18",
-    "2026-05-19"
+    "2026-05-19",
+    "2026-05-20"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -3303,7 +3349,8 @@ const DATA = {
     "2026-05-15": 3,
     "2026-05-17": 0,
     "2026-05-18": 3,
-    "2026-05-19": 2
+    "2026-05-19": 2,
+    "2026-05-20": 2
   }
 };
 const TODAY = new Date();
@@ -3377,11 +3424,14 @@ const LIFT_LABELS = {
 let activeLiftFilter = new Set(PRIMARY_LIFTS);
 let radarStart = null;
 
-function getLastSets(key) {
+function getPeriodSets(key, start) {
   const lift = DATA.lifts[key];
   if (!lift || !lift.points.length) return null;
-  const last = lift.points[lift.points.length - 1];
-  return last.sets || null;
+  const startStr = (start instanceof Date) ? start.toISOString().slice(0,10) : '';
+  const pts = startStr ? lift.points.filter(p => p.date >= startStr) : lift.points;
+  if (!pts.length) return null;
+  const total = pts.reduce((acc, p) => acc + (p.sets || 0), 0);
+  return total || null;
 }
 
 function getTopWeightYear(key) {
@@ -3402,7 +3452,7 @@ function renderLiftSelector() {
       const color = lift ? lift.color : '#454560';
       const w = getTopWeightYear(key);
       const wLabel = w != null ? w + '\u202fkg' : '—';
-      const sets = getLastSets(key);
+      const sets = getPeriodSets(key, radarStart);
       const active = activeLiftFilter.has(key);
       return `<div class="lift-tile${active?' active':''}" style="--tc:${color};cursor:pointer" onclick="toggleLiftTile('${key}')">` +
         `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
