@@ -263,11 +263,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">89.1</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.7</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-05-26</span>
+        <span class="meta-value" style="color:var(--muted)">2026-05-27</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -649,6 +649,14 @@ const DATA = {
           "sets": 6,
           "pr": true,
           "work_reps": 17
+        },
+        {
+          "date": "2026-05-27",
+          "weight": 80.0,
+          "volume": 1785.0,
+          "sets": 6,
+          "pr": true,
+          "work_reps": 16
         }
       ]
     },
@@ -1460,6 +1468,14 @@ const DATA = {
           "sets": 3,
           "pr": false,
           "work_reps": 12
+        },
+        {
+          "date": "2026-05-27",
+          "weight": 45.0,
+          "volume": 1575.0,
+          "sets": 3,
+          "pr": false,
+          "work_reps": 35
         }
       ]
     },
@@ -1632,6 +1648,14 @@ const DATA = {
           "sets": 3,
           "pr": false,
           "work_reps": 28
+        },
+        {
+          "date": "2026-05-27",
+          "weight": 25.0,
+          "volume": 875.0,
+          "sets": 3,
+          "pr": false,
+          "work_reps": 35
         }
       ]
     }
@@ -1936,6 +1960,10 @@ const DATA = {
     {
       "date": "2026-05-26",
       "weight": 89.1
+    },
+    {
+      "date": "2026-05-27",
+      "weight": 87.7
     }
   ],
   "muscle_daily": [
@@ -3013,6 +3041,21 @@ const DATA = {
       "date": "2026-05-26",
       "muscle": "Back (Lats)",
       "volume": 1295.0
+    },
+    {
+      "date": "2026-05-27",
+      "muscle": "Chest",
+      "volume": 1785.0
+    },
+    {
+      "date": "2026-05-27",
+      "muscle": "Back",
+      "volume": 1575.0
+    },
+    {
+      "date": "2026-05-27",
+      "muscle": "Hamstrings",
+      "volume": 875.0
     }
   ],
   "training_days": [
@@ -3103,7 +3146,8 @@ const DATA = {
     "2026-05-19",
     "2026-05-20",
     "2026-05-21",
-    "2026-05-26"
+    "2026-05-26",
+    "2026-05-27"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -3459,7 +3503,8 @@ const DATA = {
     "2026-05-19": 2,
     "2026-05-20": 2,
     "2026-05-21": 0,
-    "2026-05-26": 2
+    "2026-05-26": 2,
+    "2026-05-27": 0
   }
 };
 const TODAY = new Date();
@@ -3829,32 +3874,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Warmup sets helpers
   function r25(v) { return Math.round(v / 2.5) * 2.5; }
+  // Bert's warmup protocol (note 2026-05-27):
+  // Set 1: 50% × w, 5 reps (min 40kg; OHP min 20kg)
+  // Set 2: 65% × w, 3 reps (min 50kg — alleen als min < werkgewicht)
+  // Set 3: 88% × w, 1–2 reps (min 60kg — alleen als min < werkgewicht)
+  // Uitzonderingen: DL < 100kg → sla set 1 over; w < 60kg → sla set 3 over.
+  function _wuApplyMin(calc, minW, workW) {
+    // Min alleen toepassen als hij zelf onder het werkgewicht valt
+    const eff = (minW < workW) ? Math.max(calc, minW) : calc;
+    return (eff > 0 && eff < workW) ? eff : null;
+  }
   function t1Warmup(w, lk) {
     if (!w || w <= 0) return [];
-    const bar = 20, isDL = lk === 'Deadlift';
+    const isDL = lk === 'Deadlift', isOHP = lk === 'OHP';
+    const showS1 = !(isDL && w < 100);   // DL<100kg: sla set 1 over
+    const showS3 = w >= 60;              // w<60kg: sla set 3 over (te dicht op werkgewicht)
     const rows = [];
-    if (isDL) {
-      const s1 = Math.max(bar + 20, r25(w * 0.5));
-      const s2 = r25(w * 0.70);
-      const s3 = r25(w * 0.87);
-      if (s1 < w)              rows.push({w: s1, reps: 5});
-      if (s2 < w && s2 > s1)   rows.push({w: s2, reps: 3});
-      if (s3 < w && s3 > s2 && w > 70) rows.push({w: s3, reps: 1});
-    } else {
-      if (w > 35) rows.push({w: bar, reps: 5, note:'lege stang'});
-      const s2 = r25(w * 0.50); if (s2 > bar && s2 < w) rows.push({w: s2, reps: 5});
-      const s3 = r25(w * 0.67); if (s3 > (rows[rows.length-1]?.w||0) && s3 < w) rows.push({w: s3, reps: 3});
-      const s4 = r25(w * 0.85); if (s4 > (rows[rows.length-1]?.w||0) && s4 < w && w > 55) rows.push({w: s4, reps: 1, note:'last warmup'});
+    if (showS1) {
+      const s1 = _wuApplyMin(r25(w * 0.50), isOHP ? 20 : 40, w);
+      if (s1) rows.push({w: s1, reps: 5});
+    }
+    const prev2 = rows[rows.length-1]?.w || 0;
+    const s2 = _wuApplyMin(r25(w * 0.65), 50, w);
+    if (s2 && s2 > prev2) rows.push({w: s2, reps: 3});
+    if (showS3) {
+      const prev3 = rows[rows.length-1]?.w || 0;
+      const s3 = _wuApplyMin(r25(w * 0.88), 60, w);
+      if (s3 && s3 > prev3) rows.push({w: s3, reps: '1–2'});
     }
     return rows;
   }
   function t2Warmup(w, lk) {
+    // T2: lichaam al warm van T1 → max 2 lichte opwarmsets, geen strikte minima
     if (!w || w <= 0) return [];
     if (lk === 'DB Bench x2') return dbWarmup(w);
-    const bar = 20;
     const rows = [];
-    if (w > 32) rows.push({w: bar, reps: 10, note:'lege stang'});
-    const s2 = r25(w * 0.65); if (s2 > bar && s2 < w) rows.push({w: s2, reps: 8});
+    const s1 = r25(w * 0.50);
+    if (s1 >= 20 && s1 < w) rows.push({w: s1, reps: 5, note: s1 === 20 ? 'lege stang' : undefined});
+    if (w >= 60) {
+      const prev = rows[rows.length-1]?.w || 0;
+      const s2 = r25(w * 0.75);
+      if (s2 > prev && s2 < w) rows.push({w: s2, reps: 3});
+    }
     return rows;
   }
   // Dumbbell warmup: w is totaal (beide armen). Toon per-arm gewichten.
@@ -3915,6 +3976,12 @@ document.addEventListener('DOMContentLoaded', function() {
       btnRow.appendChild(b);
     });
   }
+
+  // Rekinstelling per lift (baar = j-hooks, veiligheid = spotter arms)
+  const RACK_SETUP = {
+    'Bench':       {bar: 12, safety: '4 zichtbaar'},
+    'Front Squat': {bar: 19, safety: '4 zichtbaar'},
+  };
 
   function renderDay(idx) {
     const day = DAYS[idx];
@@ -4009,18 +4076,21 @@ document.addEventListener('DOMContentLoaded', function() {
       const _prevWStr = _prevW !== null ? (isDB ? `${r25(_prevW/2)} kg/arm` : `${_prevW} kg`) : null;
 
       // Pass/fail bepalen op basis van laatste punt in data
+      // Gebruikt work_reps (alleen reps op werkgewicht) indien beschikbaar, anders vol/w fallback
       let _lastPass = null;
       let _consecFails = 0;
       if ((tier.t === 'T1' || tier.t === 'T2') && tier.lk && DATA.lifts[tier.lk]) {
         const _pts = DATA.lifts[tier.lk].points;
         if (_pts && _pts.length) {
           const _lp = _pts[_pts.length - 1];
-          if (_lp.volume && _lp.weight) {
+          const _lp_reps = _lp.work_reps !== undefined ? _lp.work_reps
+                         : (_lp.volume && _lp.weight ? Math.round(_lp.volume / _lp.weight) : null);
+          if (_lp_reps !== null) {
             if (tier.t === 'T1') {
               const _fx = tier.lk === 'Deadlift' ? 5 : 10;
-              _lastPass = (Math.round(_lp.volume / _lp.weight) - _fx) >= 5;
+              _lastPass = (_lp_reps - _fx) >= 5;
             } else {
-              _lastPass = Math.round(_lp.volume / _lp.weight) >= 30;
+              _lastPass = _lp_reps >= 30;
             }
           }
           // Tel opeenvolgende fails voor reset-regel
@@ -4028,8 +4098,10 @@ document.addEventListener('DOMContentLoaded', function() {
           const _thr = tier.t === 'T1' ? 5 : 30;
           for (let _i = _pts.length - 1; _i >= 0; _i--) {
             const _p = _pts[_i];
-            if (!_p.volume || !_p.weight) break;
-            if ((Math.round(_p.volume / _p.weight) - _fx2) < _thr) _consecFails++;
+            const _r = _p.work_reps !== undefined ? _p.work_reps
+                     : (_p.volume && _p.weight ? Math.round(_p.volume / _p.weight) : null);
+            if (_r === null) break;
+            if ((_r - _fx2) < _thr) _consecFails++;
             else break;
           }
         }
@@ -4064,12 +4136,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const dbWorkLabel = (isDB && t2dispW) ? `${r25(t2dispW/2)}\u202fkg/arm` : null;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
       const wuHtml = inlineWarmupHtml(wuRows, thisDW, liftC, dbWorkLabel, tier.lk);
+      const rackCfg = RACK_SETUP[tier.lk];
+      const rackHtml = rackCfg
+        ? `<div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px">BAAR ${rackCfg.bar} · VEILIGHEID ${rackCfg.safety}</div>`
+        : '';
       return `<div class="gzclp-tier" style="border-color:${liftC}33">
   <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${liftC},transparent 70%);box-shadow:0 0 6px ${liftC}66"></div>
   <div class="gzclp-tier-body">
     <div class="gzclp-tier-main">
       <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
       <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
+      ${rackHtml}
       <div class="gzclp-scheme">${tier.scheme}</div>
       ${wHtml}
       <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
