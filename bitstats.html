@@ -350,12 +350,15 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       <div style="display:flex;gap:16px;font-family:monospace;font-size:10px;">
         <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:16px;height:2px;background:#ff8a65;display:inline-block;border-radius:1px;"></span>Vetmassa</span>
         <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:16px;height:2px;background:#80deea;display:inline-block;border-radius:1px;"></span>Lean massa</span>
+        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:20px;height:0;border-top:2px dashed #ff8a6580;display:inline-block;"></span>Doel vet 15.6</span>
+        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:20px;height:0;border-top:2px dashed #80deea80;display:inline-block;"></span>Doel lean 71</span>
         <span style="color:#454560;font-size:9px;">geschat via Deurenberg</span>
       </div>
     </div>
     <div style="position:relative;height:clamp(180px,40vw,260px);">
       <canvas id="bodyCompChart" role="img" aria-label="Lijndiagram vetmassa en lean massa over de geselecteerde periode.">Vetmassa en lean massa geschat op basis van gewicht.</canvas>
     </div>
+    <div id="body-comp-feedback" style="margin-top:12px;font-family:monospace;font-size:11px;line-height:1.8;"></div>
   </div>
 
   <div class="panel g analysis-panel">
@@ -4312,22 +4315,78 @@ function renderBodyComp(startDate, endDate) {
   });
   const fatData  = pts.map(p => p.fatMass);
   const leanData = pts.map(p => p.leanMass);
+  const GOAL_LEAN = 71, GOAL_FAT = 15.6;
 
-  // Smart Y axes — strak ingezoomd op de variatie
+  // Smart Y axes — strak ingezoomd op de variatie, incl. doelwaarden
   function smartAxis(data, pad=0.3) {
     const mn = Math.min(...data), mx = Math.max(...data);
     const range = mx - mn || 1;
     return { min: Math.floor((mn - range*0.06 - pad) * 10) / 10,
              max: Math.ceil( (mx + range*0.06 + pad) * 10) / 10 };
   }
-  const fatAxis  = smartAxis(fatData);
-  const leanAxis = smartAxis(leanData);
+  const fatAxis  = smartAxis([...fatData, GOAL_FAT]);
+  const leanAxis = smartAxis([...leanData, GOAL_LEAN]);
 
   const isDark = true;
   const gridC = 'rgba(255,255,255,0.05)';
   const textC = '#606080';
 
   if (bodyCompChart) bodyCompChart.destroy();
+  // ── Feedback blok ──────────────────────────────────────────
+  const fbEl = document.getElementById('body-comp-feedback');
+  if (fbEl && pts.length >= 2) {
+    const last  = pts[pts.length - 1];
+    const first = pts[0];
+    const leanGap = (GOAL_LEAN - last.leanMass);
+    const fatGap  = (last.fatMass - GOAL_FAT);
+    const leanOk  = leanGap <= 0;
+    const fatOk   = fatGap  <= 0;
+    // Trend: lean gain/week over geselecteerde periode
+    const daysDiff  = (new Date(last.date) - new Date(first.date)) / 86400000;
+    const leanDelta = last.leanMass - first.leanMass;
+    const weeklyLean = daysDiff >= 7 ? leanDelta / daysDiff * 7 : null;
+    // Prognose weken tot doelen
+    let etaWeeksLean = null;
+    if (weeklyLean && weeklyLean > 0 && !leanOk) etaWeeksLean = Math.round(leanGap / weeklyLean);
+    let html = '';
+    // Huidige status
+    html += `<div><span style="color:var(--muted)">Nu &nbsp;</span>`;
+    html += `<span style="color:#80deea;font-weight:700">${last.leanMass} kg lean</span>`;
+    html += ` <span style="color:#454560">·</span> `;
+    html += `<span style="color:#ff8a65;font-weight:700">${last.fatMass} kg vet</span>`;
+    html += ` <span style="color:#454560">·</span> `;
+    html += `<span style="color:var(--muted)">BF% ${last.bfPct.toFixed(1)}%${last.estimated ? ' (schatting)' : ''}</span></div>`;
+    // Doelgap
+    html += `<div><span style="color:var(--muted)">Doel</span>  `;
+    html += leanOk
+      ? `<span style="color:var(--green)">✓ lean bereikt</span>`
+      : `<span style="color:#80deea">+${leanGap.toFixed(1)} kg lean te gaan</span>`;
+    html += ` <span style="color:#454560">·</span> `;
+    html += fatOk
+      ? `<span style="color:var(--green)">✓ vet bereikt</span>`
+      : `<span style="color:#ff8a65">−${fatGap.toFixed(1)} kg vet te gaan</span>`;
+    html += `</div>`;
+    // Trend + prognose
+    if (weeklyLean !== null) {
+      const sign = weeklyLean >= 0 ? '+' : '';
+      html += `<div style="margin-top:4px"><span style="color:var(--muted)">Trend</span>  `;
+      html += `<span style="color:var(--text)">${sign}${weeklyLean.toFixed(2)} kg lean/week</span>`;
+      if (!leanOk) {
+        if (weeklyLean > 0 && etaWeeksLean) {
+          html += ` <span style="color:#454560">·</span> <span style="color:var(--yellow)">doel bereikt in ~${etaWeeksLean} weken</span>`;
+        } else if (weeklyLean <= 0) {
+          html += ` <span style="color:#454560">·</span> <span style="color:var(--red)">lean daalt — check caloriebalans</span>`;
+        }
+      }
+      html += `</div>`;
+    }
+    // Context: schatting disclaimer
+    html += `<div style="color:#454560;margin-top:2px;font-size:10px;">Schatting via Deurenberg · geen DEXA — richting telt, niet het getal.</div>`;
+    fbEl.innerHTML = html;
+  } else if (fbEl) {
+    fbEl.innerHTML = '';
+  }
+
   bodyCompChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -4358,6 +4417,30 @@ function renderBodyComp(startDate, endDate) {
           tension: 0.3,
           yAxisID: 'yLean',
           fill: true,
+        },
+        {
+          label: 'Doel lean (71 kg)',
+          data: labels.map(() => GOAL_LEAN),
+          borderColor: 'rgba(128,222,234,0.45)',
+          borderWidth: 1.5,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          pointHoverRadius: 0,
+          tension: 0,
+          yAxisID: 'yLean',
+          fill: false,
+        },
+        {
+          label: 'Doel vet (15.6 kg)',
+          data: labels.map(() => GOAL_FAT),
+          borderColor: 'rgba(255,138,101,0.45)',
+          borderWidth: 1.5,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          pointHoverRadius: 0,
+          tension: 0,
+          yAxisID: 'yFat',
+          fill: false,
         }
       ]
     },
