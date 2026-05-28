@@ -4368,14 +4368,18 @@ function renderBodyComp(startDate, endDate) {
     html += `</div>`;
     // Trend + prognose
     if (weeklyLean !== null) {
-      const sign = weeklyLean >= 0 ? '+' : '';
+      const sign = weeklyLean > 0 ? '+' : '';
+      const _rising  = weeklyLean >  0.05;
+      const _falling = weeklyLean < -0.05;
       html += `<div style="margin-top:4px"><span style="color:var(--muted)">Trend</span>  `;
       html += `<span style="color:var(--text)">${sign}${weeklyLean.toFixed(2)} kg lean/week</span>`;
       if (!leanOk) {
-        if (weeklyLean > 0 && etaWeeksLean) {
+        if (_rising && etaWeeksLean) {
           html += ` <span style="color:#454560">·</span> <span style="color:var(--yellow)">doel bereikt in ~${etaWeeksLean} weken</span>`;
-        } else if (weeklyLean <= 0) {
+        } else if (_falling) {
           html += ` <span style="color:#454560">·</span> <span style="color:var(--red)">lean daalt — check caloriebalans</span>`;
+        } else {
+          html += ` <span style="color:#454560">·</span> <span style="color:var(--muted)">stabiel — meer eten of meer volume</span>`;
         }
       }
       html += `</div>`;
