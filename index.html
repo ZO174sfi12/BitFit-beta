@@ -3686,7 +3686,6 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · complementair aan DL' },
       { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · versterkt DL positie' },
       { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
-      { name:'DB CLEAN',         lk:'DB Clean',    reps:'3 × 8–12',   note:'explosief · heupen door · schouders/traps' },
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
@@ -3882,7 +3881,7 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   // Push/pull saldo laatste 7 dagen
   const _pushCat = new Set(['Bench','DB Bench x2','OHP','DIP-BW']);
-  const _pullCat = new Set(['Lat PD','DB Clean','Row','Cable Row']);
+  const _pullCat = new Set(['Lat PD','Row','Cable Row']);
   let _pushSets7 = 0, _pullSets7 = 0;
   for (const [k,v] of Object.entries(DATA.lifts)) {
     const sc = v.points.filter(p => p.date >= last7Str).reduce((a,p) => a+(p.sets||1), 0);
@@ -3894,7 +3893,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const _needsGlutes = !recentLifts7.has('Hip Thrust') && !recentLifts7.has('Abductor');
   // T3 naam → DATA.lifts key (voor recency + vorig gewicht)
   const T3_TO_LIFT = {
-    'LAT PULLDOWN':'Lat PD', 'DIPS':'DIP-BW', 'DB CLEAN':'DB Clean',
+    'LAT PULLDOWN':'Lat PD', 'DIPS':'DIP-BW',
     'HIP THRUST':'Hip Thrust', 'FACE PULL':'Face Pull',
     'ABDUCTOR MACHINE':'Abductor', 'LEG CURL':'Leg Curl', 'CABLE ROW':'Cable Row',
   };
@@ -3911,7 +3910,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   const T3_PRIO_CAT = {
     'HIP THRUST':'glutes','ABDUCTOR MACHINE':'glutes',
-    'LAT PULLDOWN':'pull','CABLE ROW':'pull','CHIN-UPS':'pull','DB CLEAN':'pull',
+    'LAT PULLDOWN':'pull','CABLE ROW':'pull','CHIN-UPS':'pull',
     'DIPS':'push','CABLE CHEST FLY':'push',
     'LEG CURL':'legs','DEAD BUG':'core','REVERSE NORDIC':'legs',
     'FACE PULL':'shoulder',
@@ -3920,7 +3919,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const T3_PREF = {
     'FACE PULL':30,'LEG CURL':25,'DEAD BUG':20,'REVERSE NORDIC':20,
     'HIP THRUST':15,'ABDUCTOR MACHINE':15,'CABLE ROW':15,
-    'LAT PULLDOWN':10,'DB CLEAN':5,'DIPS':0,'CABLE CHEST FLY':-10,
+    'LAT PULLDOWN':10,'DIPS':0,'CABLE CHEST FLY':-10,
   };
   // Een T3-oefening krijgt ! als ze een hoge voorkeur heeft of hard nodig is, en recent niet gedaan
   function t3IsHighlighted(name) {

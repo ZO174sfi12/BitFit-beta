@@ -3730,11 +3730,11 @@ Chart.defaults.font.size = 9;
 
 // ── Lift Selector ─────────────────────────────────────────
 const PRIMARY_LIFTS   = ['Squat','Deadlift','Bench','OHP'];
-const SECONDARY_LIFTS = ['DB Bench x2','Lat PD','DIP-BW','Front Squat','DB Clean','Row'];
+const SECONDARY_LIFTS = ['DB Bench x2','Lat PD','DIP-BW','Front Squat','Row'];
 const LIFT_LABELS = {
   'Squat':'SQUAT','Deadlift':'DEADLIFT','Bench':'BENCH','OHP':'OHP',
   'DB Bench x2':'DB BENCH','Lat PD':'LAT PD','DIP-BW':'DIP',
-  'Front Squat':'FRONT SQ.','DB Clean':'DB CLEAN','Row':'ROW'
+  'Front Squat':'FRONT SQ.','Row':'ROW'
 };
 let activeLiftFilter = new Set(PRIMARY_LIFTS);
 let radarStart = null;
@@ -4087,7 +4087,6 @@ function renderAnalysis(start) {
     'Lat PD':      { primary:'Rug'                            },
     'DIP-BW':      { primary:'Borst',     secondary:'Triceps' },
     'Front Squat': { primary:'Benen',     secondary:'Glutes'  },
-    'DB Clean':    { primary:'Schouders'                      },
     'Hip Thrust':  { primary:'Glutes'                         },
   };
 
@@ -4110,7 +4109,7 @@ function renderAnalysis(start) {
   const LIFT_CAT = {
     Squat:'legs', Deadlift:'hinge', 'Front Squat':'legs', 'Hip Thrust':'glutes',
     Bench:'push-h', OHP:'push-v', 'DB Bench x2':'push-h', 'DIP-BW':'push-v',
-    'Lat PD':'pull-v', 'DB Clean':'pull-v',
+    'Lat PD':'pull-v',
   };
   const catS = {};
   Object.entries(DATA.lifts).forEach(([key, lift]) => {
