@@ -6836,9 +6836,9 @@ update(30);
 
 // ── LICHAAMSSAMENSTELLING ─────────────────────────────────────────────────────
 // Deurenberg-schatting: BF% = 1.2×BMI + 0.23×leeftijd - 10.8 - 5.4 (man)
-// Bert: 193 cm → 3.7249 m², leeftijd ~37
+// Bert: 193 cm → 3.7249 m², geboren 23/04/1990
 const _HEIGHT_M2 = 1.93 * 1.93;
-const _AGE = 37;
+const _AGE = 36;
 function estimateBFPct(weightKg) {
   const bmi = weightKg / _HEIGHT_M2;
   return Math.max(5, Math.round((1.2 * bmi + 0.23 * _AGE - 10.8 - 5.4) * 10) / 10);
