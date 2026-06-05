@@ -6410,27 +6410,27 @@ document.addEventListener('DOMContentLoaded', function() {
     ],
   };
 
-  // T3 Varianten — primary lift varianten voor techniekvoorbereiding
+  // T3 Varianten — aanvullend op het dag-patroon richting fullbody
   const T3_VARIANTS = {
     'SQUAT A': [
-      { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · 2 sec pauze onderaan · bodemkracht' },
-      { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'dumbbells · balans · heupmobiliteit · asymmetrie' },
-      { name:'STEP-UP',               reps:'3 × 10–15/z',note:'geen explosieve afzet · hallux-vriendelijk' },
+      // Dag heeft: squat (benen) + OHP (push) → voeg hinge/pull toe
+      { name:'BLOCK PULL',            reps:'3 × 5–8',    note:'hoge start · meer hinge · Lotte · posteriors chain aanvulling' },
+      { name:'SINGLE-LEG RDL',        reps:'3 × 8–10/z', note:'hinge unilateraal · hamstring · links-rechts check' },
     ],
     'BENCH': [
-      { name:'PAUSED BENCH',          reps:'3 × 5–8',    note:'70% · 2 sec pauze op borst · geen stuitkracht' },
-      { name:'CLOSE-GRIP BENCH',      reps:'3 × 8–12',   note:'smalle grip · tricep dominant · lockout kracht' },
-      { name:'SINGLE-ARM DB BENCH',   reps:'3 × 8–12/z', note:'schouder stabilisatie · asymmetrie detectie' },
+      // Dag heeft: bench (push) + front squat (benen) → voeg pull/hinge toe
+      { name:'SINGLE-ARM DB ROW',     reps:'3 × 8–12/z', note:'horizontale pull · upper back · schouder balans na bench' },
+      { name:'ROMANIAN DEADLIFT',     reps:'3 × 10–12',  note:'hinge · hamstring · posteriors aanvulling op push-dag' },
     ],
     'SQUAT B': [
-      { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · bodemkracht · techniek diepste punt' },
-      { name:'SINGLE-LEG RDL',        reps:'3 × 8–10/z', note:'hinge unilateraal · hamstring · links-rechts check' },
-      { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'unilateraal · na row T2 · andere spiergroep' },
+      // Dag heeft: squat (benen) + row (pull) → voeg push toe
+      { name:'PAUSED BENCH',          reps:'3 × 5–8',    note:'70% · 2 sec pauze op borst · geen stuitkracht' },
+      { name:'CLOSE-GRIP BENCH',      reps:'3 × 8–12',   note:'tricep dominant · lockout kracht · push aanvulling op row-dag' },
     ],
     'DEADLIFT': [
-      { name:'BLOCK PULL',            reps:'3 × 5–8',    note:'hoge knie hoogte · meer hinge · minder squat · Lotte' },
-      { name:'ROMANIAN DEADLIFT',     reps:'3 × 10–12',  note:'hamstring · glute · heupextensie · lichte helling voorwaarts' },
-      { name:'SINGLE-LEG RDL',        reps:'3 × 8–10/z', note:'hinge unilateraal · asymmetrie detectie na DL' },
+      // Dag heeft: deadlift (hinge) + DB bench (push) → voeg squat/unilateraal toe
+      { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'squat unilateraal · balans · heupmobiliteit · asymmetrie' },
+      { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · bodemkracht · squat patroon na hinge-dag' },
     ],
   };
 
