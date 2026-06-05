@@ -6965,17 +6965,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // T3 Varianten block
     const varOpts = T3_VARIANTS[day.key] || [];
-    const t3VarHtml = varOpts.length ? `<div class="gzclp-tier gzclp-t3-full" style="border-color:#ffd60033;margin-top:8px">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--yellow),transparent 70%)"></div>
-      <span class="gzclp-badge" style="color:var(--yellow);border-color:var(--yellow);background:#ffd60015">T3</span>
+    const t3VarHtml = varOpts.length ? `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
+      <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-        <div class="gzclp-exname" style="color:var(--yellow)">VARIANTEN — primary lift techniek</div>
-        <div style="font-family:monospace;font-size:11px;color:var(--yellow)">⏱ 90–120 sec</div>
+        <div class="gzclp-exname" style="color:var(--green)">VARIANTEN — fullbody aanvulling</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 90–120 sec</div>
       </div>
       <div class="gzclp-t3-grid">
         ${varOpts.map((o, i) => `<div class="gzclp-t3-item">
           <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:var(--text)">${i+1}. ${o.name}</span>
-          <span style="color:var(--yellow);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
+          <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
           <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
         </div>`).join('')}
       </div>
@@ -7030,7 +7030,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </details>`;
 
-    c.innerHTML = tierHtml + t3Html + t3VarHtml;
+    c.innerHTML = tierHtml + t3VarHtml + t3Html;
   }
 
 
