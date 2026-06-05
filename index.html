@@ -6366,6 +6366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'SQUAT A': [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · bekken neutraal' },
       { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'kabel rope · externe rotatie · schouderhealth' },
+      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · ellebogen licht gebogen · pinch bovenaan' },
       { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · antagonist quads · kniestabiliteit' },
       { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · rechtstreeks relevant voor squat diepte' },
       { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
@@ -6376,6 +6377,7 @@ document.addEventListener('DOMContentLoaded', function() {
     BENCH: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan' },
       { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'schouder balans na bench · altijd relevant' },
+      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · schouder balans na bench' },
       { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · antagonist quads' },
       { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit' },
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
@@ -6386,6 +6388,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'SQUAT B': [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A' },
       { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'rotator cuff · schouder gezondheid' },
+      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · rear deltoid · varieer met face pull' },
       { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · na squat' },
       { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · relevant voor squat diepte' },
       { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
@@ -6397,6 +6400,7 @@ document.addEventListener('DOMContentLoaded', function() {
     DEADLIFT: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · perfect na DL — heupen al warm' },
       { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
+      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · rear deltoid · upper back balans' },
       { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · complementair aan DL' },
       { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · versterkt DL positie' },
       { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
@@ -6627,11 +6631,11 @@ document.addEventListener('DOMContentLoaded', function() {
     'LAT PULLDOWN':'pull','CABLE ROW':'pull','CHIN-UPS':'pull',
     'DIPS':'push','CABLE CHEST FLY':'push',
     'LEG CURL':'legs','DEAD BUG':'core','REVERSE NORDIC':'legs',
-    'FACE PULL':'shoulder',
+    'FACE PULL':'shoulder', 'REAR DELT FLY':'shoulder',
   };
   // Statische voorkeursscore per oefening (hogere waarde = hogere prioriteit)
   const T3_PREF = {
-    'FACE PULL':30,'LEG CURL':25,'DEAD BUG':20,'REVERSE NORDIC':20,
+    'FACE PULL':30,'REAR DELT FLY':28,'LEG CURL':25,'DEAD BUG':20,'REVERSE NORDIC':20,
     'HIP THRUST':15,'ABDUCTOR MACHINE':15,'CABLE ROW':15,
     'LAT PULLDOWN':10,'DIPS':0,'CABLE CHEST FLY':-10,
   };
@@ -6752,6 +6756,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const RACK_SETUP = {
     'Bench':       {bar: 12, safety: '4 zichtbaar'},
     'Front Squat': {bar: 19, safety: '4 zichtbaar'},
+  };
+
+  // Technische cues per lift — van Lotte
+  const LIFT_CUES = {
+    'Squat':    'Heupen naar voren · billen aanspannen',
+    'Deadlift': 'Hoger starten (block pull) · meer hinge · minder squat',
+    'OHP':      'Buik aanspannen · bovenlijf als plank',
+    'Bench':    'Hielen op grond · billen op de bank duwen',
   };
 
   function renderDay(idx) {
@@ -6917,7 +6929,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="gzclp-tier-main">
       <span class="gzclp-badge" style="color:${liftC};border-color:${liftC};background:${liftC}15">${tier.t}</span>
       <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
-      ${rackHtml}
+      ${rackHtml}${LIFT_CUES[tier.lk] ? `<div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.5px;font-style:italic">${LIFT_CUES[tier.lk]}</div>` : ''}
       <div class="gzclp-scheme">${tier.scheme}</div>
       ${wHtml}
       <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
