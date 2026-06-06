@@ -6782,6 +6782,14 @@ document.addEventListener('DOMContentLoaded', function() {
     'Front Squat': {bar: 19, safety: '4 zichtbaar'},
   };
 
+  // T1 varianten per lift — tonen in de T1 kaart bij stagnatie
+  const T1_VARIANTS = {
+    'Squat':    ['Paused squat (60–70%)', 'Bulgarian split squat', 'Step-up'],
+    'Bench':    ['Paused bench (70%)', 'Close-grip bench', 'Single-arm DB bench'],
+    'Deadlift': ['Block pull', 'Romanian deadlift', 'Single-leg RDL'],
+    'OHP':      ['Single-arm DB press', 'Push press'],
+  };
+
   // Technische cues per lift — van Lotte
   const LIFT_CUES = {
     'Squat':    'Heupen naar voren · billen aanspannen',
@@ -6955,6 +6963,18 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gzclp-exname" style="color:${liftC}">${tier.name}</div>
       ${rackHtml}${LIFT_CUES[tier.lk] ? `<div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.5px;font-style:italic">${LIFT_CUES[tier.lk]}</div>` : ''}
       <div class="gzclp-scheme">${tier.scheme}</div>
+      ${(() => {
+        if (tier.t !== 'T1') return '';
+        const vars = T1_VARIANTS[tier.lk] || [];
+        if (!vars.length) return '';
+        const clr = _consecFails >= 2 ? 'var(--red)' : _consecFails >= 1 ? 'var(--yellow)' : '#3a3a5a';
+        const lbl = _consecFails >= 2 ? '⚠ VARIANT AANGERADEN' : _consecFails >= 1 ? '→ OVERWEEG VARIANT' : 'VARIANTEN';
+        const txtClr = _consecFails >= 1 ? 'var(--muted)' : '#333355';
+        return `<div style="margin-top:6px;padding-top:5px;border-top:1px solid #1a1a2e">
+          <div style="font-family:monospace;font-size:9px;color:${clr};letter-spacing:1px;margin-bottom:2px">${lbl}</div>
+          <div style="font-family:monospace;font-size:10px;color:${txtClr}">${vars.join(' · ')}</div>
+        </div>`;
+      })()}
       ${wHtml}
       <div class="gzclp-rest-line" style="color:${liftC}">⏱ ${tier.rest}</div>
     </div>

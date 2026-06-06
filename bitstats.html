@@ -341,24 +341,15 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     </div>
   </div>
 
-  <div class="panel analysis-panel" style="border-color:#ff8a6533;">
-    <div class="cd tl" style="border-color:#ff8a65"></div>
-    <div class="cd tr" style="border-color:#ff8a65"></div>
-    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff8a65,#80deea,transparent 70%);box-shadow:0 0 8px #ff8a6544;"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
-      <div class="panel-title" style="color:#ff8a65;margin-bottom:0;">&#9658; LICHAAMSSAMENSTELLING</div>
-      <div style="display:flex;gap:16px;font-family:monospace;font-size:10px;">
-        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:16px;height:2px;background:#ff8a65;display:inline-block;border-radius:1px;"></span>Vetmassa</span>
-        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:16px;height:2px;background:#80deea;display:inline-block;border-radius:1px;"></span>Lean massa</span>
-        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:20px;height:0;border-top:2px dashed #ff8a6580;display:inline-block;"></span>Doel vet 15.6</span>
-        <span style="display:flex;align-items:center;gap:5px;color:var(--muted)"><span style="width:20px;height:0;border-top:2px dashed #80deea80;display:inline-block;"></span>Doel lean 71</span>
-        <span id="bc-source-note" style="color:#454560;font-size:9px;">weegschaal</span>
-      </div>
+  <div class="panel analysis-panel" style="border-color:#7b5cff33;">
+    <div class="cd tl" style="border-color:var(--accent)"></div>
+    <div class="cd tr" style="border-color:var(--accent)"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan),transparent 70%);box-shadow:0 0 8px #7b5cff44;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div class="panel-title" style="color:var(--accent);margin-bottom:0;">&#9658; DOELEN — check-in Lotte</div>
+      <div id="kpi-countdown" style="font-family:monospace;font-size:11px;color:var(--cyan)"></div>
     </div>
-    <div style="position:relative;height:clamp(180px,40vw,260px);">
-      <canvas id="bodyCompChart" role="img" aria-label="Lijndiagram vetmassa en lean massa over de geselecteerde periode.">Vetmassa en lean massa geschat op basis van gewicht.</canvas>
-    </div>
-    <div id="body-comp-feedback" style="margin-top:12px;font-family:monospace;font-size:11px;line-height:1.8;"></div>
+    <div id="kpi-grid" style="display:flex;flex-direction:column;gap:8px;"></div>
   </div>
 
   <div class="panel g analysis-panel">
@@ -7224,16 +7215,96 @@ function renderBodyComp(startDate, endDate) {
 
 
 // Hook body comp into period updates
-const _origUpdate = update;
-update = function(days) {
-  _origUpdate(days);
-  const start = getPeriodStart(days);
-  const end   = getActiveEnd();
-  renderBodyComp(start, end);
-};
-renderBodyComp(getPeriodStart(30), getActiveEnd());
+// ── KPI Goals Panel ────────────────────────────────────────────────────
+const KPI_BASELINE_DATE = '2026-06-04';
+const KPI_CHECK_DATE    = new Date('2026-07-07');
+const KPI_GOALS = [
+  { label:'Gewicht',   key:null,        start:86.8, goal:[85,88], unit:'kg', dir:'range' },
+  { label:'Vet%',      key:'_bf',       start:20.6, goal:19.5,   unit:'%',  dir:'down'  },
+  { label:'Squat',     key:'Squat',     start:95,   goal:100,    unit:'kg', dir:'up'    },
+  { label:'Bench',     key:'Bench',     start:82.5, goal:90,     unit:'kg', dir:'up'    },
+  { label:'Deadlift',  key:'Deadlift',  start:97.5, goal:115,    unit:'kg', dir:'up'    },
+  { label:'Row',       key:'Row',       start:50,   goal:65,     unit:'kg', dir:'up'    },
+  { label:'OHP',       key:'OHP',       start:40,   goal:60,     unit:'kg', dir:'up'    },
+];
 
-// Body comp updates via update() override above
+function renderKPI() {
+  // Countdown
+  const today = new Date();
+  const daysLeft = Math.max(0, Math.ceil((KPI_CHECK_DATE - today) / 86400000));
+  const cdEl = document.getElementById('kpi-countdown');
+  if (cdEl) cdEl.textContent = daysLeft > 0 ? `${daysLeft} dagen` : 'check-in vandaag';
+
+  // Current values
+  function getCurrentLift(key) {
+    const lift = DATA.lifts[key];
+    if (!lift || !lift.points.length) return null;
+    return lift.points[lift.points.length - 1].weight;
+  }
+  function getCurrentWeight() {
+    if (!DATA.weight || !DATA.weight.length) return null;
+    return DATA.weight[DATA.weight.length - 1].weight;
+  }
+  function getCurrentBF() {
+    const bc = (DATA.body_comp || []);
+    if (!bc.length) return null;
+    return bc[bc.length - 1].bf_pct;
+  }
+
+  const grid = document.getElementById('kpi-grid');
+  if (!grid) return;
+  grid.innerHTML = KPI_GOALS.map(g => {
+    let current;
+    if (g.key === null)  current = getCurrentWeight();
+    else if (g.key === '_bf') current = getCurrentBF();
+    else current = getCurrentLift(g.key);
+
+    if (current === null) return '';
+
+    // Progress bar (only if progress towards goal since baseline)
+    let barHtml = '';
+    let statusClr = 'var(--muted)';
+    let statusTxt = current + ' ' + g.unit;
+
+    if (g.dir === 'up') {
+      const progress = Math.min(1, Math.max(0, (current - g.start) / (g.goal - g.start)));
+      const hasProgress = current > g.start;
+      statusClr = current >= g.goal ? 'var(--green)' : hasProgress ? 'var(--cyan)' : 'var(--muted)';
+      if (hasProgress) {
+        barHtml = `<div style="height:3px;background:#1a1a2e;border-radius:2px;margin-top:4px;overflow:hidden">
+          <div style="height:100%;width:${(progress*100).toFixed(1)}%;background:var(--cyan);border-radius:2px;transition:width .5s"></div>
+        </div>`;
+      }
+    } else if (g.dir === 'down') {
+      const progress = Math.min(1, Math.max(0, (g.start - current) / (g.start - g.goal)));
+      const hasProgress = current < g.start;
+      statusClr = current <= g.goal ? 'var(--green)' : hasProgress ? 'var(--cyan)' : 'var(--muted)';
+      if (hasProgress) {
+        barHtml = `<div style="height:3px;background:#1a1a2e;border-radius:2px;margin-top:4px;overflow:hidden">
+          <div style="height:100%;width:${(progress*100).toFixed(1)}%;background:var(--cyan);border-radius:2px;transition:width .5s"></div>
+        </div>`;
+      }
+    } else if (g.dir === 'range') {
+      const inRange = current >= g.goal[0] && current <= g.goal[1];
+      statusClr = inRange ? 'var(--green)' : 'var(--yellow)';
+    }
+
+    const goalTxt = Array.isArray(g.goal) ? `${g.goal[0]}–${g.goal[1]}` : g.goal;
+
+    return `<div style="display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:start">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;padding-top:1px">${g.label}</div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:11px">
+          <span style="color:${statusClr};font-weight:700">${current} ${g.unit}</span>
+          <span style="color:#454560">→ ${goalTxt} ${g.unit}</span>
+        </div>
+        ${barHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+renderKPI();
 </script>
 </body>
 </html>
