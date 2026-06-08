@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trainingslog · Bert Nijs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Oxanium:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07070f;--surface:#0d0d1a;--border:#1a1a2e;
+  --text:#e8e8f0;--muted:#8888aa;--accent:#7b5cff;
+  --muay:#ff6b35;--gym:#4a4a7a;
+}
+body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;
+  font-size:14px;line-height:1.5;min-height:100vh;padding:24px 16px 60px;}
+.page-header{max-width:680px;margin:0 auto 28px;}
+.page-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;
+  color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.page-title::before,.page-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.page-sub{font-family:'Space Mono',monospace;font-size:9px;color:#3a3a5a;
+  text-align:center;letter-spacing:1px;}
+.feed{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+.card{border-radius:6px;padding:14px 16px;border:1px solid var(--border);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.date{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.day-badge{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;
+  border:1px solid;border-radius:3px;padding:2px 8px;}
+/* Gym */
+.gym-card{background:var(--surface);}
+.lifts{display:flex;flex-direction:column;gap:5px;}
+.lift-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:8px;align-items:baseline;}
+.tier{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
+  border-radius:2px;padding:1px 4px;text-align:center;}
+.t1{background:#b388ff22;color:#b388ff;border:1px solid #b388ff44;}
+.t2{background:#64b5f622;color:#64b5f6;border:1px solid #64b5f644;}
+.tx{background:#55555522;color:var(--muted);border:1px solid var(--border);}
+.lname{font-size:13px;color:var(--text);}
+.lweight{font-family:'Space Mono',monospace;font-size:11px;color:#fff;text-align:right;}
+.ldetail{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:right;white-space:nowrap;}
+.t3-row{display:flex;gap:10px;align-items:baseline;margin-top:4px;padding-top:4px;
+  border-top:1px solid var(--border);}
+.t3-label{font-family:'Space Mono',monospace;font-size:9px;color:#3a3a5a;min-width:28px;}
+.t3-names{font-size:11px;color:#5a5a7a;}
+/* Muay Thai */
+.muay-card{background:#0f0a07;border-color:#ff6b3522;}
+.muay-badge{color:var(--muay);border-color:#ff6b3544;}
+.muay-detail{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b3577;}
+/* Future dates placeholder */
+.future-card{background:#080812;border-color:#0f0f1f;opacity:.4;}
+.future-label{font-family:'Space Mono',monospace;font-size:9px;color:#2a2a3a;text-align:center;padding:8px 0;}
+@media print{
+  body{background:#fff;color:#111;padding:12px;}
+  .card{border-color:#ccc;background:#f8f8f8!important;break-inside:avoid;}
+  .day-badge{border-color:#999!important;color:#333!important;}
+  .tier{color:#333!important;background:#eee!important;border-color:#ccc!important;}
+  .lweight,.ldetail,.t3-names,.date{color:#444!important;}
+}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="page-title">TRAININGSLOG · BERT NIJS</div>
+  <div class="page-sub">4 JUNI 2026 → CHECK-IN LOTTE 16 JULI</div>
+</div>
+<div class="feed">
+<div class="card muay-card">
+  <div class="card-header">
+    <span class="date">do 4 jun</span>
+    <span class="day-badge muay-badge">MUAY THAI</span>
+  </div>
+  <div class="muay-detail">120 min · kickboxing</div>
+</div>
+<div class="card gym-card">
+  <div class="card-header">
+    <span class="date">vr 5 jun</span>
+    <span class="day-badge" style="color:#b388ff;border-color:#b388ff44">SQUAT B</span>
+  </div>
+  <div class="lifts">
+<div class="lift-row"><span class="tier t1">T1</span><span class="lname">Back Squat</span><span class="lweight">100 kg</span><span class="ldetail">5 reps @ 6 sets</span></div><div class="lift-row"><span class="tier t2">T2</span><span class="lname">Barbell Row</span><span class="lweight">50 kg</span><span class="ldetail">30/30 reps ✓</span></div><div class="t3-row"><span class="t3-label">T3</span><span class="t3-names">Face Pull</span></div>  </div>
+</div>
+<div class="card muay-card">
+  <div class="card-header">
+    <span class="date">zo 7 jun</span>
+    <span class="day-badge muay-badge">MUAY THAI</span>
+  </div>
+  <div class="muay-detail">120 min · kickboxing</div>
+</div>
+<div class="card gym-card">
+  <div class="card-header">
+    <span class="date">ma 8 jun</span>
+    <span class="day-badge" style="color:#ffd600;border-color:#ffd60044">DEADLIFT</span>
+  </div>
+  <div class="lifts">
+<div class="lift-row"><span class="tier t1">T1</span><span class="lname">Deadlift</span><span class="lweight">70 kg</span><span class="ldetail">5 reps @ 1 sets</span></div><div class="lift-row"><span class="tier t2">T2</span><span class="lname">DB Bench ×2</span><span class="lweight">60 kg</span><span class="ldetail">29/30 reps –</span></div>  </div>
+</div>
+<div class="card future-card">
+  <div class="future-label">— toekomstige sessies worden hier toegevoegd —</div>
+</div>
+</div>
+</body>
+</html>
