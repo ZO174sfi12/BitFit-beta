@@ -8029,7 +8029,7 @@ const PHASES = [
     <select id="comment-author">
       <option value="BERT">Bert</option>
       <option value="LOTTE">Lotte</option>
-      <option value="YANI">Yani</option>
+      <option value="OTHER">Other</option>
     </select>
     <textarea id="comment-input" placeholder="Laat je opmerking hier achter…"></textarea>
     <div id="comment-feedback"></div>
@@ -8789,9 +8789,9 @@ document.addEventListener('DOMContentLoaded', function() {
     feed.innerHTML = (!items || !items.length)
       ? '<div class="coach-empty">— geen openstaande coach requests —</div>'
       : items.map(i=>{
-          const am = (i.text||'').match(/^\[(Lotte|Yani)\]\s*/i);
-          const label = am ? am[1].toUpperCase() : 'COACH';
-          const body  = am ? (i.text||'').slice(am[0].length) : (i.text||'');
+          const am = (i.text||'').match(/^\[(Lotte)\]\s*/i);
+          const label = am ? 'LOTTE' : 'COACH';
+          const body  = am ? (i.text||'').slice(am[0].length) : (i.text||'').replace(/^\[Yani\]\s*/i,'');
           return `<div class="coach-request">
             <div class="coach-request-meta"><span class="coach-request-label">${label}</span> ${i.date||''}</div>
             <div class="coach-request-text">${body}</div>
@@ -8822,9 +8822,8 @@ document.addEventListener('DOMContentLoaded', function() {
       section = 'BERT';
     } else if (author === 'LOTTE') {
       storedText = `[Lotte] ${text}`;
-    } else {
-      storedText = `[Yani] ${text}`;
     }
+    // OTHER: no prefix, stored as-is
 
     btn.disabled = true; fb.textContent = 'Opslaan…';
     _appendNote(section, storedText)
