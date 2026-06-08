@@ -34,8 +34,18 @@ body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;fon
 .t2{background:#64b5f622;color:#64b5f6;border:1px solid #64b5f644;}
 .tx{background:#55555522;color:var(--muted);border:1px solid var(--border);}
 .lname{font-size:13px;color:var(--text);}
-.lweight{font-family:'Space Mono',monospace;font-size:11px;color:#fff;text-align:right;}
-.ldetail{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:right;white-space:nowrap;}
+.lift-block{margin-bottom:8px;}
+.lift-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.sets-list{display:flex;flex-wrap:wrap;gap:4px 10px;padding-left:36px;}
+.set-row{display:inline-flex;align-items:baseline;gap:4px;font-family:'Space Mono',monospace;font-size:10px;white-space:nowrap;}
+.set-dot{font-size:8px;}
+.set-weight{}
+.set-reps{color:var(--muted);}
+.set-row.working .set-dot{color:#fff;}
+.set-row.working .set-weight{color:#fff;font-weight:700;}
+.set-row.warmup .set-dot{color:#2a2a4a;}
+.set-row.warmup .set-weight{color:#3a3a5a;}
+.set-row.warmup .set-reps{color:#2a2a3a;}
 .t3-row{display:flex;gap:10px;align-items:baseline;margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
 .t3-label{font-family:'Space Mono',monospace;font-size:9px;color:#3a3a5a;min-width:28px;}
 .t3-names{font-size:11px;color:#5a5a7a;}
@@ -97,7 +107,7 @@ body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;fon
 <div class="card gym-card">
   <div class="card-header"><span class="date">vr 5 jun</span>
   <span class="day-badge" style="color:#b388ff;border-color:#b388ff44">SQUAT B</span></div>
-  <div class="lifts"><div class="lift-row"><span class="tier t1">T1</span><span class="lname">Back Squat</span><span class="lweight">100 kg</span><span class="ldetail">5 reps @ 6 sets</span></div><div class="lift-row"><span class="tier t2">T2</span><span class="lname">Barbell Row</span><span class="lweight">50 kg</span><span class="ldetail">30/30 reps ✓</span></div><div class="t3-row"><span class="t3-label">T3</span><span class="t3-names">Face Pull</span></div></div>
+  <div class="lifts"><div class="lift-block"><div class="lift-header"><span class="tier t1">T1</span><span class="lname">Back Squat</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">50 kg</span><span class="set-reps">× 5</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">65 kg</span><span class="set-reps">× 3</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">90 kg</span><span class="set-reps">× 2</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">100 kg</span><span class="set-reps">× 3</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">100 kg</span><span class="set-reps">× 2</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">90 kg</span><span class="set-reps">× 5</span></span></div></div><div class="lift-block"><div class="lift-header"><span class="tier t2">T2</span><span class="lname">Barbell Row</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">30 kg</span><span class="set-reps">× 8</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span></div></div><div class="t3-row"><span class="t3-label">T3</span><span class="t3-names">Face Pull</span></div></div>
 </div>
 <div class="card muay-card">
   <div class="card-header"><span class="date">zo 7 jun</span>
@@ -107,7 +117,7 @@ body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;fon
 <div class="card gym-card">
   <div class="card-header"><span class="date">ma 8 jun</span>
   <span class="day-badge" style="color:#ffd600;border-color:#ffd60044">DEADLIFT</span></div>
-  <div class="lifts"><div class="lift-row"><span class="tier t1">T1</span><span class="lname">Deadlift</span><span class="lweight">70 kg</span><span class="ldetail">5 reps @ 1 sets</span></div><div class="lift-row"><span class="tier t2">T2</span><span class="lname">DB Bench ×2</span><span class="lweight">60 kg</span><span class="ldetail">29/30 reps –</span></div></div>
+  <div class="lifts"><div class="lift-block"><div class="lift-header"><span class="tier t1">T1</span><span class="lname">Deadlift</span></div><div class="sets-list"><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">70 kg</span><span class="set-reps">× 5</span></span></div></div><div class="lift-block"><div class="lift-header"><span class="tier t2">T2</span><span class="lname">DB Bench ×2</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">40 kg</span><span class="set-reps">× 14</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 11</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 8</span></span></div></div></div>
 </div>
 <div class="card future-card">
   <div class="future-label">— toekomstige sessies worden hier toegevoegd —</div>
