@@ -307,7 +307,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
     <div class="overlap-note">
       <strong>// OVERLAP</strong><br/>
       • <strong>Magnesium:</strong> Opti-Men 100 mg + Lucovitaal 375 mg → ~475 mg/dag (ADH = 375 mg, veilig).<br/>
-      • <strong>Vitamine D:</strong> Opti-Men 300 IU + Omega-3 1000 IU → ~1300 IU/dag (grens 4000 IU).<br/>
+      • <strong>Vitamine D:</strong> Opti-Men 300 IU (Minami MorEPA Plus bevat geen D3 → let op apart supplement indien nodig).<br/>
       • <strong>Creatine:</strong> geen overlap met Opti-Men.
     </div>
   </div>
@@ -362,10 +362,11 @@ const DEFAULT_SUPPLEMENTS = [
     info:{'Werkzame stoffen':'75+ ingrediënten','Vitamine C':'300 mg (500% ADH)',
           'Vitamine D':'300 IU','B-vitamines':'tot 5000% ADH','Zink':'30 mg (200% ADH)',
           'Aanbeveling':'Bij lunch of avondmaaltijd'} },
-  { id:'omega3', name:'Omega-3 + Vitamine D3', brand:'Body&Fit', type:'Softgel',
-    badge:'VISOLIE', badgeClass:'badge-oil', defaultDose:1, unit:'capsules', defaultTime:'middag',
-    info:{'Per capsule':'1000 mg visolie','EPA':'180 mg','DHA':'120 mg',
-          'Vitamine D3':'1000 IU cholecalciferol','Aanbeveling':'Bij maaltijd met vet'} },
+  { id:'omega3', name:'MorEPA Plus', brand:'Minami', type:'Softgel',
+    badge:'VISOLIE', badgeClass:'badge-oil', defaultDose:1, unit:'softgels', defaultTime:'middag',
+    info:{'Per softgel':'1000 mg visolie (Family Pack 120 softgels)','Omega-3':'915 mg',
+          'EPA':'635 mg','DHA':'195 mg','Geen Vitamine D3':'apart bijhouden',
+          'Aanbeveling':'Bij maaltijd met vet'} },
   { id:'creatine', name:'Creatine Monohydrate', brand:'Body&Fit', type:'Poeder',
     badge:'KRACHT', badgeClass:'badge-kracht', defaultDose:6, unit:'gram', defaultTime:'pre-workout',
     info:{'Samenstelling':'100% Creatine Monohydraat','Per maatschep':'~3 g (maatschep = 3,4 g)',
