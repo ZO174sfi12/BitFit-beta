@@ -10,88 +10,77 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#07070f;--surface:#0d0d1a;--border:#1a1a2e;--text:#e8e8f0;--muted:#8888aa;}
-body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;font-size:14px;
-  line-height:1.5;padding:0 0 60px;}
+body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;font-size:14px;line-height:1.5;padding:0 0 60px;}
 .page-nav{display:flex;justify-content:center;gap:8px;padding:10px 18px;background:#090910;border-bottom:1px solid var(--border);position:relative;z-index:10;flex-wrap:wrap;}
 .nav-item{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;padding:7px 20px;color:var(--muted);text-decoration:none;border:1px solid var(--border);background:transparent;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;}
 .nav-item:hover{color:var(--text);border-color:var(--muted);}
 .nav-item.nav-log-active{color:#ff6b35;border-color:#ff6b35;background:#ff6b3518;box-shadow:0 0 10px #ff6b3522;}
-.page-header{max-width:680px;margin:0 auto 28px;padding:24px 16px 0;}
-.page-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);
-  display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.page-header{max-width:700px;margin:0 auto 18px;padding:20px 16px 0;}
+.page-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:4px;}
 .page-title::before,.page-title::after{content:'';flex:1;height:1px;background:var(--border);}
 .page-sub{font-family:'Space Mono',monospace;font-size:9px;color:#3a3a5a;text-align:center;letter-spacing:1px;}
-.feed{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
-.card{border-radius:6px;padding:14px 16px;border:1px solid var(--border);}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.feed{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:8px;padding:0 12px;}
+.card{border-radius:5px;padding:10px 12px;border:1px solid var(--border);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .date{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
 .day-badge{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;border:1px solid;border-radius:3px;padding:2px 8px;}
 .gym-card{background:var(--surface);}
-.lifts{display:flex;flex-direction:column;gap:5px;}
-.lift-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:8px;align-items:baseline;}
-.tier{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;border-radius:2px;padding:1px 4px;text-align:center;}
+/* Exercise rows */
+.exercises{display:flex;flex-direction:column;}
+.exercise-row{display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px solid #0d0d1c;flex-wrap:wrap;}
+.exercise-row:last-child{border-bottom:none;}
+.tier-pill{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border-radius:2px;flex-shrink:0;margin-top:2px;min-width:22px;text-align:center;}
 .t1{background:#b388ff22;color:#b388ff;border:1px solid #b388ff44;}
 .t2{background:#64b5f622;color:#64b5f6;border:1px solid #64b5f644;}
-.tx{background:#55555522;color:var(--muted);border:1px solid var(--border);}
-.t3{background:#1a2a1a;color:#4caf50;border:1px solid #4caf5044;}
-.lname{font-size:13px;color:var(--text);}
-.lift-block{margin-bottom:8px;}
-.lift-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
-.sets-list{display:flex;flex-wrap:wrap;gap:4px 10px;padding-left:36px;}
-.set-row{display:inline-flex;align-items:baseline;gap:4px;font-family:'Space Mono',monospace;font-size:10px;white-space:nowrap;}
-.set-dot{font-size:8px;}
-.set-weight{}
-.set-reps{color:var(--muted);}
-.set-row.working .set-dot{color:#fff;}
-.set-row.working .set-weight{color:#fff;font-weight:700;}
-.set-row.warmup .set-dot{color:#2a2a4a;}
-.set-row.warmup .set-weight{color:#3a3a5a;}
-.set-row.warmup .set-reps{color:#2a2a3a;}
-.t3-row{display:flex;gap:10px;align-items:baseline;margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
-.t3-label{font-family:'Space Mono',monospace;font-size:9px;color:#3a3a5a;min-width:28px;}
-.t3-names{font-size:11px;color:#5a5a7a;}
-.muay-card{background:#0f0a07;border-color:#ff6b3522;}
-.muay-badge{color:#ff6b35;border-color:#ff6b3544;}
-.muay-detail{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b3577;}
-.future-card{background:#080812;border-color:#0f0f1f;opacity:.4;}
+.tx{background:none;color:#404060;border:1px solid #1c1c2c;}
+.t3{background:#0e1a0e;color:#4caf50;border:1px solid #4caf5033;}
+.ex{background:none;color:#3a3a5a;border:1px solid #181828;}
+.ex-name{font-size:11px;color:var(--text);flex:0 0 138px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chips{display:flex;flex-wrap:wrap;gap:3px;flex:1;align-items:center;}
+.chip{font-family:'Space Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+.chip.warmup{color:#22223a;border:1px solid #141424;background:none;}
+.chip.working.t1-chip{background:#b388ff1a;color:#c9a6ff;border:1px solid #b388ff55;font-weight:700;}
+.chip.working.t2-chip{background:#64b5f61a;color:#90caf9;border:1px solid #64b5f655;font-weight:700;}
+.chip.working.t3-chip{background:#0e1a0e;color:#66bb6a;border:1px solid #4caf5044;}
+.chip.working.tx-chip{background:none;color:var(--muted);border:1px solid #2a2a4a;}
+.chip.working.ex-chip{background:#1a1808;color:#ffcc80;border:1px solid #ffcc8044;}
+/* Muay Thai */
+.muay-card{background:#0a0706;border-color:#ff6b3520;}
+.muay-badge{color:#ff6b35;border-color:#ff6b3540;}
+.muay-detail{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b3560;}
+/* Future */
+.future-card{background:#080812;border-color:#0f0f1f;opacity:.35;}
 .future-label{font-family:'Space Mono',monospace;font-size:9px;color:#2a2a3a;text-align:center;padding:8px 0;}
 /* Comment section */
-#comment-section{max-width:680px;margin:32px auto 0;padding:0 12px 40px;}
-#comment-section-head{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;
-  color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+#comment-section{max-width:700px;margin:28px auto 0;padding:0 12px 40px;}
+#comment-section-head{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
 #comment-section-head::before,#comment-section-head::after{content:'';flex:1;height:1px;background:#1a1a2e;}
 #coach-feed{margin-bottom:20px;}
-.coach-request{background:#120b06;border:1px solid #ff6b3530;border-left:3px solid #ff6b35;
-  border-radius:4px;padding:10px 14px;margin-bottom:8px;line-height:1.6;}
-.coach-request-meta{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b35bb;
-  margin-bottom:4px;display:flex;gap:10px;}
+.coach-request{background:#120b06;border:1px solid #ff6b3530;border-left:3px solid #ff6b35;border-radius:4px;padding:10px 14px;margin-bottom:8px;line-height:1.6;}
+.coach-request-meta{font-family:'Space Mono',monospace;font-size:10px;color:#ff6b35bb;margin-bottom:4px;display:flex;gap:10px;}
 .coach-request-label{color:#ff6b35;font-weight:700;}
 .coach-request-text{font-size:13px;color:var(--text);white-space:pre-wrap;}
 .coach-empty{font-family:'Space Mono',monospace;font-size:10px;color:#1e1e3a;text-align:center;padding:12px 0;}
 #author-select{display:flex;gap:6px;align-self:flex-start;}
-.author-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
-  padding:5px 14px;border:1px solid var(--border);border-radius:3px;cursor:pointer;
-  background:none;color:var(--muted);transition:all .15s;}
+.author-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;padding:5px 14px;border:1px solid var(--border);border-radius:3px;cursor:pointer;background:none;color:var(--muted);transition:all .15s;}
 .author-btn:hover{color:var(--text);}
 .author-btn.bert-active{color:#7b5cff;border-color:#7b5cff;background:#7b5cff18;}
 .author-btn.lotte-active{color:#ff6b35;border-color:#ff6b35;background:#ff6b3518;}
 .author-btn.other-active{color:var(--muted);border-color:#3a3a5a;background:#1a1a2e;}
 #comment-input-wrap{display:flex;flex-direction:column;gap:8px;}
-#comment-input{width:100%;min-height:72px;background:#0d0d1a;border:1px solid #1a1a2e;
-  border-radius:4px;color:var(--text);font-family:monospace;font-size:13px;
-  padding:10px 12px;resize:vertical;box-sizing:border-box;outline:none;}
+#comment-input{width:100%;min-height:72px;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:4px;color:var(--text);font-family:monospace;font-size:13px;padding:10px 12px;resize:vertical;box-sizing:border-box;outline:none;}
 #comment-input:focus{border-color:#2a2a4a;}
-#comment-submit{align-self:flex-end;font-family:'Space Mono',monospace;font-size:10px;
-  letter-spacing:1px;padding:7px 16px;border:1px solid #1a1a2e;border-radius:3px;
-  cursor:pointer;background:none;color:var(--muted);}
+#comment-submit{align-self:flex-end;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;padding:7px 16px;border:1px solid #1a1a2e;border-radius:3px;cursor:pointer;background:none;color:var(--muted);}
 #comment-submit:hover{color:var(--text);border-color:#2a2a4a;}
 #comment-feedback{font-family:'Space Mono',monospace;font-size:9px;color:#7b5cff;min-height:14px;}
 @media print{
   body{background:#fff;color:#111;padding:12px;}
-  .card{border-color:#ccc;background:#f8f8f8!important;break-inside:avoid;}
+  .card{border-color:#ccc;background:#f8f8f8!important;break-inside:avoid;border-left-color:#999!important;}
   .day-badge{border-color:#999!important;color:#333!important;}
-  .tier{color:#333!important;background:#eee!important;border-color:#ccc!important;}
-  .lweight,.ldetail,.t3-names,.date{color:#444!important;}
+  .tier-pill{color:#333!important;background:#eee!important;border-color:#ccc!important;}
+  .chip.working{background:#eee!important;color:#222!important;border-color:#ccc!important;}
+  .chip.warmup{color:#bbb!important;border-color:#ddd!important;}
+  .ex-name{color:#222!important;}
   #comment-section{display:none;}
 }
 </style>
@@ -103,26 +92,10 @@ body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;fon
   <div class="page-sub">4 JUNI 2026 → CHECK-IN LOTTE 16 JULI</div>
 </div>
 <div class="feed">
-<div class="card muay-card">
-  <div class="card-header"><span class="date">do 4 jun</span>
-  <span class="day-badge muay-badge">MUAY THAI</span></div>
-  <div class="muay-detail">120 min · kickboxing</div>
-</div>
-<div class="card gym-card">
-  <div class="card-header"><span class="date">vr 5 jun</span>
-  <span class="day-badge" style="color:#b388ff;border-color:#b388ff44">SQUAT B</span></div>
-  <div class="lifts"><div class="lift-block"><div class="lift-header"><span class="tier t1">T1</span><span class="lname">Back Squat</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">50 kg</span><span class="set-reps">× 5</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">65 kg</span><span class="set-reps">× 3</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">90 kg</span><span class="set-reps">× 2</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">100 kg</span><span class="set-reps">× 3</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">100 kg</span><span class="set-reps">× 2</span></span><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">90 kg</span><span class="set-reps">× 5</span></span></div></div><div class="lift-block"><div class="lift-header"><span class="tier t2">T2</span><span class="lname">Barbell Row</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">30 kg</span><span class="set-reps">× 8</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">50 kg</span><span class="set-reps">× 10</span></span></div></div><div class="lift-block"><div class="lift-header"><span class="tier t3">T3</span><span class="lname">Face Pull</span></div><div class="sets-list"><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">15 kg</span><span class="set-reps">× 12</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">15 kg</span><span class="set-reps">× 12</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">15 kg</span><span class="set-reps">× 14</span></span></div></div></div>
-</div>
-<div class="card muay-card">
-  <div class="card-header"><span class="date">zo 7 jun</span>
-  <span class="day-badge muay-badge">MUAY THAI</span></div>
-  <div class="muay-detail">120 min · kickboxing</div>
-</div>
-<div class="card gym-card">
-  <div class="card-header"><span class="date">ma 8 jun</span>
-  <span class="day-badge" style="color:#ffd600;border-color:#ffd60044">DEADLIFT</span></div>
-  <div class="lifts"><div class="lift-block"><div class="lift-header"><span class="tier t1">T1</span><span class="lname">Deadlift</span></div><div class="sets-list"><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">70 kg</span><span class="set-reps">× 5</span></span></div></div><div class="lift-block"><div class="lift-header"><span class="tier t2">T2</span><span class="lname">DB Bench ×2</span></div><div class="sets-list"><span class="set-row warmup"><span class="set-dot">○</span><span class="set-weight">40 kg</span><span class="set-reps">× 14</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 10</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 11</span></span><span class="set-row working"><span class="set-dot">●</span><span class="set-weight">60 kg</span><span class="set-reps">× 8</span></span></div></div></div>
-</div>
+<div class="card muay-card"><div class="card-header"><span class="date">do 4 jun</span><span class="day-badge muay-badge">MUAY THAI</span></div><div class="muay-detail">120 min · kickboxing</div></div>
+<div class="card gym-card" style="border-left:3px solid #b388ff88"><div class="card-header"><span class="date">vr 5 jun</span><span class="day-badge" style="color:#b388ff;border-color:#b388ff44">SQUAT B</span></div><div class="exercises"><div class="exercise-row"><span class="tier-pill t1">T1</span><span class="ex-name">Squat</span><div class="chips"><span class="chip warmup">50×5</span><span class="chip warmup">65×3</span><span class="chip warmup">90×2</span><span class="chip working t1-chip">100×3</span><span class="chip working t1-chip">100×2</span><span class="chip warmup">90×5</span></div></div><div class="exercise-row"><span class="tier-pill t2">T2</span><span class="ex-name">Row</span><div class="chips"><span class="chip warmup">30×8</span><span class="chip working t2-chip">50×10</span><span class="chip working t2-chip">50×10</span><span class="chip working t2-chip">50×10</span></div></div><div class="exercise-row"><span class="tier-pill t3">T3</span><span class="ex-name">Face Pull</span><div class="chips"><span class="chip working t3-chip">15×12</span><span class="chip working t3-chip">15×12</span><span class="chip working t3-chip">15×14</span></div></div><div class="exercise-row"><span class="tier-pill ex">EX</span><span class="ex-name">Barbell Bench Press (Clo…</span><div class="chips"><span class="chip working ex-chip">50×10</span><span class="chip working ex-chip">50×16</span><span class="chip working ex-chip">50×12</span></div></div><div class="exercise-row"><span class="tier-pill ex">EX</span><span class="ex-name">Barbell Ab Rollout (Knee…</span><div class="chips"><span class="chip working ex-chip">10×8</span></div></div></div></div>
+<div class="card muay-card"><div class="card-header"><span class="date">zo 7 jun</span><span class="day-badge muay-badge">MUAY THAI</span></div><div class="muay-detail">120 min · kickboxing</div></div>
+<div class="card gym-card" style="border-left:3px solid #ffd60088"><div class="card-header"><span class="date">ma 8 jun</span><span class="day-badge" style="color:#ffd600;border-color:#ffd60044">DEADLIFT</span></div><div class="exercises"><div class="exercise-row"><span class="tier-pill t1">T1</span><span class="ex-name">Deadlift</span><div class="chips"><span class="chip working t1-chip">70×5</span></div></div><div class="exercise-row"><span class="tier-pill t2">T2</span><span class="ex-name">DB Bench x2</span><div class="chips"><span class="chip warmup">40×14</span><span class="chip working t2-chip">60×10</span><span class="chip working t2-chip">60×11</span><span class="chip working t2-chip">60×8</span></div></div><div class="exercise-row"><span class="tier-pill ex">EX</span><span class="ex-name">Barbell deadlift from bl…</span><div class="chips"><span class="chip warmup">60×8</span><span class="chip warmup">90×2</span><span class="chip working ex-chip">102.5×6</span><span class="chip working ex-chip">102.5×6</span></div></div><div class="exercise-row"><span class="tier-pill ex">EX</span><span class="ex-name">Dumbbell Bulgarian Split…</span><div class="chips"><span class="chip working ex-chip">0×8</span><span class="chip working ex-chip">0×7</span><span class="chip working ex-chip">0×8</span></div></div><div class="exercise-row"><span class="tier-pill ex">EX</span><span class="ex-name">Ab wheel</span><div class="chips"><span class="chip working ex-chip">10×8</span><span class="chip working ex-chip">10×8</span></div></div></div></div>
 <div class="card future-card">
   <div class="future-label">— toekomstige sessies worden hier toegevoegd —</div>
 </div>
