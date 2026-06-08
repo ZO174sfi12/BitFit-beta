@@ -229,11 +229,14 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .coach-empty{font-family:'Space Mono',monospace;font-size:10px;color:#1e1e3a;
   text-align:center;padding:12px 0;}
 /* Author selector */
-#comment-author{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
-  background:#0d0d1a;border:1px solid #1a1a2e;color:var(--muted);padding:6px 12px;
-  border-radius:3px;cursor:pointer;appearance:none;-webkit-appearance:none;outline:none;
-  align-self:flex-start;}
-#comment-author:focus{border-color:#2a2a4a;}
+#author-select{display:flex;gap:6px;align-self:flex-start;}
+.author-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
+  padding:5px 14px;border:1px solid var(--border);border-radius:3px;cursor:pointer;
+  background:none;color:var(--muted);transition:all .15s;}
+.author-btn:hover{color:var(--text);}
+.author-btn.bert-active{color:#7b5cff;border-color:#7b5cff;background:#7b5cff18;}
+.author-btn.lotte-active{color:#ff6b35;border-color:#ff6b35;background:#ff6b3518;}
+.author-btn.other-active{color:var(--muted);border-color:#3a3a5a;background:#1a1a2e;}
 /* Input box */
 #comment-input-wrap{display:flex;flex-direction:column;gap:8px;}
 #comment-input{width:100%;min-height:72px;background:#0d0d1a;border:1px solid #1a1a2e;
@@ -12422,11 +12425,11 @@ const PHASES = [
   <div id="comment-section-head">COACH</div>
   <div id="coach-feed"></div>
   <div id="comment-input-wrap">
-    <select id="comment-author">
-      <option value="BERT">Bert</option>
-      <option value="LOTTE">Lotte</option>
-      <option value="OTHER">Other</option>
-    </select>
+    <div id="author-select">
+      <button class="author-btn bert-active" data-author="BERT" onclick="setAuthor('BERT')">BERT</button>
+      <button class="author-btn" data-author="LOTTE" onclick="setAuthor('LOTTE')">LOTTE</button>
+      <button class="author-btn" data-author="OTHER" onclick="setAuthor('OTHER')">OTHER</button>
+    </div>
     <textarea id="comment-input" placeholder="Laat je opmerking hier achter…"></textarea>
     <div id="comment-feedback"></div>
     <button id="comment-submit" onclick="submitComment()">VERSTUUR</button>
@@ -13203,11 +13206,20 @@ document.addEventListener('DOMContentLoaded', function() {
       renderCoachFeed(Array.isArray(DATA.coach_notes) ? DATA.coach_notes : []);
     }
   }
+  let _activeAuthor = 'BERT';
+  window.setAuthor = function(a) {
+    _activeAuthor = a;
+    document.querySelectorAll('.author-btn').forEach(b => {
+      b.classList.remove('bert-active','lotte-active','other-active');
+    });
+    const cls = {BERT:'bert-active',LOTTE:'lotte-active',OTHER:'other-active'}[a];
+    document.querySelector(`.author-btn[data-author="${a}"]`)?.classList.add(cls);
+  };
   window.submitComment = function() {
     const ta     = document.getElementById('comment-input');
     const fb     = document.getElementById('comment-feedback');
     const btn    = document.getElementById('comment-submit');
-    const author = (document.getElementById('comment-author')?.value) || 'YANI';
+    const author = _activeAuthor;
     const text   = ta.value.trim();
     if (!text) { fb.textContent = 'Typ iets…'; return; }
 
