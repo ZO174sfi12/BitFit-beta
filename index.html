@@ -228,6 +228,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .coach-request-text{font-size:13px;color:var(--text);white-space:pre-wrap;}
 .coach-empty{font-family:'Space Mono',monospace;font-size:10px;color:#1e1e3a;
   text-align:center;padding:12px 0;}
+/* Author selector */
+#comment-author{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
+  background:#0d0d1a;border:1px solid #1a1a2e;color:var(--muted);padding:6px 12px;
+  border-radius:3px;cursor:pointer;appearance:none;-webkit-appearance:none;outline:none;
+  align-self:flex-start;}
+#comment-author:focus{border-color:#2a2a4a;}
 /* Input box */
 #comment-input-wrap{display:flex;flex-direction:column;gap:8px;}
 #comment-input{width:100%;min-height:72px;background:#0d0d1a;border:1px solid #1a1a2e;
@@ -8020,6 +8026,11 @@ const PHASES = [
   <div id="comment-section-head">COACH</div>
   <div id="coach-feed"></div>
   <div id="comment-input-wrap">
+    <select id="comment-author">
+      <option value="BERT">Bert</option>
+      <option value="LOTTE">Lotte</option>
+      <option value="YANI">Yani</option>
+    </select>
     <textarea id="comment-input" placeholder="Laat je opmerking hier achter…"></textarea>
     <div id="comment-feedback"></div>
     <button id="comment-submit" onclick="submitComment()">VERSTUUR</button>
@@ -8777,10 +8788,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!feed) return;
     feed.innerHTML = (!items || !items.length)
       ? '<div class="coach-empty">— geen openstaande coach requests —</div>'
-      : items.map(i=>`<div class="coach-request">
-          <div class="coach-request-meta"><span class="coach-request-label">COACH</span> ${i.date||''}</div>
-          <div class="coach-request-text">${i.text||''}</div>
-        </div>`).join('');
+      : items.map(i=>{
+          const am = (i.text||'').match(/^\[(Lotte|Yani)\]\s*/i);
+          const label = am ? am[1].toUpperCase() : 'COACH';
+          const body  = am ? (i.text||'').slice(am[0].length) : (i.text||'');
+          return `<div class="coach-request">
+            <div class="coach-request-meta"><span class="coach-request-label">${label}</span> ${i.date||''}</div>
+            <div class="coach-request-text">${body}</div>
+          </div>`;
+        }).join('');
   }
   async function refreshCoachFeed() {
     try {
@@ -8792,14 +8808,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   window.submitComment = function() {
-    const ta  = document.getElementById('comment-input');
-    const fb  = document.getElementById('comment-feedback');
-    const btn = document.getElementById('comment-submit');
-    const text = ta.value.trim();
+    const ta     = document.getElementById('comment-input');
+    const fb     = document.getElementById('comment-feedback');
+    const btn    = document.getElementById('comment-submit');
+    const author = (document.getElementById('comment-author')?.value) || 'YANI';
+    const text   = ta.value.trim();
     if (!text) { fb.textContent = 'Typ iets…'; return; }
-    const section = /vegeta/i.test(text) ? 'BERT' : 'YANI';
+
+    let section    = 'YANI';
+    let storedText = text;
+    if (author === 'BERT') {
+      if (!/vegeta/i.test(text)) { fb.textContent = 'Voeg je authenticatiewoord toe.'; return; }
+      section = 'BERT';
+    } else if (author === 'LOTTE') {
+      storedText = `[Lotte] ${text}`;
+    } else {
+      storedText = `[Yani] ${text}`;
+    }
+
     btn.disabled = true; fb.textContent = 'Opslaan…';
-    _appendNote(section, text)
+    _appendNote(section, storedText)
       .then(() => {
         ta.value = ''; fb.textContent = 'Opgeslagen ✓';
         if (section === 'YANI') refreshCoachFeed();
