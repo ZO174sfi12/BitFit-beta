@@ -13107,12 +13107,11 @@ function renderAnalysis(start) {
   const phaseNames = overlapping.length
     ? ' <span style="font-family:monospace;color:var(--text);font-size:10px">(' + overlapping.map(p=>p.label).join(' + ') + ')</span>'
     : '';
-  document.getElementById('analysis-title').innerHTML = '&#9658; ANALYSE PERIODE' + phaseNames;
-  const adhEl = document.getElementById('adherence-title');
-  if (adhEl) adhEl.innerHTML = '&#9670; GREYSKULL ADHERENCE' + (gzPhase ? '' : ' <span style="font-size:9px;color:var(--text)">(geen GS fase)</span>');
-  document.getElementById('a-focus').innerHTML = focusHtml;
-  document.getElementById('a-adherence').innerHTML = adherenceHtml;
-  document.getElementById('a-tips').innerHTML = parts.join(' ') || '—';
+  const _at = document.getElementById('analysis-title'); if (_at) _at.innerHTML = '&#9658; ANALYSE PERIODE' + phaseNames;
+  const adhEl = document.getElementById('adherence-title'); if (adhEl) adhEl.innerHTML = '&#9670; GREYSKULL ADHERENCE' + (gzPhase ? '' : ' <span style="font-size:9px;color:var(--text)">(geen GS fase)</span>');
+  const _af = document.getElementById('a-focus'); if (_af) _af.innerHTML = focusHtml;
+  const _aa = document.getElementById('a-adherence'); if (_aa) _aa.innerHTML = adherenceHtml;
+  const _tp = document.getElementById('a-tips'); if (_tp) _tp.innerHTML = parts.join(' ') || '—';
 }
 
 function update(arg) {
