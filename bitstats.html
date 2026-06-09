@@ -99,8 +99,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .lift-group{display:grid;gap:3px;margin-bottom:3px;}
 .lift-group-p{grid-template-columns:repeat(4,1fr);}
 .lift-group-s{grid-template-columns:repeat(5,1fr);}
-.lift-group-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;padding:4px 10px;display:block;user-select:none;}
-.lift-group-label.group-active{color:var(--muted);}
+.lift-group-label{font-family:monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;padding:4px 10px;display:block;user-select:none;cursor:pointer;}
+.lift-group-label.group-active{color:var(--cyan);}
 .lift-tile{background:#0a0a15;border:1px solid var(--border);padding:5px 2px;text-align:center;user-select:none;}
 .lift-tile.active{border-color:var(--tc,var(--cyan));background:color-mix(in srgb, var(--tc,var(--cyan)) 8%, transparent);}
 .lift-tile-name{font-family:monospace;font-size:10px;letter-spacing:.5px;color:var(--text);text-transform:uppercase;line-height:1.2;}
@@ -310,10 +310,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       <div class="cd tr" style="border-color:var(--cyan)"></div>
 
       <div class="lift-selector">
-        <div class="lift-group-label group-active" id="lbl-primary">PRIMARY</div>
+        <div style="display:flex;gap:0;margin-bottom:4px;">
+          <div class="lift-group-label group-active" id="lbl-primary" onclick="switchLiftGroup('primary')">PRIMARY</div>
+          <div class="lift-group-label" id="lbl-secondary" onclick="switchLiftGroup('secondary')">SECONDARY</div>
+        </div>
         <div class="lift-group lift-group-p" id="primary-tiles"></div>
-        <div class="lift-group-label group-active" id="lbl-secondary" style="margin-top:5px">SECONDARY</div>
-        <div class="lift-group lift-group-s" id="secondary-tiles"></div>
+        <div class="lift-group lift-group-s" id="secondary-tiles" style="display:none"></div>
       </div>
       <div class="radar-wrap" style="height:160px"><canvas id="radarChart"></canvas></div>
     </div>
@@ -12608,7 +12610,8 @@ const LIFT_LABELS = {
   'DB Bench x2':'DB BENCH','Lat PD':'LAT PD','DIP-BW':'DIP',
   'Front Squat':'FRONT SQ.','Row':'ROW'
 };
-let activeLiftFilter = new Set([...PRIMARY_LIFTS, ...SECONDARY_LIFTS]);
+let activeGroup = 'primary';
+let activeLiftFilter = new Set(PRIMARY_LIFTS);
 let radarStart = null;
 
 function getPeriodSets(key, start) {
@@ -12632,27 +12635,32 @@ function getTopWeightYear(key) {
 }
 
 function renderLiftSelector() {
-  [['primary-tiles', PRIMARY_LIFTS, 'lbl-primary'], ['secondary-tiles', SECONDARY_LIFTS, 'lbl-secondary']].forEach(([id, keys, lblId]) => {
+  [['primary-tiles', PRIMARY_LIFTS, 'lbl-primary', 'primary'], ['secondary-tiles', SECONDARY_LIFTS, 'lbl-secondary', 'secondary']].forEach(([id, keys, lblId, grp]) => {
     const el = document.getElementById(id); if (!el) return;
+    const lbl = document.getElementById(lblId);
+    const isActive = grp === activeGroup;
+    el.style.display = isActive ? '' : 'none';
+    if (lbl) lbl.classList.toggle('group-active', isActive);
+    if (!isActive) return;
     el.innerHTML = keys.map(key => {
       const lift = DATA.lifts[key];
       const color = lift ? lift.color : '#454560';
       const w = getTopWeightYear(key);
-      const wLabel = w != null ? w + '\u202fkg' : '—';
+      const wLabel = w != null ? w + ' kg' : '—';
       const sets = getPeriodSets(key, radarStart);
       const active = activeLiftFilter.has(key);
-      return `<div class="lift-tile${active?' active':''}" style="--tc:${color};cursor:pointer" onclick="toggleLiftTile('${key}')">` +
-        `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>` +
-        `<div class="lift-tile-weight">${wLabel}</div>` +
+      return `<div class="lift-tile${active?' active':''}" style="--tc:${color};cursor:pointer" onclick="toggleLiftTile('${key}')">`+
+        `<div class="lift-tile-name">${LIFT_LABELS[key]||key}</div>`+
+        `<div class="lift-tile-weight">${wLabel}</div>`+
         `<div class="lift-tile-sets">${sets != null ? sets + ' sets' : ''}</div></div>`;
     }).join('');
-    // highlight group label when all tiles in group are active
-    const lbl = document.getElementById(lblId);
-    if (lbl) {
-      const allActive = keys.every(k => activeLiftFilter.has(k));
-      lbl.classList.toggle('group-active', allActive);
-    }
   });
+}
+
+function switchLiftGroup(grp) {
+  activeGroup = grp;
+  activeLiftFilter = new Set(grp === 'primary' ? PRIMARY_LIFTS : SECONDARY_LIFTS);
+  if (radarStart) update(radarStart);
 }
 
 function toggleLiftTile(key) {
