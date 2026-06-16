@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16T09:16:21",
+  "updated": "2026-06-16T11:15:29",
   "weight": 87.1,
   "weight_date": "2026-06-15",
   "training_days_total": 104,
@@ -102,6 +102,13 @@
       "last_volume": 875.0,
       "pr": false,
       "pr_weight": 35.0
+    },
+    "Block Pull": {
+      "last_date": "2026-06-08",
+      "last_weight": 102.5,
+      "last_volume": 1890.0,
+      "pr": true,
+      "pr_weight": 102.5
     }
   }
 }
