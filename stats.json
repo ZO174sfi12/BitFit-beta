@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16T11:15:29",
+  "updated": "2026-06-16T13:22:46",
   "weight": 87.1,
   "weight_date": "2026-06-15",
   "training_days_total": 104,
@@ -13,10 +13,10 @@
       "pr_weight": 100.0
     },
     "Deadlift": {
-      "last_date": "2026-06-08",
-      "last_weight": 70.0,
-      "last_volume": 350.0,
-      "pr": false,
+      "last_date": "2026-06-01",
+      "last_weight": 97.5,
+      "last_volume": 1532.5,
+      "pr": true,
       "pr_weight": 97.5
     },
     "Bench": {
