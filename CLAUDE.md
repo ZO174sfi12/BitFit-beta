@@ -49,6 +49,13 @@ Het script leest automatisch `mnt/bitfit-data/notes.txt` en verwerkt `[BERT]` en
 
 Er is altijd max. 1 CSV tegelijk in BitFit-beta — die wordt na de run meteen verwijderd.
 
+**Stap 4** — autocommit in BitFit-beta:
+```bash
+cd mnt/BitFit-beta && git add index.html bitstats.html lotteview.html stats.json && git commit -m "csv run $(date '+%Y-%m-%d')"
+```
+
+Bert pusht daarna zelf via GitHub Desktop. Claude pusht nooit.
+
 ---
 
 ## Workflow na een CSV-run
