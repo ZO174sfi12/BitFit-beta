@@ -1,9 +1,9 @@
 {
-  "updated": "2026-06-16T19:12:45",
-  "weight": 87.1,
-  "weight_date": "2026-06-15",
-  "training_days_total": 104,
-  "last_training_day": "2026-06-15",
+  "updated": "2026-06-16T19:45:32",
+  "weight": 86.8,
+  "weight_date": "2026-06-16",
+  "training_days_total": 105,
+  "last_training_day": "2026-06-16",
   "lifts": {
     "Squat": {
       "last_date": "2026-06-15",
@@ -13,11 +13,11 @@
       "pr_weight": 100.0
     },
     "Deadlift": {
-      "last_date": "2026-06-01",
-      "last_weight": 97.5,
-      "last_volume": 1532.5,
+      "last_date": "2026-06-16",
+      "last_weight": 102.5,
+      "last_volume": 1655.0,
       "pr": true,
-      "pr_weight": 97.5
+      "pr_weight": 102.5
     },
     "Bench": {
       "last_date": "2026-06-10",
@@ -27,9 +27,9 @@
       "pr_weight": 85.0
     },
     "DB Bench x2": {
-      "last_date": "2026-06-08",
+      "last_date": "2026-06-16",
       "last_weight": 60.0,
-      "last_volume": 2300.0,
+      "last_volume": 2200.0,
       "pr": false,
       "pr_weight": 64.0
     },
@@ -69,9 +69,9 @@
       "pr_weight": 57.5
     },
     "Hip Thrust": {
-      "last_date": "2026-05-26",
-      "last_weight": 20.0,
-      "last_volume": 800.0,
+      "last_date": "2026-06-16",
+      "last_weight": 25.0,
+      "last_volume": 600.0,
       "pr": false,
       "pr_weight": 30.0
     },
