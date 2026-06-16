@@ -13362,6 +13362,17 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         wHtml = `<div class="gzclp-wt">${_prevLine}<strong style="color:${liftC};font-size:16px">${dispWStr}</strong> <span style="color:var(--muted);font-size:11px">(schatting)</span></div>`;
       }
+      // Block Pull note: vermeld als de laatste BP recenter is dan de laatste echte DL
+      if (tier.t === 'T1' && tier.lk === 'Deadlift') {
+        const _bpPts = (DATA.lifts['Block Pull'] || {}).points || [];
+        const _dlPts = (DATA.lifts['Deadlift'] || {}).points || [];
+        const _lastBP = _bpPts.length ? _bpPts[_bpPts.length - 1] : null;
+        const _lastDLDate = _dlPts.length ? _dlPts[_dlPts.length - 1].date : '';
+        if (_lastBP && _lastBP.date >= _lastDLDate) {
+          const _bpDateFmt = _lastBP.date.slice(5).replace('-', '/');
+          wHtml += `<div style="font-size:11px;color:var(--muted);margin-top:5px;padding-top:5px;border-top:1px solid #1a1a2e;font-family:monospace">⛑ laatste DL-dag: block pull · ${_lastBP.weight} kg · ${_bpDateFmt}</div>`;
+        }
+      }
       const thisDW = tier.t === 'T1' ? dispW : (isDB ? null : t2dispW);
       const dbWorkLabel = (isDB && t2dispW) ? `${r25(t2dispW/2)}\u202fkg/arm` : null;
       const wuRows = tier.t === 'T1' ? t1Warmup(t1w, t1lk) : t2Warmup(t2dispW, t2tier.lk);
