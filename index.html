@@ -272,11 +272,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">86.5</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.1</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-06-10</span>
+        <span class="meta-value" style="color:var(--muted)">2026-06-15</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -1381,6 +1381,41 @@ const DATA = {
             {
               "w": 90.0,
               "r": 5,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-06-15",
+          "weight": 80.0,
+          "volume": 1980.0,
+          "sets": 5,
+          "pr": false,
+          "work_reps": 20,
+          "sets_detail": [
+            {
+              "w": 40.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 3,
+              "warmup": true
+            },
+            {
+              "w": 80.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 80.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 80.0,
+              "r": 10,
               "warmup": false
             }
           ]
@@ -4800,6 +4835,36 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-06-15",
+          "weight": 57.5,
+          "volume": 1905.0,
+          "sets": 4,
+          "pr": true,
+          "work_reps": 30,
+          "sets_detail": [
+            {
+              "w": 30.0,
+              "r": 6,
+              "warmup": true
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -6732,6 +6797,14 @@ const DATA = {
     {
       "date": "2026-06-10",
       "weight": 86.5
+    },
+    {
+      "date": "2026-06-11",
+      "weight": 86.8
+    },
+    {
+      "date": "2026-06-15",
+      "weight": 87.1
     }
   ],
   "muscle_daily": [
@@ -7939,6 +8012,21 @@ const DATA = {
       "date": "2026-06-10",
       "muscle": "Schouders",
       "volume": 585.0
+    },
+    {
+      "date": "2026-06-15",
+      "muscle": "Quads/Glutes",
+      "volume": 1980.0
+    },
+    {
+      "date": "2026-06-15",
+      "muscle": "Back",
+      "volume": 1905.0
+    },
+    {
+      "date": "2026-06-15",
+      "muscle": "Chest",
+      "volume": 640.0
     }
   ],
   "training_days": [
@@ -8043,7 +8131,9 @@ const DATA = {
     "2026-06-07",
     "2026-06-08",
     "2026-06-09",
-    "2026-06-10"
+    "2026-06-10",
+    "2026-06-11",
+    "2026-06-15"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -8412,7 +8502,9 @@ const DATA = {
     "2026-06-07": 0,
     "2026-06-08": 0,
     "2026-06-09": 0,
-    "2026-06-10": 0
+    "2026-06-10": 0,
+    "2026-06-11": 0,
+    "2026-06-15": 0
   },
   "body_comp": [
     {
@@ -11006,6 +11098,14 @@ const DATA = {
     {
       "date": "2026-06-10",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-06-11",
+      "bf_pct": 20.5
+    },
+    {
+      "date": "2026-06-15",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -12571,6 +12671,12 @@ const DATA = {
     },
     {
       "date": "2026-06-07",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-15",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0

@@ -27,16 +27,22 @@ Laatste update: 2026-05-18
 
 ---
 
-## CSV-run uitvoeren
+## CSV-run uitvoeren (nieuwe pipeline)
 
+**Stap 1** — kopieer nieuwste CSV van Downloads naar BitFit-beta:
 ```bash
-python3 mnt/Downloads/process_jefit.py <csv_pad> --html mnt/BitFit-beta/index.html
+cp "$(ls -t mnt/Downloads/scottygambino_*.csv | head -1)" mnt/BitFit-beta/
 ```
 
-CSV staat in `mnt/uploads/` na upload of in `mnt/Downloads/`.  
+**Stap 2** — verwerk (geen CSV-pad nodig — script vindt hem automatisch in zelfde map als HTML):
+```bash
+python3 mnt/Downloads/process_jefit.py --html mnt/BitFit-beta/index.html
+```
+
+Output gaat allemaal naar `mnt/BitFit-beta/`: index.html, bitstats.html, lotteview.html, stats.json.  
 Het script leest automatisch `mnt/bitfit-data/notes.txt` en verwerkt `[BERT]` en `[YANI]`.
 
-**Let op**: het script gooit aan het einde een `PermissionError` op stats.json (verouderd pad). Dat is **benign** — de HTML is al succesvol geschreven voor die fout.
+Geen errors meer — stats.json ging vroeger naar Downloads (fout pad), nu correct naar BitFit-beta.
 
 ---
 
