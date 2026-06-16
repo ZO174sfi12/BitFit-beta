@@ -13332,25 +13332,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
 
-      const _passInd = _lastPass === true  ? ` <span style="color:#00ffb3;font-size:11px">pass</span>`
-                     : _lastPass === false ? ` <span style="color:#ff3d6b;font-size:11px">fail</span>`
-                     : '';
+      // Pass: toon in vorig-regel. Fail: aparte failLine — nooit als onderdeel van prevLine
+      // om verwarring "herhaal + fail" op dezelfde regel te vermijden.
       const _prevLine = _prevWStr
-        ? `<div style="font-size:11px;color:${liftC}cc;margin-bottom:5px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''}${_passInd}</div>` : '';
+        ? `<div style="font-size:11px;color:${liftC}cc;margin-bottom:5px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''}${_isProgressing ? ' <span style=\"color:#00ffb3;font-size:11px\">pass</span>' : ''}</div>` : '';
 
       let wHtml;
       if (dispWStr === null) {
         wHtml = `<div class="gzclp-wt" style="color:var(--muted)">— geen data</div>`;
       } else if (_isProgressing) {
+        // Pass: vorig toont oud gewicht + "pass", hoofd toont nieuw (hogere) gewicht
         wHtml = `<div class="gzclp-wt">${_prevLine}<strong style="color:${liftC};font-size:16px">${dispWStr}</strong></div>`;
       } else if (_isFail) {
+        // Fail: aparte failLine met gewicht + "fail ×N"
+        const _failCount = _consecFails >= 2 ? ` fail ×${_consecFails}` : ' fail';
+        const _failLine = _prevWStr
+          ? `<div style="font-size:11px;color:${liftC}cc;margin-bottom:5px">vorig: ${_prevWStr}${_prevDate ? ` · ${_prevDate}` : ''} <span style="color:#ff3d6b;font-size:11px">${_failCount}</span></div>` : '';
         if (_consecFails >= 2) {
           // 2× gefaald → reset −10%
-          const _resetW  = r25(_prevW * 0.9);
+          const _resetW   = r25(_prevW * 0.9);
           const _resetStr = isDB ? `2 × ${r25(_resetW/2)} kg` : `${_resetW} kg`;
-          wHtml = `<div class="gzclp-wt">${_prevLine}<span style="color:#ff3d6b;font-size:12px">−10%</span> <strong style="color:${liftC};font-size:16px">${_resetStr}</strong></div>`;
+          wHtml = `<div class="gzclp-wt">${_failLine}<span style="color:#ff3d6b;font-size:12px">−10%</span> <strong style="color:${liftC};font-size:16px">${_resetStr}</strong></div>`;
         } else {
-          wHtml = `<div class="gzclp-wt">${_prevLine}<span style="color:var(--yellow);font-size:12px">herhaal</span> <strong style="color:${liftC};font-size:16px">${dispWStr}</strong></div>`;
+          // 1× gefaald → herhaal. Gewicht NIET herhalen — staat al in failLine.
+          wHtml = `<div class="gzclp-wt">${_failLine}<span style="color:var(--yellow);font-size:14px">↻ herhaal</span></div>`;
         }
       } else if (srcLabel === 'T2 = 75% VAN T1') {
         wHtml = `<div class="gzclp-wt"><strong style="color:${liftC};font-size:16px">${dispWStr}</strong></div>`;
