@@ -29,20 +29,25 @@ Laatste update: 2026-05-18
 
 ## CSV-run uitvoeren (nieuwe pipeline)
 
-**Stap 1** — kopieer nieuwste CSV van Downloads naar BitFit-beta:
+**Stap 1** — kopieer nieuwste CSV naar BitFit-beta (vervangt eventuele vorige):
 ```bash
 cp "$(ls -t mnt/Downloads/scottygambino_*.csv | head -1)" mnt/BitFit-beta/
 ```
 
-**Stap 2** — verwerk (geen CSV-pad nodig — script vindt hem automatisch in zelfde map als HTML):
+**Stap 2** — verwerk (script vindt CSV automatisch in zelfde map als HTML):
 ```bash
 python3 mnt/Downloads/process_jefit.py --html mnt/BitFit-beta/index.html
+```
+
+**Stap 3** — verwijder CSV uit BitFit-beta (hoort niet in de repo):
+```bash
+rm mnt/BitFit-beta/scottygambino_*.csv
 ```
 
 Output gaat allemaal naar `mnt/BitFit-beta/`: index.html, bitstats.html, lotteview.html, stats.json.  
 Het script leest automatisch `mnt/bitfit-data/notes.txt` en verwerkt `[BERT]` en `[YANI]`.
 
-Geen errors meer — stats.json ging vroeger naar Downloads (fout pad), nu correct naar BitFit-beta.
+Er is altijd max. 1 CSV tegelijk in BitFit-beta — die wordt na de run meteen verwijderd.
 
 ---
 
