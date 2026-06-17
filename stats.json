@@ -1,14 +1,14 @@
 {
-  "updated": "2026-06-16T22:17:40",
-  "weight": 86.8,
-  "weight_date": "2026-06-16",
-  "training_days_total": 105,
-  "last_training_day": "2026-06-16",
+  "updated": "2026-06-17T19:25:04",
+  "weight": 86.6,
+  "weight_date": "2026-06-17",
+  "training_days_total": 106,
+  "last_training_day": "2026-06-17",
   "lifts": {
     "Squat": {
-      "last_date": "2026-06-15",
-      "last_weight": 80.0,
-      "last_volume": 1980.0,
+      "last_date": "2026-06-17",
+      "last_weight": 85.0,
+      "last_volume": 2000.0,
       "pr": false,
       "pr_weight": 100.0
     },
@@ -34,10 +34,10 @@
       "pr_weight": 64.0
     },
     "OHP": {
-      "last_date": "2026-06-09",
-      "last_weight": 52.5,
-      "last_volume": 1185.0,
-      "pr": true,
+      "last_date": "2026-06-17",
+      "last_weight": 42.5,
+      "last_volume": 1297.5,
+      "pr": false,
       "pr_weight": 52.5
     },
     "Lat PD": {
@@ -83,18 +83,18 @@
       "pr_weight": 20.0
     },
     "Cable Row": {
-      "last_date": "2026-06-02",
+      "last_date": "2026-06-17",
       "last_weight": 40.0,
-      "last_volume": 1680.0,
+      "last_volume": 1760.0,
       "pr": false,
       "pr_weight": 60.0
     },
     "Abductor": {
-      "last_date": "2026-06-02",
-      "last_weight": 25.0,
-      "last_volume": 1150.0,
-      "pr": false,
-      "pr_weight": 27.5
+      "last_date": "2026-06-17",
+      "last_weight": 30.0,
+      "last_volume": 1320.0,
+      "pr": true,
+      "pr_weight": 30.0
     },
     "Leg Curl": {
       "last_date": "2026-05-27",
