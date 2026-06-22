@@ -13185,6 +13185,7 @@ Chart.defaults.font.size = 9;
 // ── Lift Selector ─────────────────────────────────────────
 const PRIMARY_LIFTS   = ['Squat','Deadlift','Bench','OHP'];
 const SECONDARY_LIFTS = ['DB Bench x2','Lat PD','DIP-BW','Front Squat','Row'];
+const BACKGROUND_LIFTS = new Set(['Block Pull']);
 const LIFT_LABELS = {
   'Squat':'SQUAT','Deadlift':'DEADLIFT','Bench':'BENCH','OHP':'OHP',
   'DB Bench x2':'DB BENCH','Lat PD':'LAT PD','DIP-BW':'DIP',
@@ -13504,7 +13505,6 @@ function computeStats(start) {
 
   const epley = w => Math.round(w * 1.1 * 10) / 10;
   const prs = {};
-  const BACKGROUND_LIFTS = new Set(['Block Pull']);
   Object.entries(DATA.lifts).filter(([key]) => !BACKGROUND_LIFTS.has(key)).forEach(([key, lift]) => {
     const all = lift.points.filter(p => p.date >= s && p.date <= t);
     const prPts = all.filter(p => p.pr);
