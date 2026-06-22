@@ -189,6 +189,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-wu-summary::-webkit-details-marker{display:none;}
 /* Lift tile sets */
 .lift-tile-sets{font-family:monospace;font-size:9px;color:var(--text);margin-top:1px;line-height:1;}
+.lift-group-maxw{font-family:monospace;font-size:9px;color:var(--muted);letter-spacing:0;text-align:right;}
 /* Analysis panel collapsible */
 #analysis-details summary::-webkit-details-marker{display:none;}
 #analysis-details summary{list-style:none;}
@@ -310,9 +311,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       <div class="cd tr" style="border-color:var(--cyan)"></div>
 
       <div class="lift-selector">
-        <div style="display:flex;gap:0;margin-bottom:4px;">
-          <div class="lift-group-label group-active" id="lbl-primary" onclick="switchLiftGroup('primary')">PRIMARY</div>
-          <div class="lift-group-label" id="lbl-secondary" onclick="switchLiftGroup('secondary')">SECONDARY</div>
+        <div style="display:flex;gap:0;margin-bottom:4px;justify-content:space-between;align-items:center;">
+          <div style="display:flex;gap:0;">
+            <div class="lift-group-label group-active" id="lbl-primary" onclick="switchLiftGroup('primary')">PRIMARY</div>
+            <div class="lift-group-label" id="lbl-secondary" onclick="switchLiftGroup('secondary')">SECONDARY</div>
+          </div>
+          <div class="lift-group-maxw">max. werkgewicht</div>
         </div>
         <div class="lift-group lift-group-p" id="primary-tiles"></div>
         <div class="lift-group lift-group-s" id="secondary-tiles" style="display:none"></div>
