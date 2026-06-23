@@ -272,11 +272,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">85.5</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">85.1</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">EXPORT</span>
-        <span class="meta-value" style="color:var(--muted)">2026-06-22</span>
+        <span class="meta-value" style="color:var(--muted)">2026-06-23</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -1455,6 +1455,46 @@ const DATA = {
             },
             {
               "w": 85.0,
+              "r": 7,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-06-23",
+          "weight": 90.0,
+          "volume": 2095.0,
+          "sets": 6,
+          "pr": false,
+          "work_reps": 17,
+          "sets_detail": [
+            {
+              "w": 45.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 3,
+              "warmup": true
+            },
+            {
+              "w": 80.0,
+              "r": 2,
+              "warmup": true
+            },
+            {
+              "w": 90.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 90.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 90.0,
               "r": 7,
               "warmup": false
             }
@@ -3317,6 +3357,36 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-06-23",
+          "weight": 72.0,
+          "volume": 1648.0,
+          "sets": 4,
+          "pr": true,
+          "work_reps": 6,
+          "sets_detail": [
+            {
+              "w": 48.0,
+              "r": 6,
+              "warmup": true
+            },
+            {
+              "w": 64.0,
+              "r": 6,
+              "warmup": true
+            },
+            {
+              "w": 68.0,
+              "r": 8,
+              "warmup": true
+            },
+            {
+              "w": 72.0,
+              "r": 6,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -5022,6 +5092,41 @@ const DATA = {
             {
               "w": 57.5,
               "r": 10,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-06-23",
+          "weight": 60.0,
+          "volume": 2250.0,
+          "sets": 5,
+          "pr": true,
+          "work_reps": 35,
+          "sets_detail": [
+            {
+              "w": 30.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 60.0,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 60.0,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 60.0,
+              "r": 5,
               "warmup": false
             }
           ]
@@ -7092,6 +7197,10 @@ const DATA = {
     {
       "date": "2026-06-22",
       "weight": 85.5
+    },
+    {
+      "date": "2026-06-23",
+      "weight": 85.1
     }
   ],
   "muscle_daily": [
@@ -8354,6 +8463,21 @@ const DATA = {
       "date": "2026-06-22",
       "muscle": "Chest",
       "volume": 1760.0
+    },
+    {
+      "date": "2026-06-23",
+      "muscle": "Quads/Glutes",
+      "volume": 2095.0
+    },
+    {
+      "date": "2026-06-23",
+      "muscle": "Back",
+      "volume": 2250.0
+    },
+    {
+      "date": "2026-06-23",
+      "muscle": "Chest",
+      "volume": 824.0
     }
   ],
   "training_days": [
@@ -8463,7 +8587,8 @@ const DATA = {
     "2026-06-15",
     "2026-06-16",
     "2026-06-17",
-    "2026-06-22"
+    "2026-06-22",
+    "2026-06-23"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -8837,7 +8962,8 @@ const DATA = {
     "2026-06-15": 0,
     "2026-06-16": 1,
     "2026-06-17": 2,
-    "2026-06-22": 0
+    "2026-06-22": 0,
+    "2026-06-23": 0
   },
   "body_comp": [
     {
@@ -11455,6 +11581,10 @@ const DATA = {
     {
       "date": "2026-06-22",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-06-23",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -12533,6 +12663,12 @@ const DATA = {
       "duration_min": 29.3
     },
     {
+      "date": "2025-11-06",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2025-11-07",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
@@ -12551,16 +12687,46 @@ const DATA = {
       "duration_min": 75.8
     },
     {
+      "date": "2025-12-24",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2025-12-26",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 68.8
     },
     {
+      "date": "2025-12-26",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2025-12-28",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2025-12-29",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-01-03",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 117.0
+    },
+    {
+      "date": "2026-01-04",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-01-07",
@@ -12587,6 +12753,12 @@ const DATA = {
       "duration_min": 76.2
     },
     {
+      "date": "2026-01-15",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-01-17",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
@@ -12599,10 +12771,22 @@ const DATA = {
       "duration_min": 57.0
     },
     {
+      "date": "2026-01-22",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-01-24",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 56.7
+    },
+    {
+      "date": "2026-01-25",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-01-26",
@@ -12617,10 +12801,22 @@ const DATA = {
       "duration_min": 30.7
     },
     {
+      "date": "2026-01-29",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-02-01",
       "type": "Cycling",
       "category": "other",
       "duration_min": 23.1
+    },
+    {
+      "date": "2026-02-01",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-02-02",
@@ -12647,6 +12843,12 @@ const DATA = {
       "duration_min": 13.2
     },
     {
+      "date": "2026-02-08",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-02-09",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
@@ -12665,10 +12867,22 @@ const DATA = {
       "duration_min": 57.8
     },
     {
+      "date": "2026-02-12",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-02-13",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 63.5
+    },
+    {
+      "date": "2026-02-15",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-02-16",
@@ -12695,6 +12909,12 @@ const DATA = {
       "duration_min": 22.3
     },
     {
+      "date": "2026-02-19",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-02-20",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
@@ -12705,6 +12925,12 @@ const DATA = {
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 76.9
+    },
+    {
+      "date": "2026-02-22",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-02-23",
@@ -12725,6 +12951,12 @@ const DATA = {
       "duration_min": 41.4
     },
     {
+      "date": "2026-02-26",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-03-02",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
@@ -12737,16 +12969,34 @@ const DATA = {
       "duration_min": 61.2
     },
     {
+      "date": "2026-03-04",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-03-05",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 0.9
     },
     {
+      "date": "2026-03-05",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-03-06",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 59.6
+    },
+    {
+      "date": "2026-03-08",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-03-13",
@@ -12759,6 +13009,12 @@ const DATA = {
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 79.2
+    },
+    {
+      "date": "2026-03-15",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-03-16",
@@ -12779,10 +13035,34 @@ const DATA = {
       "duration_min": 64.7
     },
     {
+      "date": "2026-03-19",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-03-22",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-03-23",
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 84.1
+    },
+    {
+      "date": "2026-03-23",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-03-26",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     },
     {
       "date": "2026-03-30",
@@ -12831,6 +13111,90 @@ const DATA = {
       "type": "TraditionalStrengthTraining",
       "category": "gym",
       "duration_min": 51.2
+    },
+    {
+      "date": "2026-04-16",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-04-19",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-04-24",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-04-30",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-03",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-14",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-17",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-21",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-24",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-28",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-31",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-04",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-07",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-11",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     }
   ]
 };
@@ -12934,6 +13298,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'brede grip · focus op lats' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
     ],
     BENCH: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan' },
@@ -12945,6 +13310,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
       { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
       { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie · kabel' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
     ],
     'SQUAT B': [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A' },
@@ -12957,6 +13323,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie na rows T2' },
       { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'compound push · borst + triceps' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
     ],
     DEADLIFT: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · perfect na DL — heupen al warm' },
@@ -12968,27 +13335,41 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'horizontale pull · upper back' },
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
     ],
   };
 
   // T3 Varianten — aanvullend op het dag-patroon richting fullbody
+  // Revalidatie-items (Situps + Rathleff Heel Raise) zijn vast onderdeel op elke dag
   const T3_VARIANTS = {
     'SQUAT A': [
+      // Revalidatie — vast onderdeel elke sessie
+      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
       // Dag heeft: squat (benen) + OHP (push) → voeg hinge/pull toe
       { name:'BLOCK PULL',            reps:'3 × 5–8',    note:'hoge start · meer hinge · Lotte · posteriors chain aanvulling' },
       { name:'SINGLE-LEG RDL',        reps:'3 × 8–10/z', note:'hinge unilateraal · hamstring · links-rechts check' },
     ],
     'BENCH': [
+      // Revalidatie — vast onderdeel elke sessie
+      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
       // Dag heeft: bench (push) + front squat (benen) → voeg pull/hinge toe
       { name:'SINGLE-ARM DB ROW',     reps:'3 × 8–12/z', note:'horizontale pull · upper back · schouder balans na bench' },
       { name:'ROMANIAN DEADLIFT',     reps:'3 × 10–12',  note:'hinge · hamstring · posteriors aanvulling op push-dag' },
     ],
     'SQUAT B': [
+      // Revalidatie — vast onderdeel elke sessie
+      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
       // Dag heeft: squat (benen) + row (pull) → voeg push toe
       { name:'PAUSED BENCH',          reps:'3 × 5–8',    note:'70% · 2 sec pauze op borst · geen stuitkracht' },
       { name:'CLOSE-GRIP BENCH',      reps:'3 × 8–12',   note:'tricep dominant · lockout kracht · push aanvulling op row-dag' },
     ],
     'DEADLIFT': [
+      // Revalidatie — vast onderdeel elke sessie
+      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
       // Dag heeft: deadlift (hinge) + DB bench (push) → voeg squat/unilateraal toe
       { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'squat unilateraal · balans · heupmobiliteit · asymmetrie' },
       { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · bodemkracht · squat patroon na hinge-dag' },
@@ -13431,14 +13812,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const suggested = nextW(tier.lk, 'T1');
         const last = lastW(tier.lk);
         dispW = suggested ?? last;
-        srcLabel = (suggested !== null && suggested !== last) ? '+2.5 KG ✓' : 'HERHAAL';
+        srcLabel = (suggested !== null && suggested !== last) ? (tier.stepLabel + ' ✓') : 'HERHAAL';
       } else if (sameAsT1) {
         dispW = t1w !== null ? r25(t1w * 0.75) : null; srcLabel = 'T2 = 75% VAN T1';
       } else {
         const suggested = nextW(tier.lk, 'T2');
         const last = lastW(tier.lk);
         dispW = suggested ?? last ?? (t1w !== null ? r25(t1w * 0.75) : null);
-        srcLabel = suggested !== null ? ((suggested !== last) ? '+2.5 KG ✓' : 'HERHAAL') : 'SCHATTING';
+        srcLabel = suggested !== null ? ((suggested !== last) ? (tier.stepLabel + ' ✓') : 'HERHAAL') : 'SCHATTING';
       }
       const isDB = tier.lk === 'DB Bench x2';
       const dispWStr = (dispW !== null && isDB)
@@ -13447,7 +13828,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Vorig gewicht + datum + pass/fail
       const _prevW    = lastW(tier.lk);
       const _prevDate = lastDate(tier.lk);
-      const _isProgressing = srcLabel === '+2.5 KG ✓';
+      const _isProgressing = srcLabel.endsWith('✓');
       const _isFail        = srcLabel === 'HERHAAL';
       const _prevWStr = _prevW !== null ? (isDB ? `${r25(_prevW/2)} kg/arm` : `${_prevW} kg`) : null;
 
@@ -13570,11 +13951,23 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 90–120 sec</div>
       </div>
       <div class="gzclp-t3-grid">
-        ${varOpts.map((o, i) => `<div class="gzclp-t3-item">
-          <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:var(--text)">${i+1}. ${o.name}</span>
-          <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
-          <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
-        </div>`).join('')}
+        ${(() => { let vi=0; return varOpts.map(o => {
+          const isRev = o.type === 'REV';
+          if (!isRev) vi++;
+          const badge = isRev
+            ? `<span style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #ff6b3566;border-radius:2px;color:#ff6b35;background:#ff6b3510;flex-shrink:0">REV</span>`
+            : `<span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0">${vi}.</span>`;
+          const nc = isRev ? '#ff6b35' : 'var(--text)';
+          const bc = isRev ? 'border-color:#ff6b3533;background:#130b08' : '';
+          return `<div class="gzclp-t3-item" style="${bc}">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+              ${badge}
+              <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nc}">${o.name}</span>
+              <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:auto">${o.reps}</span>
+            </div>
+            <div style="color:var(--muted);font-family:monospace;font-size:11px">${o.note}</div>
+          </div>`;
+        }).join(''); })()}
       </div>
     </div>` : '';
 
