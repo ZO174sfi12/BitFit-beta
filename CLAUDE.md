@@ -237,6 +237,37 @@ const td = _allDays.filter(d => d >= s && d <= t).length;
 
 ---
 
+## T3/REV loggen via Claude
+
+Bert kan T3- en REV-oefeningen rechtstreeks via Claude laten loggen (zonder Jefit).
+
+**Bestand**: `mnt/bitfit-data/t3_log.json`  
+**Format**:
+```json
+[
+  { "date": "2026-06-23", "exercise": "Situps",               "sets": [20, 20, 20] },
+  { "date": "2026-06-23", "exercise": "Rathleff Heel Raise",  "sets": [20, 20, 20, 20] }
+]
+```
+
+**Werkwijze voor Claude**:
+1. Bert zegt wat hij gedaan heeft (bv. "vandaag: situps 3×20, rathleff 4×20")
+2. Claude voegt de entries toe aan `t3_log.json` in bitfit-data
+3. Bert commit bitfit-data (`git add t3_log.json && git commit`)
+4. Bij de volgende CSV-run worden de entries samengevoegd in de log view
+
+**Tier-regels in de log**:
+- `Rathleff Heel Raise` (en varianten) → **REV** badge (oranje)
+- `Situps`, `Toe Dorsiflex Lunge`, `Crunches` → **T3** badge (groen)
+- Jefit-data heeft altijd prioriteit: als een oefening al via CSV aanwezig is, wordt het t3_log-item geskipt
+
+**Oefenamen** (exact, hoofdletter-gevoelig voor leesbaarheid, script matcht lowercase):
+- `Situps`
+- `Rathleff Heel Raise`
+- `Toe Dorsiflex Lunge`
+
+---
+
 ## Wat NOOIT te doen
 
 - Nooit `supplement-log.json` aanpassen
