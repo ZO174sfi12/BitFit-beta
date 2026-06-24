@@ -13538,10 +13538,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!date) return -1;
     const liftsOn = Object.entries(DATA.lifts)
       .filter(([,v]) => v.points.some(p => p.date === date)).map(([k]) => k);
-    if (liftsOn.includes('Deadlift') || (liftsOn.includes('DB Bench x2') && !liftsOn.includes('Bench'))) return 3;
-    if (liftsOn.includes('Bench') && !liftsOn.includes('Squat')) return 1;
-    if (liftsOn.includes('Squat') && (liftsOn.includes('Bench') || liftsOn.includes('Row'))) return 2;
-    if (liftsOn.includes('Squat')) return 0;
+    // Squat-checks eerst — als Squat aanwezig is, is het altijd een squat-dag
+    if (liftsOn.includes('Squat') && (liftsOn.includes('Bench') || liftsOn.includes('Row'))) return 2; // SQUAT B
+    if (liftsOn.includes('Squat')) return 0; // SQUAT A
+    // Geen Squat → bench of deadlift dag
+    if (liftsOn.includes('Bench')) return 1; // BENCH
+    if (liftsOn.includes('Deadlift') || liftsOn.includes('DB Bench x2')) return 3; // DEADLIFT
     return -1;
   }
   // Zoek de meest recente dag waarvoor een dag-type bepaald kan worden
