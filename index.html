@@ -13645,6 +13645,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Squat-checks eerst — als Squat aanwezig is, is het altijd een squat-dag
     if (liftsOn.includes('Squat') && (liftsOn.includes('Bench') || liftsOn.includes('Row'))) return 2; // SQUAT B
     if (liftsOn.includes('Squat')) return 0; // SQUAT A
+    // Dubbele dag: Bench + Deadlift → behandel als DEADLIFT-positie zodat volgende = SQUAT A
+    if (liftsOn.includes('Bench') && liftsOn.includes('Deadlift')) return 3; // DUBBEL → next = SQUAT A
     // Geen Squat → bench of deadlift dag
     if (liftsOn.includes('Bench')) return 1; // BENCH
     if (liftsOn.includes('Deadlift') || liftsOn.includes('DB Bench x2')) return 3; // DEADLIFT
