@@ -174,6 +174,12 @@ De app kijkt naar de laatste trainingsdag, bepaalt via `identifyDayIdx` welke da
 - Alle 30 reps gehaald → volgende sessie +2.5kg
 - Niet alle reps → gewicht blijft
 
+### Volgorde na T2 (per sessie)
+Na T2 komen altijd in deze volgorde:
+1. **REV** — revalidatie/correctieve oefeningen (Rathleff Heel Raise voor Hallux Rigidus voetboogversterking, **niet** Achilles)
+2. **T3 Variaties** — dynamisch gerangschikte oefeningen uit de dag-pool (Hip Thrust, Lat PD, Cable Row, enz.)
+3. **T3 Aanvulling** — full body supplementary (Situps, Crunches, enz.) → ook badge `T3`
+
 ### T3 regels
 - Vrije keuze, 3×15–25 reps
 - App rangschikt T3-opties dynamisch op basis van:
@@ -257,14 +263,14 @@ Bert kan T3- en REV-oefeningen rechtstreeks via Claude laten loggen (zonder Jefi
 4. Bij de volgende CSV-run worden de entries samengevoegd in de log view
 
 **Tier-regels in de log**:
-- `Rathleff Heel Raise` (en varianten) → **REV** badge (oranje)
-- `Situps`, `Toe Dorsiflex Lunge`, `Crunches` → **T3** badge (groen)
+- `Rathleff Heel Raise`, `Toe Dorsiflex Lunge` (en varianten) → **REV** badge (oranje) — correctieve oefeningen voor Hallux Rigidus / voetboogversterking
+- `Situps`, `Crunches` → **T3** badge (groen) — T3 Aanvulling full body
 - Jefit-data heeft altijd prioriteit: als een oefening al via CSV aanwezig is, wordt het t3_log-item geskipt
 
 **Oefenamen** (exact, hoofdletter-gevoelig voor leesbaarheid, script matcht lowercase):
-- `Situps`
-- `Rathleff Heel Raise`
-- `Toe Dorsiflex Lunge`
+- `Situps` → T3
+- `Rathleff Heel Raise` → REV
+- `Toe Dorsiflex Lunge` → REV
 
 ---
 

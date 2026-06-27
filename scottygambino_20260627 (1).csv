@@ -2,7 +2,7 @@
 ### SETTING ##########################################
 
 row_id,USERID,TIMESTAMP,gender,currentRoutine,DOB,name,length,mass,dbversion,vibration,alarm,timer,sets,targetrep,age,zonedifference,location,use_location,screenon,auto_lock,lastlogs,preloadreps,exp_level,fit_goal,audio_reminder,audio_exercise_tips,audio_personal_tips,week_start
-768503,541724,"2026-06-23 16:51:19",M,1773333205,1989-01-01,," cm"," kg",,,,90,3,8,23,2,,1,1,1,0,0,2,4,0,0,0,7
+768503,541724,"2026-06-27 08:08:06",M,1773333205,1989-01-01,," cm"," kg",,,,90,3,8,23,2,,1,1,1,0,0,2,4,0,0,0,7
 
 
 ######################################################
@@ -154,6 +154,8 @@ row_id,USERID,TIMESTAMP,_id,mydate,weight,fatpercent,chest,arms,waist,calves,hei
 270589732,541724,"2026-06-22 14:27:00",100083,2026-06-18,86.3,20.5,99,35.5,82,36,193,88.5,56,122,36,29,1781804474
 270589733,541724,"2026-06-22 14:27:00",100084,2026-06-22,85.5,20.5,99,35.5,82,36,193,88.5,56,122,36,29,1782135140
 270630664,541724,"2026-06-23 10:50:54",100085,2026-06-23,85.1,20.5,99,35.5,82,36,193,88.5,56,122,36,29,1782211835
+270758031,541724,"2026-06-27 08:08:00",100086,2026-06-26,86.9,20.5,99,35.5,82,36,193,88.5,56,122,36,29,1782487855
+270758032,541724,"2026-06-27 08:08:00",100087,2026-06-27,86,20.5,99,35.5,82,36,193,88.5,56,122,36,29,1782541867
 
 
 ######################################################
@@ -571,7 +573,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 7443814321,541724,"2026-03-18 17:38:12",1,0,512,312,42,"Indoor Cycling",1,90,"0x0,0x0,0x0,0x0,0x60",10,4,8,0,1770143568,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7443814322,541724,"2026-06-23 10:50:54",1,0,513,2,42,"Barbell Bench Press",3,90,"45.0x11,45.0x8,45.0x10",3,5,"11,8,10",0,1768929796,0,sec,1,0,
+7443814322,541724,"2026-06-27 08:08:06",1,0,513,2,42,"Barbell Bench Press",3,90,"45.0x11,45.0x8,45.0x10",3,5,"11,8,10",0,1768929796,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7493330327,541724,"2026-03-18 17:38:12",1,0,517,31,42,"Dumbbell Incline Bench Press",3,90,"20.5x8,20.5x7,20.5x6",3,6,"8,7,6",0,1772035481,0,sec,1,0,
@@ -654,7 +656,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 7580219740,541724,"2026-03-17 17:43:39",0,0,541,17,44,"stretching ",3,90,"0x0,0x0,0x0,0x0,0x600",10,0,"8,8,8",0,1773769403,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7423205200,541724,"2026-06-02 16:38:25",1,0,508,93,44,"Barbell Deadlift",9,150,"20.0x10,39.9999x5,59.9999x5,69.9999x3,79.9998x5,80.0x5,80.0x5,80.0x5,80.0x5",1,1,"10,5,5,3,5,5,5,5,5",0,1773767260,0,sec,1,0,
+7423205200,541724,"2026-06-27 08:08:06",1,0,508,93,44,"Barbell Deadlift",9,150,"20.0x10,39.9999x5,59.9999x5,69.9999x3,79.9998x5,80.0x5,80.0x5,80.0x5,80.0x5",1,1,"10,5,5,3,5,5,5,5,5",0,1773767260,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7423205201,541724,"2026-06-23 16:51:19",1,0,509,3,44,"Barbell Bent-Over Row",4,90,"40.0x10,40.0x8,40.0x8,50.0x8",1,2,"10,8,8,8",0,1772567009,0,sec,1,0,
@@ -715,7 +717,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 7604364675,541724,"2026-06-17 16:51:06",1,0,100223,453,100044,"Barbell Military Press",9,120,"20.0x10,29.9998x8,35.0x5,40.0x3,42.5x5,42.5x5,42.5x5,42.5x5,42.5x4",6,2,"10,8,5,3,5,5,5,5,4",0,1773501048,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7604364676,541724,"2026-06-23 10:50:54",1,0,100224,2,100044,"Barbell Bench Press",9,120,"20.0x10,40.0x8,50.0x5,55.0x3,60.0x5,60.0x5,60.0x5,60.0x5,59.9999x5",3,3,"10,8,5,3,5,5,5,5,5",0,1773502510,0,sec,1,0,
+7604364676,541724,"2026-06-27 08:08:06",1,0,100224,2,100044,"Barbell Bench Press",9,120,"20.0x10,40.0x8,50.0x5,55.0x3,60.0x5,60.0x5,60.0x5,60.0x5,59.9999x5",3,3,"10,8,5,3,5,5,5,5,5",0,1773502510,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7604364678,541724,"2026-05-20 16:32:15",1,0,100226,45,100044,"Machine Fly",3,75,"10.0x10,10.0x12,10.0x12",3,4,"10,12,12",0,1773503178,0,sec,1,0,
@@ -831,7 +833,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 159666400,541724,"2026-06-02 16:38:25",1,0,100049,86,100013,"Wide Grip Lat Pulldown",3,70,"32.5x12,40x10,45x8,45x8",1,1,"12,10,8",0,1672773715,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-159666402,541724,"2026-06-02 16:38:25",1,0,100051,93,100013,"Barbell Deadlift",6,90,"40x8,60x8",1,2,"8,8,8,8,8,8",0,1672772953,0,sec,1,1,
+159666402,541724,"2026-06-27 08:08:06",1,0,100051,93,100013,"Barbell Deadlift",6,90,"40x8,60x8",1,2,"8,8,8,8,8,8",0,1672772953,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 159666403,541724,"2025-11-03 18:25:20",1,0,100052,1248,100013,"Cable Underhand Pull Down",3,60,"35x12,40x10,45x10",1,3,"12,10,10",0,1485971942,0,sec,1,1,
@@ -990,7 +992,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 159666420,541724,"2025-11-11 19:58:44",1,0,100069,47,100016,"Push Up",3,90,10x8,3,1,"12,12,8",0,1670868173,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-159666421,541724,"2026-06-23 10:50:54",1,0,100070,2,100016,"Barbell Bench Press",3,120,"40x12,40x16,50x12,60x8,60x4",3,2,"12,16,12",0,1672772556,0,sec,1,0,
+159666421,541724,"2026-06-27 08:08:06",1,0,100070,2,100016,"Barbell Bench Press",3,120,"40x12,40x16,50x12,60x8,60x4",3,2,"12,16,12",0,1672772556,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 159666422,541724,"2026-05-19 16:29:16",1,0,100071,26,100016,"Dumbbell Bench Press",3,70,"26x8,26x6,26x7",3,3,"10,10,10",0,1481646709,0,sec,1,0,
@@ -1029,7 +1031,7 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 220205943,541724,"2025-10-28 20:06:48",1,0,267,711,100016,"Dumbbell Decline Press",3,80,"16.0x8,20.0x12",3,14,"10,10,10",0,1437759578,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-220205944,541724,"2026-06-23 10:50:54",1,0,268,2,100016,"Barbell Bench Press",3,80,"10.0x10,10.0x8,10.0x8",3,15,"12,16,12",0,1395781599,0,sec,1,0,
+220205944,541724,"2026-06-27 08:08:06",1,0,268,2,100016,"Barbell Bench Press",3,80,"10.0x10,10.0x8,10.0x8",3,15,"12,16,12",0,1395781599,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 241104583,541724,"2025-10-28 20:06:48",1,0,280,1059,100016,"Cable Lower Chest Raise",3,80,"6x10,6x10",3,16,"10,10,10",0,1510075454,0,sec,1,0,
@@ -1665,74 +1667,74 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 56204976,541724,"2025-10-28 20:06:48",1483280265,33,"Extras home",8,8,0,0,0,0,"2017-05-25 15:40:10"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-628964570,541724,"2025-10-28 20:06:48",1,0,375,860,33,"Close Hand Pushup",3,80,"0x11,0x10,0x8",3,100,8,0,1484331752,0,sec,1,1,
+628964570,541724,"2026-06-27 08:08:00",1,0,375,860,33,"Close Hand Pushup",3,80,"0x11,0x10,0x8",3,100,"11,10,8",0,1484331752,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-706868434,541724,"2017-05-25 15:40:20",1,0,393,967,33,"Abdominal Pendulum",3,80,0x0,0,100,8,0,0,0,sec,1,1,
+706868434,541724,"2026-06-27 08:08:00",1,0,393,967,33,"Abdominal Pendulum",3,80,0x0,0,100,"8,8,8",0,0,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-706868433,541724,"2025-10-28 20:06:48",0,0,392,38,33,"1 dumbbell clean and press",3,80,"22.5x8,22.5x8,22.5x8",1,100,8,0,1495725785,0,sec,1,1,
+706868433,541724,"2026-06-27 08:08:00",0,0,392,38,33,"1 dumbbell clean and press",3,80,"22.5x8,22.5x8,22.5x8",1,100,"6,8,5",0,1495725785,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-706868432,541724,"2025-10-28 20:06:48",0,0,391,37,33,Burpee,3,80,"0x8,0x8,0x8",5,100,8,0,1495725287,0,sec,1,1,
+706868432,541724,"2026-06-27 08:08:00",0,0,391,37,33,Burpee,3,80,"0x8,0x8,0x8",5,100,"8,8,8",0,1495725287,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-703250253,541724,"2025-10-28 20:06:48",0,0,389,35,33,"one leg assisted pull ups",3,80,"0x8,0x5,0x8",1,100,8,0,1495479239,0,sec,1,1,
+703250253,541724,"2026-06-27 08:08:00",0,0,389,35,33,"one leg assisted pull ups",3,80,"0x8,0x5,0x8",1,100,"8,5,8",0,1495479239,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-653330498,541724,"2025-10-28 20:06:48",1,0,385,628,33,"Plank with Side Kick",3,80,"0x0,0x0,0x0,0x0,0x30,0x0,0x0,0x0,0x0,0x30",0,100,8,0,1487709348,0,sec,1,1,
+653330498,541724,"2026-06-27 08:08:00",1,0,385,628,33,"Plank with Side Kick",3,80,"0x0,0x0,0x0,0x0,0x30,0x0,0x0,0x0,0x0,0x30",0,100,"0,0,0",0,1487709348,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-653330497,541724,"2017-02-21 20:52:20",1,0,384,633,33,"Lying to Side Plank",3,80,0x0,0,100,8,0,0,0,sec,1,1,
+653330497,541724,"2026-06-27 08:08:00",1,0,384,633,33,"Lying to Side Plank",3,80,0x0,0,100,"8,8,8",0,0,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-653330496,541724,"2017-02-21 20:52:20",1,0,383,631,33,Plank,3,80,0x0,0,100,8,0,0,0,sec,1,1,
+653330496,541724,"2026-06-27 08:08:00",1,0,383,631,33,Plank,3,80,0x0,0,100,"8,8,8",0,0,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-651686729,541724,"2025-10-28 20:06:48",1,0,382,317,33,Running,3,80,"0x0,0x0,0x0,0x0,0x1500",10,100,8,0,1495726810,0,sec,1,1,
+651686729,541724,"2026-06-27 08:08:00",1,0,382,317,33,Running,3,80,"0x0,0x0,0x0,0x0,0x1500",10,100,"8,8,8",0,1495726810,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-644745692,541724,"2025-10-28 20:06:48",1,0,380,107,33,"Dumbbell Concentration Curls",3,80,"12.5x7,12.5x8",2,100,8,0,1486412665,0,sec,1,1,
+644745692,541724,"2026-06-27 08:08:00",1,0,380,107,33,"Dumbbell Concentration Curls",3,80,"12.5x7,12.5x8",2,100,"7,8,8",0,1486412665,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-628964571,541724,"2025-10-28 20:06:48",1,0,376,47,33,"Push Up",3,80,"0x14,0x16,0x16",3,100,8,0,1495724804,0,sec,1,1,
+628964571,541724,"2026-06-27 08:08:00",1,0,376,47,33,"Push Up",3,80,"0x14,0x16,0x16",3,100,"12,12,8",0,1495724804,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-706868435,541724,"2025-10-28 20:06:48",1,0,394,1,33,"Band Cross Over",3,80,"0x10,0x8,0x8",3,100,8,0,1495726773,0,sec,1,1,
+706868435,541724,"2026-06-27 08:08:00",1,0,394,1,33,"Band Cross Over",3,80,"0x10,0x8,0x8",3,100,"10,8,8",0,1495726773,0,sec,1,1,
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
 55429759,541724,"2025-10-28 20:06:48",1483280265,1483280265,"Day 1",1,8,0,0,0,0,"2017-05-25 15:30:19"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765779,541724,"2025-10-28 20:06:48",1,0,1483280265,955,1483280265,"Dumbbell Stiff Leg Deadlift",3,60,"25x12,25x12",8,100,10,0,1492020274,0,sec,1,1,
+620765779,541724,"2026-06-27 08:08:00",1,0,1483280265,955,1483280265,"Dumbbell Stiff Leg Deadlift",3,60,"25x12,25x12",8,100,"12,12,12",0,1492020274,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765787,541724,"2025-10-28 20:06:48",1,0,1483280273,247,1483280265,"Dumbbell Standing Triceps Extension",3,60,"17.5x12,17.5x10,20x8",7,100,10,0,1485692036,0,sec,1,1,
+620765787,541724,"2026-06-27 08:08:00",1,0,1483280273,247,1483280265,"Dumbbell Standing Triceps Extension",3,60,"17.5x12,17.5x10,20x8",7,100,"12,12,10",0,1485692036,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765786,541724,"2025-10-28 20:06:48",1,0,1483280272,778,1483280265,"Dumbbell Alternate Bent Over Kickback",3,60,"7.5x10,7.5x10,7.5x8",7,100,10,0,1485691657,0,sec,1,1,
+620765786,541724,"2026-06-27 08:08:00",1,0,1483280272,778,1483280265,"Dumbbell Alternate Bent Over Kickback",3,60,"7.5x10,7.5x10,7.5x8",7,100,"10,10,8",0,1485691657,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765785,541724,"2025-10-28 20:06:48",1,0,1483280271,106,1483280265,"Dumbbell Incline Curl",3,60,"7.5x10,7.5x12,7.5x10",2,100,10,0,1485691307,0,sec,1,1,
+620765785,541724,"2026-06-27 08:08:00",1,0,1483280271,106,1483280265,"Dumbbell Incline Curl",3,60,"7.5x10,7.5x12,7.5x10",2,100,"10,12,10",0,1485691307,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765784,541724,"2025-10-28 20:06:48",1,0,1483280270,116,1483280265,"Dumbbell Alternate Bicep Curl",3,60,"7.5x12,7.5x14,7.5x11",2,100,10,0,1485690990,0,sec,1,1,
+620765784,541724,"2026-06-27 08:08:00",1,0,1483280270,116,1483280265,"Dumbbell Alternate Bicep Curl",3,60,"7.5x12,7.5x14,7.5x11",2,100,"10,8,10",0,1485690990,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765783,541724,"2025-10-28 20:06:48",1,0,1483280269,90,1483280265,"Dumbbell One Arm Row",3,60,"20x8,22.5x9,25x8",1,100,10,0,1492021633,0,sec,1,1,
+620765783,541724,"2026-06-27 08:08:00",1,0,1483280269,90,1483280265,"Dumbbell One Arm Row",3,60,"20x8,22.5x9,25x8",1,100,"7,8,8",0,1492021633,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765782,541724,"2025-10-28 20:06:48",1,0,1483280268,31,1483280265,"Dumbbell Incline Bench Press",3,60,"20x8,20x9,20x8",3,100,10,0,1492021218,0,sec,1,1,
+620765782,541724,"2026-06-27 08:08:00",1,0,1483280268,31,1483280265,"Dumbbell Incline Bench Press",3,60,"20x8,20x9,20x8",3,100,"8,7,6",0,1492021218,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765781,541724,"2025-10-28 20:06:48",1,0,1483280267,26,1483280265,"Dumbbell Bench Press",3,60,"15x14,15x12,15x8",3,100,10,0,1495726219,0,sec,1,1,
+620765781,541724,"2026-06-27 08:08:00",1,0,1483280267,26,1483280265,"Dumbbell Bench Press",3,60,"15x14,15x12,15x8",3,100,"10,10,10",0,1495726219,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765780,541724,"2025-10-28 20:06:48",1,0,1483280266,136,1483280265,"Dumbbell Lunges",3,60,"7.5x12,10x10,12.5x10",8,100,10,0,1485689119,0,sec,1,1,
+620765780,541724,"2026-06-27 08:08:00",1,0,1483280266,136,1483280265,"Dumbbell Lunges",3,60,"7.5x12,10x10,12.5x10",8,100,"8,8,8",0,1485689119,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765788,541724,"2025-10-28 20:06:48",1,0,1483280274,48,1483280265,"Dumbbell Shoulder Press",3,60,"12.5x12,12.5x10,12.5x8",6,100,10,0,1485692482,0,sec,1,1,
+620765788,541724,"2026-06-27 08:08:00",1,0,1483280274,48,1483280265,"Dumbbell Shoulder Press",3,60,"12.5x12,12.5x10,12.5x8",6,100,"12,10,8",0,1485692482,0,sec,1,1,
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
@@ -1743,34 +1745,34 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 55429761,541724,"2025-10-28 20:06:48",1483280265,1483280267,"Day 2",3,8,0,0,0,0,"2017-04-12 18:47:34"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765789,541724,"2025-10-28 20:06:48",1,0,1483280275,131,1483280267,"Dumbbell Squat",3,60,"0.5x10,7.5x10,7.5x10",8,100,10,0,1485617034,0,sec,1,1,
+620765789,541724,"2026-06-27 08:08:00",1,0,1483280275,131,1483280267,"Dumbbell Squat",3,60,"0.5x10,7.5x10,7.5x10",8,100,"6,6,3",0,1485617034,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765797,541724,"2025-10-28 20:06:48",1,0,1483280283,25,1483280267,"Dumbbell Arnold Press",3,60,"12.5x10,12.5x10,12.5x8",6,100,10,0,1485096411,0,sec,1,1,
+620765797,541724,"2026-06-27 08:08:00",1,0,1483280283,25,1483280267,"Dumbbell Arnold Press",3,60,"12.5x10,12.5x10,12.5x8",6,100,"10,10,8",0,1485096411,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765796,541724,"2025-10-28 20:06:48",1,0,1483280282,242,1483280267,"Dumbbell Tate Press",3,60,12.5x8,7,100,10,0,1492022854,0,sec,1,1,
+620765796,541724,"2026-06-27 08:08:00",1,0,1483280282,242,1483280267,"Dumbbell Tate Press",3,60,12.5x8,7,100,"10,10,10",0,1492022854,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765795,541724,"2025-10-28 20:06:48",1,0,1483280281,54,1483280267,"Dumbbell Lying Triceps Extension",3,60,"12.5x6,12.5x7,12.5x8",7,100,10,0,1486412350,0,sec,1,1,
+620765795,541724,"2026-06-27 08:08:00",1,0,1483280281,54,1483280267,"Dumbbell Lying Triceps Extension",3,60,"12.5x6,12.5x7,12.5x8",7,100,"6,7,8",0,1486412350,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765794,541724,"2025-10-28 20:06:48",1,0,1483280280,114,1483280267,"Dumbbell Alternate Hammer Curl",3,60,"7.5x10,7.5x10,7.5x10",2,100,10,0,1485095278,0,sec,1,1,
+620765794,541724,"2026-06-27 08:08:00",1,0,1483280280,114,1483280267,"Dumbbell Alternate Hammer Curl",3,60,"7.5x10,7.5x10,7.5x10",2,100,"10,10,10",0,1485095278,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765793,541724,"2025-10-28 20:06:48",1,0,1483280279,165,1483280267,"Dumbbell Incline Fly",3,60,"12.5x8,12.5x8",3,100,10,0,1492022438,0,sec,1,1,
+620765793,541724,"2026-06-27 08:08:00",1,0,1483280279,165,1483280267,"Dumbbell Incline Fly",3,60,"12.5x8,12.5x8",3,100,"10,10,10",0,1492022438,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765792,541724,"2025-10-28 20:06:48",1,0,1483280278,41,1483280267,"Dumbbell Fly",3,60,"12.5x8,12.5x8,12.5x8",3,100,10,0,1492022158,0,sec,1,1,
+620765792,541724,"2026-06-27 08:08:00",1,0,1483280278,41,1483280267,"Dumbbell Fly",3,60,"12.5x8,12.5x8,12.5x8",3,100,"14,16,6",0,1492022158,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765791,541724,"2025-10-28 20:06:48",1,0,1483280277,193,1483280267,"Dumbbell Deadlift",3,60,"20x12,20x12,25x11",1,100,10,0,1484156367,0,sec,1,1,
+620765791,541724,"2026-06-27 08:08:00",1,0,1483280277,193,1483280267,"Dumbbell Deadlift",3,60,"20x12,20x12,25x11",1,100,"10,8,8",0,1484156367,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765790,541724,"2025-10-28 20:06:48",1,0,1483280276,473,1483280267,"Dumbbell Rear Lunge",3,60,0.5x10,8,100,10,0,1485617203,0,sec,1,1,
+620765790,541724,"2026-06-27 08:08:00",1,0,1483280276,473,1483280267,"Dumbbell Rear Lunge",3,60,0.5x10,8,100,"8,8,8",0,1485617203,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765798,541724,"2025-10-28 20:06:48",1,0,1483280284,866,1483280267,"Dumbbell Alternating Deltoid Raise",3,60,"7.5x9,7.5x8,7.5x8",6,100,10,0,1485096782,0,sec,1,1,
+620765798,541724,"2026-06-27 08:08:00",1,0,1483280284,866,1483280267,"Dumbbell Alternating Deltoid Raise",3,60,"7.5x9,7.5x8,7.5x8",6,100,"10,3,8",0,1485096782,0,sec,1,1,
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
@@ -1781,40 +1783,40 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 55429763,541724,"2025-10-28 20:06:48",1483280265,1483280269,"Day 3 ",5,8,0,0,0,0,"2017-03-05 16:22:03"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765799,541724,"2025-10-28 20:06:48",1,0,1483280285,134,1483280269,"Dumbbell Step Ups",3,60,"0.5x20,7.5x19,7.5x16",8,100,10,0,1484328216,0,sec,1,1,
+620765799,541724,"2026-06-27 08:08:00",1,0,1483280285,134,1483280269,"Dumbbell Step Ups",3,60,"0.5x20,7.5x19,7.5x16",8,100,"10,10,10",0,1484328216,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765809,541724,"2025-10-28 20:06:48",1,0,1483280295,43,1483280269,"Dumbbell Upright Row",3,60,"10x13,10x12,10x10",6,100,10,0,1484332469,0,sec,1,1,
+620765809,541724,"2026-06-27 08:08:00",1,0,1483280295,43,1483280269,"Dumbbell Upright Row",3,60,"10x13,10x12,10x10",6,100,"13,12,10",0,1484332469,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765808,541724,"2025-10-28 20:06:48",1,0,1483280294,245,1483280269,"Dumbbell Standing One Arm Triceps Extension",3,60,"10x7,7.5x9,7.5x8",7,100,10,0,1484332160,0,sec,1,1,
+620765808,541724,"2026-06-27 08:08:00",1,0,1483280294,245,1483280269,"Dumbbell Standing One Arm Triceps Extension",3,60,"10x7,7.5x9,7.5x8",7,100,"10,10,10",0,1484332160,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765807,541724,"2025-10-28 20:06:48",1,0,1483280293,1162,1483280269,"Dumbbell Alternate Seated Bent Over Kickback",3,60,"7.5x8,5x10,5x8",7,100,10,0,1483646546,0,sec,1,1,
+620765807,541724,"2026-06-27 08:08:00",1,0,1483280293,1162,1483280269,"Dumbbell Alternate Seated Bent Over Kickback",3,60,"7.5x8,5x10,5x8",7,100,"10,10,10",0,1483646546,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765806,541724,"2025-10-28 20:06:48",1,0,1483280292,107,1483280269,"Dumbbell Concentration Curls",3,60,"7.5x10,7.5x10,7.5x12",2,100,10,0,1484331342,0,sec,1,1,
+620765806,541724,"2026-06-27 08:08:00",1,0,1483280292,107,1483280269,"Dumbbell Concentration Curls",3,60,"7.5x10,7.5x10,7.5x12",2,100,"7,8,8",0,1484331342,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765805,541724,"2025-10-28 20:06:48",1,0,1483280291,1315,1483280269,"Dumbbell Spider Curl",3,60,"7.5x12,10x10,10x7",2,100,10,0,1484330861,0,sec,1,1,
+620765805,541724,"2026-06-27 08:08:00",1,0,1483280291,1315,1483280269,"Dumbbell Spider Curl",3,60,"7.5x12,10x10,10x7",2,100,"12,10,7",0,1484330861,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765804,541724,"2025-10-28 20:06:48",1,0,1483280290,375,1483280269,"Dumbbell Bent Arm Pullover",3,60,"15x13,20x9,20x8",3,100,10,0,1484330482,0,sec,1,1,
+620765804,541724,"2026-06-27 08:08:00",1,0,1483280290,375,1483280269,"Dumbbell Bent Arm Pullover",3,60,"15x13,20x9,20x8",3,100,"10,10,10",0,1484330482,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765803,541724,"2025-10-28 20:06:48",1,0,1483280289,1064,1483280269,"Dumbbell Palms In Bench Press",3,60,"20x10,20x12,20x9",3,100,10,0,1484330097,0,sec,1,1,
+620765803,541724,"2026-06-27 08:08:00",1,0,1483280289,1064,1483280269,"Dumbbell Palms In Bench Press",3,60,"20x10,20x12,20x9",3,100,"10,10,10",0,1484330097,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765802,541724,"2025-10-28 20:06:48",1,0,1483280288,88,1483280269,"Dumbbell Bent Over Row",3,60,"20x6,15x8,15x10",1,100,10,0,1484329528,0,sec,1,1,
+620765802,541724,"2026-06-27 08:08:00",1,0,1483280288,88,1483280269,"Dumbbell Bent Over Row",3,60,"20x6,15x8,15x10",1,100,"10,12,12",0,1484329528,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765801,541724,"2025-10-28 20:06:48",1,0,1483280287,1043,1483280269,"Dumbbell Palms In Bent Over Row",3,60,"12.5x12,12.5x10,12.5x12",1,100,10,0,1488730923,0,sec,1,1,
+620765801,541724,"2026-06-27 08:08:00",1,0,1483280287,1043,1483280269,"Dumbbell Palms In Bent Over Row",3,60,"12.5x12,12.5x10,12.5x12",1,100,"10,10,10",0,1488730923,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765800,541724,"2025-10-28 20:06:48",1,0,1483280286,1224,1483280269,"Dumbbell Decline Bench Lunge",3,60,"7.5x9,7.5x10,7.5x13",8,100,10,0,1484328749,0,sec,1,1,
+620765800,541724,"2026-06-27 08:08:00",1,0,1483280286,1224,1483280269,"Dumbbell Decline Bench Lunge",3,60,"7.5x9,7.5x10,7.5x13",8,100,"9,10,13",0,1484328749,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-620765810,541724,"2025-10-28 20:06:48",1,0,1483280296,42,1483280269,"Dumbbell Shoulder Shrug",3,60,"10x12,17.5x10,15x12",6,100,10,0,1484332809,0,sec,1,1,
+620765810,541724,"2026-06-27 08:08:00",1,0,1483280296,42,1483280269,"Dumbbell Shoulder Shrug",3,60,"10x12,17.5x10,15x12",6,100,"8,10,10",0,1484332809,0,sec,1,1,
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
@@ -1825,7 +1827,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 55429765,541724,"2025-10-28 20:06:48",1483280265,1483280271,Rest,7,8,0,0,0,0,"2017-01-23 17:50:12"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-635266758,541724,"2025-10-28 20:06:48",1,0,379,830,1483280271,"Side-Lying Floor Stretch",3,80,"0x0,0x0,0x0,0x0,0x600",1,100,8,0,1485193812,0,sec,1,1,
+635266758,541724,"2026-06-27 08:08:00",1,0,379,830,1483280271,"Side-Lying Floor Stretch",3,80,"0x0,0x0,0x0,0x0,0x600",1,100,"0,0,0",0,1485193812,0,sec,1,1,
 
 
 row_id,USERID,TIMESTAMP,_id,name,difficulty,focus,dayaweek,description,daytype,tags,rdb_id,bannerCode,progression_flag
@@ -2014,7 +2016,14 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 
 
 row_id,USERID,TIMESTAMP,_id,name,difficulty,focus,dayaweek,description,daytype,tags,rdb_id,bannerCode,progression_flag
-74007572,541724,"2026-03-30 15:06:31",1773333205,"GZCLP ",0,0,3,,1,,0,,0
+74007572,541724,"2026-06-27 08:08:00",1773333205,"GZCLP ",0,0,4,,1,,0,,0
+
+row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
+540663285,541724,"2026-06-27 08:08:00",1773333205,100045,Other,4,4,0,0,0,3,
+
+row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
+7802440467,541724,"2026-06-27 08:08:00",1,0,100301,1433,100045,"Dumbbell Romanian Deadlift",3,90,0x0,8,1,"8,8,10",0,0,0,sec,1,0,
+
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
 526023247,541724,"2026-06-23 16:51:19",1773333205,1483280307,"Squat prio",0,1,0,0,0,0,"2026-06-23 16:40:50"
@@ -2084,86 +2093,92 @@ row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisena
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
-526026299,541724,"2026-06-16 16:54:47",1773333205,1483280309,"Deadlift prio",8,2,0,0,0,1,"2026-06-16 16:54:44"
+526026299,541724,"2026-06-27 08:08:00",1773333205,1483280309,"Deadlift prio",8,2,0,0,0,1,"2026-06-27 08:07:57"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661911056,541724,"2026-06-17 16:51:06",0,0,1483280540,17,1483280309,,1,60,"0x0,0x0,0x0,0x5,0x82",11,0,8,0,1781625180,0,sec,1,1,
+7661911056,541724,"2026-06-27 08:08:00",0,0,1483280540,17,1483280309,,1,60,"0x0,0x0,0x0,0x5,0x82",11,0,8,0,1781625180,0,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661615936,541724,"2026-06-17 16:51:06",1,0,1483280533,93,1483280309,,5,60,"60.0x5,80.0x3,90.0x1,102.5x5,102.5x5",11,1,"8,6,8,8,8",0,1781626146,0,sec,1,0,
+7661615936,541724,"2026-06-27 08:08:06",1,0,1483280533,93,1483280309,,5,60,"60.0x5,70.0x3,100.0x1,107.5x5,107.5x5",11,1,"8,6,8,8,8",0,1782544604,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7696323361,541724,"2026-06-17 16:51:06",1,0,100263,26,1483280309,"Dumbbell Bench Press",4,90,"20.0x10,30.0x10,30.0x10,30.0x10",3,2,"10,10,10,12",0,1781627083,0,sec,1,0,
+7696323361,541724,"2026-06-27 08:08:00",1,0,100263,26,1483280309,"Dumbbell Bench Press",4,90,"20.0x10,30.0x10,30.0x10,30.0x10",3,2,"10,10,10,12",0,1781627083,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661663996,541724,"2026-06-16 16:38:36",1,0,1483280535,884,1483280309,,1,60,,11,3,8,0,0,0,sec,1,0,
+7661663996,541724,"2026-06-27 08:08:00",1,0,1483280535,884,1483280309,,1,60,,11,3,8,0,0,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661666253,541724,"2026-06-16 16:38:36",1,0,1483280536,86,1483280309,,3,45,"35.0x16,35.0x16,40.0x12",11,4,"12,12,12",0,1780333794,0,sec,1,0,
+7661666253,541724,"2026-06-27 08:08:00",1,0,1483280536,86,1483280309,,3,45,"35.0x16,35.0x16,40.0x12",11,4,"12,12,12",0,1780333794,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661670972,541724,"2026-06-16 16:38:36",1,0,1483280538,90,1483280309,,1,60,,11,5,8,0,0,0,sec,1,0,
+7661670972,541724,"2026-06-27 08:08:00",1,0,1483280538,90,1483280309,,1,60,,11,5,8,0,0,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661660483,541724,"2026-06-17 16:51:06",1,0,1483280534,453,1483280309,,7,60,"20.0x12,40.0x8,40.0x6,40.0x6,40.0x5",11,6,"5,5,12,5,5,5,5",0,1776610322,0,sec,1,0,
+7661660483,541724,"2026-06-27 08:08:00",1,0,1483280534,453,1483280309,,7,60,"20.0x12,40.0x8,40.0x6,40.0x6,40.0x5",11,6,"5,5,12,5,5,5,5",0,1776610322,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661920166,541724,"2026-06-16 16:38:36",1,0,1483280541,199,1483280309,,3,60,,11,7,"8,8,8",0,0,0,sec,1,0,
+7661920166,541724,"2026-06-27 08:08:00",1,0,1483280541,199,1483280309,,3,60,,11,7,"8,8,8",0,0,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661921287,541724,"2026-06-16 16:38:36",1,0,1483280542,61,1483280309,,3,60,,11,8,"8,8,8",0,0,0,sec,1,0,
+7661921287,541724,"2026-06-27 08:08:00",1,0,1483280542,61,1483280309,,3,60,,11,8,"8,8,8",0,0,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7663651359,541724,"2026-06-17 16:51:06",1,0,100252,21,1483280309,"Cable Seated Row",3,90,"40.0x12,45.0x10,50.0x12",1,9,"12,10,12",0,1776183606,0,sec,1,0,
+7663651359,541724,"2026-06-27 08:08:00",1,0,100252,21,1483280309,"Cable Seated Row",3,90,"40.0x12,45.0x10,50.0x12",1,9,"12,10,12",0,1776183606,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7663651360,541724,"2026-06-16 16:38:36",0,0,100253,17,1483280309,"Stretching ",1,90,"0x0,0x0,0x0,0x5,0x600",11,10,8,0,1776788736,0,sec,1,0,
+7663651360,541724,"2026-06-27 08:08:00",0,0,100253,17,1483280309,"Stretching ",1,90,"0x0,0x0,0x0,0x5,0x600",11,10,8,0,1776788736,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7682308699,541724,"2026-06-16 16:38:36",1,0,100259,218,1483280309,"Barbell Squat (Wide Stance)",3,90,"45.0x8,45.0x8,45.0x11",8,11,"8,8,11",0,1776182816,0,sec,1,0,
+7682308699,541724,"2026-06-27 08:08:00",1,0,100259,218,1483280309,"Barbell Squat (Wide Stance)",3,90,"45.0x8,45.0x8,45.0x11",8,11,"8,8,11",0,1776182816,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7696323362,541724,"2026-06-17 16:51:06",0,0,100264,44,1483280309,"Technogym hip thrust",3,75,"25.0x8,25.0x8,24.9999x8",5,12,"12,12,12",0,1781628138,0,sec,1,0,
+7696323362,541724,"2026-06-27 08:08:00",0,0,100264,44,1483280309,"Technogym hip thrust",3,75,"25.0x8,25.0x8,24.9999x8",5,12,"12,12,12",0,1781628138,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7696323363,541724,"2026-06-16 16:38:36",1,0,100265,874,1483280309,"Cable Rope Face Pull",3,90,"15.0x14,17.5x10,20.0x10",1,13,"14,16,10",0,1781107687,0,sec,1,0,
+7696323363,541724,"2026-06-27 08:08:00",1,0,100265,874,1483280309,"Cable Rope Face Pull",3,90,"15.0x14,17.5x10,20.0x10",1,13,"14,16,10",0,1781107687,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7713761146,541724,"2026-06-16 16:38:36",0,0,100275,45,1483280309,"Standing abductor ",3,90,"15.0x18,20.0x16,20.0x16",5,14,"18,16,16",0,1777628972,0,sec,1,0,
+7713761146,541724,"2026-06-27 08:08:00",0,0,100275,45,1483280309,"Standing abductor ",3,90,"15.0x18,20.0x16,20.0x16",5,14,"18,16,16",0,1777628972,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7736252545,541724,"2026-06-16 16:38:36",0,0,100280,100003,1483280309,"Side plank hold",1,90,"0x0,0x0,0x0,0x5,0x110",0,15,8,0,1779208129,0,sec,1,0,
+7736252545,541724,"2026-06-27 08:08:00",0,0,100280,100003,1483280309,"Side plank hold",1,90,"0x0,0x0,0x0,0x5,0x110",0,15,8,0,1779208129,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7748233458,541724,"2026-06-16 16:38:36",1,0,100283,1338,1483280309,"Dead Bug",3,60,"0x0,0x0,0x0,0x8,0x60,0x0,0x0,0x0,0x8,0x60,0x0,0x0,0x0,0x8,0x60",0,16,"8,8,8",0,1779207384,0,sec,1,0,
+7748233458,541724,"2026-06-27 08:08:00",1,0,100283,1338,1483280309,"Dead Bug",3,60,"0x0,0x0,0x0,0x8,0x60,0x0,0x0,0x0,0x8,0x60,0x0,0x0,0x0,0x8,0x60",0,16,"8,8,8",0,1779207384,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7767133155,541724,"2026-06-16 16:38:36",1,0,100287,127,1483280309,"Hack Squat",3,90,"60.0x8,60.0x8,40.0x8",8,17,"14,10,8",0,1781108242,0,sec,1,0,
+7767133155,541724,"2026-06-27 08:08:00",1,0,100287,127,1483280309,"Hack Squat",3,90,"60.0x8,60.0x8,40.0x8",8,17,"14,10,8",0,1781108242,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7767133156,541724,"2026-06-16 16:38:36",1,0,100288,319,1483280309,"Step Machine",1,90,"0x0,0x0,0x0,0x0,0x1540,0x0,0x0,0x0,0x0,0x1540",10,18,8,0,1780335445,0,sec,1,0,
+7767133156,541724,"2026-06-27 08:08:00",1,0,100288,319,1483280309,"Step Machine",1,90,"0x0,0x0,0x0,0x0,0x1540,0x0,0x0,0x0,0x0,0x1540",10,18,8,0,1780335445,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7776547856,541724,"2026-06-16 16:38:36",0,0,100293,100005,1483280309,"Barbell deadlift from blocks ",4,90,"60.0x8,90.0x2,102.5x6,102.4998x6",1,19,"8,2,6,6",0,1780933950,0,sec,1,0,
+7776547856,541724,"2026-06-27 08:08:00",0,0,100293,100005,1483280309,"Barbell deadlift from blocks ",4,90,"60.0x8,90.0x2,102.5x6,102.4998x6",1,19,"8,2,6,6",0,1780933950,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7776547857,541724,"2026-06-16 16:38:36",1,0,100294,205,1483280309,"Barbell Bulgarian Split Squat",3,90,0x0,8,20,"8,8,8",0,0,0,sec,1,0,
+7776547857,541724,"2026-06-27 08:08:00",1,0,100294,205,1483280309,"Barbell Bulgarian Split Squat",3,90,0x0,8,20,"8,8,8",0,0,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7776547858,541724,"2026-06-16 16:38:36",1,0,100295,1346,1483280309,"Dumbbell Bulgarian Split Squat",3,90,"0.0x8,0.0x7,0.0x8",8,21,"8,7,8",0,1780935718,0,sec,1,0,
+7776547858,541724,"2026-06-27 08:08:00",1,0,100295,1346,1483280309,"Dumbbell Bulgarian Split Squat",3,90,"0.0x8,0.0x7,0.0x8",8,21,"8,7,8",0,1780935718,0,sec,1,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7788018213,541724,"2026-06-16 16:54:47",0,0,100299,100006,1483280309,"Ergonomic grip cable Lat pulldown",3,90,"40.0x16,40.0x12,40.0x9",1,22,"16,12,9",0,1781627792,0,sec,1,0,
+7788018213,541724,"2026-06-27 08:08:00",0,0,100299,100006,1483280309,"Ergonomic grip cable Lat pulldown",3,90,"40.0x16,40.0x12,40.0x9",1,22,"16,12,9",0,1781627792,0,sec,1,0,
+
+row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
+7802440468,541724,"2026-06-27 08:08:00",0,0,100302,100008,1483280309,"Toe dorsiflex lunge",3,90,"10x8,10x8,10x8",8,23,"8,8,8",0,1782547225,0,sec,1,0,
+
+row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
+7802440469,541724,"2026-06-27 08:08:06",1,0,100303,116,1483280309,"Dumbbell Alternating Bicep Curl",3,90,"8.0x16,8.0x12,6.5x12",2,24,"10,8,10",0,1782547666,0,sec,1,0,
 
 
 row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,week,sort_order,day_completed_timestamp
-526051759,541724,"2026-06-22 14:27:00",1773333205,1483280310,"Bench prio",8,3,0,0,0,2,"2026-06-22 14:26:58"
+526051759,541724,"2026-06-27 08:08:00",1773333205,1483280310,"Bench prio",8,3,0,0,0,2,"2026-06-27 08:07:57"
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7661928716,541724,"2026-06-22 14:27:00",0,0,1483280543,17,1483280310,,1,60,"0x0,0x0,0x0,0x5,0x600",11,0,8,0,1782138414,120,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7661928828,541724,"2026-06-23 10:50:54",1,0,1483280544,2,1483280310,,7,60,"20.0x6,50.0x6,70.0x2,80.0x5,80.0x5,80.0x5",11,1,"5,8,10,2,5,5,5",0,1782137015,120,sec,1,1,
+7661928828,541724,"2026-06-27 08:08:06",1,0,1483280544,2,1483280310,,7,60,"60.0x5,72.5x2,82.5x5,82.5x5,82.5x4",11,1,"5,8,10,2,5,5,5",0,1782546060,120,sec,1,1,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7665013535,541724,"2026-06-23 10:50:54",1,0,100254,137,1483280310,"Barbell Front Squat",5,60,"30.0x6,50.0x8,50.0x9,50.0x8",8,2,"12,10,5,8,8",0,1782137875,120,sec,1,1,
@@ -2215,7 +2230,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596426,541724,"2026-06-05 16:49:07",1780606035,1483280359,"Upper Body Workout",0,1,0,0,0,0,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829522,541724,"2026-06-23 10:50:54",1,0,1483280860,2,1483280359,"Barbell Bench Press",5,135,,3,0,"6,6,6,6,6",0,0,0,sec,1,0,1
+7771829522,541724,"2026-06-27 08:08:06",1,0,1483280860,2,1483280359,"Barbell Bench Press",5,135,,3,0,"6,6,6,6,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829523,541724,"2026-06-17 16:51:06",1,0,1483280861,21,1483280359,"Cable Seated Row",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2262,7 +2277,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596428,541724,"2026-06-05 16:49:07",1780606035,1483280361,"Upper Body Workout",0,3,0,0,0,2,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829535,541724,"2026-06-23 10:50:54",1,0,1483280873,2,1483280361,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829535,541724,"2026-06-27 08:08:06",1,0,1483280873,2,1483280361,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829536,541724,"2026-06-05 16:49:07",1,0,1483280874,86,1483280361,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2284,7 +2299,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596429,541724,"2026-06-05 16:49:07",1780606035,1483280362,"Lower Body Workout",0,4,0,0,0,3,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829541,541724,"2026-06-05 16:49:07",1,0,1483280879,93,1483280362,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829541,541724,"2026-06-27 08:08:06",1,0,1483280879,93,1483280362,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829542,541724,"2026-06-05 16:49:07",1,0,1483280880,130,1483280362,"Machine Leg Extension",3,75,,8,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2356,7 +2371,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596432,541724,"2026-06-05 16:49:07",1780606035,1483280365,"Upper Body Workout",0,3,0,0,1,6,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829561,541724,"2026-06-23 10:50:54",1,0,1483280899,2,1483280365,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829561,541724,"2026-06-27 08:08:06",1,0,1483280899,2,1483280365,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829562,541724,"2026-06-05 16:49:07",1,0,1483280900,86,1483280365,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2375,7 +2390,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596433,541724,"2026-06-05 16:49:07",1780606035,1483280366,"Lower Body Workout",0,4,0,0,1,7,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829566,541724,"2026-06-05 16:49:07",1,0,1483280904,93,1483280366,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829566,541724,"2026-06-27 08:08:06",1,0,1483280904,93,1483280366,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829567,541724,"2026-06-05 16:49:07",1,0,1483280905,130,1483280366,"Machine Leg Extension",3,75,,8,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2447,7 +2462,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596436,541724,"2026-06-05 16:49:07",1780606035,1483280369,"Upper Body Workout",0,3,0,0,2,10,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829586,541724,"2026-06-23 10:50:54",1,0,1483280924,2,1483280369,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829586,541724,"2026-06-27 08:08:06",1,0,1483280924,2,1483280369,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829587,541724,"2026-06-05 16:49:07",1,0,1483280925,86,1483280369,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2472,7 +2487,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596437,541724,"2026-06-05 16:49:07",1780606035,1483280370,"Lower Body Workout",0,4,0,0,2,11,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829593,541724,"2026-06-05 16:49:07",1,0,1483280931,93,1483280370,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829593,541724,"2026-06-27 08:08:06",1,0,1483280931,93,1483280370,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829594,541724,"2026-06-05 16:49:07",1,0,1483280932,136,1483280370,"Dumbbell Lunge",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -2544,7 +2559,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596440,541724,"2026-06-05 16:49:07",1780606035,1483280373,"Upper Body Workout",0,3,0,0,3,14,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829613,541724,"2026-06-23 10:50:54",1,0,1483280951,2,1483280373,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
+7771829613,541724,"2026-06-27 08:08:06",1,0,1483280951,2,1483280373,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829614,541724,"2026-06-05 16:49:07",1,0,1483280952,86,1483280373,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2569,7 +2584,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596441,541724,"2026-06-05 16:49:07",1780606035,1483280374,"Lower Body Workout",0,4,0,0,3,15,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829620,541724,"2026-06-05 16:49:07",1,0,1483280958,93,1483280374,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829620,541724,"2026-06-27 08:08:06",1,0,1483280958,93,1483280374,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829621,541724,"2026-06-05 16:49:07",1,0,1483280959,136,1483280374,"Dumbbell Lunge",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -2641,7 +2656,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596444,541724,"2026-06-05 16:49:07",1780606035,1483280377,"Upper Body Workout",0,3,0,0,4,18,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829640,541724,"2026-06-23 10:50:54",1,0,1483280978,2,1483280377,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829640,541724,"2026-06-27 08:08:06",1,0,1483280978,2,1483280377,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829641,541724,"2026-06-05 16:49:07",1,0,1483280979,86,1483280377,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2663,7 +2678,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596445,541724,"2026-06-05 16:49:07",1780606035,1483280378,"Lower Body Workout",0,4,0,0,4,19,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829646,541724,"2026-06-05 16:49:07",1,0,1483280984,93,1483280378,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829646,541724,"2026-06-27 08:08:06",1,0,1483280984,93,1483280378,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829647,541724,"2026-06-05 16:49:07",1,0,1483280985,130,1483280378,"Machine Leg Extension",3,75,,8,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2735,7 +2750,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596448,541724,"2026-06-05 16:49:07",1780606035,1483280381,"Upper Body Workout",0,3,0,0,5,22,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829666,541724,"2026-06-23 10:50:54",1,0,1483281004,2,1483280381,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829666,541724,"2026-06-27 08:08:06",1,0,1483281004,2,1483280381,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829667,541724,"2026-06-05 16:49:07",1,0,1483281005,86,1483280381,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2754,7 +2769,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596449,541724,"2026-06-05 16:49:07",1780606035,1483280382,"Lower Body Workout",0,4,0,0,5,23,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829671,541724,"2026-06-05 16:49:07",1,0,1483281009,93,1483280382,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829671,541724,"2026-06-27 08:08:06",1,0,1483281009,93,1483280382,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829672,541724,"2026-06-05 16:49:07",1,0,1483281010,130,1483280382,"Machine Leg Extension",3,75,,8,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2826,7 +2841,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596452,541724,"2026-06-05 16:49:07",1780606035,1483280385,"Upper Body Workout",0,3,0,0,6,26,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829691,541724,"2026-06-23 10:50:54",1,0,1483281029,2,1483280385,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829691,541724,"2026-06-27 08:08:06",1,0,1483281029,2,1483280385,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829692,541724,"2026-06-05 16:49:07",1,0,1483281030,86,1483280385,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2851,7 +2866,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596453,541724,"2026-06-05 16:49:07",1780606035,1483280386,"Lower Body Workout",0,4,0,0,6,27,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829698,541724,"2026-06-05 16:49:07",1,0,1483281036,93,1483280386,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829698,541724,"2026-06-27 08:08:06",1,0,1483281036,93,1483280386,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829699,541724,"2026-06-05 16:49:07",1,0,1483281037,1346,1483280386,"Dumbbell Bulgarian Split Squat",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -2923,7 +2938,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596456,541724,"2026-06-05 16:49:07",1780606035,1483280389,"Upper Body Workout",0,3,0,0,7,30,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829718,541724,"2026-06-23 10:50:54",1,0,1483281056,2,1483280389,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
+7771829718,541724,"2026-06-27 08:08:06",1,0,1483281056,2,1483280389,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829719,541724,"2026-06-05 16:49:07",1,0,1483281057,86,1483280389,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -2948,7 +2963,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596457,541724,"2026-06-05 16:49:07",1780606035,1483280390,"Lower Body Workout",0,4,0,0,7,31,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829725,541724,"2026-06-05 16:49:07",1,0,1483281063,93,1483280390,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829725,541724,"2026-06-27 08:08:06",1,0,1483281063,93,1483280390,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829726,541724,"2026-06-05 16:49:07",1,0,1483281064,136,1483280390,"Dumbbell Lunge",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -3020,7 +3035,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596460,541724,"2026-06-05 16:49:07",1780606035,1483280393,"Upper Body Workout",0,3,0,0,8,34,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829745,541724,"2026-06-23 10:50:54",1,0,1483281083,2,1483280393,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829745,541724,"2026-06-27 08:08:06",1,0,1483281083,2,1483280393,"Barbell Bench Press",4,135,,3,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829746,541724,"2026-06-05 16:49:07",1,0,1483281084,86,1483280393,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -3042,7 +3057,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596461,541724,"2026-06-05 16:49:07",1780606035,1483280394,"Lower Body Workout",0,4,0,0,8,35,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829751,541724,"2026-06-05 16:49:07",1,0,1483281089,93,1483280394,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829751,541724,"2026-06-27 08:08:06",1,0,1483281089,93,1483280394,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829752,541724,"2026-06-05 16:49:07",1,0,1483281090,1346,1483280394,"Dumbbell Bulgarian Split Squat",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -3114,7 +3129,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596464,541724,"2026-06-05 16:49:07",1780606035,1483280397,"Upper Body Workout",0,3,0,0,9,38,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829771,541724,"2026-06-23 10:50:54",1,0,1483281109,2,1483280397,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829771,541724,"2026-06-27 08:08:06",1,0,1483281109,2,1483280397,"Barbell Bench Press",4,150,,3,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829772,541724,"2026-06-05 16:49:07",1,0,1483281110,51,1483280397,"Smith Machine Upright Row",4,135,,6,1,"5,5,5,5",0,0,0,sec,1,0,1
@@ -3133,7 +3148,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596465,541724,"2026-06-05 16:49:07",1780606035,1483280398,"Lower Body Workout",0,4,0,0,9,39,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829776,541724,"2026-06-05 16:49:07",1,0,1483281114,93,1483280398,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
+7771829776,541724,"2026-06-27 08:08:06",1,0,1483281114,93,1483280398,"Barbell Deadlift",4,165,,1,0,"7,7,6,5",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829777,541724,"2026-06-05 16:49:07",1,0,1483281115,136,1483280398,"Dumbbell Lunge",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -3205,7 +3220,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596468,541724,"2026-06-05 16:49:07",1780606035,1483280401,"Upper Body Workout",0,3,0,0,10,42,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829796,541724,"2026-06-23 10:50:54",1,0,1483281134,2,1483280401,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829796,541724,"2026-06-27 08:08:06",1,0,1483281134,2,1483280401,"Barbell Bench Press",4,165,,3,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829797,541724,"2026-06-05 16:49:07",1,0,1483281135,86,1483280401,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -3230,7 +3245,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596469,541724,"2026-06-05 16:49:07",1780606035,1483280402,"Lower Body Workout",0,4,0,0,10,43,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829803,541724,"2026-06-05 16:49:07",1,0,1483281141,93,1483280402,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
+7771829803,541724,"2026-06-27 08:08:06",1,0,1483281141,93,1483280402,"Barbell Deadlift",4,195,,1,0,"6,6,5,4",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829804,541724,"2026-06-05 16:49:07",1,0,1483281142,1346,1483280402,"Dumbbell Bulgarian Split Squat",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -3302,7 +3317,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596472,541724,"2026-06-05 16:49:07",1780606035,1483280405,"Upper Body Workout",0,3,0,0,11,46,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829823,541724,"2026-06-23 10:50:54",1,0,1483281161,2,1483280405,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
+7771829823,541724,"2026-06-27 08:08:06",1,0,1483281161,2,1483280405,"Barbell Bench Press",4,135,,3,0,"8,8,6,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829824,541724,"2026-06-05 16:49:07",1,0,1483281162,86,1483280405,"Cable Lat Pulldown (Wide Grip)",3,75,,1,1,"10,10,10",0,0,0,sec,1,0,0
@@ -3327,7 +3342,7 @@ row_id,USERID,TIMESTAMP,package,_id,name,day,dayIndex,interval_mode,rest_day,wee
 537596473,541724,"2026-06-05 16:49:07",1780606035,1483280406,"Lower Body Workout",0,4,0,0,11,47,
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
-7771829830,541724,"2026-06-05 16:49:07",1,0,1483281168,93,1483280406,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
+7771829830,541724,"2026-06-27 08:08:06",1,0,1483281168,93,1483280406,"Barbell Deadlift",4,150,,1,0,"8,8,7,6",0,0,0,sec,1,0,1
 
 row_id,USERID,TIMESTAMP,belongSys,superset,_id,exercise_id,belongplan,exercisename,setcount,timer,logs,bodypart,mysort,targetrep,setdone,setdonetime,interval_time,interval_unit,rest_time_enabled,interval_time_enabled,is_tier_primary
 7771829831,541724,"2026-06-05 16:49:07",1,0,1483281169,136,1483280406,"Dumbbell Lunge",3,75,,8,1,"8,8,8",0,0,0,sec,1,0,0
@@ -3965,7 +3980,8 @@ rowid,_id,USERID,edit_time,day_id,total_time,workout_time,rest_time,wasted_time,
 4125950410,1781625071,541724,1781636087,0,3806,607,1217,1532,5,5935,1,1781625071,1781628877,0,"2026-06-17 16:50:46",0,0
 4126911511,1781711921,541724,1781729445,0,3121,957,1028,686,5,6377.5,1,1781711921,1781715042,0,"2026-06-22 14:27:00",0,0
 4130826078,1782135428,541724,1782152820,0,2988,950,959,809,3,3190,0,1782135428,1782138416,0,"2026-06-23 10:50:54",0,0
-4132033121,1782229881,541724,1782240053,0,2833,785,934,754,4,5993,2,1782229881,1782232714,0,"2026-06-23 16:51:19",0,0
+4132033121,1782229881,541724,1782247252,0,2833,785,934,754,4,5993,2,1782229881,1782232714,0,"2026-06-27 08:08:00",0,0
+4135146316,1782543252,541724,1782554879,0,4414,517,698,2839,4,3889,0,1782543252,1782547666,0,"2026-06-27 08:08:06",0,0
 
 
 ######################################################
@@ -5276,6 +5292,10 @@ USERID,TIMESTAMP,belongSys,logs,_id,record,mydate,eid,ename,day_item_id,belongse
 541724,"2026-06-23 16:13:30",1,"45.0x5,60.0x3,80.0x2,90.0x5,90.0x5,90.0x7",100295,111,2026-06-23,12,"Barbell Squat",1483280524,1782229881,1782231209,"0,0,0,0,0,0",No
 541724,"2026-06-23 16:26:28",1,"30.0x5,60.0x10,60.0x10,60.0x10,60.0x5",100296,80,2026-06-23,3,"Barbell Bent-Over Row",100272,1782229881,1782231987,"0,0,0,0,0",No
 541724,"2026-06-23 16:38:35",1,"24.0x6,32.0x6,34.0x8,36.0x6",100297,43.2,2026-06-23,26,"Dumbbell Bench Press",100300,1782229881,1782232713,"0,0,0,0",No
+541724,"2026-06-27 07:16:44",1,"60.0x5,70.0x3,100.0x1,107.5x5,107.5x5",100298,125.42,2026-06-27,93,"Barbell Deadlift",1483280533,1782543252,1782544604,"0,0,0,0,0",No
+541724,"2026-06-27 07:41:00",1,"60.0x5,72.5x2,82.5x5,82.5x5,82.5x4",100299,96.25,2026-06-27,2,"Barbell Bench Press",1483280544,1782543252,1782546060,"0,0,0,0,0",No
+541724,"2026-06-27 08:00:25",0,"10x8,10x8,10x8",100300,8,2026-06-27,100008,"Toe dorsiflex lunge",100302,1782543252,1782547225,"0,0,0",No
+541724,"2026-06-27 08:07:47",1,"8.0x16,8.0x12,6.5x12",100301,12.27,2026-06-27,116,"Dumbbell Alternating Bicep Curl",100303,1782543252,1782547666,"0,0,0",No
 
 
 ######################################################
@@ -6741,6 +6761,22 @@ _id,userid,exercise_log_id,set_index,weight_lbs,reps,calories,distance_mi,speed_
 1457,541724,100297,1,70.5478,6,,,,,0,default,1782232336,"2026-06-23 16:38:35"
 1458,541724,100297,2,74.9571,8,,,,,0,default,1782232502,"2026-06-23 16:38:35"
 1459,541724,100297,3,79.3663,6,,,,,0,default,1782232713,"2026-06-23 16:38:35"
+1460,541724,100298,0,132.2772,5,,,,,0,warm-up,1782543900,"2026-06-27 07:16:44"
+1461,541724,100298,1,154.3234,3,,,,,0,warm-up,1782544010,"2026-06-27 07:16:44"
+1462,541724,100298,2,220.4620,1,,,,,0,warm-up,1782544218,"2026-06-27 07:16:44"
+1463,541724,100298,3,236.9966,5,,,,,0,default,1782544404,"2026-06-27 07:16:44"
+1464,541724,100298,4,236.9966,5,,,,,0,default,1782544604,"2026-06-27 07:16:44"
+1465,541724,100299,0,132.2772,5,,,,,0,warm-up,1782545113,"2026-06-27 07:41:00"
+1466,541724,100299,1,159.8349,2,,,,,0,warm-up,1782545296,"2026-06-27 07:41:00"
+1467,541724,100299,2,181.8811,5,,,,,0,default,1782545544,"2026-06-27 07:41:00"
+1468,541724,100299,3,181.8811,5,,,,,0,default,1782545745,"2026-06-27 07:41:00"
+1469,541724,100299,4,181.8811,4,,,,,0,default,1782546060,"2026-06-27 07:41:00"
+1470,541724,100300,0,,8,,,,,0,default,1782546833,"2026-06-27 08:00:25"
+1471,541724,100300,1,,8,,,,,0,default,1782547029,"2026-06-27 08:00:25"
+1472,541724,100300,2,,8,,,,,0,default,1782547225,"2026-06-27 08:00:25"
+1473,541724,100301,0,17.6370,16,,,,,0,default,1782547333,"2026-06-27 08:07:47"
+1474,541724,100301,1,17.6370,12,,,,,0,default,1782547518,"2026-06-27 08:07:47"
+1475,541724,100301,2,14.3300,12,,,,,0,default,1782547666,"2026-06-27 08:07:47"
 
 
 ######################################################
@@ -6767,7 +6803,7 @@ row_id,USERID,TIMESTAMP,_id,belongSys,record,eid,target1RM,mydate,goalDate,recor
 12296070,541724,"2026-02-07 16:08:56",17,1,12,345,0,,0,0,0
 12361577,541724,"2026-01-11 18:16:33",18,1,31.2,88,0,,0,0,0
 12361579,541724,"2013-09-09 16:50:56",20,1,0,94,0,,0,0,0
-12561493,541724,"2026-03-13 17:52:32",21,1,13.33,116,0,,0,0,0
+12561493,541724,"2026-06-27 08:08:00",21,1,13.33,116,0,,0,0,0
 12561494,541724,"2017-01-22 15:01:40",22,1,16.66,114,0,,0,0,0
 12561495,541724,"2017-11-04 10:06:37",23,1,31.66,113,0,,0,0,0
 13355196,541724,"2017-01-29 12:21:35",24,1,21.58,48,0,,0,0,0
@@ -6782,7 +6818,7 @@ row_id,USERID,TIMESTAMP,_id,belongSys,record,eid,target1RM,mydate,goalDate,recor
 14611220,541724,"2026-05-20 16:23:32",33,1,60,130,0,,0,0,0
 14611221,541724,"2013-07-30 19:30:09",34,1,14,200,0,,0,0,0
 14611222,541724,"2017-11-04 10:06:37",35,1,63.33,160,0,,0,0,0
-16773018,541724,"2026-06-22 14:27:00",37,1,99.17,2,0,,0,1781105549,0
+16773018,541724,"2026-06-27 08:08:00",37,1,99.17,2,0,,0,1781105549,0
 20876143,541724,"2026-05-27 10:44:44",39,1,66,161,0,,0,0,0
 21043204,541724,"2025-11-11 19:58:44",40,1,0,317,0,,0,0,0
 21043205,541724,"2026-06-15 16:13:09",41,1,100.06,45,0,,0,0,0
@@ -6808,7 +6844,7 @@ row_id,USERID,TIMESTAMP,_id,belongSys,record,eid,target1RM,mydate,goalDate,recor
 24684146,541724,"2014-05-15 17:53:07",62,0,168,10,0,,0,1400175934,0
 24924172,541724,"2015-07-08 19:31:58",63,1,66,5,0,,0,1406563340,0
 26530075,541724,"2016-12-09 17:18:03",64,1,0,318,0,,0,0,0
-28040781,541724,"2026-06-16 16:38:36",65,1,147.33,93,117,,1787169611,0,3
+28040781,541724,"2026-06-27 08:08:00",65,1,147.33,93,117,,1787169611,0,3
 28267096,541724,"2016-04-08 16:59:24",66,1,0.11,1247,0,,0,1460131509,0
 29255659,541724,"2013-09-09 16:50:56",68,1,25.33,1015,0,,0,0,0
 29255660,541724,"2016-01-07 17:14:03",69,1,10,78,0,,0,1452185777,0
@@ -6980,6 +7016,7 @@ row_id,USERID,TIMESTAMP,_id,belongSys,record,eid,target1RM,mydate,goalDate,recor
 1793484611,541724,"2026-06-15 16:13:09",100016,1,6.33333,1346,0,,0,1781539593,0
 1793925382,541724,"2026-06-09 19:00:56",100017,1,7.6,1108,0,,0,1781031307,0
 1796051371,541724,"2026-06-16 16:38:36",100018,0,61.33,100006,0,,0,1781627431,0
+1799197896,541724,"2026-06-27 08:08:00",100019,0,8,100008,0,,0,0,0
 
 
 ######################################################
@@ -7327,6 +7364,7 @@ arm swings + scapula activatie",0,0,11,11,11,17,4,0,3,'',,0,
 207631136,541724,"2026-06-08 16:39:40",0,"Barbell deadlift from blocks ",,0,0,1,5,8,100005,2,0,0,,,0,
 207936997,541724,"2026-06-16 16:38:36",0,"Ergonomic grip cable Lat pulldown",,0,0,1,11,2,100006,11,0,0,,,0,
 207936998,541724,"2026-06-16 16:38:36",0,"Ergonomic grip cable Lat pulldown",,0,0,1,11,2,100007,11,0,0,,,0,
+208311150,541724,"2026-06-27 08:08:00",0,"Toe dorsiflex lunge",,0,0,8,11,11,100008,4,0,1,,,0,
 
 
 ######################################################
