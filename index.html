@@ -13606,7 +13606,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'brede grip · focus op lats' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit · voetboog · Hallux Rigidus' },
     ],
     BENCH: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan' },
@@ -13618,7 +13618,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
       { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
       { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie · kabel' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit · voetboog · Hallux Rigidus' },
     ],
     'SQUAT B': [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A' },
@@ -13631,7 +13631,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie na rows T2' },
       { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'compound push · borst + triceps' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit · voetboog · Hallux Rigidus' },
     ],
     DEADLIFT: [
       { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · perfect na DL — heupen al warm' },
@@ -13644,7 +13644,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
       { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
       { name:'BICEP CURL',       lk:null,          reps:'3 × 12–15',  note:'dumbbell · alternating · biceps · aanvulling op pull-dag' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit + achillespees' },
+      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'revalidatie · voet plat, knie maximaal naar voren over teen · 10 sec hold onderaan · enkel mobiliteit · voetboog · Hallux Rigidus' },
     ],
   };
 
@@ -13654,15 +13654,16 @@ document.addEventListener('DOMContentLoaded', function() {
     'SQUAT A': [
       // Revalidatie — vast onderdeel elke sessie
       { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'UNIPODALE RDL',         type:'REV',       reps:'3 × 8/z',    note:'sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · gewicht in hiel · knie standbeen licht gebogen · slow & controlled · propriocepie + enkel stabiliteit' },
       // Dag heeft: squat (benen) + OHP (push) → voeg hinge/pull toe
       { name:'BLOCK PULL',            reps:'3 × 5–8',    note:'hoge start · meer hinge · Lotte · posteriors chain aanvulling' },
-      { name:'SINGLE-LEG RDL',        reps:'3 × 8–10/z', note:'hinge unilateraal · hamstring · links-rechts check' },
     ],
     'BENCH': [
       // Revalidatie — vast onderdeel elke sessie
       { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'UNIPODALE RDL',         type:'REV',       reps:'3 × 8/z',    note:'sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · gewicht in hiel · knie standbeen licht gebogen · slow & controlled · propriocepie + enkel stabiliteit' },
       // Dag heeft: bench (push) + front squat (benen) → voeg pull/hinge toe
       { name:'SINGLE-ARM DB ROW',     reps:'3 × 8–12/z', note:'horizontale pull · upper back · schouder balans na bench' },
       { name:'ROMANIAN DEADLIFT',     reps:'3 × 10–12',  note:'hinge · hamstring · posteriors aanvulling op push-dag' },
@@ -13670,7 +13671,8 @@ document.addEventListener('DOMContentLoaded', function() {
     'SQUAT B': [
       // Revalidatie — vast onderdeel elke sessie
       { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'UNIPODALE RDL',         type:'REV',       reps:'3 × 8/z',    note:'sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · gewicht in hiel · knie standbeen licht gebogen · slow & controlled · propriocepie + enkel stabiliteit' },
       // Dag heeft: squat (benen) + row (pull) → voeg push toe
       { name:'PAUSED BENCH',          reps:'3 × 5–8',    note:'70% · 2 sec pauze op borst · geen stuitkracht' },
       { name:'CLOSE-GRIP BENCH',      reps:'3 × 8–12',   note:'tricep dominant · lockout kracht · push aanvulling op row-dag' },
@@ -13678,7 +13680,8 @@ document.addEventListener('DOMContentLoaded', function() {
     'DEADLIFT': [
       // Revalidatie — vast onderdeel elke sessie
       { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'revalidatie achillespees · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand step, hiel vrij · omhoog op 2 voeten (3 sec) → neer op 1 voet (3 sec) · pijnboog ≤5/10 VAS: blijf door bewegen · knie gestrekt = gastro · licht gebogen = soleus' },
+      { name:'UNIPODALE RDL',         type:'REV',       reps:'3 × 8/z',    note:'sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · gewicht in hiel · knie standbeen licht gebogen · slow & controlled · propriocepie + enkel stabiliteit' },
       // Dag heeft: deadlift (hinge) + DB bench (push) → voeg squat/unilateraal toe
       { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'squat unilateraal · balans · heupmobiliteit · asymmetrie' },
       { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · bodemkracht · squat patroon na hinge-dag' },
