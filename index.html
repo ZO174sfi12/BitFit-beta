@@ -13972,98 +13972,80 @@ document.addEventListener('DOMContentLoaded', function() {
   const LC = {};
   for (const [k,v] of Object.entries(DATA.lifts||{})) LC[k] = v.color || '#888';
 
-  const T3_OPTIONS = {
-    'SQUAT A': [
-      { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan · bekken neutraal' },
-      { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'kabel rope · externe rotatie · schouderhealth' },
-      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · ellebogen licht gebogen · pinch bovenaan' },
-      { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · antagonist quads · kniestabiliteit' },
-      { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · rechtstreeks relevant voor squat diepte' },
-      { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
-      { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
-      { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'smalle grip · rug breed houden' },
-      { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'brede grip · focus op lats' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
-    ],
-    BENCH: [
-      { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · volle extensie bovenaan' },
-      { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'schouder balans na bench · altijd relevant' },
-      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · schouder balans na bench' },
-      { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · antagonist quads' },
-      { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit' },
-      { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
-      { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 12–15',  note:'antagonist pull na heavy bench' },
-      { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'BW · toevoegen gewicht als >20 makkelijk' },
-      { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie · kabel' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
-    ],
-    'SQUAT B': [
-      { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · glutes · varieer met SQUAT A' },
-      { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'rotator cuff · schouder gezondheid' },
-      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · rear deltoid · varieer met face pull' },
-      { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · na squat' },
-      { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · relevant voor squat diepte' },
-      { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
-      { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie · glutes med & min' },
-      { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
-      { name:'CABLE CHEST FLY',  lk:null,          reps:'3 × 15–20',  note:'borst isolatie na rows T2' },
-      { name:'DIPS',             lk:'DIP-BW',      reps:'3 × 15–20',  note:'compound push · borst + triceps' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
-    ],
-    DEADLIFT: [
-      { name:'HIP THRUST',       lk:'Hip Thrust',  reps:'3 × 15–20',  note:'plate-loaded machine · perfect na DL — heupen al warm' },
-      { name:'FACE PULL',        lk:'Face Pull',   reps:'3 × 20–25',  note:'rotator cuff · altijd nuttig' },
-      { name:'REAR DELT FLY',   lk:null,          reps:'3 × 15–20',  note:'4 kg · staand · rear deltoid · upper back balans' },
-      { name:'LEG CURL',         lk:'Leg Curl',    reps:'3 × 12–15',  note:'machine · hamstrings · complementair aan DL' },
-      { name:'DEAD BUG',         lk:null,          reps:'3 × 8–10/z', note:'core stabiliteit · versterkt DL positie' },
-      { name:'REVERSE NORDIC',   lk:null,          reps:'3 × 6–10',   note:'eccentrische hamstring · kniebescherming' },
-      { name:'CABLE ROW',        lk:'Cable Row',   reps:'3 × 15–20',  note:'horizontale pull · upper back' },
-      { name:'LAT PULLDOWN',     lk:'Lat PD',      reps:'3 × 15–20',  note:'verticale pull · lats' },
-      { name:'ABDUCTOR MACHINE', lk:'Abductor',    reps:'3 × 15–20',  note:'standing · heupabductie' },
-      { name:'BICEP CURL',       lk:null,          reps:'3 × 12–15',  note:'dumbbell · alternating · biceps · aanvulling op pull-dag' },
-      { name:'TOE DORSIFLEX LUNGE',   lk:null,          reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
-    ],
-  };
+  // ── T3 MASTER POOL ─────────────────────────────────────────────
+  // Eén grote pool voor alle T3-oefeningen met badge-type en dag-score.
+  // type: 'REV' (kinesist revalidatie) | 'VAR' (variatie op T1/T2) | 'SUPP' (supplementair fullbody)
+  // dayScore: complementariteit per dag (0 = overbodig/redundant, 30 = neutraal, 60 = goed, 80+ = uitstekend)
+  const T3_POOL = [
+    // ── REV (kinesist revalidatie — altijd tonen, vaste sectie) ─────────────
+    { name:'RATHLEFF HEEL RAISE',        type:'REV', reps:'4 × 20',           note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
+    { name:'TOE DORSIFLEX LUNGE',        type:'REV', reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
+    { name:'UNIPODALE RDL MET ELASTIEK', type:'REV', reps:'3 × 8/z',           note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
 
-  // T3 Varianten — aanvullend op het dag-patroon richting fullbody
-  // Revalidatie-items (Situps + Rathleff Heel Raise) zijn vast onderdeel op elke dag
-  const T3_VARIANTS = {
-    'SQUAT A': [
-      // Revalidatie — vast onderdeel elke sessie
-      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
-      { name:'UNIPODALE RDL MET ELASTIEK',         type:'REV',       reps:'3 × 8/z',    note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
-      // Dag heeft: squat (benen) + OHP (push) → voeg hinge/pull toe
-      { name:'BLOCK PULL',            reps:'3 × 5–8',    note:'hoge start · meer hinge · Lotte · posteriors chain aanvulling' },
-    ],
-    'BENCH': [
-      // Revalidatie — vast onderdeel elke sessie
-      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
-      { name:'UNIPODALE RDL MET ELASTIEK',         type:'REV',       reps:'3 × 8/z',    note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
-      // Dag heeft: bench (push) + front squat (benen) → voeg pull/hinge toe
-      { name:'SINGLE-ARM DB ROW',     reps:'3 × 8–12/z', note:'horizontale pull · upper back · schouder balans na bench' },
-      { name:'ROMANIAN DEADLIFT',     reps:'3 × 10–12',  note:'hinge · hamstring · posteriors aanvulling op push-dag' },
-    ],
-    'SQUAT B': [
-      // Revalidatie — vast onderdeel elke sessie
-      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
-      { name:'UNIPODALE RDL MET ELASTIEK',         type:'REV',       reps:'3 × 8/z',    note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
-      // Dag heeft: squat (benen) + row (pull) → voeg push toe
-      { name:'PAUSED BENCH',          reps:'3 × 5–8',    note:'70% · 2 sec pauze op borst · geen stuitkracht' },
-      { name:'CLOSE-GRIP BENCH',      reps:'3 × 8–12',   note:'tricep dominant · lockout kracht · push aanvulling op row-dag' },
-    ],
-    'DEADLIFT': [
-      // Revalidatie — vast onderdeel elke sessie
-      { name:'SITUPS',                reps:'3 × 20',     note:'core · gecontroleerd naar beneden · voeten vast of vrij' },
-      { name:'RATHLEFF HEEL RAISE',   type:'REV',       reps:'4 × 20',     note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
-      { name:'UNIPODALE RDL MET ELASTIEK',         type:'REV',       reps:'3 × 8/z',    note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
-      // Dag heeft: deadlift (hinge) + DB bench (push) → voeg squat/unilateraal toe
-      { name:'BULGARIAN SPLIT SQUAT', reps:'3 × 8–12/z', note:'squat unilateraal · balans · heupmobiliteit · asymmetrie' },
-      { name:'PAUSED SQUAT',          reps:'3 × 5–8',    note:'60–70% · bodemkracht · squat patroon na hinge-dag' },
-    ],
-  };
+    // ── VAR (variaties op primary/secondary lifts) ───────────────────────────
+    { name:'BLOCK PULL',            type:'VAR', lk:null,        reps:'3 × 5–8',    cat:'hinge',
+      note:'hoge start · meer hinge · posteriors chain aanvulling',
+      dayScore:{'SQUAT A':30,'BENCH':30,'SQUAT B':30,'DEADLIFT':80,'DUBBEL':55} },
+    { name:'PAUSED BENCH',          type:'VAR', lk:null,        reps:'3 × 5–8',    cat:'push',
+      note:'70% · 2 sec pauze op borst · geen stuitkracht',
+      dayScore:{'SQUAT A':30,'BENCH':80,'SQUAT B':50,'DEADLIFT':30,'DUBBEL':55} },
+    { name:'CLOSE-GRIP BENCH',      type:'VAR', lk:null,        reps:'3 × 8–12',   cat:'push',
+      note:'tricep dominant · lockout kracht · push aanvulling op row-dag',
+      dayScore:{'SQUAT A':30,'BENCH':50,'SQUAT B':70,'DEADLIFT':30,'DUBBEL':40} },
+    { name:'PAUSED SQUAT',          type:'VAR', lk:null,        reps:'3 × 5–8',    cat:'legs',
+      note:'60–70% · bodemkracht · squat patroon na hinge-dag',
+      dayScore:{'SQUAT A':80,'BENCH':30,'SQUAT B':80,'DEADLIFT':40,'DUBBEL':35} },
+    { name:'SINGLE-ARM DB ROW',     type:'VAR', lk:null,        reps:'3 × 8–12/z', cat:'pull',
+      note:'horizontale pull · upper back · schouder balans na bench',
+      dayScore:{'SQUAT A':70,'BENCH':80,'SQUAT B':10,'DEADLIFT':60,'DUBBEL':70} },
+    { name:'ROMANIAN DEADLIFT',     type:'VAR', lk:null,        reps:'3 × 10–12',  cat:'hinge',
+      note:'hinge · hamstring · posteriors aanvulling op push-dag',
+      dayScore:{'SQUAT A':40,'BENCH':80,'SQUAT B':40,'DEADLIFT':20,'DUBBEL':50} },
+    { name:'BULGARIAN SPLIT SQUAT', type:'VAR', lk:null,        reps:'3 × 8–12/z', cat:'legs',
+      note:'squat unilateraal · balans · heupmobiliteit · asymmetrie',
+      dayScore:{'SQUAT A':40,'BENCH':70,'SQUAT B':40,'DEADLIFT':70,'DUBBEL':55} },
+
+    // ── SUPP (supplementair naar fullbody) ───────────────────────────────────
+    { name:'HIP THRUST',       type:'SUPP', lk:'Hip Thrust',  reps:'3 × 15–20',  cat:'glutes',
+      note:'plate-loaded machine · glutes · volle extensie bovenaan · bekken neutraal',
+      dayScore:{'SQUAT A':60,'BENCH':80,'SQUAT B':60,'DEADLIFT':60,'DUBBEL':70} },
+    { name:'FACE PULL',        type:'SUPP', lk:'Face Pull',   reps:'3 × 20–25',  cat:'shoulder',
+      note:'kabel rope · externe rotatie · schouderhealth · altijd nuttig na push',
+      dayScore:{'SQUAT A':80,'BENCH':80,'SQUAT B':50,'DEADLIFT':50,'DUBBEL':65} },
+    { name:'REAR DELT FLY',    type:'SUPP', lk:null,          reps:'3 × 15–20',  cat:'shoulder',
+      note:'4 kg · staand · ellebogen licht gebogen · pinch bovenaan · varieer met Face Pull',
+      dayScore:{'SQUAT A':80,'BENCH':70,'SQUAT B':50,'DEADLIFT':50,'DUBBEL':60} },
+    { name:'LEG CURL',         type:'SUPP', lk:'Leg Curl',    reps:'3 × 12–15',  cat:'legs',
+      note:'machine · hamstrings · antagonist quads · kniestabiliteit',
+      dayScore:{'SQUAT A':80,'BENCH':50,'SQUAT B':80,'DEADLIFT':40,'DUBBEL':45} },
+    { name:'DEAD BUG',         type:'SUPP', lk:null,          reps:'3 × 8–10/z', cat:'core',
+      note:'core stabiliteit · rechtstreeks relevant voor squat en DL diepte',
+      dayScore:{'SQUAT A':70,'BENCH':50,'SQUAT B':70,'DEADLIFT':70,'DUBBEL':60} },
+    { name:'REVERSE NORDIC',   type:'SUPP', lk:null,          reps:'3 × 6–10',   cat:'legs',
+      note:'eccentrische hamstring · kniebescherming',
+      dayScore:{'SQUAT A':70,'BENCH':40,'SQUAT B':70,'DEADLIFT':40,'DUBBEL':40} },
+    { name:'ABDUCTOR MACHINE', type:'SUPP', lk:'Abductor',    reps:'3 × 15–20',  cat:'glutes',
+      note:'standing · heupabductie · glutes med & min',
+      dayScore:{'SQUAT A':60,'BENCH':80,'SQUAT B':60,'DEADLIFT':50,'DUBBEL':65} },
+    { name:'CABLE ROW',        type:'SUPP', lk:'Cable Row',   reps:'3 × 15–20',  cat:'pull',
+      note:'smalle grip · rug breed houden · horizontale pull',
+      dayScore:{'SQUAT A':70,'BENCH':80,'SQUAT B':10,'DEADLIFT':70,'DUBBEL':75} },
+    { name:'LAT PULLDOWN',     type:'SUPP', lk:'Lat PD',      reps:'3 × 15–20',  cat:'pull',
+      note:'brede grip · focus op lats · verticale pull',
+      dayScore:{'SQUAT A':70,'BENCH':70,'SQUAT B':60,'DEADLIFT':70,'DUBBEL':70} },
+    { name:'DIPS',             type:'SUPP', lk:'DIP-BW',      reps:'3 × 15–20',  cat:'push',
+      note:'BW · compound push · borst + triceps · toevoegen gewicht als >20 makkelijk',
+      dayScore:{'SQUAT A':30,'BENCH':30,'SQUAT B':80,'DEADLIFT':40,'DUBBEL':35} },
+    { name:'CABLE CHEST FLY',  type:'SUPP', lk:null,          reps:'3 × 15–20',  cat:'push',
+      note:'borst isolatie · kabel · squeeze op het midden',
+      dayScore:{'SQUAT A':30,'BENCH':30,'SQUAT B':80,'DEADLIFT':40,'DUBBEL':35} },
+    { name:'BICEP CURL',       type:'SUPP', lk:null,          reps:'3 × 12–15',  cat:'pull',
+      note:'dumbbell · alternating · biceps · aanvulling op pull-dag',
+      dayScore:{'SQUAT A':40,'BENCH':60,'SQUAT B':50,'DEADLIFT':70,'DUBBEL':65} },
+    { name:'SITUPS',           type:'SUPP', lk:null,          reps:'3 × 20',     cat:'core',
+      note:'core · gecontroleerd naar beneden · voeten vast of vrij',
+      dayScore:{'SQUAT A':50,'BENCH':50,'SQUAT B':50,'DEADLIFT':50,'DUBBEL':50} },
+  ];
 
   const STRETCHES = {
     'SQUAT A': {
@@ -14268,42 +14250,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const _needsPull = _pushSets7 > _pullSets7 * 1.4;
   // Glutes: gebruik lift-keys (Hip Thrust en Abductor worden nu getrackt)
   const _needsGlutes = !recentLifts7.has('Hip Thrust') && !recentLifts7.has('Abductor');
-  // T3 naam → DATA.lifts key (voor recency + vorig gewicht)
-  const T3_TO_LIFT = {
-    'LAT PULLDOWN':'Lat PD', 'DIPS':'DIP-BW',
-    'HIP THRUST':'Hip Thrust', 'FACE PULL':'Face Pull',
-    'ABDUCTOR MACHINE':'Abductor', 'LEG CURL':'Leg Curl', 'CABLE ROW':'Cable Row',
-  };
-  // T3 naam → spiergroep (voor oefeningen zonder lift key)
-  const T3_TO_MUSCLE = {
-    'DEAD BUG':'Core', 'REVERSE NORDIC':'Hamstrings', 'CABLE CHEST FLY':'Chest',
-  };
-  function t3RecentlyDone(name) {
-    const lk = T3_TO_LIFT[name];
-    if (lk && recentLifts7.has(lk)) return true;
-    const muscle = T3_TO_MUSCLE[name];
-    if (muscle && recentMuscles7.has(muscle)) return true;
+  // T3 recency check — afleiden uit pool (lk-veld)
+  function t3RecentlyDone(o) {
+    if (o.lk && recentLifts7.has(o.lk)) return true;
     return false;
-  }
-  const T3_PRIO_CAT = {
-    'HIP THRUST':'glutes','ABDUCTOR MACHINE':'glutes',
-    'LAT PULLDOWN':'pull','CABLE ROW':'pull','CHIN-UPS':'pull',
-    'DIPS':'push','CABLE CHEST FLY':'push',
-    'LEG CURL':'legs','DEAD BUG':'core','REVERSE NORDIC':'legs',
-    'FACE PULL':'shoulder', 'REAR DELT FLY':'shoulder',
-  };
-  // Statische voorkeursscore per oefening (hogere waarde = hogere prioriteit)
-  const T3_PREF = {
-    'FACE PULL':30,'REAR DELT FLY':28,'LEG CURL':25,'DEAD BUG':20,'REVERSE NORDIC':20,
-    'HIP THRUST':15,'ABDUCTOR MACHINE':15,'CABLE ROW':15,
-    'LAT PULLDOWN':10,'DIPS':0,'CABLE CHEST FLY':-10,
-  };
-  // Een T3-oefening krijgt ! als ze een hoge voorkeur heeft of hard nodig is, en recent niet gedaan
-  function t3IsHighlighted(name) {
-    const cat = T3_PRIO_CAT[name];
-    const needed = (cat === 'glutes' && _needsGlutes) || (cat === 'pull' && _needsPull);
-    const pref = T3_PREF[name] ?? 0;
-    return (needed || pref >= 20) && !t3RecentlyDone(name);
   }
 
   // Warmup sets helpers
@@ -14437,19 +14387,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const day = DAYS[idx];
     const c = document.getElementById('gzclp-tiers');
     if (!c) return;
-    const t3opts = T3_OPTIONS[day.key] || [];
     const str = STRETCHES[day.key] || {pre:[], post:[]};
-    // Rank T3 opties obv voorkeuren + push/pull saldo + recency
-    function _t3Score(name) {
-      const pref = T3_PREF[name] ?? 0;
-      let s = 20 + pref;
-      const cat = T3_PRIO_CAT[name];
-      if (cat === 'glutes' && _needsGlutes) s += 60;
-      if (cat === 'pull'   && _needsPull)   s += 50;
-      if (t3RecentlyDone(name)) s -= 30;
+    // T3 scoring: dag-score + push/pull saldo boost + recency penalty
+    function _t3Score(o) {
+      let s = (o.dayScore?.[day.key] ?? 30);
+      if (o.cat === 'glutes'   && _needsGlutes) s += 20;
+      if (o.cat === 'pull'     && _needsPull)   s += 20;
+      if (t3RecentlyDone(o))                    s -= 25;
       return s;
     }
-    const rankedT3 = [...t3opts].sort((a,b) => _t3Score(b.name) - _t3Score(a.name));
+    const _t3Rev  = T3_POOL.filter(o => o.type === 'REV');
+    const _t3Main = T3_POOL.filter(o => o.type !== 'REV');
+    const rankedT3 = [..._t3Main].sort((a,b) => _t3Score(b) - _t3Score(a));
     const t1lk = day.tiers[0].lk;
     const t1w  = nextW(t1lk, 'T1') ?? lastW(t1lk);
 
@@ -14634,64 +14583,66 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>`;
     }).join('');
 
-    // T3 Varianten block
-    const varOpts = T3_VARIANTS[day.key] || [];
-    const t3VarHtml = varOpts.length ? `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
-      <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-        <div class="gzclp-exname" style="color:var(--green)">VARIANTEN — fullbody aanvulling</div>
-        <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 90–120 sec</div>
-      </div>
-      <div class="gzclp-t3-grid">
-        ${(() => { let vi=0; return varOpts.map(o => {
-          const isRev = o.type === 'REV';
-          if (!isRev) vi++;
-          const badge = isRev
-            ? `<span style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #ff6b3566;border-radius:2px;color:#ff6b35;background:#ff6b3510;flex-shrink:0">REV</span>`
-            : `<span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0">${vi}.</span>`;
-          const nc = isRev ? '#ff6b35' : 'var(--text)';
-          const bc = isRev ? 'border-color:#ff6b3533;background:#130b08' : '';
-          return `<div class="gzclp-t3-item" style="${bc}">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
-              ${badge}
-              <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nc}">${o.name}</span>
-              <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:auto">${o.reps}</span>
-            </div>
-            <div style="color:var(--muted);font-family:monospace;font-size:11px">${o.note}</div>
-          </div>`;
-        }).join(''); })()}
-      </div>
-    </div>` : '';
+    // ── T3 UNIFIED BLOCK ───────────────────────────────────────────
+    // Badge-kleuren
+    const _BADGE_STYLE = {
+      VAR:  `font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #ffb74d55;border-radius:2px;color:#ffb74d;background:#1a120633;flex-shrink:0`,
+      SUPP: `font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #4caf5055;border-radius:2px;color:#4caf50;background:#0e1a0e33;flex-shrink:0`,
+      REV:  `font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #ff6b3566;border-radius:2px;color:#ff6b35;background:#ff6b3510;flex-shrink:0`,
+    };
+    const _BORDER_HL  = `border-color:var(--accent)55;background:#0d0d20`;
+    const _BORDER_VAR = `border-color:#ffb74d33;background:#1a1206`;
+    const _BORDER_SUPP= `border-color:#4caf5033;background:#0e1a0e`;
+    const _BORDER_REV = `border-color:#ff6b3533;background:#130b08`;
 
-    // T3 block — alle opties in 2 kolommen, ! op aanbevolen
+    function _t3ItemHtml(o, prefix) {
+      const prevW = o.lk ? lastW(o.lk) : null;
+      const lkColor = o.lk ? (LC[o.lk] || 'var(--muted)') : 'var(--muted)';
+      const qualColor = o.lk ? (lastT3Quality(o.lk) ?? lkColor) : lkColor;
+      const prevDate  = o.lk ? lastDate(o.lk) : null;
+      const prevWLine = prevW !== null
+        ? `<div style="font-size:11px;color:${qualColor};margin-top:3px">vorig: ${prevW} kg${prevDate ? ` · ${prevDate}` : ''}</div>`
+        : '';
+      const isHL  = prefix === '!';
+      const nc = isHL ? 'var(--accent)' : (o.type === 'REV' ? '#ff6b35' : o.type === 'VAR' ? '#ffb74d' : 'var(--text)');
+      const bdr = isHL ? _BORDER_HL : (o.type==='REV' ? _BORDER_REV : o.type==='VAR' ? _BORDER_VAR : _BORDER_SUPP);
+      const badge = `<span style="font-family:'Space Mono',monospace;${_BADGE_STYLE[o.type]||''}">${o.type}</span>`;
+      const pfx   = isHL ? `<span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--accent)">!</span>` : '';
+      return `<div class="gzclp-t3-item" style="${bdr}">
+        <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">
+          ${badge}${pfx}
+          <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nc}">${o.name}</span>
+          <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:auto">${o.reps}</span>
+        </div>
+        <div style="color:var(--muted);font-family:monospace;font-size:11px">${o.note}</div>
+        ${prevWLine}
+      </div>`;
+    }
+
+    const _top4 = rankedT3.slice(0, 4);
+    const _rest = rankedT3.slice(4);
+
+    const _mainItemsHtml = _top4.map((o, i) => _t3ItemHtml(o, i === 0 ? '!' : `${i+1}.`)).join('') +
+      (_rest.length ? `<details style="grid-column:1/-1;margin-top:4px">
+        <summary style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;user-select:none">▸ ${_rest.length} meer oefeningen</summary>
+        <div class="gzclp-t3-grid" style="margin-top:6px">
+          ${_rest.map((o,i) => _t3ItemHtml(o, `${_top4.length+i+1}.`)).join('')}
+        </div>
+      </details>` : '');
+
+    const _revItemsHtml = _t3Rev.map(o => _t3ItemHtml(o, '')).join('');
+
     const t3Html = `<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>
       <span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-        <div class="gzclp-exname" style="color:var(--green)">ACCESSOIRES — kies 1 of 2</div>
-        <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60–90 sec</div>
+        <div class="gzclp-exname" style="color:var(--green)">AANVULLING — kies 1 of 2</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60–120 sec</div>
       </div>
-      <div class="gzclp-t3-grid">
-        ${rankedT3.map((o, i) => {
-          const hl = t3IsHighlighted(o.name);
-          const border = hl ? `;border-color:var(--accent)55;background:#0d0d20` : '';
-          const nameClr = hl ? 'var(--accent)' : 'var(--text)';
-          const prefix = hl ? '! ' : `${i+1}. `;
-          const prevW = o.lk ? lastW(o.lk) : null;
-          const lkColor = o.lk ? (LC[o.lk] || 'var(--muted)') : 'var(--muted)';
-          const qualColor = o.lk ? (lastT3Quality(o.lk) ?? lkColor) : lkColor;
-          const prevDate  = o.lk ? lastDate(o.lk) : null;
-          const prevWLine = prevW !== null
-            ? `<div style="font-size:11px;color:${qualColor};margin-top:3px">vorig: ${prevW} kg${prevDate ? ` · ${prevDate}` : ''}</div>`
-            : '';
-          return `<div class="gzclp-t3-item" style="${border}">
-            <span style="font-family:'Oxanium',sans-serif;font-size:11px;font-weight:700;color:${nameClr}">${prefix}${o.name}</span>
-            <span style="color:var(--cyan);font-family:'Space Mono',monospace;font-size:11px;margin-left:8px">${o.reps}</span>
-            <div style="color:var(--muted);font-family:monospace;font-size:11px;margin-top:2px">${o.note}</div>
-            ${prevWLine}
-          </div>`;
-        }).join('')}
+      <div class="gzclp-t3-grid">${_mainItemsHtml}</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #ff6b3522">
+        <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:#ff6b35;margin-bottom:6px">REVALIDATIE (altijd doen)</div>
+        <div class="gzclp-t3-grid">${_revItemsHtml}</div>
       </div>
     </div>`;
 
@@ -14713,7 +14664,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </details>`;
 
-    c.innerHTML = tierHtml + t3VarHtml + t3Html;
+    c.innerHTML = tierHtml + t3Html;
   }
 
 
