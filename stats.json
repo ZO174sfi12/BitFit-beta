@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-29T22:18:13",
+  "updated": "2026-06-29T22:20:38",
   "weight": 87.0,
   "weight_date": "2026-06-29",
   "training_days_total": 111,
@@ -55,9 +55,9 @@
       "pr_weight": 87.8
     },
     "Front Squat": {
-      "last_date": "2026-04-13",
-      "last_weight": 40.0,
-      "last_volume": 1040.0,
+      "last_date": "2026-06-29",
+      "last_weight": 45.0,
+      "last_volume": 1650.0,
       "pr": false,
       "pr_weight": 60.0
     },
