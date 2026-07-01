@@ -25,15 +25,12 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 
 /* ── Header ── */
 header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--green),transparent);animation:pulse-line 4s ease-in-out infinite;}
+header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),transparent);animation:pulse-line 4s ease-in-out infinite;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .logo{font-family:'Oxanium',sans-serif;font-size:clamp(18px,5.5vw,26px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;display:flex;align-items:center;gap:0;}
 .logo-bit{color:var(--accent);}
-.logo-supp{color:var(--green);}
+.logo-fit{color:var(--cyan);}
 .logo-sep{color:var(--border);font-size:.55em;letter-spacing:0;margin:0 8px;}
-.logo-fit-link{text-decoration:none;font-family:'Oxanium',sans-serif;font-weight:800;letter-spacing:4px;font-size:.62em;opacity:.55;display:flex;align-items:baseline;gap:0;transition:opacity .2s;}
-.logo-fit-link:hover{opacity:.85;}
-.logo-fit-mini{color:var(--cyan);}
 .header-right{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
 .meta-item{display:flex;flex-direction:column;align-items:flex-end;}
 .meta-label{font-family:monospace;font-size:10px;letter-spacing:2px;color:var(--muted);}
@@ -185,6 +182,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 .nav-item.nav-active{color:var(--accent);border-color:var(--accent);background:#7b5cff18;box-shadow:0 0 10px #7b5cff22;}
 .nav-item.nav-stats-active{color:var(--cyan);border-color:var(--cyan);background:#00e5ff18;box-shadow:0 0 10px #00e5ff22;}
 .nav-item.nav-supp-active{color:var(--green);border-color:var(--green);background:#00ffb318;box-shadow:0 0 10px #00ffb322;}
+@media(max-width:480px){.nav-item{padding:6px 14px;letter-spacing:1px;font-size:10px;}.page-nav{gap:5px;padding:8px 10px;}}
 
 </style>
 </head>
@@ -193,12 +191,16 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
 <header>
   <div class="header-inner">
     <div class="logo">
-      <span class="logo-bit">BIT</span><span class="logo-supp">SUPP</span>
+      <span class="logo-bit">BIT</span><span class="logo-fit">FIT</span>
     </div>
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // SUPPLEMENTS</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">—</span>KG</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">UPDATE</span>
+        <span id="hdr-update" class="meta-value" style="color:var(--muted)">—</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">SYNC</span>
@@ -212,7 +214,7 @@ footer{text-align:center;color:var(--muted);font-family:monospace;font-size:8px;
   </div>
 </header>
 
-<nav class="page-nav"><a href="bitstats.html" class="nav-item ">BITSTATS</a><a href="index.html" class="nav-item ">BITFIT</a><a href="supplement-tracker.html" class="nav-item nav-supp-active">BITSUPP</a><a href="lotteview.html" class="nav-item ">LOG VIEW</a></nav>
+<nav class="page-nav"><a href="bitstats.html" class="nav-item ">STATS</a><a href="index.html" class="nav-item ">GYM</a><a href="supplement-tracker.html" class="nav-item nav-supp-active">SUPPS</a><a href="log-view.html" class="nav-item ">LOGS</a></nav>
 
 <!-- GitHub modal -->
 <div class="modal-overlay" id="settings-modal">
@@ -810,6 +812,23 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
   const today=todayStr(), month=new Date(); month.setDate(month.getDate()-30);
   document.getElementById('filter-to').value=today;
   document.getElementById('filter-from').value=month.toISOString().slice(0,10);
+  // Load weight + update timestamp from stats.json
+  try{
+    const r=await fetch('stats.json?_='+Date.now());
+    if(r.ok){
+      const s=await r.json();
+      if(s.weight){document.getElementById('hdr-weight').textContent=s.weight;}
+      if(s.updated){
+        const d=new Date(s.updated);
+        const fmt=d.getFullYear().toString()+
+          String(d.getMonth()+1).padStart(2,'0')+
+          String(d.getDate()).padStart(2,'0')+
+          String(d.getHours()).padStart(2,'0')+
+          String(d.getMinutes()).padStart(2,'0');
+        document.getElementById('hdr-update').textContent=fmt;
+      }
+    }
+  }catch(e){}
   if(!GH.token){setSyncStatus('error','⚠ TOKEN ONTBREEKT');openSettings();}
   else{await loadLogsFromGitHub();}
   renderToday();
