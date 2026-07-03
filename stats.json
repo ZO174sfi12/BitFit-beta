@@ -1,9 +1,9 @@
 {
-  "updated": "2026-07-03T16:41:45",
-  "weight": 86.1,
-  "weight_date": "2026-07-01",
-  "training_days_total": 113,
-  "last_training_day": "2026-07-01",
+  "updated": "2026-07-03T16:50:38",
+  "weight": 85.7,
+  "weight_date": "2026-07-03",
+  "training_days_total": 115,
+  "last_training_day": "2026-07-03",
   "lifts": {
     "Squat": {
       "last_date": "2026-06-30",
@@ -34,11 +34,11 @@
       "pr_weight": 72.0
     },
     "OHP": {
-      "last_date": "2026-06-28",
-      "last_weight": 40.0,
-      "last_volume": 1310.0,
-      "pr": false,
-      "pr_weight": 52.5
+      "last_date": "2026-07-03",
+      "last_weight": 55.0,
+      "last_volume": 1110.0,
+      "pr": true,
+      "pr_weight": 55.0
     },
     "Lat PD": {
       "last_date": "2026-06-29",
@@ -76,10 +76,10 @@
       "pr_weight": 30.0
     },
     "Face Pull": {
-      "last_date": "2026-06-10",
-      "last_weight": 20.0,
-      "last_volume": 585.0,
-      "pr": true,
+      "last_date": "2026-07-03",
+      "last_weight": 15.0,
+      "last_volume": 680.0,
+      "pr": false,
       "pr_weight": 20.0
     },
     "Cable Row": {
