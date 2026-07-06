@@ -273,11 +273,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">85.7</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.7</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202607031819</span>
+        <span class="meta-value" style="color:var(--muted)">202607062236</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -8036,6 +8036,10 @@ const DATA = {
     {
       "date": "2026-07-03",
       "weight": 85.7
+    },
+    {
+      "date": "2026-07-06",
+      "weight": 87.7
     }
   ],
   "muscle_daily": [
@@ -9500,7 +9504,9 @@ const DATA = {
     "2026-06-30",
     "2026-07-01",
     "2026-07-02",
-    "2026-07-03"
+    "2026-07-03",
+    "2026-07-05",
+    "2026-07-06"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -9882,7 +9888,8 @@ const DATA = {
     "2026-06-30": 1,
     "2026-07-01": 1,
     "2026-07-02": 0,
-    "2026-07-03": 1
+    "2026-07-03": 1,
+    "2026-07-05": 0
   },
   "body_comp": [
     {
@@ -12536,6 +12543,10 @@ const DATA = {
     {
       "date": "2026-07-03",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-07-06",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -14152,6 +14163,12 @@ const DATA = {
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-07-05",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     }
   ]
 };
@@ -14253,6 +14270,9 @@ document.addEventListener('DOMContentLoaded', function() {
     { name:'RATHLEFF HEEL RAISE',        type:'REV', reps:'4 × 20',           note:'voetboogversterking · sta op rand handdoek met grote teen · hiel omhoog duwen op bal van de voet' },
     { name:'TOE DORSIFLEX LUNGE',        type:'REV', reps:'3 × 10/z · 10 sec', note:'overstretching grote teen · voet plat, knie maximaal naar voren over teen · 10 sec hold' },
     { name:'UNIPODALE RDL MET ELASTIEK', type:'REV', reps:'3 × 8/z',           note:'voetboogversterking · sta op 1 been · hinge: romp vooruit, vrij been achteruit · rug neutraal · knie standbeen licht gebogen · slow & controlled' },
+    { name:'BRIDGE OP TENEN (BANKJE)',   type:'REV', reps:'3 × 15',            note:'lig op rug, dikke tenen op bankje · bekken omhoog, maxglute aanspannen · slow' },
+    { name:'RDL BANDED MEDIAAL',         type:'REV', reps:'3 × 10/z',          note:'enkelstabiliteit · elastiek mediaal (spanning naar midden)' },
+    { name:'Y-BALANCE MET ELASTIEK ONDER TEEN', type:'REV', reps:'3 × 4 rondjes/z', note:'enkelstabiliteit · sta op 1 been · reach in 3 richtingen (voor · achter-mediaal · achter-lateraal)' },
 
     // ── VAR (variaties op primary/secondary lifts) ───────────────────────────
     { name:'BLOCK PULL',            type:'VAR', lk:null,        reps:'3 × 5–8',    cat:'hinge',
