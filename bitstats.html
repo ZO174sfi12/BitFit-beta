@@ -348,7 +348,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     </div>
   </div>
 
-
+  <div class="panel" id="bodycomp-monthly">
+    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+    <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
+    <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek.</div>
+  </div>
 
 </div>
 
@@ -15344,6 +15349,51 @@ function renderKPI() {
 }
 
 renderKPI();
+
+// ── BODY COMP MAANDELIJKS ──────────────────────────────────────────────
+// Bron: bitfit-data/bodycomp.json — bij wijziging daar ook dit blok bijwerken.
+const BODYCOMP = [
+  { month: "2026-01", weight_avg: 83.6, fat_pct: 18.8, fat_source: "graph" },
+  { month: "2026-02", weight_avg: 82.2, fat_pct: 18.1, fat_source: "graph" },
+  { month: "2026-03", weight_avg: 83.7, fat_pct: 20.0, fat_source: "graph" },
+  { month: "2026-04", weight_avg: 85.8, fat_pct: 20.9, fat_source: "graph" },
+  { month: "2026-05", weight_avg: 87.4, fat_pct: 21.2, fat_source: "graph" },
+  { month: "2026-06", weight_avg: 86.6, fat_pct: 20.5, fat_source: "graph" },
+  { month: "2026-07", weight_avg: 86.7, fat_pct: 20.6, fat_source: "app" }
+];
+
+function renderBodycompMonthly() {
+  const el = document.getElementById('bodycomp-monthly-body');
+  if (!el || !BODYCOMP.length) return;
+  const MND = { '01':'JAN','02':'FEB','03':'MRT','04':'APR','05':'MEI','06':'JUN','07':'JUL','08':'AUG','09':'SEP','10':'OKT','11':'NOV','12':'DEC' };
+  const th = 'text-align:right;padding:4px 10px;color:var(--muted);font-size:10px;letter-spacing:1px;border-bottom:1px solid var(--border);';
+  const td = 'text-align:right;padding:4px 10px;';
+  const rows = BODYCOMP.map((m, i) => {
+    const prev = i > 0 ? BODYCOMP[i - 1] : null;
+    const fatKg  = Math.round(m.weight_avg * m.fat_pct / 10) / 10;
+    const leanKg = Math.round((m.weight_avg - fatKg) * 10) / 10;
+    const dFat = prev ? Math.round((m.fat_pct - prev.fat_pct) * 10) / 10 : null;
+    const dClr = dFat === null ? 'var(--muted)' : (dFat < 0 ? 'var(--green)' : (dFat > 0 ? 'var(--red)' : 'var(--muted)'));
+    const dTxt = dFat === null ? '—' : (dFat > 0 ? '+' : '') + dFat.toFixed(1);
+    const est  = m.fat_source !== 'app' ? '<span style="color:var(--muted)">&#177;</span>' : '';
+    const yr = m.month.slice(0, 4), mm = m.month.slice(5, 7);
+    return `<tr>
+      <td style="${td}text-align:left;color:var(--text)">${MND[mm] || mm} <span style="color:var(--muted);font-size:10px">${yr.slice(2)}</span></td>
+      <td style="${td}color:var(--text)">${m.weight_avg.toFixed(1)}</td>
+      <td style="${td}color:var(--cyan)">${m.fat_pct.toFixed(1)}%${est}</td>
+      <td style="${td}color:${dClr}">${dTxt}</td>
+      <td style="${td}color:#ff8a65">${fatKg.toFixed(1)}</td>
+      <td style="${td}color:var(--green)">${leanKg.toFixed(1)}</td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `<table style="border-collapse:collapse;width:100%;min-width:420px">
+    <thead><tr>
+      <th style="${th}text-align:left">MAAND</th><th style="${th}">KG &Oslash;</th>
+      <th style="${th}">VET%</th><th style="${th}">&Delta; VET%</th>
+      <th style="${th}">VET KG</th><th style="${th}">LEAN KG</th>
+    </tr></thead><tbody>${rows}</tbody></table>`;
+}
+renderBodycompMonthly();
 </script>
 </body>
 </html>
