@@ -352,7 +352,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
     <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
     <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
-    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek.</div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek.<br>Doelen: KG &Oslash; 85&ndash;88 &middot; VET% &le;19.5 &middot; VET &le;15.6 kg &middot; LEAN &ge;71 kg &mdash; <span style="color:var(--green)">doel bereikt</span> / <span style="color:var(--yellow)">beter dan baseline</span> / <span style="color:var(--red)">slechter dan baseline (apr '26)</span></div>
   </div>
 
 </div>
@@ -15029,236 +15029,8 @@ window.addEventListener('resize', () => {
 update(30);
 update(30);
 
-// ── LICHAAMSSAMENSTELLING ─────────────────────────────────────────────────────
-// Deurenberg-schatting: BF% = 1.2×BMI + 0.23×leeftijd - 10.8 - 5.4 (man)
-// Bert: 193 cm → 3.7249 m², geboren 23/04/1990
-const _HEIGHT_M2 = 1.93 * 1.93;
-const _AGE = 36;
-function estimateBFPct(weightKg) {
-  const bmi = weightKg / _HEIGHT_M2;
-  return Math.max(5, Math.round((1.2 * bmi + 0.23 * _AGE - 10.8 - 5.4) * 10) / 10);
-}
-
-let bodyCompChart = null;
-function renderBodyComp(startDate, endDate) {
-  const ctx = document.getElementById('bodyCompChart');
-  if (!ctx) return;
-
-  // Nearest-neighbour BF% lookup from scale data (sorted by date)
-  const _bcSorted = (DATA.body_comp || []).slice().sort((a,b) => a.date < b.date ? -1 : 1);
-  function nearestBFPct(dateStr) {
-    if (!_bcSorted.length) return null;
-    let best = _bcSorted[0], bestDiff = Infinity;
-    for (const b of _bcSorted) {
-      const diff = Math.abs(new Date(b.date) - new Date(dateStr));
-      if (diff < bestDiff) { bestDiff = diff; best = b; }
-    }
-    // Only use if within 45 days
-    return bestDiff <= 45 * 86400000 ? best.bf_pct : null;
-  }
-
-  // Filter weight data in period
-  const pts = DATA.weight
-    .filter(w => { const d = new Date(w.date); return d >= startDate && d <= endDate; })
-    .map(w => {
-      const exact = (_bcSorted).find(b => b.date === w.date);
-      const bfPct = exact ? exact.bf_pct : (nearestBFPct(w.date) ?? estimateBFPct(w.weight));
-      const fromScale = !!exact || nearestBFPct(w.date) !== null;
-      const fatMass  = Math.round(w.weight * bfPct / 100 * 10) / 10;
-      const leanMass = Math.round((w.weight - fatMass) * 10) / 10;
-      return { date: w.date, weight: w.weight, bfPct, fatMass, leanMass, estimated: !fromScale };
-    });
-
-  if (!pts.length) return;
-
-  const hasActual = pts.some(p => !p.estimated);
-  const labels = pts.map(p => {
-    const d = new Date(p.date + 'T00:00');
-    return d.toLocaleDateString('nl-BE', { day: 'numeric', month: 'short' });
-  });
-  const fatData  = pts.map(p => p.fatMass);
-  const leanData = pts.map(p => p.leanMass);
-  const GOAL_LEAN = 71, GOAL_FAT = 15.6;
-
-  // Smart Y axes — strak ingezoomd op de variatie, incl. doelwaarden
-  function smartAxis(data, pad=0.3) {
-    const mn = Math.min(...data), mx = Math.max(...data);
-    const range = mx - mn || 1;
-    return { min: Math.floor((mn - range*0.06 - pad) * 10) / 10,
-             max: Math.ceil( (mx + range*0.06 + pad) * 10) / 10 };
-  }
-  const fatAxis  = smartAxis([...fatData, GOAL_FAT]);
-  const leanAxis = smartAxis([...leanData, GOAL_LEAN]);
-
-  const isDark = true;
-  const gridC = 'rgba(255,255,255,0.05)';
-  const textC = '#606080';
-
-  if (bodyCompChart) bodyCompChart.destroy();
-  // ── Feedback blok ──────────────────────────────────────────
-  const fbEl = document.getElementById('body-comp-feedback');
-  if (fbEl && pts.length >= 2) {
-    const last  = pts[pts.length - 1];
-    const first = pts[0];
-    const leanGap = (GOAL_LEAN - last.leanMass);
-    const fatGap  = (last.fatMass - GOAL_FAT);
-    const leanOk  = leanGap <= 0;
-    const fatOk   = fatGap  <= 0;
-    // Trend: lean gain/week over geselecteerde periode
-    const daysDiff  = (new Date(last.date) - new Date(first.date)) / 86400000;
-    const leanDelta = last.leanMass - first.leanMass;
-    const weeklyLean = daysDiff >= 7 ? leanDelta / daysDiff * 7 : null;
-    // Prognose weken tot doelen
-    let etaWeeksLean = null;
-    if (weeklyLean && weeklyLean > 0 && !leanOk) etaWeeksLean = Math.round(leanGap / weeklyLean);
-    let html = '';
-    // Huidige status
-    html += `<div><span style="color:var(--muted)">Nu &nbsp;</span>`;
-    html += `<span style="color:#80deea;font-weight:700">${last.leanMass} kg lean</span>`;
-    html += ` <span style="color:#454560">·</span> `;
-    html += `<span style="color:#ff8a65;font-weight:700">${last.fatMass} kg vet</span>`;
-    html += ` <span style="color:#454560">·</span> `;
-    html += `<span style="color:var(--muted)">BF% ${last.bfPct.toFixed(1)}%${last.estimated ? ' (schatting)' : ''}</span></div>`;
-    // Doelgap
-    html += `<div><span style="color:var(--muted)">Doel</span>  `;
-    html += leanOk
-      ? `<span style="color:var(--green)">✓ lean bereikt</span>`
-      : `<span style="color:#80deea">+${leanGap.toFixed(1)} kg lean te gaan</span>`;
-    html += ` <span style="color:#454560">·</span> `;
-    html += fatOk
-      ? `<span style="color:var(--green)">✓ vet bereikt</span>`
-      : `<span style="color:#ff8a65">−${fatGap.toFixed(1)} kg vet te gaan</span>`;
-    html += `</div>`;
-    // Trend + prognose
-    if (weeklyLean !== null) {
-      const sign = weeklyLean > 0 ? '+' : '';
-      const _rising  = weeklyLean >  0.05;
-      const _falling = weeklyLean < -0.05;
-      html += `<div style="margin-top:4px"><span style="color:var(--muted)">Trend</span>  `;
-      html += `<span style="color:var(--text)">${sign}${weeklyLean.toFixed(2)} kg lean/week</span>`;
-      if (!leanOk) {
-        if (_rising && etaWeeksLean) {
-          html += ` <span style="color:#454560">·</span> <span style="color:var(--yellow)">doel bereikt in ~${etaWeeksLean} weken</span>`;
-        } else if (_falling) {
-          html += ` <span style="color:#454560">·</span> <span style="color:var(--red)">lean daalt — check caloriebalans</span>`;
-        } else {
-          html += ` <span style="color:#454560">·</span> <span style="color:var(--muted)">stabiel — meer eten of meer volume</span>`;
-        }
-      }
-      html += `</div>`;
-    }
-    // Bronvermelding
-    const _hasScale = pts.some(p => !p.estimated);
-    const _srcNote = document.getElementById('bc-source-note');
-    if (_srcNote) _srcNote.textContent = _hasScale ? 'weegschaal' : 'schatting via Deurenberg';
-    html += `<div style="color:#454560;margin-top:2px;font-size:10px;">${_hasScale ? 'BF% van weegschaal (nearest-match) · richting telt, niet het getal.' : 'Geen schaaldata — schatting via Deurenberg · onbetrouwbaar voor recompositie.'}</div>`;
-    fbEl.innerHTML = html;
-  } else if (fbEl) {
-    fbEl.innerHTML = '';
-  }
-
-  bodyCompChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: 'Vetmassa (kg)',
-          data: fatData,
-          borderColor: '#ff8a65',
-          backgroundColor: 'rgba(255,138,101,0.08)',
-          borderWidth: 2,
-          borderDash: hasActual ? [] : [5,3],
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          tension: 0.3,
-          yAxisID: 'yFat',
-          fill: true,
-        },
-        {
-          label: 'Lean massa (kg)',
-          data: leanData,
-          borderColor: '#80deea',
-          backgroundColor: 'rgba(128,222,234,0.06)',
-          borderWidth: 2,
-          borderDash: hasActual ? [] : [5,3],
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          tension: 0.3,
-          yAxisID: 'yLean',
-          fill: true,
-        },
-        {
-          label: 'Doel lean (71 kg)',
-          data: labels.map(() => GOAL_LEAN),
-          borderColor: 'rgba(128,222,234,0.45)',
-          borderWidth: 1.5,
-          borderDash: [6, 4],
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          tension: 0,
-          yAxisID: 'yLean',
-          fill: false,
-        },
-        {
-          label: 'Doel vet (15.6 kg)',
-          data: labels.map(() => GOAL_FAT),
-          borderColor: 'rgba(255,138,101,0.45)',
-          borderWidth: 1.5,
-          borderDash: [6, 4],
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          tension: 0,
-          yAxisID: 'yFat',
-          fill: false,
-        }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          position: 'nearest',
-          yAlign: 'bottom',
-          callbacks: {
-            title: items => items[0].label,
-            afterBody: items => {
-              const i = items[0].dataIndex;
-              const p = pts[i];
-              return [`BF% ${p.bfPct.toFixed(1)}%  ·  gewicht ${p.weight} kg${p.estimated ? '  (schatting)' : ''}`];
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          type: 'category',
-          grid: { color: gridC },
-          ticks: { color: textC, font: { size: 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }
-        },
-        yFat: {
-          type: 'linear', position: 'left',
-          min: fatAxis.min, max: fatAxis.max,
-          grid: { color: gridC },
-          ticks: { color: '#ff8a6599', font: { size: 10 }, callback: v => v + ' kg' },
-          title: { display: true, text: 'VET', color: '#ff8a6588', font: { size: 9, family: 'monospace' } }
-        },
-        yLean: {
-          type: 'linear', position: 'right',
-          min: leanAxis.min, max: leanAxis.max,
-          grid: { drawOnChartArea: false },
-          ticks: { color: '#80deea99', font: { size: 10 }, callback: v => v + ' kg' },
-          title: { display: true, text: 'LEAN', color: '#80deea88', font: { size: 9, family: 'monospace' } }
-        }
-      }
-    }
-  });
-}
 
 
-// Hook body comp into period updates
 // ── KPI Goals Panel ────────────────────────────────────────────────────
 const KPI_BASELINE_DATE = '2026-06-04';
 const KPI_CHECK_DATE    = new Date('2026-07-16');
@@ -15368,22 +15140,41 @@ function renderBodycompMonthly() {
   const MND = { '01':'JAN','02':'FEB','03':'MRT','04':'APR','05':'MEI','06':'JUN','07':'JUL','08':'AUG','09':'SEP','10':'OKT','11':'NOV','12':'DEC' };
   const th = 'text-align:right;padding:4px 10px;color:var(--muted);font-size:10px;letter-spacing:1px;border-bottom:1px solid var(--border);';
   const td = 'text-align:right;padding:4px 10px;';
+  // Kleurlogica — obv doelen en ranges (baseline = april 2026)
+  // groen = doel/range bereikt · geel = beter dan baseline, doel nog niet · rood = slechter dan baseline
+  const BC_GOALS = {
+    w_range: [85, 88],                          // gewichtsrange (KPI)
+    w_tol:   1.0,                               // geel tot 1 kg buiten range, daarna rood
+    fat_pct: { base: 20.9, goal: 19.5, down: true  },   // baseline apr, KPI vet%-doel
+    fat_kg:  { base: 17.9, goal: 15.6, down: true  },   // apr: 85.8 kg × 20.9%
+    lean_kg: { base: 67.9, goal: 71.0, down: false }    // apr: 85.8 − 17.9
+  };
+  const goalClr = (cur, g) => {
+    const done  = g.down ? cur <= g.goal : cur >= g.goal;
+    if (done) return 'var(--green)';
+    const EPS = 0.2;  // ≈baseline telt niet als slechter
+    const worse = g.down ? cur > g.base + EPS : cur < g.base - EPS;
+    return worse ? 'var(--red)' : 'var(--yellow)';
+  };
+  const rangeClr = (w, [lo, hi], tol) =>
+    (w >= lo && w <= hi) ? 'var(--green)'
+    : (w >= lo - tol && w <= hi + tol) ? 'var(--yellow)' : 'var(--red)';
   const rows = BODYCOMP.map((m, i) => {
     const prev = i > 0 ? BODYCOMP[i - 1] : null;
     const fatKg  = Math.round(m.weight_avg * m.fat_pct / 10) / 10;
     const leanKg = Math.round((m.weight_avg - fatKg) * 10) / 10;
     const dFat = prev ? Math.round((m.fat_pct - prev.fat_pct) * 10) / 10 : null;
-    const dClr = dFat === null ? 'var(--muted)' : (dFat < 0 ? 'var(--green)' : (dFat > 0 ? 'var(--red)' : 'var(--muted)'));
+    const dClr = dFat === null || dFat === 0 ? 'var(--muted)' : (dFat < 0 ? 'var(--green)' : 'var(--red)');
     const dTxt = dFat === null ? '—' : (dFat > 0 ? '+' : '') + dFat.toFixed(1);
     const est  = m.fat_source !== 'app' ? '<span style="color:var(--muted)">&#177;</span>' : '';
     const yr = m.month.slice(0, 4), mm = m.month.slice(5, 7);
     return `<tr>
       <td style="${td}text-align:left;color:var(--text)">${MND[mm] || mm} <span style="color:var(--muted);font-size:10px">${yr.slice(2)}</span></td>
-      <td style="${td}color:var(--text)">${m.weight_avg.toFixed(1)}</td>
-      <td style="${td}color:var(--cyan)">${m.fat_pct.toFixed(1)}%${est}</td>
+      <td style="${td}color:${rangeClr(m.weight_avg, BC_GOALS.w_range, BC_GOALS.w_tol)}">${m.weight_avg.toFixed(1)}</td>
+      <td style="${td}color:${goalClr(m.fat_pct, BC_GOALS.fat_pct)};font-weight:700">${m.fat_pct.toFixed(1)}%${est}</td>
       <td style="${td}color:${dClr}">${dTxt}</td>
-      <td style="${td}color:#ff8a65">${fatKg.toFixed(1)}</td>
-      <td style="${td}color:var(--green)">${leanKg.toFixed(1)}</td>
+      <td style="${td}color:${goalClr(fatKg, BC_GOALS.fat_kg)}">${fatKg.toFixed(1)}</td>
+      <td style="${td}color:${goalClr(leanKg, BC_GOALS.lean_kg)}">${leanKg.toFixed(1)}</td>
     </tr>`;
   }).join('');
   el.innerHTML = `<table style="border-collapse:collapse;width:100%;min-width:420px">
