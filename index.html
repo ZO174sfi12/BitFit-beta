@@ -14434,7 +14434,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!lk || !DATA.lifts[lk]) return null;
     const pts = DATA.lifts[lk].points;
     if (!pts || !pts.length) return null;
-    const last = pts[pts.length - 1];
+    // Voor T2: zoek de laatste sessie in T2-formaat (work_reps ≥ 20 = minstens 2×10)
+    // Dit voorkomt dat een T1-sessie (bijv. OHP dag) de T2-berekening verstoort
+    const last = t === 'T2'
+      ? ([...pts].reverse().find(p => (p.work_reps ?? 0) >= 20) ?? pts[pts.length - 1])
+      : pts[pts.length - 1];
     const w = last.weight, vol = last.volume;
     const wr = last.work_reps; // reps at working weight only (excl. warmup sets)
     if (!w) return null;
