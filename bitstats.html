@@ -268,7 +268,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202607131900</span>
+        <span class="meta-value" style="color:var(--muted)">202607131954</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -353,6 +353,12 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
     <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
     <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek.<br>Doelen: KG &Oslash; 85&ndash;88 &middot; VET% &le;19.5 &middot; VET &le;15.6 kg &middot; LEAN &ge;71 kg &mdash; kleur gradueel: <span style="color:var(--red)">slechter dan baseline (apr '26)</span> &rarr; <span style="color:var(--yellow)">baseline</span> &rarr; <span style="color:var(--green)">doel</span></div>
+  </div>
+
+  <div class="panel" id="primary-lifts-panel">
+    <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+    <div class="panel-title">&#9658; PRIMARY LIFTS</div>
+    <div id="primary-lifts-body" style="font-family:monospace;font-size:11px;"></div>
   </div>
 
 </div>
@@ -15575,6 +15581,79 @@ function renderBodycompMonthly() {
     </tr></thead><tbody>${rows}</tbody></table>`;
 }
 renderBodycompMonthly();
+
+// ── Primary Lifts sectie ──────────────────────────────────────────────────────
+function renderPrimaryLifts() {
+  const primaries = [
+    { key:'Squat',    label:'SQUAT',    color:'#b388ff', t2:['OHP','Row'] },
+    { key:'Deadlift', label:'DEADLIFT', color:'#ffd600', t2:['DB Bench x2'] },
+    { key:'Bench',    label:'BENCH',    color:'#64b5f6', t2:['Front Squat'] },
+    { key:'OHP',      label:'OHP',      color:'#80deea', t2:[] },
+  ];
+
+  // Bouw date → {key: {color, pt}} index
+  const byDate = {};
+  for (const [key, liftData] of Object.entries(DATA.lifts)) {
+    for (const pt of liftData.points) {
+      if (!byDate[pt.date]) byDate[pt.date] = {};
+      byDate[pt.date][key] = { color: liftData.color, name: liftData.name, pt };
+    }
+  }
+
+  const DAYS = ['zo','ma','di','wo','do','vr','za'];
+  const MONS = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  function fmtDate(iso) {
+    const d = new Date(iso + 'T12:00:00');
+    return `${DAYS[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]}`;
+  }
+
+  function chipHtml(sd, color) {
+    if (!sd || !sd.length) return '';
+    return sd.map(s => {
+      if (s.warmup) {
+        return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid #252535;border-radius:2px;color:#44445a;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
+      } else {
+        return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid ${color}66;border-radius:2px;color:${color};background:${color}12;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
+      }
+    }).join('');
+  }
+
+  function renderSection(prim) {
+    const liftData = DATA.lifts[prim.key];
+    if (!liftData || !liftData.points.length) return '';
+    const sessions = [...liftData.points].reverse();
+    const rows = sessions.map(pt => {
+      const mainChips = chipHtml(pt.sets_detail, prim.color);
+      const dayMap = byDate[pt.date] || {};
+      let t2Rows = '';
+      for (const t2key of prim.t2) {
+        if (dayMap[t2key]) {
+          const t2 = dayMap[t2key];
+          const t2chips = chipHtml(t2.pt.sets_detail, t2.color);
+          t2Rows += `<div style="display:flex;align-items:center;gap:4px;padding-left:82px;margin-top:3px">
+            <span style="font-size:10px;color:var(--muted);white-space:nowrap;min-width:72px;opacity:.7">${t2.name}</span>
+            <div style="display:flex;flex-wrap:wrap">${t2chips}</div>
+          </div>`;
+        }
+      }
+      return `<div style="margin-bottom:${t2Rows ? 10 : 4}px">
+        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+          <span style="color:var(--muted);min-width:78px;flex-shrink:0;font-size:10px">${fmtDate(pt.date)}</span>
+          <div style="display:flex;flex-wrap:wrap">${mainChips}</div>
+        </div>${t2Rows}
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:22px">
+      <div style="font-family:monospace;font-size:10px;letter-spacing:2px;color:${prim.color};margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #1c1c30">${prim.label}</div>
+      <div style="max-height:300px;overflow-y:auto;padding-right:4px">${rows}</div>
+    </div>`;
+  }
+
+  const container = document.getElementById('primary-lifts-body');
+  if (!container) return;
+  container.innerHTML = primaries.map(renderSection).join('');
+}
+renderPrimaryLifts();
 </script>
 </body>
 </html>
