@@ -1,23 +1,23 @@
 {
-  "updated": "2026-07-13T11:19:41",
-  "weight": 86.3,
-  "weight_date": "2026-07-09",
-  "training_days_total": 120,
-  "last_training_day": "2026-07-09",
+  "updated": "2026-07-13T19:00:36",
+  "weight": 89.3,
+  "weight_date": "2026-07-13",
+  "training_days_total": 122,
+  "last_training_day": "2026-07-13",
   "lifts": {
     "Squat": {
-      "last_date": "2026-07-07",
-      "last_weight": 100.0,
-      "last_volume": 1990.0,
+      "last_date": "2026-07-10",
+      "last_weight": 95.0,
+      "last_volume": 2540.0,
       "pr": false,
       "pr_weight": 100.0
     },
     "Deadlift": {
-      "last_date": "2026-06-27",
-      "last_weight": 107.5,
-      "last_volume": 1685.0,
+      "last_date": "2026-07-13",
+      "last_weight": 115.0,
+      "last_volume": 1830.0,
       "pr": true,
-      "pr_weight": 107.5
+      "pr_weight": 115.0
     },
     "Bench": {
       "last_date": "2026-07-08",
@@ -27,9 +27,9 @@
       "pr_weight": 85.0
     },
     "DB Bench x2": {
-      "last_date": "2026-07-01",
+      "last_date": "2026-07-13",
       "last_weight": 60.0,
-      "last_volume": 2400.0,
+      "last_volume": 2120.0,
       "pr": false,
       "pr_weight": 72.0
     },
@@ -48,9 +48,9 @@
       "pr_weight": 60.0
     },
     "DIP-BW": {
-      "last_date": "2026-05-28",
-      "last_weight": 59.1,
-      "last_volume": 2364.0,
+      "last_date": "2026-07-10",
+      "last_weight": 65.2,
+      "last_volume": 2151.6,
       "pr": false,
       "pr_weight": 87.8
     },
@@ -62,10 +62,10 @@
       "pr_weight": 60.0
     },
     "Row": {
-      "last_date": "2026-06-30",
+      "last_date": "2026-07-10",
       "last_weight": 62.5,
-      "last_volume": 1992.5,
-      "pr": true,
+      "last_volume": 2035.0,
+      "pr": false,
       "pr_weight": 62.5
     },
     "Hip Thrust": {
@@ -90,16 +90,16 @@
       "pr_weight": 60.0
     },
     "Abductor": {
-      "last_date": "2026-06-29",
-      "last_weight": 30.0,
-      "last_volume": 1220.0,
-      "pr": false,
-      "pr_weight": 30.0
+      "last_date": "2026-07-13",
+      "last_weight": 35.0,
+      "last_volume": 1450.0,
+      "pr": true,
+      "pr_weight": 35.0
     },
     "Leg Curl": {
-      "last_date": "2026-05-27",
+      "last_date": "2026-07-10",
       "last_weight": 25.0,
-      "last_volume": 875.0,
+      "last_volume": 950.0,
       "pr": false,
       "pr_weight": 35.0
     },
