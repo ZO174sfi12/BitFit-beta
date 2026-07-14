@@ -15612,15 +15612,12 @@ function renderPrimaryLifts() {
     return `${DAYS[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]}`;
   }
 
-  function chipHtml(sd, color) {
-    if (!sd || !sd.length) return '';
-    return sd.map(s => {
-      if (s.warmup) {
-        return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid #1e1e2e;border-radius:2px;color:#3a3a55;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
-      } else {
-        return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid ${color}66;border-radius:2px;color:${color};background:${color}12;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
-      }
-    }).join('');
+  function makeChip(s, color) {
+    if (s.warmup) {
+      return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid #1e1e2e;border-radius:2px;color:#3a3a55;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
+    } else {
+      return `<span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;border:1px solid ${color}66;border-radius:2px;color:${color};background:${color}12;margin:1px 2px;white-space:nowrap">${s.w}&times;${s.r}</span>`;
+    }
   }
 
   function renderSection(prim) {
@@ -15628,10 +15625,15 @@ function renderPrimaryLifts() {
     if (!liftData || !liftData.points.length) return '';
     const sessions = [...liftData.points].reverse();
     const rows = sessions.map(pt => {
-      const chips = chipHtml(pt.sets_detail, prim.color);
-      return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:4px">
+      const sd = pt.sets_detail || [];
+      const warmupChips = sd.filter(s => s.warmup).map(s => makeChip(s, prim.color)).join('');
+      const workChips   = sd.filter(s => !s.warmup).map(s => makeChip(s, prim.color)).join('');
+      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
         <span style="color:var(--muted);min-width:78px;flex-shrink:0;font-size:10px">${fmtDate(pt.date)}</span>
-        <div style="display:flex;flex-wrap:wrap">${chips}</div>
+        <div style="flex:1;display:flex;justify-content:space-between;align-items:center;gap:4px;min-width:0">
+          <div style="display:flex;flex-wrap:wrap">${warmupChips}</div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:flex-end">${workChips}</div>
+        </div>
       </div>`;
     }).join('');
     return `<div style="margin-bottom:22px">
