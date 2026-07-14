@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14T14:51:54",
+  "updated": "2026-07-14T19:07:33",
   "weight": 87.8,
   "weight_date": "2026-07-14",
   "training_days_total": 123,
@@ -20,9 +20,9 @@
       "pr_weight": 115.0
     },
     "Bench": {
-      "last_date": "2026-07-08",
-      "last_weight": 82.5,
-      "last_volume": 2650.0,
+      "last_date": "2026-07-14",
+      "last_weight": 85.0,
+      "last_volume": 2155.0,
       "pr": false,
       "pr_weight": 85.0
     },
@@ -69,9 +69,9 @@
       "pr_weight": 62.5
     },
     "Hip Thrust": {
-      "last_date": "2026-07-07",
+      "last_date": "2026-07-14",
       "last_weight": 20.0,
-      "last_volume": 620.0,
+      "last_volume": 640.0,
       "pr": false,
       "pr_weight": 30.0
     },
