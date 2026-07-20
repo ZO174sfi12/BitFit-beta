@@ -287,7 +287,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
   </div>
 </header>
 
-<nav class="page-nav"><a href="bitstats.html" class="nav-item ">STATS</a><a href="index.html" class="nav-item nav-active">GYM</a><a href="supplement-tracker.html" class="nav-item ">SUPPS</a><a href="log-view.html" class="nav-item ">LOGS</a></nav>
+<nav class="page-nav"><a href="bitstats.html" class="nav-item ">STATS</a><a href="index.html" class="nav-item nav-active">GYM</a><a href="program.html" class="nav-item ">PROGRAM</a><a href="supplement-tracker.html" class="nav-item ">SUPPS</a><a href="log-view.html" class="nav-item ">LOGS</a></nav>
 
 <script>
 /*DATA_START*/
@@ -14965,43 +14965,6 @@ const PHASES = [
 <div class="gzclp-wrap">
   <hr class="gzclp-divider">
 
-  <details class="gzclp-rules">
-    <summary class="gzclp-rules-head">◈ GZCLP GREYSKULL LP HANDLEIDING (klik open)</summary>
-    <div class="gzclp-rules-grid">
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PLUS SET (GREYSKULL)</div>
-        <div class="gzclp-rule-body">Set 1 × 5, Set 2 × 5, Set 3 × AMRAP — alle drie op hetzelfde gewicht. De AMRAP-set is de kern van Greyskull: je test jezelf elke sessie. Minimaal 5 reps nodig om te progresseren.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--accent)">T1 — PROGRESSIE &amp; DELOAD</div>
-        <div class="gzclp-rule-body">AMRAP ≥ 5 reps → volgende sessie +gewicht. Minder dan 5 → zelfde gewicht herhalen. Twee opeenvolgende mislukkingen → −10% deload (afronden naar beneden op 2,5 kg). Daarna gewoon lineair verder.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--cyan)">T2 — ALL-OR-NOTHING REGEL</div>
-        <div class="gzclp-rule-body">3 × 10 = alle 30 reps. Eén rep mislukt → zelfde gewicht volgende sessie. Geen "bijna compleet". Pas als alle sets voltooid zijn ga je omhoog met +2,5 kg.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--cyan)">T2 — GEWICHT &amp; KOPPELING</div>
-        <div class="gzclp-rule-body">Start op je laatste gelogde gewicht voor die oefening. T2 traint een antagonist of secundaire lift — nooit dezelfde bewegingspatroon als T1 op die dag. Squat dag → OHP T2. Bench dag → Front Squat T2. Deadlift dag → Bench T2.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--green)">T3 — REP RANGE</div>
-        <div class="gzclp-rule-body">3 sets van 15–25 reps. Kies 1 of 2 oefeningen per sessie. Als je de bovengrens (25) comfortabel haalt → klein gewicht omhoog (+2,5 kg). T3 is niet optioneel — het bouwt de basis voor T2 progressie.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--green)">FREQUENTIE &amp; RUST</div>
-        <div class="gzclp-rule-body">3–4× per week. Cyclus van 4: SQUAT A → BENCH → SQUAT B → DEADLIFT → herhaal. Consecutieve dagen zijn mogelijk — SQUAT A → BENCH is de beste combinatie (andere spiergroepen). SQUAT A → SQUAT B op opeenvolgende dagen is zwaarder: AMRAP-kwaliteit op dag 2 zal lager liggen.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--yellow)">GREYSKULL VS STARTING STRENGTH</div>
-        <div class="gzclp-rule-body">SS: 3 × 5 vaste sets, deload na 3 mislukkingen. Greyskull vervangt de 3e set door AMRAP en deloadt al na 2 mislukkingen. Voordeel: je weet elke sessie of je vooruitgaat en bouwt meer volume op goede dagen.</div>
-      </div>
-      <div class="gzclp-rule">
-        <div class="gzclp-rule-title" style="color:var(--yellow)">AFWIJKINGEN IN DIT SCHEMA</div>
-        <div class="gzclp-rule-body">OHP altijd T2 — nooit T1 (schouderrisico + lagere opbrengst vs andere T1-liften). Front Squat als T2 op Bench-dag ipv Back Squat. DB Bench als T2 op Deadlift-dag: arm-onafhankelijk, minder CNS-overlap. T3 bevat ook varianten op de primary lifts (block pull, paused squat, paused bench) — techniekvoorbereiding voor wanneer lineaire progressie stopt.</div>
-      </div>
-    </div>
-  </details>
   <div id="taper-banner" style="display:none"></div>
   <div class="gzclp-day-row" id="gzclp-day-btns"></div>
   <div id="gzclp-pre-stretch"></div>
@@ -15430,7 +15393,12 @@ document.addEventListener('DOMContentLoaded', function() {
       '<div style="border:1px solid #4dd0e1;padding:8px 10px;margin-bottom:10px;">' +
         '<div style="font-family:monospace;font-size:10px;letter-spacing:2px;color:#4dd0e1;margin-bottom:6px;">◈ TAPERING WEEK · 20–26 JUL</div>' +
         '<div style="display:flex;gap:4px;flex-wrap:wrap;">' + cells + '</div>' +
-        '<div style="font-size:11px;margin-top:6px;color:#aabbcc;">Gym-dagen: gewichten aanhouden, volume omlaag — T1 2×5 (AMRAP niet pushen) · T2 2×10 · T3 optioneel.</div>' +
+        '<div style="font-size:11px;margin-top:6px;color:#aabbcc;">Taper: gewichten ~85%, volume omlaag. Geen AMRAP. T3 aanbevolen (2 sets), vrij te wisselen. Rust: T1 2–3 min · T2 90 s · REV/T3 60 s. Cooldown = zone 2.</div>' +
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">' +
+          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">MA 20 · SQUAT LICHT · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + Squat 40×5·60×3·75×2<br>Squat 2×5 @ 85 kg<br>OHP 2×10 @ 40 kg<br><span style="color:#00ffb3">T3</span> Hip Thrust (plate-loaded) 2×15 @ 20 kg<br><span style="color:#00ffb3">T3</span> Face Pull 2×15 @ 15 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
+          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">WO 22 · BENCH LICHT · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + Bench 40×5·55×3·65×2<br>Bench 2×5 @ 72.5 kg<br>Front Squat 2×10 @ 50 kg<br><span style="color:#00ffb3">T3</span> Lat PD 2×15 @ 35 kg<br><span style="color:#00ffb3">T3</span> Cable Row 2×15 @ 40 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
+          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">ZO 26 · DEADLIFT LICHT (indien gym) · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + DL 60×3·80×2·90×1<br>Deadlift 2×3 @ 97.5 kg<br>DB Bench ×2 2×10 @ 50 kg (2×25)<br><span style="color:#00ffb3">T3</span> Hip Thrust (plate-loaded) 2×15 @ 20 kg<br><span style="color:#00ffb3">T3</span> Abductor 2×15 @ 30 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
+        '</div>' +
       '</div>';
   })();
 

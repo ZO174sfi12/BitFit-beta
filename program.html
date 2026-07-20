@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Program · Bert Nijs</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+:root {
+  --bg:#08080f; --panel:#0d0d18; --border:#1c1c30;
+  --accent:#7b5cff; --cyan:#00e5ff; --green:#00ffb3;
+  --red:#ff3d6b; --yellow:#ffd600; --orange:#ff8a65; --text:#c0c0d8; --muted:#8888aa;
+  --glow-a:0 0 12px #7b5cff88,0 0 30px #7b5cff33;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Oxanium',sans-serif;font-size:14px;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 10% 10%,#7b5cff0a 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 90% 90%,#00e5ff08 0%,transparent 60%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(123,92,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(123,92,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+@keyframes pulse-line{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes neon-a{0%,100%{text-shadow:var(--glow-a)}50%{text-shadow:0 0 4px #7b5cffcc,0 0 30px #7b5cff99}}
+header{position:relative;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0a0a16 0%,transparent 100%);z-index:10;}
+header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),transparent);animation:pulse-line 4s ease-in-out infinite;}
+.logo{font-family:'Oxanium',sans-serif;font-size:clamp(18px,5.5vw,26px);font-weight:800;letter-spacing:4px;animation:neon-a 5s ease-in-out infinite;}
+.logo-bit{color:var(--accent)}.logo-fit{color:var(--cyan)}.logo-beta{color:var(--muted);font-size:.55em;letter-spacing:2px;}
+.page-nav{display:flex;justify-content:center;gap:8px;padding:10px 18px;background:#090910;border-bottom:1px solid var(--border);position:relative;z-index:10;flex-wrap:wrap;}
+.nav-item{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;padding:7px 20px;color:var(--muted);text-decoration:none;border:1px solid var(--border);background:transparent;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:all .2s;white-space:nowrap;}
+.nav-item:hover{color:var(--text);border-color:var(--muted);}
+.nav-item.nav-prog-active{color:var(--yellow);border-color:var(--yellow);background:#ffd60018;box-shadow:0 0 10px #ffd60022;}
+@media(max-width:480px){.nav-item{padding:6px 14px;letter-spacing:1px;font-size:10px;}.page-nav{gap:5px;padding:8px 10px;}}
+main{position:relative;z-index:5;max-width:980px;margin:0 auto;padding:18px 14px 48px;}
+.sec-title{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--yellow);margin:26px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px;}
+.sec-title:first-child{margin-top:6px;}
+.prose{font-size:13px;line-height:1.7;color:var(--text);margin-bottom:10px;}
+.prose b{color:#e8e8ff;}
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:12px;}
+th{font-family:monospace;font-size:10px;letter-spacing:1px;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);}
+td{padding:7px 8px;border-bottom:1px solid #14142a;vertical-align:top;line-height:1.5;}
+td:first-child{font-family:monospace;font-weight:700;white-space:nowrap;}
+.tag{display:inline-block;font-family:monospace;font-size:10px;letter-spacing:1px;padding:1px 6px;border:1px solid;margin-right:4px;}
+.tag-t1{color:var(--accent);border-color:var(--accent);}
+.tag-t2{color:var(--cyan);border-color:var(--cyan);}
+.tag-t3{color:var(--green);border-color:var(--green);}
+.tag-rev{color:var(--orange);border-color:var(--orange);}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);background:#0a0a15;}
+@media(max-width:600px){.rules-grid{grid-template-columns:1fr;}}
+.rule{padding:12px 14px;border-bottom:1px solid #14142a;border-right:1px solid #14142a;}
+.rule-title{font-family:monospace;font-size:11px;letter-spacing:2px;margin-bottom:6px;}
+.rule-body{font-size:12px;line-height:1.65;color:var(--text);}
+.note{border-left:2px solid var(--orange);padding:8px 12px;background:#0d0d18;font-size:12px;line-height:1.6;margin:10px 0;}
+</style>
+</head>
+<body>
+<header><div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span><span class="logo-beta">&nbsp;PROGRAM</span></div></header>
+<nav class="page-nav"><a href="bitstats.html" class="nav-item ">STATS</a><a href="index.html" class="nav-item ">GYM</a><a href="program.html" class="nav-item nav-prog-active">PROGRAM</a><a href="supplement-tracker.html" class="nav-item ">SUPPS</a><a href="log-view.html" class="nav-item ">LOGS</a></nav>
+<main>
+
+<div class="sec-title">◈ AANPAK — GZCLP GREYSKULL LP</div>
+<div class="prose">
+Lineaire progressie in een 4-daagse cyclus: <b>SQUAT A → BENCH → SQUAT B → DEADLIFT → herhaal</b>.
+3–4 sessies per week, met rust waar mogelijk tussen sessies. Elke sessie bestaat uit drie lagen:
+<span class="tag tag-t1">T1</span> zware hoofdlift (2×5 + AMRAP),
+<span class="tag tag-t2">T2</span> secundaire lift (3×10),
+<span class="tag tag-rev">REV</span> correctieve oefeningen, gevolgd door
+<span class="tag tag-t3">T3</span> variaties en aanvulling (3×15–25, dynamisch gerangschikt door de app).
+</div>
+
+<div class="sec-title">◈ DAGINDELING</div>
+<table>
+<tr><th>DAG</th><th>T1 · 2×5 + AMRAP</th><th>T2 · 3×10</th><th>T3-POOL · 3×15–25</th></tr>
+<tr><td>SQUAT A</td><td>Back Squat</td><td>Overhead Press</td><td>Hip Thrust · Lat PD · Cable Row · Face Pull · Abductor · DB Clean</td></tr>
+<tr><td>BENCH</td><td>Barbell Bench</td><td>Front Squat / Zercher</td><td>Hip Thrust · Lat PD · Cable Row · Face Pull · DB Clean · Abductor</td></tr>
+<tr><td>SQUAT B</td><td>Back Squat</td><td>Barbell Row</td><td>Hip Thrust · Cable Chest Fly · Dips · Lat PD · Abductor · Face Pull</td></tr>
+<tr><td>DEADLIFT</td><td>Deadlift</td><td>DB Bench ×2</td><td>Hip Thrust · DB Clean · Cable Row · Lat PD · Abductor · Face Pull</td></tr>
+</table>
+<div class="note"><b>REV</b> (na T2, vóór T3): Rathleff Heel Raise — voetboogversterking voor Hallux Rigidus. <b>Hip Thrust</b>: altijd plate-loaded machine. <b>DB Bench ×2</b>: gelogd gewicht = beide dumbbells samen.</div>
+
+<div class="sec-title">◈ HANDLEIDING</div>
+<div class="rules-grid">
+  <div class="rule"><div class="rule-title" style="color:var(--accent)">T1 — PLUS SET (GREYSKULL)</div><div class="rule-body">Set 1 × 5, Set 2 × 5, Set 3 × AMRAP — alle drie op hetzelfde gewicht. De AMRAP-set is de kern van Greyskull: je test jezelf elke sessie. Minimaal 5 reps nodig om te progresseren.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--accent)">T1 — PROGRESSIE &amp; DELOAD</div><div class="rule-body">AMRAP ≥ 5 reps → volgende sessie +gewicht. Minder dan 5 → zelfde gewicht herhalen. Twee opeenvolgende mislukkingen → −10% deload (afronden naar beneden op 2,5 kg). Daarna gewoon lineair verder.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--cyan)">T2 — ALL-OR-NOTHING REGEL</div><div class="rule-body">3 × 10 = alle 30 reps. Eén rep mislukt → zelfde gewicht volgende sessie. Geen "bijna compleet". Pas als alle sets voltooid zijn ga je omhoog met +2,5 kg.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--cyan)">T2 — GEWICHT &amp; KOPPELING</div><div class="rule-body">Start op je laatste gelogde gewicht voor die oefening. T2 traint een antagonist of secundaire lift — nooit hetzelfde bewegingspatroon als T1 op die dag. Squat dag → OHP T2. Bench dag → Front Squat T2. Deadlift dag → DB Bench T2.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--green)">T3 — REP RANGE</div><div class="rule-body">3 sets van 15–25 reps. Kies 1 of 2 oefeningen per sessie. Als je de bovengrens (25) comfortabel haalt → klein gewicht omhoog (+2,5 kg). T3 is niet optioneel — het bouwt de basis voor T2 progressie.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--green)">FREQUENTIE &amp; RUST</div><div class="rule-body">3–4× per week. Cyclus van 4: SQUAT A → BENCH → SQUAT B → DEADLIFT → herhaal. Consecutieve dagen zijn mogelijk — SQUAT A → BENCH is de beste combinatie (andere spiergroepen). SQUAT A → SQUAT B op opeenvolgende dagen is zwaarder: AMRAP-kwaliteit op dag 2 zal lager liggen.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--yellow)">GREYSKULL VS STARTING STRENGTH</div><div class="rule-body">SS: 3 × 5 vaste sets, deload na 3 mislukkingen. Greyskull vervangt de 3e set door AMRAP en deloadt al na 2 mislukkingen. Voordeel: je weet elke sessie of je vooruitgaat en bouwt meer volume op goede dagen.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--yellow)">AFWIJKINGEN IN DIT SCHEMA</div><div class="rule-body">OHP altijd T2 — nooit T1 (schouderrisico + lagere opbrengst vs andere T1-liften). Front Squat als T2 op Bench-dag ipv Back Squat. DB Bench als T2 op Deadlift-dag: arm-onafhankelijk, minder CNS-overlap. T3 bevat ook varianten op de primary lifts (block pull, paused squat, paused bench) — techniekvoorbereiding voor wanneer lineaire progressie stopt.</div></div>
+</div>
+
+<div class="sec-title">◈ T3 RANGSCHIKKING (APP-LOGICA)</div>
+<div class="prose">
+De app rangschikt T3-opties per sessie dynamisch: <b>glute-behoefte</b> (7 dagen geen Hip Thrust → hogere score), <b>push/pull-saldo</b> (push &gt; pull × 1.4 in sets → pull-oefeningen scoren hoger) en <b>recency</b> (gedaan in de laatste 7 dagen → −15 score). De eerste keuze krijgt een <b>!</b>-markering; top 4 zichtbaar, rest uitklapbaar.
+</div>
+
+</main>
+</body>
+</html>
