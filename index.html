@@ -136,6 +136,20 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 /* ── GZCLP ─────────────────────────────────────── */
 .gzclp-wrap{padding:0 14px 32px;}
 .gzclp-divider{border:none;border-top:1px solid var(--border);margin:20px 0 16px;}
+.taper-box{border:1px solid #4dd0e1;background:var(--panel);padding:10px 12px;margin-bottom:10px;}
+.taper-head{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:#4dd0e1;margin-bottom:7px;}
+.taper-days{display:flex;gap:4px;flex-wrap:wrap;}
+.taper-day{flex:1;min-width:64px;text-align:center;padding:5px 2px;border:1px solid var(--border);}
+.taper-day.today{border-color:#4dd0e1;background:rgba(77,208,225,.12);}
+.taper-wd{font-family:monospace;font-size:10px;letter-spacing:1px;color:var(--muted);}
+.taper-day.today .taper-wd{color:#4dd0e1;}
+.taper-act{font-size:10px;margin-top:2px;}
+.taper-note{font-size:11px;margin-top:7px;color:#aabbcc;line-height:1.6;}
+.taper-sessions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.taper-sess{flex:1;min-width:200px;border:1px solid var(--border);background:#0a0a15;padding:8px 10px;font-size:11px;line-height:1.7;}
+.taper-sess-head{font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:4px;}
+.tb{font-family:monospace;font-size:10px;letter-spacing:1px;}
+.tb-wu{color:var(--muted);} .tb-t3{color:var(--green);} .tb-rev{color:#ff8a65;} .tb-cd{color:var(--muted);}
 .gzclp-topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
 .gzclp-title{font-family:monospace;font-size:11px;letter-spacing:3px;color:var(--accent);}
 .gzclp-sub{font-family:monospace;font-size:11px;letter-spacing:1px;color:var(--cyan);margin-top:4px;}
@@ -14966,10 +14980,15 @@ const PHASES = [
   <hr class="gzclp-divider">
 
   <div id="taper-banner" style="display:none"></div>
-  <div class="gzclp-day-row" id="gzclp-day-btns"></div>
-  <div id="gzclp-pre-stretch"></div>
-  <div class="gzclp-tiers" id="gzclp-tiers"></div>
-  <div id="gzclp-post-stretch"></div>
+  <details class="gzclp-rules" id="gzclp-standard" open>
+    <summary class="gzclp-rules-head">◈ GZCLP DAGPLAN (STANDAARD)</summary>
+    <div style="padding:10px 12px;">
+      <div class="gzclp-day-row" id="gzclp-day-btns"></div>
+      <div id="gzclp-pre-stretch"></div>
+      <div class="gzclp-tiers" id="gzclp-tiers"></div>
+      <div id="gzclp-post-stretch"></div>
+    </div>
+  </details>
 </div>
 
 <!-- ══ COMMENT SECTION ══════════════════════════════════════════════════════ -->
@@ -15371,7 +15390,7 @@ document.addEventListener('DOMContentLoaded', function() {
   (function(){
     const TAPER = {start:'2026-07-20', end:'2026-07-26', days:[
       {d:'2026-07-20', wd:'MA', act:'GYM'},
-      {d:'2026-07-21', wd:'DI', act:'WANDELING'},
+      {d:'2026-07-21', wd:'DI', act:'ZONE 2'},
       {d:'2026-07-22', wd:'WO', act:'GYM'},
       {d:'2026-07-23', wd:'DO', act:'MUAY THAI'},
       {d:'2026-07-24', wd:'VR', act:'RUST'},
@@ -15380,25 +15399,46 @@ document.addEventListener('DOMContentLoaded', function() {
     ]};
     const el = document.getElementById('taper-banner');
     if (!el || todayStr < TAPER.start || todayStr > TAPER.end) return;
-    const cells = TAPER.days.map(x => {
-      const isToday = x.d === todayStr;
-      const gym = x.act.indexOf('GYM') === 0;
-      return '<div style="flex:1;min-width:64px;text-align:center;padding:5px 2px;border:1px solid ' +
-        (isToday ? '#4dd0e1' : 'var(--border)') + ';' + (isToday ? 'background:rgba(77,208,225,.12);' : '') + '">' +
-        '<div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:' + (isToday ? '#4dd0e1' : 'var(--muted)') + '">' + x.wd + '</div>' +
-        '<div style="font-size:10px;margin-top:2px;color:' + (gym ? '#4dd0e1' : 'var(--text)') + '">' + x.act + '</div></div>';
-    }).join('');
+    const std = document.getElementById('gzclp-standard');
+    if (std) std.removeAttribute('open');
+    const cells = TAPER.days.map(x =>
+      '<div class="taper-day' + (x.d===todayStr?' today':'') + '"><div class="taper-wd">' + x.wd + '</div>' +
+      '<div class="taper-act"' + (x.act.indexOf('GYM')===0?' style="color:#4dd0e1"':'') + '>' + x.act + '</div></div>').join('');
+    const S = [
+      {h:'MA 20 · SQUAT LICHT · ±55 MIN', r:[
+        ['tb-wu','WU','5 min bike + Squat 40×5·60×3·75×2'],
+        ['','T1','Squat 2×5 @ 85 kg (geen AMRAP)'],
+        ['','T2','OHP 2×10 @ 40 kg'],
+        ['tb-t3','T3','Hip Thrust (plate-loaded) 2×15 @ 20 kg'],
+        ['tb-t3','T3','Cable Bicep Curl 2×15 licht'],
+        ['tb-rev','REV','Rathleff 3×20'],
+        ['tb-cd','CD','10–15 min zone 2 bike (optioneel)']]},
+      {h:'WO 22 · BENCH LICHT · ±55 MIN', r:[
+        ['tb-wu','WU','5 min bike + Bench 40×5·55×3·65×2'],
+        ['','T1','Bench 2×5 @ 72.5 kg (geen AMRAP)'],
+        ['','T2','Front Squat 2×10 @ 50 kg'],
+        ['tb-t3','T3','Lat PD 2×15 @ 35 kg'],
+        ['tb-t3','T3','Triceps Pushdown 2×15 licht'],
+        ['tb-rev','REV','Rathleff 3×20'],
+        ['tb-cd','CD','10–15 min zone 2 bike (optioneel)']]},
+      {h:'ZO 26 · DEADLIFT LICHT (INDIEN GYM) · ±55 MIN', r:[
+        ['tb-wu','WU','5 min bike + DL 60×3·80×2·90×1'],
+        ['','T1','Deadlift 2×3 @ 97.5 kg'],
+        ['','T2','DB Bench ×2 2×10 @ 50 kg (2×25)'],
+        ['tb-t3','T3','Hip Thrust (plate-loaded) 2×15 @ 20 kg'],
+        ['tb-t3','T3','Hammer Curl 2×15 licht'],
+        ['tb-rev','REV','Rathleff 3×20'],
+        ['tb-cd','CD','10–15 min zone 2 bike (optioneel)']]}
+    ];
+    const sess = S.map(x => '<div class="taper-sess"><div class="taper-sess-head">' + x.h + '</div>' +
+      x.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>').join('');
     el.style.display = 'block';
     el.innerHTML =
-      '<div style="border:1px solid #4dd0e1;padding:8px 10px;margin-bottom:10px;">' +
-        '<div style="font-family:monospace;font-size:10px;letter-spacing:2px;color:#4dd0e1;margin-bottom:6px;">◈ TAPERING WEEK · 20–26 JUL</div>' +
-        '<div style="display:flex;gap:4px;flex-wrap:wrap;">' + cells + '</div>' +
-        '<div style="font-size:11px;margin-top:6px;color:#aabbcc;">Taper: gewichten ~85%, volume omlaag. Geen AMRAP. T3 aanbevolen (2 sets), vrij te wisselen. Rust: T1 2–3 min · T2 90 s · REV/T3 60 s. Cooldown = zone 2.</div>' +
-        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">' +
-          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">MA 20 · SQUAT LICHT · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + Squat 40×5·60×3·75×2<br>Squat 2×5 @ 85 kg<br>OHP 2×10 @ 40 kg<br><span style="color:#00ffb3">T3</span> Hip Thrust (plate-loaded) 2×15 @ 20 kg<br><span style="color:#00ffb3">T3</span> Face Pull 2×15 @ 15 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
-          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">WO 22 · BENCH LICHT · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + Bench 40×5·55×3·65×2<br>Bench 2×5 @ 72.5 kg<br>Front Squat 2×10 @ 50 kg<br><span style="color:#00ffb3">T3</span> Lat PD 2×15 @ 35 kg<br><span style="color:#00ffb3">T3</span> Cable Row 2×15 @ 40 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
-          '<div style="flex:1;min-width:190px;border:1px solid var(--border);padding:7px 9px;font-size:11px;line-height:1.6;"><div style="font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:3px;">ZO 26 · DEADLIFT LICHT (indien gym) · ±55 MIN</div><span style="color:#8888aa">WU</span> 5 min bike + DL 60×3·80×2·90×1<br>Deadlift 2×3 @ 97.5 kg<br>DB Bench ×2 2×10 @ 50 kg (2×25)<br><span style="color:#00ffb3">T3</span> Hip Thrust (plate-loaded) 2×15 @ 20 kg<br><span style="color:#00ffb3">T3</span> Abductor 2×15 @ 30 kg<br><span style="color:#ff8a65">REV</span> Rathleff 3×20<br><span style="color:#8888aa">CD</span> 10 min zone 2 bike</div>' +
-        '</div>' +
+      '<div class="taper-box">' +
+        '<div class="taper-head">◈ TAPERING WEEK · 20–26 JUL</div>' +
+        '<div class="taper-days">' + cells + '</div>' +
+        '<div class="taper-note">Taper: gewichten ~85%, volume omlaag. Geen AMRAP. T3 aanbevolen (2 sets), vrij te wisselen. Rust: T1 2–3 min · T2 90 s · T3/REV 60 s.</div>' +
+        '<div class="taper-sessions">' + sess + '</div>' +
       '</div>';
   })();
 
