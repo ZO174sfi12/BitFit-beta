@@ -150,6 +150,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .taper-sess-head{font-family:monospace;font-size:10px;letter-spacing:1px;color:#4dd0e1;margin-bottom:4px;}
 .tb{font-family:monospace;font-size:10px;letter-spacing:1px;}
 .tb-wu{color:var(--muted);} .tb-t3{color:var(--green);} .tb-rev{color:#ff8a65;} .tb-cd{color:var(--muted);}
+.taper-tiers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+@media(max-width:560px){.taper-tiers{grid-template-columns:1fr;}}
 .gzclp-topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
 .gzclp-title{font-family:monospace;font-size:11px;letter-spacing:3px;color:var(--accent);}
 .gzclp-sub{font-family:monospace;font-size:11px;letter-spacing:1px;color:var(--cyan);margin-top:4px;}
@@ -15194,7 +15196,10 @@ const PHASES = [
   {label:"ZIEKTE",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
   {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2026-04-19",color:"#ff8a65",track:1,desc:"<b>3 apr → 19 apr</b><br>Operatie. Herstelperiode afgerond."},
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
-  {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2099-12-31",color:"#00e5ff",track:0,desc:"<b>4 jun →</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
+  {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
+  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-16",color:"#ff6b35",track:0,desc:"<b>27 jul → 16 aug</b><br>Speed werk @ 60–70% + 1 zware topset/wk. Vaste week: ma squat · wo bench · za deadlift. Kortere rust, core in warmup, zone 2 cooldown."},
+  {label:"STRENGTH",short:"STR",start:"2026-08-17",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>17 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Hoofddoel = zwaarder: squat 115 · bench 95 als 3×5. +5 kg/wk zolang licht (RPE ≤ 7), daarna +2,5. DL Greyskull door · OHP 3×5."},
+  {label:"TEST",short:"TST",start:"2026-09-28",end:"2026-10-04",color:"#ffd600",track:0,desc:"<b>28 sep → 4 okt</b><br>Zware 3×5-test per lift. Doel: Squat 115 · Bench 95 · DL 140 · OHP 60. Daarna herevaluatie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
@@ -15614,50 +15619,214 @@ document.addEventListener('DOMContentLoaded', function() {
   // Day buttons
   // ── Taper-banner (week 20–26 juli 2026) ──
   (function(){
-    const TAPER = {start:'2026-07-20', end:'2026-07-26', days:[
-      {d:'2026-07-20', wd:'MA', act:'GYM'},
-      {d:'2026-07-21', wd:'DI', act:'ZONE 2'},
-      {d:'2026-07-22', wd:'WO', act:'GYM'},
-      {d:'2026-07-23', wd:'DO', act:'MUAY THAI'},
-      {d:'2026-07-24', wd:'VR', act:'RUST'},
-      {d:'2026-07-25', wd:'ZA', act:'WANDELING'},
-      {d:'2026-07-26', wd:'ZO', act:'RUST'}
-    ]};
     const el = document.getElementById('taper-banner');
-    if (!el || todayStr < TAPER.start || todayStr > TAPER.end) return;
+    if (!el || todayStr < '2026-07-20' || todayStr > '2026-07-26') return;
     const std = document.getElementById('gzclp-standard');
     if (std) std.removeAttribute('open');
-    const cells = TAPER.days.map(x =>
-      '<div class="taper-day' + (x.d===todayStr?' today':'') + '"><div class="taper-wd">' + x.wd + '</div>' +
-      '<div class="taper-act"' + (x.act.indexOf('GYM')===0?' style="color:#4dd0e1"':'') + '>' + x.act + '</div></div>').join('');
-    const S = [
-      {h:'MA 20 · SQUAT LICHT · ±55 MIN', r:[
-        ['tb-wu','WU','5 min bike + Squat 40×5·60×3·75×2'],
-        ['','T1','Squat 2×5 @ 85 kg (geen AMRAP)'],
-        ['','T2','OHP 2×10 @ 40 kg'],
-        ['tb-t3','T3','Hip Thrust (plate-loaded) 2×15 @ 20 kg'],
-        ['tb-t3','T3','Cable Bicep Curl 2×15 licht'],
-        ['tb-rev','REV','Rathleff 3×20'],
-        ['tb-cd','CD','10–15 min zone 2 bike (optioneel)']]},
-      {h:'WO 22 · BENCH LICHT · ±55 MIN', r:[
-        ['tb-wu','WU','5 min bike + Bench 40×5·55×3·65×2'],
-        ['','T1','Bench 2×5 @ 72.5 kg (geen AMRAP)'],
-        ['','T2','Front Squat 2×10 @ 50 kg'],
-        ['tb-t3','T3','Lat PD 2×15 @ 35 kg'],
-        ['tb-t3','T3','Triceps Pushdown 2×15 licht'],
-        ['tb-rev','REV','Rathleff 3×20'],
-        ['tb-cd','CD','10–15 min zone 2 bike (optioneel)']]}
+    const DAYP = [
+      {key:'SQUAT', color:'#b388ff', gym:true, sub:'MA 20 · SQUAT LICHT · ±55 MIN',
+       tiers:[
+         {t:'T1', c:'#b388ff', name:'Back Squat', scheme:'2 × 5 · geen AMRAP', wt:'85 kg', rest:'2–3 min', wu:'40 × 5 · 60 × 3 · 75 × 2'},
+         {t:'T2', c:'#00e5ff', name:'Overhead Press', scheme:'2 × 10', wt:'40 kg', rest:'90 sec'}],
+       t3:[{name:'Hip Thrust', note:'plate-loaded machine', reps:'2×15 @ 20 kg'},
+           {name:'Cable Bicep Curl', note:'licht', reps:'2×15'}]},
+      {key:'WANDEL', color:'#00ffb3', rev:true, sub:'DI 21 + ZA 25 · WANDELING',
+       tiers:[
+         {t:'DI', c:'#00ffb3', name:'Wandeling', scheme:'rustig · geen zone 2-doel deze week', wt:'naar keuze', rest:'—'},
+         {t:'ZA', c:'#00ffb3', name:'Wandeling', scheme:'rustig mag — het is taper', wt:'naar keuze', rest:'—'}]},
+      {key:'BENCH', color:'#64b5f6', gym:true, sub:'WO 22 · BENCH LICHT · ±55 MIN',
+       tiers:[
+         {t:'T1', c:'#64b5f6', name:'Barbell Bench', scheme:'2 × 5 · geen AMRAP', wt:'72.5 kg', rest:'2–3 min', wu:'40 × 5 · 55 × 3 · 65 × 2'},
+         {t:'T2', c:'#00e5ff', name:'Front Squat', scheme:'2 × 10', wt:'50 kg', rest:'90 sec'}],
+       t3:[{name:'Lat Pulldown', note:'', reps:'2×15 @ 35 kg'},
+           {name:'Triceps Pushdown', note:'licht', reps:'2×15'}]},
+      {key:'RUST', color:'#8888aa', rev:true, sub:'DO 23 · MUAY THAI — VR 24 + ZO 26 · RUST',
+       tiers:[
+         {t:'DO', c:'#ff6b35', name:'Muay thai', scheme:'23 jul · intensiteit, geen taper-belasting', wt:'—', rest:'—'},
+         {t:'RUST', c:'#8888aa', name:'Vr 24 + Zo 26 rust', scheme:'geen gym · deadlift vervalt', wt:'rust', rest:'—'},
+         {t:'→', c:'#ff6b35', name:'Fris naar EXPLOSIVE wk 1', scheme:'ma 27 jul · Speed Squat 62.5 kg · 1e zware DL za 1 aug', wt:'—', rest:'—'}]}
     ];
-    const sess = S.map(x => '<div class="taper-sess"><div class="taper-sess-head">' + x.h + '</div>' +
-      x.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>').join('');
+    const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
+    const defIdx = [0,1,2,3,3,1,3][dow];
     el.style.display = 'block';
     el.innerHTML =
       '<div class="taper-box">' +
         '<div class="taper-head">◈ TAPERING WEEK · 20–26 JUL</div>' +
-        '<div class="taper-days">' + cells + '</div>' +
-        '<div class="taper-note">Taper: gewichten ~85%, volume omlaag. Geen AMRAP. T3 aanbevolen (2 sets), vrij te wisselen. Rust: T1 2–3 min · T2 90 s · T3/REV 60 s.</div>' +
-        '<div class="taper-sessions">' + sess + '</div>' +
+        '<div class="gzclp-day-row" id="taper-day-btns"></div>' +
+        '<div id="taper-day-card"></div>' +
+        '<div class="taper-note">Taper: minder sets, ~85% gewicht, geen AMRAP. Rust: T1 2–3 min · T2 90 s · T3/REV 60 s. Deze week geen gestructureerde cardio — di/za zijn gewone wandelingen. T3 alleen op gym-dagen; REV mag ook op rust/wandeldagen.</div>' +
       '</div>';
+    const row = document.getElementById('taper-day-btns');
+    const cardEl = document.getElementById('taper-day-card');
+    function tierBox(tr){
+      const wu = tr.wu ? '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + tr.c + '">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline" style="font-family:monospace;font-size:12px;color:var(--muted);padding:6px 2px;letter-spacing:1px">' + tr.wu + '</div></details>' : '';
+      return '<div class="gzclp-tier" style="border-color:' + tr.c + '33">' +
+        '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,' + tr.c + ',transparent 70%);box-shadow:0 0 6px ' + tr.c + '66"></div>' +
+        '<span class="gzclp-badge" style="color:' + tr.c + ';border-color:' + tr.c + ';background:' + tr.c + '15">' + tr.t + '</span>' +
+        '<div class="gzclp-exname" style="color:' + tr.c + '">' + tr.name + '</div>' +
+        '<div class="gzclp-scheme">' + tr.scheme + '</div>' +
+        '<div class="gzclp-wt"><strong style="color:' + tr.c + ';font-size:16px">' + tr.wt + '</strong></div>' +
+        '<div class="gzclp-rest-line" style="color:' + tr.c + '">⏱ ' + tr.rest + '</div>' + wu +
+      '</div>';
+    }
+    function t3Box(d){
+      const items = d.t3.map(o =>
+        '<div class="gzclp-t3-item"><div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">' +
+        '<span style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #4caf5055;color:#4caf50;background:#0e1a0e33">T3</span>' +
+        '<span style="font-family:\'Oxanium\',sans-serif;font-size:11px;font-weight:700;color:var(--text)">' + o.name + '</span>' +
+        '<span style="color:var(--cyan);font-family:\'Space Mono\',monospace;font-size:11px;margin-left:auto">' + o.reps + '</span></div>' +
+        (o.note ? '<div style="color:var(--muted);font-family:monospace;font-size:11px">' + o.note + '</div>' : '') + '</div>').join('');
+      const rev = '<div class="gzclp-t3-item" style="border-color:#ff6b3533;background:#130b08"><div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">' +
+        '<span style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid #ff6b3566;color:#ff6b35;background:#ff6b3510">REV</span>' +
+        '<span style="font-family:\'Oxanium\',sans-serif;font-size:11px;font-weight:700;color:#ff6b35">Keuze — één oefening</span>' +
+        '<span style="color:var(--cyan);font-family:\'Space Mono\',monospace;font-size:11px;margin-left:auto">3×20</span></div>' +
+        '<div style="color:var(--muted);font-family:monospace;font-size:11px">Rathleff Heel Raise · Toe Dorsiflex Lunge · Unipodale RDL</div></div>';
+      return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333;margin-top:8px">' +
+        '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>' +
+        '<span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><div class="gzclp-exname" style="color:var(--green)">T3 — aanbevolen (2 sets, vrij te wisselen)</div><div style="font-family:monospace;font-size:11px;color:var(--green)">⏱ 60 sec</div></div>' +
+        '<div class="gzclp-t3-grid">' + items + '</div>' +
+        '<div style="margin-top:10px;padding-top:8px;border-top:1px solid #ff6b3522"><div style="font-family:\'Space Mono\',monospace;font-size:9px;letter-spacing:1px;color:#ff6b35;margin-bottom:6px">REVALIDATIE (altijd één)</div><div class="gzclp-t3-grid">' + rev + '</div></div>' +
+      '</div>';
+    }
+    // REV-only blok voor niet-gym dagen (mag wél op rust/wandeldagen)
+    function revBox(){
+      return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#ff6b3533;margin-top:8px">' +
+        '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff6b35,transparent 70%)"></div>' +
+        '<span class="gzclp-badge" style="color:#ff6b35;border-color:#ff6b35;background:#ff6b3510">REV</span>' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><div class="gzclp-exname" style="color:#ff6b35">REV — mag op rustdagen (optioneel)</div><div style="font-family:monospace;font-size:11px;color:#ff6b35">3×20</div></div>' +
+        '<div style="color:var(--muted);font-family:monospace;font-size:11px">Keuze — één oefening: Rathleff Heel Raise · Toe Dorsiflex Lunge · Unipodale RDL. Voetboog (Hallux Rigidus, beide tenen).</div>' +
+      '</div>';
+    }
+    function renderCard(i){
+      const d = DAYP[i];
+      cardEl.innerHTML =
+        '<div style="font-family:\'Space Mono\',monospace;font-size:11px;letter-spacing:2px;color:' + d.color + ';margin:4px 0 8px">' + d.sub + '</div>' +
+        '<div class="taper-tiers">' + d.tiers.map(tierBox).join('') + '</div>' +
+        (d.gym ? t3Box(d) : (d.rev ? revBox() : ''));
+    }
+    DAYP.forEach((d,i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'gzclp-day-btn' + (i===defIdx ? ' active' : '');
+      btn.textContent = d.key;
+      btn.style.borderColor = d.color; btn.style.color = d.color;
+      btn.onclick = ()=>{
+        row.querySelectorAll('.gzclp-day-btn').forEach((x,j)=>x.classList.toggle('active', j===i));
+        renderCard(i);
+      };
+      row.appendChild(btn);
+    });
+    renderCard(defIdx);
+  })();
+
+  // ── Programma-banner (EXPLOSIVE/STRENGTH/TEST, 27 jul – 4 okt 2026) ──
+  (function(){
+    const el = document.getElementById('taper-banner');
+    if (!el) return;
+    const P = [
+      {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-16', color:'#ff6b35'},
+      {name:'STRENGTH',  start:'2026-08-17', end:'2026-09-27', color:'#ff3d6b'},
+      {name:'TEST',      start:'2026-09-28', end:'2026-10-04', color:'#ffd600'}
+    ];
+    const ph = P.find(x => todayStr >= x.start && todayStr <= x.end);
+    if (!ph) return;
+    const std = document.getElementById('gzclp-standard');
+    if (std) std.removeAttribute('open');
+    const wk = Math.floor((new Date(todayStr) - new Date(ph.start)) / (7*86400000));
+    const f = x => (x % 1 ? x.toFixed(1) : x) + ' kg';
+    const cardio = [
+      ['','DI','Zone 2 · 60 min — vorm naar keuze'],
+      ['tb-cd','GYM','Na ma/wo/za: 20–30 min zone 2 — vast onderdeel van de sessie'],
+      ['tb-wu','HR','Zone 2 = 130–145 bpm (plafond 145) · praattempo · rust ~55, maxHR ~183'],
+      ['tb-t3','Σ','Weektotaal 120–150 min zuivere zone 2 · muay thai (do/zo) is intensiteit en telt níet mee']];
+    let sq, be, dl;
+    if (ph.name === 'EXPLOSIVE') {
+      sq = {h:'MA · SQUAT · ±55 MIN', r:[
+        ['tb-wu','WU','Core (plank/ab wheel) + Squat 1 opbouwset 50×5'],
+        ['','T1','Speed Squat 6×3 @ ' + f(62.5+2.5*wk) + ' — max barsnelheid, 60–90 s rust'],
+        ['','T1b','Topset Squat 1×2–3 @ ' + f(wk===2?102.5:95+5*wk) + ' (geen falen)'],
+        ['','T2','OHP 3×5 @ ' + f(45+2.5*wk)],
+        ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Cable Bicep Curl 3×15'],
+        ['tb-rev','REV','Rathleff / Toe Dorsiflex / Unipodale RDL 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+      be = {h:'WO · BENCH · ±55 MIN', r:[
+        ['tb-wu','WU','Core + Bench 1 opbouwset 40×5'],
+        ['','T1','Speed Bench 6×3 @ ' + f(52.5+2.5*wk) + ' — max barsnelheid, 60–90 s rust'],
+        ['','T1b','Topset Bench 1×2–3 @ ' + f(wk===2?87.5:80+5*wk) + ' (geen falen)'],
+        ['','T2','Barbell Row 3×10 @ 62.5 kg'],
+        ['tb-t3','T3','Lat PD 3×15 · Triceps Pushdown 3×15'],
+        ['tb-rev','REV','REV-oefening 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+      dl = {h:'ZA · DEADLIFT · ±65 MIN', r:[
+        ['tb-wu','WU','Core + DL opbouw 60×3 · 90×2'],
+        ['','T1','Deadlift ZWAAR 2×5+AMRAP @ ' + f(117.5+2.5*wk) + ' (Greyskull door)'],
+        ['','T2','Speed Pulls 5×2 @ ' + f(70+2.5*wk)],
+        ['','T2','Front Squat 3×10 @ 60 kg'],
+        ['tb-t3','T3','DB Bench ×2 licht 3×12 · Hammer Curl 3×15'],
+        ['tb-rev','REV','REV-oefening 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+    } else if (ph.name === 'STRENGTH') {
+      sq = {h:'MA · SQUAT · ±70 MIN', r:[
+        ['tb-wu','WU','Opbouwsets Squat naar werkgewicht'],
+        ['','T1','Back Squat 3×5 @ ' + f(92.5+2.5*wk) + ' — 3 min rust; enkel als vorige week gelukt'],
+        ['','T2','OHP 3×5 @ ' + f(52.5+2.5*wk)],
+        ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Cable Bicep Curl 3×15'],
+        ['tb-rev','REV','REV-oefening 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+      be = {h:'WO · BENCH · ±70 MIN', r:[
+        ['tb-wu','WU','Opbouwsets Bench naar werkgewicht'],
+        ['','T1','Barbell Bench 3×5 @ ' + f(80+2.5*wk) + ' — 3 min rust'],
+        ['','T2','Barbell Row 3×10 @ 62.5 kg →'],
+        ['tb-t3','T3','Lat PD 3×15 · Triceps Pushdown 3×15'],
+        ['tb-rev','REV','REV-oefening 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+      dl = {h:'ZA · DEADLIFT · ±70 MIN', r:[
+        ['tb-wu','WU','Opbouwsets DL naar werkgewicht'],
+        ['','T1','Deadlift 2×5+AMRAP @ ' + f(125+2.5*wk) + ' (Greyskull door)'],
+        ['','T2','Front Squat 3×10 @ 60 kg →'],
+        ['tb-t3','T3','DB Bench ×2 3×12 · Hammer Curl 3×15'],
+        ['tb-rev','REV','REV-oefening 3×20'],
+        ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+    } else {
+      sq = {h:'MA · SQUAT-TEST', r:[['','T1','Opbouw naar zware 3×5 — doel 115 kg'],['tb-rev','REV','REV-oefening 3×20']]};
+      be = {h:'WO · BENCH-TEST', r:[['','T1','Opbouw naar zware 3×5 — doel 95 kg'],['','T2','OHP 3×5-test'],['tb-rev','REV','REV-oefening 3×20']]};
+      dl = {h:'ZA · DEADLIFT-TEST', r:[['','T1','Laatste Greyskull-sessie — doel 140 kg'],['tb-rev','REV','REV-oefening 3×20']]};
+    }
+    const DAYP = [
+      {key:'SQUAT',    color:'#b388ff', card:sq},
+      {key:'CARDIO',   color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}},
+      {key:'BENCH',    color:'#64b5f6', card:be},
+      {key:'DEADLIFT', color:'#ffd600', card:dl}
+    ];
+    const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
+    const defIdx = [0,1,2,3,3,3,0][dow];
+    el.style.display = 'block';
+    el.innerHTML =
+      '<div class="taper-box" style="border-color:' + ph.color + '">' +
+        '<div class="taper-head" style="color:' + ph.color + '">◈ ' + ph.name + ' · WEEK ' + (wk+1) + '</div>' +
+        '<div class="gzclp-day-row" id="prog-day-btns"></div>' +
+        '<div id="prog-day-card"></div>' +
+        '<div class="taper-note">Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.</div>' +
+      '</div>';
+    const row = document.getElementById('prog-day-btns');
+    const cardEl = document.getElementById('prog-day-card');
+    function renderCard(i){
+      const d = DAYP[i];
+      cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
+        d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
+    }
+    DAYP.forEach((d,i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'gzclp-day-btn' + (i===defIdx ? ' active' : '');
+      btn.textContent = d.key;
+      btn.style.borderColor = d.color; btn.style.color = d.color;
+      btn.onclick = ()=>{
+        row.querySelectorAll('.gzclp-day-btn').forEach((x,j)=>x.classList.toggle('active', j===i));
+        renderCard(i);
+      };
+      row.appendChild(btn);
+    });
+    renderCard(defIdx);
   })();
 
   const btnRow = document.getElementById('gzclp-day-btns');

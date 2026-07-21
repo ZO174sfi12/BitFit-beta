@@ -60,6 +60,7 @@ Bert pusht daarna zelf via GitHub Desktop. Claude pusht nooit.
 
 ## Workflow na een CSV-run
 
+0. **Geef Bert altijd korte feedback over de nieuwe data**: PR's/toppers, of de sessies het actieve programma volgden (gewichten/sets vs plan), AMRAP-kwaliteit, en opvallende afwijkingen of stagnatie. Kort en concreet — een paar zinnen, geen rapport.
 1. **Check `mnt/bitfit-data/notes.txt`** — lees beide secties volledig
 2. **[BERT]**: Dit zijn Berts instructies. Voer ze uit. Vraag bevestiging als ze betrekking hebben op code-aanpassingen.
 3. **[YANI]**: Dit zijn coach change requests. **Toon ze EERST aan Bert** en vraag welke hij wil doorvoeren. Voer NOOIT aan zonder expliciete bevestiging van Bert. Verwijder daarna de goedgekeurde items uit `[YANI]`.
