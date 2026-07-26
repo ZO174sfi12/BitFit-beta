@@ -15186,7 +15186,8 @@ const DATA = {
   ]
 };
 /*DATA_END*/
-const TODAY = new Date();
+const _previewDate = new URLSearchParams(location.search).get('preview');
+const TODAY = _previewDate ? new Date(_previewDate + 'T12:00:00') : new Date();
 
 const PHASES = [
   {label:"ORIENTATIE",short:"ORI",start:"2026-01-01",end:"2026-01-31",color:"#7c6fff",track:0,desc:"<b>1 jan - 31 jan</b><br>Kennismaking. Machines en dumbbells. Geen barbell."},
@@ -15797,16 +15798,21 @@ document.addEventListener('DOMContentLoaded', function() {
         dl = {h:'ZA · DEADLIFT-TEST', r:[['','T1','Greyskull + zware single RPE 9 · 1RM-doel 130–140 kg'],['tb-rev','REV','REV-oefening 3×20']]};
       }
       const isExp = ph.name === 'EXPLOSIVE';
-      return [
+      const days = [
         {key: isExp ? 'MA' : 'SQUAT',    color:'#b388ff', card:sq},
-        {key:'DI',                         color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}},
         {key: isExp ? 'WO' : 'BENCH',    color:'#64b5f6', card:be},
         {key: isExp ? 'ZA' : 'DEADLIFT', color:'#ffd600', card:dl}
       ];
+      if (!isExp) days.splice(1, 0, {key:'DI', color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}});
+      return days;
     }
 
     const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
-    const defDayIdx = [0,1,2,3,3,3,0][dow];
+    // EXPLOSIVE: 3 gym-dagen (MA=0, WO=1, ZA=2) — di/do/vr/zo → dichtstbijzijnde gym dag
+    // Andere fases: 4 dagen (SQUAT=0, DI=1, BENCH=2, DEADLIFT=3)
+    const defDayIdx = ph.name === 'EXPLOSIVE'
+      ? [0,0,1,2,2,2,0][dow]
+      : [0,1,2,3,3,3,0][dow];
     const multiWk = ph.totalWks > 1;
     const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 2–3 min (power-kwaliteit behouden). 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
@@ -15833,8 +15839,115 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderCard(dayIdx) {
       const d = currentDayp[dayIdx];
-      cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
-        d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
+      const wk = activeWk;
+
+      // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
+      if (ph.name !== 'EXPLOSIVE' || d.key === 'DI') {
+        cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
+          d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
+        return;
+      }
+
+      // ── Helpers ─────────────────────────────────────────────────────
+      const _BBL = new Set(['Squat','Deadlift','Bench','OHP','Front Squat','Row']);
+
+      function _wuHtml(lk, w, isT1, c) {
+        if (!w) return '';
+        const rows = isT1 ? t1Warmup(w, lk) : t2Warmup(w, lk);
+        if (!rows.length) return '';
+        const restRow = '<div class="gzclp-wu-rest">— 60 sec</div>';
+        const rowsHtml = rows.map((r, i) => {
+          const plts = _BBL.has(lk) ? platesPerSide(r.w) : null;
+          const pltsH = plts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + plts + ']</span>' : '';
+          return '<div class="gzclp-wu-inline-row"><span style="color:' + c + ';min-width:48px">' + r.w + ' kg</span><span style="color:var(--text)">× ' + r.reps + '</span>' + pltsH + '</div>' + (i < rows.length - 1 ? restRow : '');
+        }).join('');
+        const wPlts = _BBL.has(lk) ? platesPerSide(w) : null;
+        const wPltsH = wPlts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + wPlts + ']</span>' : '';
+        return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + rowsHtml + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div><div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span style="min-width:48px">' + w + ' kg</span><span style="color:var(--text)">werkgewicht</span>' + wPltsH + '</div></div></details>';
+      }
+
+      function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1) {
+        const c = liftColor(lk) || d.color;
+        const pW = lastW(lk), pD = lastDate(lk);
+        const plts = (_BBL.has(lk) && w) ? platesPerSide(w) : null;
+        const pltsH = plts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:8px">[' + plts + ']</span>' : '';
+        const prevLine = pW ? '<div style="font-size:11px;color:' + c + 'cc;margin-bottom:4px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
+        const wu = _wuHtml(lk, w, isT1 !== false, c);
+        return '<div class="gzclp-tier" style="border-color:' + c + '33">' +
+          '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,' + c + ',transparent 70%);box-shadow:0 0 6px ' + c + '66"></div>' +
+          '<div class="gzclp-tier-body"><div class="gzclp-tier-main">' +
+          '<span class="gzclp-badge" style="color:' + c + ';border-color:' + c + ';background:' + c + '15">' + badge + '</span>' +
+          '<div class="gzclp-exname" style="color:' + c + '">' + name + '</div>' +
+          (cue ? '<div style="font-family:monospace;font-size:10px;color:var(--muted);margin-bottom:4px;font-style:italic">' + cue + '</div>' : '') +
+          '<div class="gzclp-scheme">' + scheme + '</div>' +
+          '<div class="gzclp-wt">' + prevLine + (w ? '<strong style="color:' + c + ';font-size:16px">' + w + ' kg</strong>' + pltsH : '<span style="color:var(--muted)">—</span>') + '</div>' +
+          '<div class="gzclp-rest-line" style="color:' + c + '">⏱ ' + rest + '</div>' +
+          '</div>' + wu + '</div></div>';
+      }
+
+      function _t3Item(name, reps, lk, isRev) {
+        const bc = isRev ? '#ff6b35' : '#4caf50';
+        const bg = isRev ? '#130b08' : '#0e1a0e33';
+        const bd = isRev ? '#ff6b3533' : '#4caf5033';
+        const badge = isRev ? 'REV' : 'T3';
+        const pW = lk ? lastW(lk) : null;
+        const pD = lk ? lastDate(lk) : null;
+        const prevLine = pW ? '<div style="font-size:11px;color:var(--muted);margin-top:3px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
+        return '<div class="gzclp-t3-item" style="border-color:' + bd + ';background:' + bg + '">' +
+          '<div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">' +
+          '<span style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid ' + bc + '55;border-radius:2px;color:' + bc + ';background:' + bg + '">' + badge + '</span>' +
+          '<span style="font-family:\'Oxanium\',sans-serif;font-size:11px;font-weight:700;color:var(--text)">' + name + '</span>' +
+          (reps ? '<span style="color:var(--cyan);font-family:\'Space Mono\',monospace;font-size:11px;margin-left:auto">' + reps + '</span>' : '') +
+          '</div>' + prevLine + '</div>';
+      }
+
+      function _t3Block(mainItems) {
+        const revItems = _t3Item('Rathleff Heel Raise','3×20',null,true) + _t3Item('Toe Dorsiflex / Unipodale RDL','3×20',null,true);
+        return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333;grid-column:1/-1">' +
+          '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>' +
+          '<span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>' +
+          '<div class="gzclp-t3-grid">' + mainItems + '</div>' +
+          '<div style="margin-top:10px;padding-top:8px;border-top:1px solid #ff6b3522">' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:9px;letter-spacing:1px;color:#ff6b35;margin-bottom:6px">REVALIDATIE (altijd doen)</div>' +
+          '<div class="gzclp-t3-grid">' + revItems + '</div></div></div>';
+      }
+
+      // ── Per dag opbouwen ─────────────────────────────────────────────
+      const expReps = wk === 1 ? '4-3-4' : wk === 2 ? '3×3' : '3×4';
+      let tiersHtml = '';
+
+      if (d.key === 'MA') {
+        tiersHtml += _tierCard('T1','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '2–3 min', 'Heupen naar voren · billen aanspannen', true);
+        tiersHtml += _tierCard('T1','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '2–3 min', 'Hielen op grond · billen op de bank', true);
+        tiersHtml += _tierCard('T1','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '2–3 min', 'Meer hinge · minder squat', true);
+        tiersHtml += _tierCard('T1','Row',      'SPEED ROW',      expReps + ' · horizontale trek', 60,               '2–3 min', null, true);
+        tiersHtml += _t3Block(
+          _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
+          _t3Item('T3 naar keuze', '', null, false)
+        );
+      } else if (d.key === 'WO') {
+        tiersHtml += _tierCard('T2','Bench', 'BARBELL BENCH PRESS', '3 × 8 — kracht/volume', r25(65+2.5*wk),   '2 min', 'Hielen op grond · billen op de bank', false);
+        tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',          '3 × 10',                r25(62.5+2.5*wk), '2 min', null, false);
+        tiersHtml += _t3Block(
+          _t3Item('Lat PD',           '3×15', 'Lat PD', false) +
+          _t3Item('Bicep Curl',       '3×12', null, false) +
+          _t3Item('Triceps Pushdown', '3×15', null, false) +
+          _t3Item('Face Pull',        '3×20', null, false)
+        );
+      } else { // ZA
+        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd',        r25(87.5+2.5*wk),  '3 min',   'Heupen naar voren · billen aanspannen', true);
+        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5  +  AMRAP (Greyskull)',   r25(117.5+2.5*wk), '3–5 min', 'Meer hinge · hoger starten', true);
+        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                         r25(45+2.5*wk),    '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
+        tiersHtml += _t3Block(
+          _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
+          _t3Item('Leg Curl',          '3×12', null, false) +
+          _t3Item('Abductor Machine',  '3×15', null, false)
+        );
+      }
+
+      cardEl.innerHTML =
+        '<div style="font-family:\'Oxanium\',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:' + d.color + ';margin-bottom:10px">' + d.card.h + '</div>' +
+        '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + tiersHtml + '</div>';
     }
 
     function switchWeek(w) {
