@@ -15917,10 +15917,10 @@ document.addEventListener('DOMContentLoaded', function() {
       let tiersHtml = '';
 
       if (d.key === 'MA') {
-        tiersHtml += _tierCard('T1','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '2–3 min', 'Heupen naar voren · billen aanspannen', true);
-        tiersHtml += _tierCard('T1','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '2–3 min', 'Hielen op grond · billen op de bank', true);
-        tiersHtml += _tierCard('T1','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '2–3 min', 'Meer hinge · minder squat', true);
-        tiersHtml += _tierCard('T1','Row',      'SPEED ROW',      expReps + ' · horizontale trek', 60,               '2–3 min', null, true);
+        tiersHtml += _tierCard('T1','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec', 'Heupen naar voren · billen aanspannen', false);
+        tiersHtml += _tierCard('T1','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '90 sec', 'Hielen op grond · billen op de bank', false);
+        tiersHtml += _tierCard('T1','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec', 'Meer hinge · minder squat', false);
+        tiersHtml += _tierCard('T1','Row',      'SPEED ROW',      expReps + ' · horizontale trek', 60,               '90 sec', null, false);
         tiersHtml += _t3Block(
           _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
           _t3Item('T3 naar keuze', '', null, false)
