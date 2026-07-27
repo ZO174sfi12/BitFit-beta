@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-27T19:59:09",
+  "updated": "2026-07-27T20:11:34",
   "weight": 87.3,
   "weight_date": "2026-07-27",
   "training_days_total": 128,
@@ -116,6 +116,27 @@
       "last_volume": 750.0,
       "pr": true,
       "pr_weight": 62.5
+    },
+    "Speed Deadlift": {
+      "last_date": "2026-07-27",
+      "last_weight": 70.0,
+      "last_volume": 840.0,
+      "pr": true,
+      "pr_weight": 70.0
+    },
+    "Speed Bench": {
+      "last_date": "2026-07-27",
+      "last_weight": 60.0,
+      "last_volume": 780.0,
+      "pr": true,
+      "pr_weight": 60.0
+    },
+    "Speed Row": {
+      "last_date": "2026-07-27",
+      "last_weight": 50.0,
+      "last_volume": 660.0,
+      "pr": true,
+      "pr_weight": 50.0
     }
   }
 }
