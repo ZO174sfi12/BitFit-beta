@@ -1,9 +1,9 @@
 {
-  "updated": "2026-07-20T18:45:35",
-  "weight": 87.7,
-  "weight_date": "2026-07-20",
-  "training_days_total": 126,
-  "last_training_day": "2026-07-20",
+  "updated": "2026-07-27T19:31:46",
+  "weight": 87.3,
+  "weight_date": "2026-07-27",
+  "training_days_total": 128,
+  "last_training_day": "2026-07-27",
   "lifts": {
     "Squat": {
       "last_date": "2026-07-20",
@@ -90,10 +90,10 @@
       "pr_weight": 60.0
     },
     "Abductor": {
-      "last_date": "2026-07-13",
+      "last_date": "2026-07-27",
       "last_weight": 35.0,
-      "last_volume": 1450.0,
-      "pr": true,
+      "last_volume": 1295.0,
+      "pr": false,
       "pr_weight": 35.0
     },
     "Leg Curl": {
