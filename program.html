@@ -58,6 +58,7 @@ details.archive .archive-inner{padding:4px 14px 18px;}
 <header><div class="logo"><span class="logo-bit">BIT</span><span class="logo-fit">FIT</span><span class="logo-beta">&nbsp;PROGRAM</span></div></header>
 <nav class="page-nav"><a href="bitstats.html" class="nav-item ">STATS</a><a href="index.html" class="nav-item ">GYM</a><a href="program.html" class="nav-item nav-prog-active">PROGRAM</a><a href="supplement-tracker.html" class="nav-item ">SUPPS</a><a href="log-view.html" class="nav-item ">LOGS</a></nav>
 <main>
+<!-- ⚠ Waarden (data, %, rust, doelen) = canoniek in program_config.json. Bij bijsturen: sync index.html + build.js (docx) + deze pagina, draai check_program_consistency.py. -->
 
 <!-- ══ ACTUEEL PROGRAMMA ═══════════════════════════════════════════════ -->
 <div class="sec-title">◈ PHASES 2026 — EXPLOSIVE → STRENGTH → TEST · actief sinds 27 jul 2026</div>
@@ -75,7 +76,7 @@ Gebouwd op de data-analyse van jul 2026: vertraagde progressie op squat (~100 kg
 <table>
 <tr><th>BLOK</th><th>PERIODE</th><th>FOCUS</th><th>DUUR/SESSIE</th></tr>
 <tr><td>TAPER</td><td>20 – 26 jul</td><td>Minder sets, ~85% gewicht, geen AMRAP</td><td>±55 min</td></tr>
-<tr><td>EXPLOSIVE</td><td>27 jul – 16 aug (3 wkn)</td><td>Full body explosief (Lotte) · MA: alle grote liften SPEED @ 50–60% · WO: bench + row volume/upper · ZA: benen/lower + Greyskull DL · wk1 3×4 · wk2 4-3-4 · wk3 3×3 · 90 sec rust · 1RM-test bij Lotte 17 aug</td><td>±55–65 min</td></tr>
+<tr><td>EXPLOSIVE</td><td>27 jul – 16 aug (3 wkn)</td><td>Full body explosief (Lotte) · MA: alle grote liften SPEED @ 50–60% · WO: bench + row volume/upper · ZA: benen/lower + Greyskull DL · wk1 3×4 · wk2 4-3-4 · wk3 3×3 · 90 sec rust (langer als snelheid daalt) · 1RM-test bij Lotte 17 aug</td><td>±55–65 min</td></tr>
 <tr><td>STRENGTH</td><td>17 aug – 27 sep (6 wkn)</td><td>3×5 zwaar · +5 kg/wk zolang licht (RPE ≤ 7), daarna +2,5. Start 17 aug = kalibratie met Lotte (startgewichten + techniek); 1RM-skill in wk 4–6.</td><td>±70 min</td></tr>
 <tr><td>TEST</td><td>28 sep – 4 okt</td><td>Zware 3×5-test per lift · herevaluatie volgend blok</td><td>±60 min</td></tr>
 </table>
@@ -83,10 +84,10 @@ Gebouwd op de data-analyse van jul 2026: vertraagde progressie op squat (~100 kg
 <div class="sec-title">◈ RECORDS & DOELEN</div>
 <table>
 <tr><th>LIFT</th><th>RECORD NU · JUN–JUL</th><th>PROCES-DOEL · 3×5</th><th>1RM-DOEL · TESTWEEK (Lotte)</th></tr>
-<tr><td>Squat</td><td>100 kg · 2×5+AMRAP ~6 (e1RM ~117)</td><td>115 kg · 3×5</td><td>115–135 kg</td></tr>
-<tr><td>Bench</td><td>85 kg · 2×5+AMRAP ~6 (e1RM ~99)</td><td>95 kg · 3×5</td><td>95–105 kg</td></tr>
-<tr><td>Deadlift</td><td>115 kg × 5 (e1RM ~129)</td><td>140 kg · 2×5+AMRAP</td><td>130–140 kg</td></tr>
-<tr><td>OHP</td><td>52,5 kg × 5 (e1RM ~61)</td><td>60 kg · 3×5</td><td>70–80 kg</td></tr>
+<tr><td>Squat</td><td>100 kg · 2×5+AMRAP ~6 (e1RM 117)</td><td>115 kg · 3×5</td><td>115–135 kg</td></tr>
+<tr><td>Bench</td><td>85 kg · 2×5+AMRAP ~6 (e1RM 102)</td><td>95 kg · 3×5</td><td>95–105 kg</td></tr>
+<tr><td>Deadlift</td><td>115 kg × 5 (e1RM 134)</td><td>140 kg · 2×5+AMRAP</td><td>130–140 kg</td></tr>
+<tr><td>OHP</td><td>60 kg × 5 (e1RM 70)</td><td>60 kg · 3×5</td><td>70–80 kg</td></tr>
 </table>
 <div class="note">Twee lagen. Het <b>3×5-gewicht</b> is je wekelijkse proces-doel (T1 = 2×5 + AMRAP-set; 5 reps op die set volstaat, grotere AMRAP = bonus, ≥8 → +5 kg). De <b>1RM-range (Lotte)</b> is de uitkomst tegen het <b>einde van álle fases</b> (testweek 28 sep–4 okt) — géén tussendoel voor 17 aug. Een 1RM is een aparte vaardigheid: die oefen je in wk 4–6 (zware single/double, RPE 8–9) en test je in de testweek. <b>Niet blindstaren op de cijfers</b> — consistent afwerken, laat de progressie komen (Lotte).</div>
 
@@ -104,7 +105,7 @@ Gebouwd op de data-analyse van jul 2026: vertraagde progressie op squat (~100 kg
 
 <div class="sec-title">◈ DAGINDELING — EXPLOSIVE (27 jul – 16 aug)</div>
 <table>
-<tr><th>DAG</th><th>SPEED (allen @ 50–60% · 90 sec)</th><th>T2</th><th>T3 + REV</th></tr>
+<tr><th>DAG</th><th>SPEED (allen @ 50–60% · 90 sec, langer als snelheid daalt)</th><th>T2</th><th>T3 + REV</th></tr>
 <tr><td>MA · FULL BODY</td><td>Speed Squat · 62,5→67,5 kg<br>Speed Bench · 52,5→57,5 kg<br>Speed Deadlift · 70→75 kg<br>Speed Row · 60 kg (vast)<br><i>wk1 3×4 · wk2 4-3-4 · wk3 3×3</i></td><td>—</td><td>Hip Thrust 3×15 · REV</td></tr>
 <tr><td>WO · UPPER</td><td>—</td><td>Bench Press 3×8 · 65→70 kg · 2 min<br>Barbell Row 3×10 · 62,5→67,5 kg · 2 min</td><td>Lat PD · Bicep Curl · Triceps · Face Pull · REV</td></tr>
 <tr><td>ZA · LOWER</td><td>—</td><td>Back Squat 3×5 · 87,5→92,5 kg · 3 min<br>Deadlift 2×5+AMRAP · 117,5→122,5 kg · 3–5 min (Greyskull door)<br>OHP 3×5 · 45→50 kg · 2–3 min</td><td>Hip Thrust · Leg Curl · Abductor · REV</td></tr>
@@ -120,7 +121,7 @@ Gebouwd op de data-analyse van jul 2026: vertraagde progressie op squat (~100 kg
 
 <div class="sec-title">◈ HANDLEIDING</div>
 <div class="rules-grid">
-  <div class="rule"><div class="rule-title" style="color:var(--accent)">SPEED WERK — HET WAAROM</div><div class="rule-body">Sets op 50–60%, elke rep met maximale intentie omhoog, 90 sec rust. Geen topsets — puur speed. Traint barsnelheid en rate of force development. Stoppen zodra de staaf traag wordt: snelheid is het criterium, niet vermoeidheid. 1RM-kalibratie bij Lotte op 17 aug → startgewichten STRENGTH.</div></div>
+  <div class="rule"><div class="rule-title" style="color:var(--accent)">SPEED WERK — HET WAAROM</div><div class="rule-body">Sets op 50–60%, elke rep met maximale intentie omhoog, 90 sec rust (langer als de snelheid daalt). Geen topsets — puur speed. Traint barsnelheid en rate of force development. Stoppen zodra de staaf traag wordt: snelheid is het criterium, niet vermoeidheid. 1RM-kalibratie bij Lotte op 17 aug → startgewichten STRENGTH.</div></div>
   <div class="rule"><div class="rule-title" style="color:var(--cyan)">3×5 PROGRESSIE (STRENGTH)</div><div class="rule-body">Twee sets van 5 + een AMRAP-set op hetzelfde gewicht ("3×5"). <b>5 reps op de AMRAP-set volstaat</b> → volgende week zwaarder. AMRAP ≥ 8 of alles licht (RPE ≤ 7) → <b>+5 kg</b>; anders +2,5 kg. Onder 5 → herhalen; twee weken falen → −10% en opnieuw opbouwen. Alleen in dit blok — speed-gewichten in EXPLOSIVE blijven percentagewerk. Testweek toetst op ditzelfde formaat.</div></div>
   <div class="rule"><div class="rule-title" style="color:var(--cyan)">DEADLIFT — GREYSKULL DOOR</div><div class="rule-body">Deadlift had een cleane lineaire lijn (PR elke sessie) — niet breken wat werkt. Behoudt Greyskull-regel in beide blokken: 2×5 + AMRAP, +2,5 kg bij AMRAP ≥ 5 — en de dubbelsprong: <b>AMRAP ≥ 8 → +5 kg</b>. Start STRENGTH op 125 kg.</div></div>
   <div class="rule"><div class="rule-title" style="color:var(--green)">T3 — AANVULLING & ARMWERK</div><div class="rule-body">3×15 per oefening, aanbevolen maar vrij te wisselen. Vaste gasten: Hip Thrust (plate-loaded machine), Lat PD, en armwerk op voorkeur — Cable Bicep Curl, Hammer Curl, Triceps Pushdown, Dips. Bovengrens comfortabel → +2,5 kg.</div></div>

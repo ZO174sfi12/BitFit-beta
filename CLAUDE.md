@@ -58,6 +58,19 @@ Bert pusht daarna zelf via GitHub Desktop. Claude pusht nooit.
 
 ---
 
+## Programma-consistentie (bij bijsturen van gewichten/data/doelen)
+
+De phase-programmawaarden staan verspreid over meerdere bestanden. Om drift te vermijden:
+
+- **`program_config.json`** (in BitFit-beta) = canonieke bron van waarheid: blokdata, speed-%, rusttijd, 1RM-referenties, startgewichten, proces-doelen, Lotte's 1RM-ranges.
+- Bij elke bijsturing pas je de waarde aan op **alle** relevante plekken: `program_config.json`, `index.html` (app + PHASES + REF1RM), `program.html` (PROGRAM-pagina), en `mnt/Downloads/process_jefit.py`-adjacent `outputs/prog/build.js` (docx-bron) → daarna docx opnieuw genereren.
+- **Controle**: `python3 mnt/Downloads/check_program_consistency.py` — vergelijkt index.html, program.html, build.js én de docx-tekst met de config en toont per feit OK/FAIL. Bevat ook een kruischeck van de 1RM-referentie (index REF1RM) tegen de stats-pagina (topgewicht × 1,1); een geel "wijkt af" is een bewuste keuze-vraag, geen fout.
+- Draai de checker altijd na een programma-wijziging en vóór Bert commit.
+
+**Openstaand besluit**: de 1RM-referentie (REF1RM in index) gebruikt reps-correcte Epley (squat 120 · bench 100 · DL 140 · OHP 62), de stats-pagina gebruikt ×1,1 (squat 110 · bench 93,5 · DL 126,5). Nog te beslissen of beide gesynct worden.
+
+---
+
 ## Workflow na een CSV-run
 
 0. **Geef Bert altijd korte feedback over de nieuwe data**: PR's/toppers, of de sessies het actieve programma volgden (gewichten/sets vs plan), AMRAP-kwaliteit, en opvallende afwijkingen of stagnatie. Kort en concreet — een paar zinnen, geen rapport.

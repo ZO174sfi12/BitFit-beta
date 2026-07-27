@@ -15379,13 +15379,31 @@ function selectLiftGroup(group) {
 
 let liftChart = null;
 let liftMode = '1rm'; // 'werk' or '1rm'
-const epleyFactor = 1.1;
+const epleyFactor = 1.1; // legacy fallback
+// Reps-correcte Epley e1RM uit de beste enkele werkset van een punt.
+// Canoniek: program_config.json (ref_1rm_bron). Sync met index REF1RM.
+function e1rmPoint(p){
+  let best = 0;
+  const sd = p.sets_detail;
+  if (sd) for (const st of sd){
+    if (st.warmup) continue;
+    const r = st.r;
+    if (r < 1 || r > 12) continue;
+    const e = st.w * (1 + r/30);
+    if (e > best) best = e;
+  }
+  if (!best){
+    const r = p.work_reps || (p.volume && p.weight ? p.volume/p.weight : 0);
+    best = (r >= 1 && r <= 12) ? p.weight * (1 + r/30) : p.weight * epleyFactor;
+  }
+  return Math.round(best * 10) / 10;
+}
 
 function setLiftMode(mode) {
   liftMode = mode;
   document.getElementById('btn-werk').classList.toggle('active', mode === 'werk');
   document.getElementById('btn-1rm').classList.toggle('active', mode === '1rm');
-  document.getElementById('panel-lift-title').textContent = mode === 'werk' ? 'WERKGEWICHT' : 'GESCHATTE 1RM (~x1.1)';
+  document.getElementById('panel-lift-title').textContent = mode === 'werk' ? 'WERKGEWICHT' : 'GESCHATTE 1RM (reps-Epley)';
   // Re-update using active period or custom start
   update(getActiveStart());
 }
@@ -15463,7 +15481,7 @@ function renderRadar(start) {
     const pts = lift.points.filter(p => p.date >= s && p.date <= t);
     const sets = pts.reduce((acc, p) => acc + (p.sets || 0), 0);
     const vol = pts.reduce((acc, p) => acc + p.volume, 0);
-    const rm1 = pts.length ? Math.max(...pts.map(p => p.est1rm || 0)) : 0;
+    const rm1 = pts.length ? Math.max(...pts.map(p => e1rmPoint(p))) : 0;
     const gain = pts.length > 1 ? Math.round((pts[pts.length-1].weight - pts[0].weight) * 10) / 10 : 0;
     return {key, sets, vol, rm1, gain, color: lift.color};
   }).filter(e => e.sets > 0).sort((a, b) => b.sets - a.sets);
@@ -15557,7 +15575,7 @@ function buildLiftDatasets(start) {
     return {
       label: key, data: allDates.map(d => {
         if (!byDate[d]) return null;
-        return liftMode === '1rm' ? (byDate[d].est1rm || Math.round(byDate[d].weight * epleyFactor * 10) / 10) : byDate[d].weight;
+        return liftMode === '1rm' ? e1rmPoint(byDate[d]) : byDate[d].weight;
       }),
       borderColor: lift.color, backgroundColor: lift.color + '22',
       pointBackgroundColor: allDates.map(d => byDate[d] ? lift.color : 'transparent'),
@@ -15620,15 +15638,15 @@ function computeStats(start) {
     leanDelta = Math.round((wDelta  - fatDelta)            * 10) / 10;
   }
 
-  const epley = w => Math.round(w * 1.1 * 10) / 10;
   const prs = {};
   Object.entries(DATA.lifts).filter(([key]) => !BACKGROUND_LIFTS.has(key)).forEach(([key, lift]) => {
     const all = lift.points.filter(p => p.date >= s && p.date <= t);
     const prPts = all.filter(p => p.pr);
     if (!prPts.length) return;
-    const firstW = all[0]?.weight ?? prPts[0].weight;
-    const maxW = Math.max(...prPts.map(p => p.weight));
-    prs[key] = {weight: maxW, est1rm: epley(maxW), firstWeight: firstW, rm_gain: Math.round((epley(maxW)-epley(firstW))*10)/10, color: lift.color};
+    const firstPt = all[0] ?? prPts[0];
+    const bestPt = prPts.reduce((a, b) => e1rmPoint(b) > e1rmPoint(a) ? b : a);
+    const est = e1rmPoint(bestPt), estFirst = e1rmPoint(firstPt);
+    prs[key] = {weight: bestPt.weight, est1rm: est, firstWeight: firstPt.weight, rm_gain: Math.round((est - estFirst)*10)/10, color: lift.color};
   });
   const top3 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
   return {td, totalDays, wFirst, wLast, wDelta, wDeltaLabel, fatDelta, leanDelta, top3, gymN, muayN, otherN, totalAct};

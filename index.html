@@ -15198,7 +15198,7 @@ const PHASES = [
   {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2026-04-19",color:"#ff8a65",track:1,desc:"<b>3 apr → 19 apr</b><br>Operatie. Herstelperiode afgerond."},
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
   {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
-  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-16",color:"#ff6b35",track:0,desc:"<b>27 jul → 16 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 2–3 min rust · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 17 aug."},
+  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-16",color:"#ff6b35",track:0,desc:"<b>27 jul → 16 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 17 aug."},
   {label:"STRENGTH",short:"STR",start:"2026-08-17",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>17 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel: squat 115 · bench 95 als 3×5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Start 17 aug = kalibratie met Lotte. +5 kg/wk zolang licht, daarna +2,5."},
   {label:"TEST",short:"TST",start:"2026-09-28",end:"2026-10-04",color:"#ffd600",track:0,desc:"<b>28 sep → 4 okt</b><br>Dubbele test per lift: top 3×5/AMRAP + één zware single (RPE 9, geen max-out) → getest 1RM. Doel-range (Lotte): Squat 115–135 · Bench 95–105 · DL 130–140 · OHP 70–80. Daarna herevaluatie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
@@ -15627,8 +15627,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const DAYP = [
       {key:'SQUAT', color:'#b388ff', gym:true, sub:'MA 20 · SQUAT LICHT · ±55 MIN',
        tiers:[
-         {t:'T1', c:'#b388ff', name:'Back Squat', scheme:'2 × 5 · geen AMRAP', wt:'85 kg', ref:120, rest:'2–3 min', wu:'40 × 5 · 60 × 3 · 75 × 2'},
-         {t:'T2', c:'#00e5ff', name:'Overhead Press', scheme:'2 × 10', wt:'40 kg', ref:62, rest:'90 sec'}],
+         {t:'T1', c:'#b388ff', name:'Back Squat', scheme:'2 × 5 · geen AMRAP', wt:'85 kg', ref:117, rest:'2–3 min', wu:'40 × 5 · 60 × 3 · 75 × 2'},
+         {t:'T2', c:'#00e5ff', name:'Overhead Press', scheme:'2 × 10', wt:'40 kg', ref:70, rest:'90 sec'}],
        t3:[{name:'Hip Thrust', note:'plate-loaded machine', reps:'2×15 @ 20 kg'},
            {name:'Cable Bicep Curl', note:'licht', reps:'2×15'}]},
       {key:'WANDEL', color:'#00ffb3', rev:true, sub:'DI 21 + ZA 25 · WANDELING',
@@ -15637,8 +15637,8 @@ document.addEventListener('DOMContentLoaded', function() {
          {t:'ZA', c:'#00ffb3', name:'Wandeling', scheme:'rustig mag — het is taper', wt:'naar keuze', rest:'—'}]},
       {key:'BENCH', color:'#64b5f6', gym:true, sub:'WO 22 · BENCH LICHT · ±55 MIN',
        tiers:[
-         {t:'T1', c:'#64b5f6', name:'Barbell Bench', scheme:'2 × 5 · geen AMRAP', wt:'72.5 kg', ref:100, rest:'2–3 min', wu:'40 × 5 · 55 × 3 · 65 × 2'},
-         {t:'T2', c:'#00e5ff', name:'Front Squat', scheme:'2 × 10', wt:'50 kg', ref:75, rest:'90 sec'}],
+         {t:'T1', c:'#64b5f6', name:'Barbell Bench', scheme:'2 × 5 · geen AMRAP', wt:'72.5 kg', ref:102, rest:'2–3 min', wu:'40 × 5 · 55 × 3 · 65 × 2'},
+         {t:'T2', c:'#00e5ff', name:'Front Squat', scheme:'2 × 10', wt:'50 kg', ref:76, rest:'90 sec'}],
        t3:[{name:'Lat Pulldown', note:'', reps:'2×15 @ 35 kg'},
            {name:'Triceps Pushdown', note:'licht', reps:'2×15'}]},
       {key:'RUST', color:'#8888aa', rev:true, sub:'DO 23 · MUAY THAI — VR 24 + ZO 26 · RUST',
@@ -15746,7 +15746,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const curWk = Math.floor((new Date(todayStr) - new Date(ph.start)) / (7*86400000));
     const f = x => (x % 1 ? x.toFixed(1) : x) + ' kg';
     // 1RM-referenties (schatting jul 2026) voor % en plaat-berekening (20 kg olympische bar)
-    const REF1RM = {Squat:120, Bench:100, Deadlift:140, OHP:62, Front:75};
+    // ⚠ CANONIEK: program_config.json (ref_1rm). Bij wijzigen: sync config + program.html + build.js,
+    //   draai daarna Downloads/check_program_consistency.py.
+    const REF1RM = {Squat:117, Bench:102, Deadlift:134, OHP:70, Front:76};
     const pct = (w,ref) => ref ? ' · ' + Math.round(w/ref*100) + '% 1RM' : '';
     function platesTxt(w){
       let per = (w-20)/2;
@@ -15772,7 +15774,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let sq, be, dl;
       if (ph.name === 'EXPLOSIVE') {
         const expReps = wk === 1 ? '4-3-4' : wk === 2 ? '3×3' : '3×4';
-        const expRest = '2–3 min rust';
+        const expRest = '90 sec · langer als snelheid daalt';
         sq = {h:'MA · FULL BODY EXPLOSIEF · ±80 MIN', r:[
           ['tb-wu','WU','Core (plank / ab wheel) · 1 opwarmset per lift op lege bar / licht gewicht'],
           ...W('T1','Speed Squat ' + expReps, 62.5+2.5*wk, REF1RM.Squat, '— max barsnelheid · ' + expRest),
@@ -15841,7 +15843,7 @@ document.addEventListener('DOMContentLoaded', function() {
       ? [0,0,1,2,2,2,0][dow]
       : [0,1,2,3,3,3,0][dow];
     const multiWk = ph.totalWks > 1;
-    const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 50–60% zone. Rust: 2–3 min (power-kwaliteit behouden). 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
+    const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 50–60% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
     const noteText = ph.name === 'EXPLOSIVE' ? expNote : strNote;
 
@@ -15946,10 +15948,10 @@ document.addEventListener('DOMContentLoaded', function() {
       let tiersHtml = '';
 
       if (d.key === 'MA') {
-        tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec', 'Heupen naar voren · billen aanspannen', false, true);
-        tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '90 sec', 'Hielen op grond · billen op de bank', false, true);
-        tiersHtml += _tierCard('SPEED','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec', 'Meer hinge · minder squat', false, true);
-        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, 60,               '90 sec', null, false, true);
+        tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec · langer als snelh. daalt', 'Heupen naar voren · billen aanspannen', false, true);
+        tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '90 sec · langer als snelh. daalt', 'Hielen op grond · billen op de bank', false, true);
+        tiersHtml += _tierCard('SPEED','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec · langer als snelh. daalt', 'Meer hinge · minder squat', false, true);
+        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, 60,               '90 sec · langer als snelh. daalt', null, false, true);
         tiersHtml += _t3Block(
           _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
           _t3Item('T3 naar keuze', '', null, false)
