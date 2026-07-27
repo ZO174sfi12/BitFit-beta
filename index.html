@@ -15897,7 +15897,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const c = liftColor(lk) || d.color;
         const pW = lastW(lk), pD = lastDate(lk);
         const plts = (_BBL.has(lk) && w) ? platesPerSide(w) : null;
-        const pltsH = plts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:8px">[' + plts + ']</span>' : '';
+        const ref = REF1RM[lk];
+        const pctStr = (ref && w) ? ' <span style="font-size:11px;color:' + c + 'cc">· ' + Math.round(w/ref*100) + '% 1RM</span>' : '';
+        const pltsLine = plts ? '<div style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:2px">◧ ' + plts + '</div>' : '';
         const prevLine = pW ? '<div style="font-size:11px;color:' + c + 'cc;margin-bottom:4px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
         const wu = noWu ? '' : _wuHtml(lk, w, isT1 !== false, c);
         return '<div class="gzclp-tier" style="border-color:' + c + '33">' +
@@ -15907,7 +15909,7 @@ document.addEventListener('DOMContentLoaded', function() {
           '<div class="gzclp-exname" style="color:' + c + '">' + name + '</div>' +
           (cue ? '<div style="font-family:monospace;font-size:10px;color:var(--muted);margin-bottom:4px;font-style:italic">' + cue + '</div>' : '') +
           '<div class="gzclp-scheme">' + scheme + '</div>' +
-          '<div class="gzclp-wt">' + prevLine + (w ? '<strong style="color:' + c + ';font-size:16px">' + w + ' kg</strong>' + pltsH : '<span style="color:var(--muted)">—</span>') + '</div>' +
+          '<div class="gzclp-wt">' + prevLine + (w ? '<strong style="color:' + c + ';font-size:16px">' + w + ' kg</strong>' + pctStr : '<span style="color:var(--muted)">—</span>') + '</div>' + pltsLine +
           '<div class="gzclp-rest-line" style="color:' + c + '">⏱ ' + rest + '</div>' +
           '</div>' + wu + '</div></div>';
       }
@@ -15947,7 +15949,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec', 'Heupen naar voren · billen aanspannen', false, true);
         tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '90 sec', 'Hielen op grond · billen op de bank', false, true);
         tiersHtml += _tierCard('SPEED','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec', 'Meer hinge · minder squat', false, true);
-        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps + ' · horizontale trek', 60,               '90 sec', null, false, true);
+        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, 60,               '90 sec', null, false, true);
         tiersHtml += _t3Block(
           _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
           _t3Item('T3 naar keuze', '', null, false)
