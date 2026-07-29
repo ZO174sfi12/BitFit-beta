@@ -16280,13 +16280,18 @@ document.addEventListener('DOMContentLoaded', function() {
           _t3Item('T3 naar keuze', '', null, false)
         );
       } else if (d.key === 'WO') {
-        tiersHtml += _tierCard('T2','Bench', 'BARBELL BENCH PRESS', '3 × 8 — kracht/volume', r25(65+2.5*wk),   '2 min', 'Hielen op grond · billen op de bank', false);
-        tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',          '3 × 10',                r25(60+2.5*wk), '2 min', 'Alle 30 reps gehaald → volgende week +2,5', false);
+        // Weekgewichten woensdag (index = wk, 0-based). Niet-lineair:
+        //  bench +5/wk (65 was comfortabel: 8·8·10 op 29 jul)
+        //  row herhaalt 60 (1e set op 29 jul was aftasten, niet alle 30 op 60)
+        const WO_BENCH = [65, 70, 75];
+        const WO_ROW   = [60, 60, 62.5];
+        tiersHtml += _tierCard('T2','Bench', 'BARBELL BENCH PRESS', '3 × 8', WO_BENCH[wk], '2 min', 'Hielen op grond · billen op de bank', false);
+        tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',         '3 × 10', WO_ROW[wk],  '2 min', 'Alle 30 reps op hetzelfde gewicht → volgende week omhoog', false);
         tiersHtml += _t3Block(
-          _t3Item('Lat PD',           '3×15', 'Lat PD', false) +
-          _t3Item('Bicep Curl',       '3×12', null, false) +
-          _t3Item('Triceps Pushdown', '3×15', null, false) +
-          _t3Item('Face Pull',        '3×20', null, false)
+          _t3Item('Lat Pulldown (wide grip)', '3×12', 'Lat PD',    false) +
+          _t3Item('Face Pull (rope)',         '3×12', 'Face Pull', false) +
+          _t3Item('Triceps Pushdown (rope)',  '3×14', null,        false) +
+          _t3Item('Bicep Curl (DB alt.)',     '3×12', null,        false)
         );
       } else { // ZA
         tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd',        r25(87.5+2.5*wk),  '3 min',   'Heupen naar voren · billen aanspannen', true);
