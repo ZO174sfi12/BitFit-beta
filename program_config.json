@@ -8,7 +8,7 @@
     "TEST":      { "start": "2026-09-28", "eind": "2026-10-04", "label": "28 sep – 4 okt" }
   },
   "speed": {
-    "pct_1rm": "50–60%",
+    "pct_1rm": "60–70%",
     "rust": "90 sec",
     "rust_regel": "langer als snelheid daalt"
   },
