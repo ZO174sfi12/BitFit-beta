@@ -15968,8 +15968,8 @@ document.addEventListener('DOMContentLoaded', function() {
         dl = {h:'ZA · BENEN / LOWER · ±65 MIN', r:[
           ['tb-wu','WU','Core + Squat opbouw · DL opbouw 60×3 · 90×2'],
           ...W('T1','Back Squat 3×5', 87.5+2.5*wk, REF1RM.Squat, '— gecontroleerd · 3 min rust'),
-          ...W('T1','Deadlift 2×5+AMRAP', 117.5+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
-          ...W('T2','OHP 3×5', 45+2.5*wk, REF1RM.OHP),
+          ...W('T1','Deadlift 2×5+AMRAP', 90+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
+          ...W('T2','OHP 3×5', 40+2.5*wk, REF1RM.OHP),
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Leg Curl 3×12 · Abductor Machine 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
@@ -16013,11 +16013,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
     // EXPLOSIVE: 3 gym-dagen (MA=0, WO=1, ZA=2) — di/do/vr/zo → dichtstbijzijnde gym dag
     // Andere fases: 4 dagen (SQUAT=0, DI=1, BENCH=2, DEADLIFT=3)
-    const defDayIdx = ph.name === 'EXPLOSIVE'
-      ? [0,0,1,2,2,2,0][dow]
-      : [0,1,2,3,3,3,0][dow];
+    const defDayIdx = (() => {
+      if (ph.name !== 'EXPLOSIVE') return [0,1,2,3,3,3,0][dow];
+      const baseIdx = [0,0,1,2,2,2,0][dow];
+      // Als vandaag al getraind → toon volgende dag in MA→WO→ZA cyclus
+      if (lastTrainingDate === todayStr) return (baseIdx + 1) % 3;
+      return baseIdx;
+    })();
     const multiWk = ph.totalWks > 1;
-    const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 50–60% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
+    const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
     const noteText = ph.name === 'EXPLOSIVE' ? expNote : strNote;
 
@@ -16123,16 +16127,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (d.key === 'MA') {
         tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec · langer als snelh. daalt', 'Heupen naar voren · billen aanspannen', false, true);
-        tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(52.5+2.5*wk), '90 sec · langer als snelh. daalt', 'Hielen op grond · billen op de bank', false, true);
+        tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(60+2.5*wk), '90 sec · langer als snelh. daalt', 'Hielen op grond · billen op de bank', false, true);
         tiersHtml += _tierCard('SPEED','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec · langer als snelh. daalt', 'Meer hinge · minder squat', false, true);
-        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, 60,               '90 sec · langer als snelh. daalt', null, false, true);
+        tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, 50,               '90 sec · langer als snelh. daalt', null, false, true);
         tiersHtml += _t3Block(
           _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
           _t3Item('T3 naar keuze', '', null, false)
         );
       } else if (d.key === 'WO') {
         tiersHtml += _tierCard('T2','Bench', 'BARBELL BENCH PRESS', '3 × 8 — kracht/volume', r25(65+2.5*wk),   '2 min', 'Hielen op grond · billen op de bank', false);
-        tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',          '3 × 10',                r25(62.5+2.5*wk), '2 min', null, false);
+        tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',          '3 × 10',                r25(20+2.5*wk), '2 min', null, false);
         tiersHtml += _t3Block(
           _t3Item('Lat PD',           '3×15', 'Lat PD', false) +
           _t3Item('Bicep Curl',       '3×12', null, false) +
@@ -16141,8 +16145,8 @@ document.addEventListener('DOMContentLoaded', function() {
         );
       } else { // ZA
         tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd',        r25(87.5+2.5*wk),  '3 min',   'Heupen naar voren · billen aanspannen', true);
-        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5  +  AMRAP (Greyskull)',   r25(117.5+2.5*wk), '3–5 min', 'Meer hinge · hoger starten', true);
-        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                         r25(45+2.5*wk),    '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
+        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5  +  AMRAP (Greyskull)',   r25(90+2.5*wk), '3–5 min', 'Meer hinge · hoger starten', true);
+        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                         r25(40+2.5*wk),    '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
         tiersHtml += _t3Block(
           _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
           _t3Item('Leg Curl',          '3×12', null, false) +
