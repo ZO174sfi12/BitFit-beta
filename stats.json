@@ -1,9 +1,9 @@
 {
-  "updated": "2026-07-28T08:16:41",
-  "weight": 87.3,
-  "weight_date": "2026-07-27",
-  "training_days_total": 128,
-  "last_training_day": "2026-07-27",
+  "updated": "2026-07-29T18:45:43",
+  "weight": 87.2,
+  "weight_date": "2026-07-29",
+  "training_days_total": 130,
+  "last_training_day": "2026-07-29",
   "lifts": {
     "Squat": {
       "last_date": "2026-07-20",
@@ -20,9 +20,9 @@
       "pr_weight": 115.0
     },
     "Bench": {
-      "last_date": "2026-07-16",
-      "last_weight": 60.0,
-      "last_volume": 1380.0,
+      "last_date": "2026-07-29",
+      "last_weight": 65.0,
+      "last_volume": 1690.0,
       "pr": false,
       "pr_weight": 85.0
     },
@@ -41,9 +41,9 @@
       "pr_weight": 60.0
     },
     "Lat PD": {
-      "last_date": "2026-07-20",
-      "last_weight": 35.0,
-      "last_volume": 1260.0,
+      "last_date": "2026-07-29",
+      "last_weight": 40.0,
+      "last_volume": 1360.0,
       "pr": false,
       "pr_weight": 60.0
     },
@@ -62,9 +62,9 @@
       "pr_weight": 60.0
     },
     "Row": {
-      "last_date": "2026-07-20",
-      "last_weight": 20.0,
-      "last_volume": 240.0,
+      "last_date": "2026-07-29",
+      "last_weight": 60.0,
+      "last_volume": 1700.0,
       "pr": false,
       "pr_weight": 62.5
     },
@@ -76,9 +76,9 @@
       "pr_weight": 30.0
     },
     "Face Pull": {
-      "last_date": "2026-07-03",
-      "last_weight": 15.0,
-      "last_volume": 680.0,
+      "last_date": "2026-07-29",
+      "last_weight": 12.5,
+      "last_volume": 420.0,
       "pr": false,
       "pr_weight": 20.0
     },
