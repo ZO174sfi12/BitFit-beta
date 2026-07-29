@@ -2,21 +2,58 @@
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
   "laatste_update": "2026-07-21",
   "blokken": {
-    "TAPER":     { "start": "2026-07-20", "eind": "2026-07-26", "label": "20 – 26 jul" },
-    "EXPLOSIVE": { "start": "2026-07-27", "eind": "2026-08-16", "label": "27 jul – 16 aug" },
-    "STRENGTH":  { "start": "2026-08-17", "eind": "2026-09-27", "label": "17 aug – 27 sep" },
-    "TEST":      { "start": "2026-09-28", "eind": "2026-10-04", "label": "28 sep – 4 okt" }
+    "TAPER": {
+      "start": "2026-07-20",
+      "eind": "2026-07-26",
+      "label": "20 – 26 jul"
+    },
+    "EXPLOSIVE": {
+      "start": "2026-07-27",
+      "eind": "2026-08-16",
+      "label": "27 jul – 16 aug"
+    },
+    "STRENGTH": {
+      "start": "2026-08-17",
+      "eind": "2026-09-27",
+      "label": "17 aug – 27 sep"
+    },
+    "TEST": {
+      "start": "2026-09-28",
+      "eind": "2026-10-04",
+      "label": "28 sep – 4 okt"
+    }
   },
   "speed": {
     "pct_1rm": "60–70%",
     "rust": "90 sec",
     "rust_regel": "langer als snelheid daalt"
   },
-  "ref_1rm": { "Squat": 117, "Bench": 102, "Deadlift": 134, "OHP": 70, "Front": 76 },
+  "ref_1rm": {
+    "Squat": 117,
+    "Bench": 102,
+    "Deadlift": 134,
+    "OHP": 70,
+    "Front": 76
+  },
   "ref_1rm_bron": "reps-correcte Epley e1RM = beste enkele werkset × (1 + reps/30). Stats-pagina (bitstats.html) gebruikt nu DEZELFDE formule (e1rmPoint). Bij bijsturen: sync config + index REF1RM + bitstats.html.",
-  "strength_start": { "Squat": 92.5, "Bench": 80, "Deadlift": 125, "OHP": 52.5 },
-  "proces_doel_3x5": { "Squat": 115, "Bench": 95, "Deadlift": 140, "OHP": 60 },
-  "lotte_1rm_range": { "Squat": "115–135", "Bench": "95–105", "Deadlift": "130–140", "OHP": "70–80" },
+  "strength_start": {
+    "Squat": 92.5,
+    "Bench": 80,
+    "Deadlift": 125,
+    "OHP": 57.5
+  },
+  "proces_doel_3x5": {
+    "Squat": 115,
+    "Bench": 95,
+    "Deadlift": 140,
+    "OHP": 65
+  },
+  "lotte_1rm_range": {
+    "Squat": "115–135",
+    "Bench": "95–105",
+    "Deadlift": "130–140",
+    "OHP": "70–80"
+  },
   "kalibratie_lotte": "17 aug",
   "test_aanpak": "dubbele test — top 3×5/AMRAP + zware single RPE 9 (geen max-out)"
 }

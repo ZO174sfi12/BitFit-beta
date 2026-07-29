@@ -16097,24 +16097,24 @@ document.addEventListener('DOMContentLoaded', function() {
         sq = {h:'MA · FULL BODY EXPLOSIEF · ±80 MIN', r:[
           ['tb-wu','WU','Core (plank / ab wheel) · 1 opwarmset per lift op lege bar / licht gewicht'],
           ...W('T1','Speed Squat ' + expReps, 62.5+2.5*wk, REF1RM.Squat, '— max barsnelheid · ' + expRest),
-          ...W('T1','Speed Bench ' + expReps, 52.5+2.5*wk, REF1RM.Bench, '— explosief · ' + expRest),
+          ...W('T1','Speed Bench ' + expReps, 60+2.5*wk, REF1RM.Bench, '— explosief · ' + expRest),
           ...W('T1','Speed Deadlift ' + expReps, 70+2.5*wk, REF1RM.Deadlift, '— hinge explosief · ' + expRest),
-          ...W('T1','Speed Row ' + expReps, 60, null, '· ' + expRest),
+          ...W('T1','Speed Row ' + expReps, 50+2.5*wk, null, '· ' + expRest),
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15'],
           ['tb-rev','REV','Rathleff / Toe Dorsiflex / Unipodale RDL 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
         be = {h:'WO · BENCH + ROW / UPPER · ±55 MIN', r:[
           ['tb-wu','WU','Core + Bench 1 opwarmset'],
           ...W('T2','Bench Press 3×8', 65+2.5*wk, REF1RM.Bench, '— kracht/volume · 2 min rust'),
-          ...W('T2','Barbell Row 3×10', 62.5+2.5*wk, null),
+          ...W('T2','Barbell Row 3×10', wk===2 ? 62.5 : 60, null),
           ['tb-t3','T3','Lat PD 3×15 · Bicep Curl 3×12 · Triceps Pushdown 3×15 · Face Pull 3×20'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
         dl = {h:'ZA · BENEN / LOWER · ±65 MIN', r:[
           ['tb-wu','WU','Core + Squat opbouw · DL opbouw 60×3 · 90×2'],
           ...W('T1','Back Squat 3×5', 87.5+2.5*wk, REF1RM.Squat, '— gecontroleerd · 3 min rust'),
-          ...W('T1','Deadlift 2×5+AMRAP', 90+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
-          ...W('T2','OHP 3×5', 40+2.5*wk, REF1RM.OHP),
+          ...W('T1','Deadlift 2×5', 115+2.5*wk, REF1RM.Deadlift, '(geen AMRAP dit blok)'),
+          ...W('T2','OHP 3×5', 57.5+2.5*wk, REF1RM.OHP),
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Leg Curl 3×12 · Abductor Machine 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
@@ -16122,14 +16122,14 @@ document.addEventListener('DOMContentLoaded', function() {
         sq = {h:'MA · SQUAT · ±70 MIN', r:[
           ['tb-wu','WU','Opbouwsets Squat naar werkgewicht'],
           ...W('T1','Back Squat 3×5', 92.5+2.5*wk, REF1RM.Squat, '— 3 min rust; enkel als vorige week gelukt'),
-          ...W('T2','OHP 3×5', 52.5+2.5*wk, REF1RM.OHP),
+          ...W('T2','OHP 3×5', 57.5+2.5*wk, REF1RM.OHP),
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Cable Bicep Curl 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
         be = {h:'WO · BENCH · ±70 MIN', r:[
           ['tb-wu','WU','Opbouwsets Bench naar werkgewicht'],
           ...W('T1','Barbell Bench 3×5', 80+2.5*wk, REF1RM.Bench, '— 3 min rust'),
-          ...W('T2','Barbell Row 3×10', 62.5, null, '→'),
+          ...W('T2','Barbell Row 3×10', 65, null, '→'),
           ['tb-t3','T3','Lat PD 3×15 · Triceps Pushdown 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
