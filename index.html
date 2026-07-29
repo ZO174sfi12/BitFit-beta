@@ -16294,13 +16294,19 @@ document.addEventListener('DOMContentLoaded', function() {
           _t3Item('Bicep Curl (DB alt.)',     '3×12', null,        false)
         );
       } else { // ZA
-        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd',        r25(87.5+2.5*wk),  '3 min',   'Heupen naar voren · billen aanspannen', true);
-        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5  +  AMRAP (Greyskull)',   r25(90+2.5*wk), '3–5 min', 'Meer hinge · hoger starten', true);
-        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                         r25(40+2.5*wk),    '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
+        // Weekgewichten zaterdag (index = wk, 0-based), afgeleid uit de logs:
+        //  DL  — lineaire PR-lijn t/m 115×5×2 op 13 jul; geen AMRAP in EXPLOSIVE (2×5)
+        //  OHP — PR-lijn 52,5 (9 jun) → 55 (3 jul) → 60×5 (17 jul)
+        const ZA_SQUAT = [87.5, 90, 92.5];
+        const ZA_DL    = [115, 117.5, 120];
+        const ZA_OHP   = [57.5, 60, 62.5];
+        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd', ZA_SQUAT[wk], '3 min',   'Heupen naar voren · billen aanspannen', true);
+        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5 — geen AMRAP',    ZA_DL[wk],    '3–5 min', 'Explosief blok: sets afmaken, niet uitknijpen', true);
+        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                 ZA_OHP[wk],   '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
         tiersHtml += _t3Block(
-          _t3Item('Hip Thrust (plate-loaded)', '3×15', null, false) +
-          _t3Item('Leg Curl',          '3×12', null, false) +
-          _t3Item('Abductor Machine',  '3×15', null, false)
+          _t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false) +
+          _t3Item('Leg Curl',                  '3×12', 'Leg Curl',   false) +
+          _t3Item('Abductor Machine',          '3×15', 'Abductor',   false)
         );
       }
 
