@@ -16,7 +16,8 @@ Laatste update: 2026-05-18
 |-----|-----|--------|
 | BitFit-beta | `mnt/BitFit-beta/` | App-code (index.html, supplement-tracker.html) |
 | bitfit-data | `mnt/bitfit-data/` | Data-bestanden (notes.txt, supplement-log.json) |
-| Downloads | `mnt/Downloads/` | process_jefit.py, CSV-exports |
+| Downloads | `mnt/Downloads/` | alleen Jefit CSV-exports (laatste 5 bewaard) |
+| GYM/scripts | `mnt/GYM/scripts/` | process_jefit.py, check_program_consistency.py |
 
 ---
 
@@ -36,7 +37,7 @@ cp "$(ls -t mnt/Downloads/scottygambino_*.csv | head -1)" mnt/BitFit-beta/
 
 **Stap 2** — verwerk (script vindt CSV automatisch in zelfde map als HTML):
 ```bash
-python3 mnt/Downloads/process_jefit.py --html mnt/BitFit-beta/index.html
+python3 mnt/GYM/scripts/process_jefit.py --html mnt/BitFit-beta/index.html
 ```
 
 **Stap 3** — verwijder CSV uit BitFit-beta (hoort niet in de repo):
@@ -63,8 +64,8 @@ Bert pusht daarna zelf via GitHub Desktop. Claude pusht nooit.
 De phase-programmawaarden staan verspreid over meerdere bestanden. Om drift te vermijden:
 
 - **`program_config.json`** (in BitFit-beta) = canonieke bron van waarheid: blokdata, speed-%, rusttijd, 1RM-referenties, startgewichten, proces-doelen, Lotte's 1RM-ranges.
-- Bij elke bijsturing pas je de waarde aan op **alle** relevante plekken: `program_config.json`, `index.html` (app + PHASES + REF1RM), `program.html` (PROGRAM-pagina), en `mnt/Downloads/process_jefit.py`-adjacent `outputs/prog/build.js` (docx-bron) → daarna docx opnieuw genereren.
-- **Controle**: `python3 mnt/Downloads/check_program_consistency.py` — vergelijkt index.html, program.html, build.js én de docx-tekst met de config en toont per feit OK/FAIL. Bevat ook een kruischeck van de 1RM-referentie (index REF1RM) tegen de stats-pagina (topgewicht × 1,1); een geel "wijkt af" is een bewuste keuze-vraag, geen fout.
+- Bij elke bijsturing pas je de waarde aan op **alle** relevante plekken: `program_config.json`, `index.html` (app + PHASES + REF1RM), `program.html` (PROGRAM-pagina), en `outputs/prog/build.js` (docx-bron). **Let op**: `GYM/programma/BitFit_Programma v5.docx` is handmatig door Bert bewerkt — nooit een generator opnieuw draaien over dat bestand, wel gericht de XML patchen.
+- **Controle**: `python3 mnt/GYM/scripts/check_program_consistency.py` — vergelijkt index.html, program.html, build.js én de docx-tekst met de config en toont per feit OK/FAIL. Bevat ook een kruischeck van de 1RM-referentie (index REF1RM) tegen de stats-pagina (topgewicht × 1,1); een geel "wijkt af" is een bewuste keuze-vraag, geen fout.
 - Draai de checker altijd na een programma-wijziging en vóór Bert commit.
 
 **Openstaand besluit**: de 1RM-referentie (REF1RM in index) gebruikt reps-correcte Epley (squat 120 · bench 100 · DL 140 · OHP 62), de stats-pagina gebruikt ×1,1 (squat 110 · bench 93,5 · DL 126,5). Nog te beslissen of beide gesynct worden.
