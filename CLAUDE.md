@@ -279,11 +279,18 @@ Bert kan T3- en REV-oefeningen rechtstreeks via Claude laten loggen (zonder Jefi
 
 **Tier-regels in de log**:
 - `Rathleff Heel Raise`, `Toe Dorsiflex Lunge`, `Unipodale RDL` (en varianten) → **REV** badge (oranje) — correctieve oefeningen voor Hallux Rigidus / voetboogversterking
-- `Situps`, `Crunches` → **T3** badge (groen) — T3 Aanvulling full body
+- `Situps`/`Sit-Up`, `Alternating Heel Touch`, `Push-Up` → **WU** badge (opwarming) — bijgesteld 30 jul 2026, stonden eerder als T3/EX
+- `Crunches` → **T3** badge (groen) — T3 Aanvulling full body
+- `Cable Tricep Pushdown (Rope)`, `Dumbbell Alternating Bicep Curl` → **T3** badge — armwerk (toegevoegd 30 jul 2026)
 - Jefit-data heeft altijd prioriteit: als een oefening al via CSV aanwezig is, wordt het t3_log-item geskipt
 
 **Oefenamen** (exact, hoofdletter-gevoelig voor leesbaarheid, script matcht lowercase):
-- `Situps` → T3
+- `Situps` / `Sit-Up` → WU
+- `Alternating Heel Touch` → WU
+- `Push-Up` → WU
+- `Crunches` → T3
+- `Cable Tricep Pushdown (Rope)` → T3
+- `Dumbbell Alternating Bicep Curl` → T3
 - `Rathleff Heel Raise` → REV
 - `Toe Dorsiflex Lunge` → REV
 - `Unipodale RDL` → REV
