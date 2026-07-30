@@ -15518,7 +15518,7 @@ const PHASES = [
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
   {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
   {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-16",color:"#ff6b35",track:0,desc:"<b>27 jul → 16 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 17 aug."},
-  {label:"STRENGTH",short:"STR",start:"2026-08-17",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>17 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel: squat 115 · bench 95 als 3×5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Start 17 aug = kalibratie met Lotte. +5 kg/wk zolang licht, daarna +2,5."},
+  {label:"STRENGTH",short:"STR",start:"2026-08-17",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>17 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Start 17 aug = kalibratie met Lotte. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
   {label:"TEST",short:"TST",start:"2026-09-28",end:"2026-10-04",color:"#ffd600",track:0,desc:"<b>28 sep → 4 okt</b><br>Dubbele test per lift: top 3×5/AMRAP + één zware single (RPE 9, geen max-out) → getest 1RM. Doel-range (Lotte): Squat 115–135 · Bench 95–105 · DL 130–140 · OHP 70–80. Daarna herevaluatie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
@@ -16122,20 +16122,20 @@ document.addEventListener('DOMContentLoaded', function() {
         sq = {h:'MA · SQUAT · ±70 MIN', r:[
           ['tb-wu','WU','Opbouwsets Squat naar werkgewicht'],
           ...W('T1','Back Squat 3×5', 92.5+2.5*wk, REF1RM.Squat, '— 3 min rust; enkel als vorige week gelukt'),
-          ...W('T2','OHP 3×5', 57.5+2.5*wk, REF1RM.OHP),
+          ...W('T2','OHP 3×5', 57.5+2.5*Math.floor(wk/2), REF1RM.OHP, '— +2,5 kg per twee weken'),
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Cable Bicep Curl 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
         be = {h:'WO · BENCH · ±70 MIN', r:[
           ['tb-wu','WU','Opbouwsets Bench naar werkgewicht'],
-          ...W('T1','Barbell Bench 3×5', 80+2.5*wk, REF1RM.Bench, '— 3 min rust'),
+          ...W('T1','Barbell Bench 3×5', 75+2.5*wk, REF1RM.Bench, '— 3 min rust'),
           ...W('T2','Barbell Row 3×10', 65, null, '→'),
           ['tb-t3','T3','Lat PD 3×15 · Triceps Pushdown 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
         dl = {h:'ZA · DEADLIFT · ±70 MIN', r:[
           ['tb-wu','WU','Opbouwsets DL naar werkgewicht'],
-          ...W('T1','Deadlift 2×5+AMRAP', 125+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
+          ...W('T1','Deadlift 2×5+AMRAP', 112.5+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
           ...W('T2','Front Squat 3×10', 60, REF1RM.Front, '→'),
           ['tb-t3','T3','DB Bench ×2 3×12 · Hammer Curl 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],

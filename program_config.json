@@ -38,16 +38,25 @@
   "ref_1rm_bron": "reps-correcte Epley e1RM = beste enkele werkset × (1 + reps/30). Stats-pagina (bitstats.html) gebruikt nu DEZELFDE formule (e1rmPoint). Bij bijsturen: sync config + index REF1RM + bitstats.html.",
   "strength_start": {
     "Squat": 92.5,
-    "Bench": 80,
-    "Deadlift": 125,
+    "Bench": 75,
+    "Deadlift": 112.5,
     "OHP": 57.5
   },
+  "strength_start_bron": "teruggerekend vanaf proces_doel_3x5 met +2,5 kg per sessie over 6 sessies (OHP: +2,5 per twee sessies, historisch tempo ~1,1 kg/wk). Herzien 30 jul 2026 — de oude starts (bench 80 · DL 125) lagen te hoog t.o.v. de herziene einddoelen.",
   "proces_doel_3x5": {
-    "Squat": 115,
-    "Bench": 95,
-    "Deadlift": 140,
-    "OHP": 65
+    "Squat": 105,
+    "Bench": 87.5,
+    "Deadlift": 125,
+    "OHP": 62.5
   },
+  "proces_doel_bron": "einde STRENGTH-blok, teruggerekend vanaf Berts eigen historische progressietempo — elk doel net boven het huidige record. Deadlift is 2×5 (Greyskull), niet 3×5. Herzien 30 jul 2026; de oude waarden (115/95/140/65) kwamen uit de GZCLP-periode en impliceerden e1RM's boven Lotte's 1RM-plafond.",
+  "doel_5rm": {
+    "Squat": "105–115",
+    "Bench": "87,5–90",
+    "Deadlift": "125–130",
+    "OHP": "62,5–67,5"
+  },
+  "doel_5rm_bron": "ondergrens = proces_doel_3x5 (als je 3×5 haalt op dat gewicht, is je 5RM minstens dat); bovengrens = Lotte's 1RM-plafond × 6/7 (inverse Epley). Deadlift 125–130 is een expliciete keuze van Bert (30 jul) en ligt boven de 120 die uit Lotte's 140 zou volgen — af te stemmen 17 aug.",
   "lotte_1rm_range": {
     "Squat": "115–135",
     "Bench": "95–105",
