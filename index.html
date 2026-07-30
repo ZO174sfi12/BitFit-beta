@@ -204,6 +204,15 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 @media(max-width:599px){.gzclp-wu-details{max-width:100%;}}
 .gzclp-wu-summary{font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;list-style:none;padding:4px 0;text-transform:uppercase;}
 .gzclp-wu-summary::-webkit-details-marker{display:none;}
+/* Mobiliteitsopwarming per dag (uitvouwbaar, staat vóór de tiers) */
+.mobwu{grid-column:1/-1;border:1px solid #1a1a2e;border-radius:4px;padding:6px 9px;margin-bottom:9px;}
+.mobwu>summary{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--cyan);cursor:pointer;list-style:none;}
+.mobwu>summary::-webkit-details-marker{display:none;}
+.mobwu>summary::before{content:'▸ ';}
+.mobwu[open]>summary::before{content:'▾ ';}
+.mobwu-row{display:flex;justify-content:space-between;gap:10px;font-family:monospace;font-size:11px;padding:3px 0;border-top:1px solid #14141f;}
+.mobwu-row:first-of-type{border-top:none;margin-top:5px;}
+.mobwu-row i{color:var(--muted);font-style:normal;font-size:10px;}
 /* Lift tile sets */
 .lift-tile-sets{font-family:monospace;font-size:9px;color:var(--text);margin-top:1px;line-height:1;}
 /* Analysis panel collapsible */
@@ -16189,6 +16198,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const cardEl = document.getElementById('prog-day-card');
     const phHead = document.getElementById('prog-phase-head');
 
+    // ── Mobiliteitsopwarming per dag ────────────────────────────────────
+    // Stond eerder alleen op de PROGRAM-pagina; hoort hier, want dit is de
+    // pagina die je in de gym openhebt. Per dagslot: ma/wo/za, ook geldig
+    // voor de STRENGTH-namen (SQUAT=ma, BENCH=wo, DEADLIFT=za).
+    const WU_MOB = {
+      ma: {core:'core zijkant', rows:[
+        ['Side Heel Touches','2 × 10/kant','core zijkant'],
+        ['Leg Swings voor + opzij','10/kant','heup · hamstrings'],
+        ['Hip Circles','10/kant','heup activatie'],
+        ['Arm Swings','15×','schouder activatie'],
+        ["World's Greatest Stretch",'5/kant','thoracaal']]},
+      wo: {core:'core voorkant', rows:[
+        ['Dead Bug','1 × 8','core voorkant'],
+        ['Cat-Cow','6×','rugmobiliteit'],
+        ['Side Heel Touches','1 × 10/kant','core zijkant'],
+        ['Push-ups','2 × 12','borst/schouder']]},
+      za: {core:'core rug', rows:[
+        ['Superman','1 × 10','core rug'],
+        ['Leg Swings voor + opzij','10/kant','hamstrings · heup'],
+        ['Glute Bridge BW','15×','glute activatie'],
+        ["World's Greatest Stretch",'5/kant','thoracaal']]}
+    };
+    const WU_SLOT = {MA:'ma', WO:'wo', ZA:'za', SQUAT:'ma', BENCH:'wo', DEADLIFT:'za'};
+
+    function _mobWuHtml(dayKey) {
+      const slot = WU_SLOT[dayKey];
+      if (!slot || !WU_MOB[slot]) return '';
+      const w = WU_MOB[slot];
+      const rows = w.rows.map(r =>
+        '<div class="mobwu-row"><span>' + r[0] + '</span>' +
+        '<span style="white-space:nowrap">' + r[1] + ' <i>· ' + r[2] + '</i></span></div>').join('');
+      return '<details class="mobwu"><summary>OPWARMING · ' + w.core.toUpperCase() +
+             '</summary>' + rows + '</details>';
+    }
+
     function renderCard(dayIdx) {
       const d = currentDayp[dayIdx];
       const wk = activeWk;
@@ -16196,6 +16240,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
       if (ph.name !== 'EXPLOSIVE' || d.key === 'DI') {
         cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
+          _mobWuHtml(d.key) +
           d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
         return;
       }
@@ -16312,7 +16357,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       cardEl.innerHTML =
         '<div style="font-family:\'Oxanium\',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:' + d.color + ';margin-bottom:10px">' + d.card.h + '</div>' +
-        '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + tiersHtml + '</div>';
+        '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + _mobWuHtml(d.key) + tiersHtml + '</div>';
     }
 
     function switchWeek(w) {
