@@ -63,6 +63,35 @@
     "Deadlift": "130–140",
     "OHP": "70–80"
   },
+  "historiek": {
+    "_comment": "Achterhaalde doelwaarden per veld. De checker faalt als zo'n getal nog binnen ~120 tekens van een doel-label staat. Bij een bijsturing: oude waarde hier bijzetten, niet verwijderen.",
+    "proces_doel_3x5": {
+      "Squat": [
+        115
+      ],
+      "Bench": [
+        95
+      ],
+      "Deadlift": [
+        140
+      ],
+      "OHP": [
+        60,
+        65
+      ]
+    },
+    "strength_start": {
+      "Bench": [
+        80
+      ],
+      "Deadlift": [
+        125
+      ],
+      "OHP": [
+        52.5
+      ]
+    }
+  },
   "vervallen_teksten": {
     "_comment": "Formuleringen die bij een herziening zijn vervangen en NERGENS meer mogen voorkomen. check_program_consistency.py faalt als het er een vindt. Zo valt prozadrift op — losse getallen checken werkt niet (65 kg is elders legitiem), volledige zinsdelen wel. Vul dit aan bij elke toekomstige bijsturing.",
     "teksten": [
@@ -75,7 +104,11 @@
       "95 kg · 3×5",
       "140 kg · 2×5+AMRAP",
       "65 kg · 3×5",
-      "Bench en deadlift zitten dicht bij de testweek-range"
+      "Bench en deadlift zitten dicht bij de testweek-range",
+      "squat 115 · bench 95 · deadlift 140",
+      "PROCES-DOEL · 3×5",
+      "RECORD NU · JUN–JUL",
+      "Twee lagen."
     ]
   },
   "kalibratie_lotte": "17 aug",
