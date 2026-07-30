@@ -63,6 +63,21 @@
     "Deadlift": "130–140",
     "OHP": "70–80"
   },
+  "vervallen_teksten": {
+    "_comment": "Formuleringen die bij een herziening zijn vervangen en NERGENS meer mogen voorkomen. check_program_consistency.py faalt als het er een vindt. Zo valt prozadrift op — losse getallen checken werkt niet (65 kg is elders legitiem), volledige zinsdelen wel. Vul dit aan bij elke toekomstige bijsturing.",
+    "teksten": [
+      "Doel nu bijgesteld naar 65 kg",
+      "STRENGTH-startweek van 125 kg",
+      "+5 kg (beginweken)",
+      "+5 kg/wk zolang licht",
+      "wekelijkse proces-doel",
+      "115 kg · 3×5",
+      "95 kg · 3×5",
+      "140 kg · 2×5+AMRAP",
+      "65 kg · 3×5",
+      "Bench en deadlift zitten dicht bij de testweek-range"
+    ]
+  },
   "kalibratie_lotte": "17 aug",
   "test_aanpak": "dubbele test — top 3×5/AMRAP + zware single RPE 9 (geen max-out)"
 }
