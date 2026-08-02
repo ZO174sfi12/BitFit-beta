@@ -70,6 +70,7 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 .legend-pin{display:inline-block;width:2px;height:11px;background:#7b7bde;border-radius:1px;box-shadow:0 0 4px #7b7bdeaa;flex-shrink:0;}
 .legend-real{display:inline-block;width:2px;height:11px;background:#7b7bde;opacity:.55;border-radius:1px;flex-shrink:0;}
 .legend-hi{display:inline-block;width:0;height:11px;border-left:1px solid var(--muted);opacity:.7;flex-shrink:0;}
+.legend-tested{display:inline-block;width:3px;height:11px;background:#7b7bde;border-radius:1px;box-shadow:0 0 4px #7b7bdeaa;flex-shrink:0;}
 .goals-lifts{display:flex;flex-direction:column;gap:10px;}
 .goal-row{display:grid;grid-template-columns:82px 1fr;gap:8px;align-items:start;}
 .goal-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;padding-top:1px;}
@@ -103,6 +104,15 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 .e1rm-real-label{position:absolute;bottom:100%;margin-bottom:5px;transform:translateX(-50%);z-index:2;
   font-family:'Space Mono',monospace;font-size:10px;font-weight:400;white-space:nowrap;opacity:.75;
   background:var(--surface);padding:0 3px;border-radius:3px;pointer-events:none;}
+/* Getest 1RM (echte single, geen schatting) — verschijnt pas zodra Bert die ooit
+   logt. Deelt de bovenste rij met pin/werkgewicht (Berts regel: eigen bevestigde
+   cijfers horen boven de balk, doelen eronder). Dikkere, volle-kleur tick zodat
+   'm meteen als het meest gezaghebbende cijfer leest. */
+.e1rm-tested-tick{position:absolute;top:-6px;bottom:-6px;width:2px;border-radius:1px;z-index:1;}
+.e1rm-tested-label{position:absolute;bottom:100%;margin-bottom:5px;transform:translateX(-50%);z-index:2;
+  font-family:'Space Mono',monospace;font-size:10px;font-weight:700;white-space:nowrap;
+  background:var(--surface);padding:0 4px;border-radius:3px;pointer-events:none;
+  border:1px solid currentColor;}
 /* Doel 3×5 — los streepje op de balk (geen zone, één punt) + eigen cijferlabel
    altijd in de onderste rij, buiten de track. */
 .e1rm-doel-tick{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed;opacity:.85;z-index:1;}
