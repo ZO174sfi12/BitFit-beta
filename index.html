@@ -16334,9 +16334,14 @@ document.addEventListener('DOMContentLoaded', function() {
       if (ph.name === 'EXPLOSIVE') {
         const expReps = wk === 1 ? '4-3-4' : wk === 2 ? '3×3' : '3×4';
         const expRest = '90 sec · langer als snelheid daalt';
+        // Speed Squat wijkt af van de lineaire +2,5/wk-formule (index = wk, 0-based):
+        // wk3 formule zou 67,5 geven, maar squat was in wk1/wk2 niet snappy genoeg
+        // (Bert koos toen zelf al terug naar 60 op 3 aug i.p.v. het geplande 65 vast
+        // te houden) — dus wk3 blijft op 60 i.p.v. verder te klimmen. Bevestigd 3 aug.
+        const SPEED_SQUAT = [62.5, 65, 60];
         sq = {h:'MA · FULL BODY EXPLOSIEF · ±80 MIN', r:[
           ['tb-wu','WU','Core (plank / ab wheel) · 1 opwarmset per lift op lege bar / licht gewicht'],
-          ...W('T1','Speed Squat ' + expReps, 62.5+2.5*wk, REF1RM.Squat, '— max barsnelheid · ' + expRest),
+          ...W('T1','Speed Squat ' + expReps, SPEED_SQUAT[wk], REF1RM.Squat, '— max barsnelheid · ' + expRest),
           ...W('T1','Speed Bench ' + expReps, 60+2.5*wk, REF1RM.Bench, '— explosief · ' + expRest),
           ...W('T1','Speed Deadlift ' + expReps, 70+2.5*wk, REF1RM.Deadlift, '— hinge explosief · ' + expRest),
           ...W('T1','Speed Row ' + expReps, 50+2.5*wk, null, '· ' + expRest),
@@ -16547,7 +16552,10 @@ document.addEventListener('DOMContentLoaded', function() {
       let tiersHtml = '';
 
       if (d.key === 'MA') {
-        tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(62.5+2.5*wk), '90 sec · langer als snelh. daalt', 'Heupen naar voren · billen aanspannen', false, true);
+        // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
+        // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
+        const SPEED_SQUAT = [62.5, 65, 60];
+        tiersHtml += _tierCard('SPEED','Squat',    'SPEED SQUAT',    expReps + ' · max barsnelheid', r25(SPEED_SQUAT[wk]), '90 sec · langer als snelh. daalt', 'Heupen naar voren · billen aanspannen', false, true);
         tiersHtml += _tierCard('SPEED','Bench',    'SPEED BENCH',    expReps + ' · explosief omhoog', r25(60+2.5*wk), '90 sec · langer als snelh. daalt', 'Hielen op grond · billen op de bank', false, true);
         tiersHtml += _tierCard('SPEED','Deadlift', 'SPEED DEADLIFT', expReps + ' · hinge explosief',  r25(70+2.5*wk),   '90 sec · langer als snelh. daalt', 'Meer hinge · minder squat', false, true);
         tiersHtml += _tierCard('SPEED','Row',      'SPEED ROW',      expReps, r25(50+2.5*wk),  '90 sec · langer als snelh. daalt', null, false, true);
