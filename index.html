@@ -16513,10 +16513,16 @@ document.addEventListener('DOMContentLoaded', function() {
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15'],
           ['tb-rev','REV','Rathleff / Toe Dorsiflex / Unipodale RDL 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+        // Zelfde WO-lijnen als in de tiersHtml-renderer hieronder (index = wk, 0-based) —
+        // niet-lineair, dus geen +2,5/wk-formule: bench mag grotere sprongen (Bert wilde
+        // dat al op 29 jul), row hield Bert bewust vlak op 60 (3 aug: 30/30 reps, maar
+        // "nipt" — nog niet verder omhoog).
+        const WO_BENCH = [65, 70, 75];
+        const WO_ROW   = [60, 60, 60];
         be = {h:'WO · BENCH + ROW / UPPER · ±55 MIN', r:[
           ['tb-wu','WU','Core + Bench 1 opwarmset'],
-          ...W('T2','Bench Press 3×8', 65+2.5*wk, REF1RM.Bench, '— kracht/volume · 2 min rust'),
-          ...W('T2','Barbell Row 3×10', wk===2 ? 62.5 : 60, null),
+          ...W('T2','Bench Press 3×8', WO_BENCH[wk], REF1RM.Bench, '— kracht/volume · 2 min rust'),
+          ...W('T2','Barbell Row 3×10', WO_ROW[wk], null),
           ['tb-t3','T3','Lat PD 3×15 · Bicep Curl 3×12 · Triceps Pushdown 3×15 · Face Pull 3×20'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
@@ -16730,10 +16736,11 @@ document.addEventListener('DOMContentLoaded', function() {
         );
       } else if (d.key === 'WO') {
         // Weekgewichten woensdag (index = wk, 0-based). Niet-lineair:
-        //  bench +5/wk (65 was comfortabel: 8·8·10 op 29 jul)
-        //  row herhaalt 60 (1e set op 29 jul was aftasten, niet alle 30 op 60)
+        //  bench +5/wk (65 was comfortabel: 8·8·10 op 29 jul; 70×8×3 schoon op 5 aug
+        //  bevestigt de sprong naar 75 voor wk3 — Bert akkoord 6 aug)
+        //  row blijft vlak op 60 (5 aug: wel alle 30 reps, maar nipt — nog niet omhoog)
         const WO_BENCH = [65, 70, 75];
-        const WO_ROW   = [60, 60, 62.5];
+        const WO_ROW   = [60, 60, 60];
         tiersHtml += _tierCard('T2','Bench', 'BARBELL BENCH PRESS', '3 × 8', WO_BENCH[wk], '2 min', 'Hielen op grond · billen op de bank', false);
         tiersHtml += _tierCard('T2','Row',   'BARBELL ROW',         '3 × 10', WO_ROW[wk],  '2 min', 'Alle 30 reps op hetzelfde gewicht → volgende week omhoog', false);
         tiersHtml += _t3Block(
