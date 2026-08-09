@@ -16584,23 +16584,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
-    // Eenmalige inhaal-uitzonderingen op een specifieke datum (i.p.v. de normale
-    // dichtstbijzijnde-gym-dag-mapping) — bv. een gemiste ZA/VR-Lower die op een
-    // andere dag wordt ingehaald. Key = datum, value = dagindex (EXPLOSIVE: 0=MA,1=WO,2=ZA).
-    const DAY_OVERRIDES = {
-      // di 11 aug: inhaal van de gemiste Lower-sessie van vrijdag 7 aug (Bert, 9 aug)
-      '2026-08-11': 2,
-    };
     // EXPLOSIVE: 3 gym-dagen (MA=0, WO=1, ZA=2) — di/do/vr/zo → dichtstbijzijnde gym dag
     // Andere fases: 4 dagen (SQUAT=0, DI=1, BENCH=2, DEADLIFT=3)
-    const defDayIdx = (() => {
-      if (todayStr in DAY_OVERRIDES) return DAY_OVERRIDES[todayStr];
+    const defDayIdxBase = (() => {
       if (ph.name !== 'EXPLOSIVE') return [0,1,2,3,3,3,0][dow];
       const baseIdx = [0,0,1,2,2,2,0][dow];
       // Als vandaag al getraind → toon volgende dag in MA→WO→ZA cyclus
       if (lastTrainingDate === todayStr) return (baseIdx + 1) % 3;
       return baseIdx;
     })();
+    // Eenmalige inhaal-dag: gemiste Lower-sessie van vrijdag 7 aug wordt op dinsdag
+    // 11 aug ingehaald (Bert, 9 aug). Krijgt een eigen klikbare 'DI'-tab naast
+    // MA/WO/ZA — enkel zichtbaar in de week die 11 aug bevat, verdwijnt daarna
+    // vanzelf (geen permanente wijziging aan de weekindeling).
+    const DI_CATCHUP = { date: '2026-08-11', weekFrom: '2026-08-10', weekTo: '2026-08-16' };
+    function applyDiCatchup(dayp, wk, dIdx) {
+      if (ph.name !== 'EXPLOSIVE' || wk !== curWk) return {dayp, dIdx};
+      if (!(todayStr >= DI_CATCHUP.weekFrom && todayStr <= DI_CATCHUP.weekTo)) return {dayp, dIdx};
+      const za = dayp[2];
+      const out = dayp.slice();
+      out.splice(1, 0, {key:'DI+', color: za.color, card: za.card});
+      let newIdx = dIdx >= 1 ? dIdx + 1 : dIdx; // WO/ZA schuiven één plek op
+      if (todayStr === DI_CATCHUP.date) newIdx = 1; // vandaag zelf → toon de DI-tab
+      return {dayp: out, dIdx: newIdx};
+    }
     const multiWk = ph.totalWks > 1;
     const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
@@ -16617,8 +16624,10 @@ document.addEventListener('DOMContentLoaded', function() {
       '</div>';
 
     let activeWk = curWk;
-    let activeDayIdx = defDayIdx;
-    let currentDayp = buildDayp(activeWk);
+    const _diApplied0 = applyDiCatchup(buildDayp(activeWk), activeWk, defDayIdxBase);
+    let currentDayp   = _diApplied0.dayp;
+    let defDayIdx     = _diApplied0.dIdx;
+    let activeDayIdx  = defDayIdx;
 
     const wkRow  = document.getElementById('prog-wk-btns');
     const dayRow = document.getElementById('prog-day-btns');
@@ -16647,7 +16656,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ['Glute Bridge BW','15×','glute activatie'],
         ["World's Greatest Stretch",'5/kant','thoracaal']]}
     };
-    const WU_SLOT = {MA:'ma', WO:'wo', ZA:'za', SQUAT:'ma', BENCH:'wo', DEADLIFT:'za'};
+    const WU_SLOT = {MA:'ma', WO:'wo', ZA:'za', SQUAT:'ma', BENCH:'wo', DEADLIFT:'za', 'DI+':'za'};
 
     function _mobWuHtml(dayKey) {
       const slot = WU_SLOT[dayKey];
@@ -16792,8 +16801,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function switchWeek(w) {
+      // Dagkey onthouden vóór de switch, zodat we (indien mogelijk) op dezelfde
+      // dag blijven staan i.p.v. altijd terug te vallen op de standaarddag —
+      // behalve de DI+ inhaal-tab, die enkel bestaat in curWk.
+      const prevKey = currentDayp[activeDayIdx] ? currentDayp[activeDayIdx].key : null;
       activeWk = w;
-      currentDayp = buildDayp(w);
+      const baseIdx = (w === curWk) ? defDayIdxBase : 0;
+      const _r = applyDiCatchup(buildDayp(w), w, baseIdx);
+      currentDayp = _r.dayp;
+      let newIdx = _r.dIdx;
+      if (prevKey) {
+        const found = currentDayp.findIndex(x => x.key === prevKey);
+        if (found >= 0) newIdx = found;
+      }
+      activeDayIdx = newIdx;
       const isCur = (w === curWk);
       phHead.textContent = '◈ ' + ph.name + ' · WEEK ' + (w+1) + (isCur ? '' : ' (vooruitblik)');
       phHead.style.opacity = isCur ? '1' : '0.7';
@@ -16802,6 +16823,7 @@ document.addEventListener('DOMContentLoaded', function() {
         b.style.opacity = j === w ? '1' : '0.5';
         b.style.borderBottomWidth = j === w ? '2px' : '1px';
       });
+      renderDayButtons();
       renderCard(activeDayIdx);
     }
 
@@ -16822,19 +16844,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Day buttons
-    currentDayp.forEach((d,i) => {
-      const btn = document.createElement('button');
-      btn.className = 'gzclp-day-btn' + (i===defDayIdx ? ' active' : '');
-      btn.textContent = d.key;
-      btn.style.borderColor = d.color; btn.style.color = d.color;
-      btn.onclick = () => {
-        activeDayIdx = i;
-        dayRow.querySelectorAll('.gzclp-day-btn:not(.prog-wk-btn)').forEach((x,j) => x.classList.toggle('active', j===i));
-        renderCard(i);
-      };
-      dayRow.appendChild(btn);
-    });
+    // Day buttons — herbruikbaar zodat switchWeek() ze kan herbouwen (aantal
+    // tabs verschilt: 4 in curWk met DI+ inhaaldag, 3 in andere weken).
+    function renderDayButtons() {
+      dayRow.innerHTML = '';
+      currentDayp.forEach((d,i) => {
+        const btn = document.createElement('button');
+        btn.className = 'gzclp-day-btn' + (i===activeDayIdx ? ' active' : '');
+        btn.textContent = d.key;
+        btn.style.borderColor = d.color; btn.style.color = d.color;
+        btn.onclick = () => {
+          activeDayIdx = i;
+          dayRow.querySelectorAll('.gzclp-day-btn:not(.prog-wk-btn)').forEach((x,j) => x.classList.toggle('active', j===i));
+          renderCard(i);
+        };
+        dayRow.appendChild(btn);
+      });
+    }
+    renderDayButtons();
     renderCard(defDayIdx);
   })();
 
