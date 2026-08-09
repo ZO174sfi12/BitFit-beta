@@ -16606,7 +16606,12 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!(todayStr >= DI_CATCHUP.weekFrom && todayStr <= DI_CATCHUP.weekTo)) return {dayp, dIdx};
       const za = dayp[2];
       const out = dayp.slice();
-      out.splice(1, 0, {key:'DI+', color: za.color, card: za.card});
+      // Let op: dit is de gemiste week2-Lower, maar de tab hangt onder de
+      // WK3-tab en de tiered renderer leest gewichten uit de actieve week
+      // (wk3) — dus hieronder staan momenteel wk3-gewichten, niet de
+      // gemiste wk2-gewichten. Nog te beslissen door Bert (vlag: 8 aug).
+      const diH = 'DI+ · INHAAL LOWER (vr. 7 aug gemist) · gewichten wk3? · ±65 MIN';
+      out.splice(1, 0, {key:'DI+', color: za.color, card: {h: diH, r: za.card.r}});
       let newIdx = dIdx >= 1 ? dIdx + 1 : dIdx; // WO/ZA schuiven één plek op
       if (todayStr === DI_CATCHUP.date && wk === curWk) newIdx = 1; // vandaag zelf én op de actieve week → toon de DI-tab
       return {dayp: out, dIdx: newIdx};
