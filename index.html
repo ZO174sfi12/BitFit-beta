@@ -16584,9 +16584,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
+    // Eenmalige inhaal-uitzonderingen op een specifieke datum (i.p.v. de normale
+    // dichtstbijzijnde-gym-dag-mapping) — bv. een gemiste ZA/VR-Lower die op een
+    // andere dag wordt ingehaald. Key = datum, value = dagindex (EXPLOSIVE: 0=MA,1=WO,2=ZA).
+    const DAY_OVERRIDES = {
+      // di 11 aug: inhaal van de gemiste Lower-sessie van vrijdag 7 aug (Bert, 9 aug)
+      '2026-08-11': 2,
+    };
     // EXPLOSIVE: 3 gym-dagen (MA=0, WO=1, ZA=2) — di/do/vr/zo → dichtstbijzijnde gym dag
     // Andere fases: 4 dagen (SQUAT=0, DI=1, BENCH=2, DEADLIFT=3)
     const defDayIdx = (() => {
+      if (todayStr in DAY_OVERRIDES) return DAY_OVERRIDES[todayStr];
       if (ph.name !== 'EXPLOSIVE') return [0,1,2,3,3,3,0][dow];
       const baseIdx = [0,0,1,2,2,2,0][dow];
       // Als vandaag al getraind → toon volgende dag in MA→WO→ZA cyclus
