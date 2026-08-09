@@ -16597,7 +16597,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 11 aug ingehaald (Bert, 9 aug). Krijgt een eigen klikbare 'DI'-tab naast
     // MA/WO/ZA — enkel zichtbaar in de week die 11 aug bevat, verdwijnt daarna
     // vanzelf (geen permanente wijziging aan de weekindeling).
-    const DI_CATCHUP = { date: '2026-08-11', weekFrom: '2026-08-10', weekTo: '2026-08-16' };
+    const DI_CATCHUP = { date: '2026-08-11', weekFrom: '2026-08-09', weekTo: '2026-08-16' };
     function applyDiCatchup(dayp, wk, dIdx) {
       if (ph.name !== 'EXPLOSIVE' || wk !== curWk) return {dayp, dIdx};
       if (!(todayStr >= DI_CATCHUP.weekFrom && todayStr <= DI_CATCHUP.weekTo)) return {dayp, dIdx};
