@@ -16594,18 +16594,21 @@ document.addEventListener('DOMContentLoaded', function() {
       return baseIdx;
     })();
     // Eenmalige inhaal-dag: gemiste Lower-sessie van vrijdag 7 aug wordt op dinsdag
-    // 11 aug ingehaald (Bert, 9 aug). Krijgt een eigen klikbare 'DI'-tab naast
-    // MA/WO/ZA — enkel zichtbaar in de week die 11 aug bevat, verdwijnt daarna
+    // 11 aug ingehaald (Bert, 9 aug). Krijgt een eigen klikbare 'DI+'-tab naast
+    // MA/WO/ZA — enkel zichtbaar in de weektab die 11 aug kalendermatig bevat
+    // (dus week3, niet "vandaag's actieve week" — die twee vielen tot 9 aug
+    // nog niet samen, gecorrigeerd na feedback van Bert), verdwijnt daarna
     // vanzelf (geen permanente wijziging aan de weekindeling).
     const DI_CATCHUP = { date: '2026-08-11', weekFrom: '2026-08-09', weekTo: '2026-08-16' };
+    const DI_CATCHUP_WK = Math.floor((new Date(DI_CATCHUP.date) - new Date(ph.start)) / (7*86400000));
     function applyDiCatchup(dayp, wk, dIdx) {
-      if (ph.name !== 'EXPLOSIVE' || wk !== curWk) return {dayp, dIdx};
+      if (ph.name !== 'EXPLOSIVE' || wk !== DI_CATCHUP_WK) return {dayp, dIdx};
       if (!(todayStr >= DI_CATCHUP.weekFrom && todayStr <= DI_CATCHUP.weekTo)) return {dayp, dIdx};
       const za = dayp[2];
       const out = dayp.slice();
       out.splice(1, 0, {key:'DI+', color: za.color, card: za.card});
       let newIdx = dIdx >= 1 ? dIdx + 1 : dIdx; // WO/ZA schuiven één plek op
-      if (todayStr === DI_CATCHUP.date) newIdx = 1; // vandaag zelf → toon de DI-tab
+      if (todayStr === DI_CATCHUP.date && wk === curWk) newIdx = 1; // vandaag zelf én op de actieve week → toon de DI-tab
       return {dayp: out, dIdx: newIdx};
     }
     const multiWk = ph.totalWks > 1;
