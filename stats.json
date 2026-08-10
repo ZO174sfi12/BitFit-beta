@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-06T11:55:16",
-  "weight": 87.4,
-  "weight_date": "2026-08-05",
-  "training_days_total": 135,
-  "last_training_day": "2026-08-05",
+  "updated": "2026-08-10T18:54:05",
+  "weight": 87.9,
+  "weight_date": "2026-08-10",
+  "training_days_total": 136,
+  "last_training_day": "2026-08-10",
   "lifts": {
     "Squat": {
       "last_date": "2026-07-31",
@@ -111,32 +111,32 @@
       "pr_weight": 115.0
     },
     "Speed Squat": {
-      "last_date": "2026-08-03",
+      "last_date": "2026-08-10",
       "last_weight": 65.0,
-      "last_volume": 680.0,
-      "pr": true,
+      "last_volume": 555.0,
+      "pr": false,
       "pr_weight": 65.0
     },
     "Speed Deadlift": {
-      "last_date": "2026-08-03",
-      "last_weight": 75.0,
-      "last_volume": 825.0,
+      "last_date": "2026-08-10",
+      "last_weight": 80.0,
+      "last_volume": 720.0,
       "pr": true,
-      "pr_weight": 75.0
+      "pr_weight": 80.0
     },
     "Speed Bench": {
-      "last_date": "2026-08-03",
-      "last_weight": 62.5,
-      "last_volume": 437.5,
+      "last_date": "2026-08-10",
+      "last_weight": 65.0,
+      "last_volume": 585.0,
       "pr": true,
-      "pr_weight": 62.5
+      "pr_weight": 65.0
     },
     "Speed Row": {
-      "last_date": "2026-08-03",
-      "last_weight": 52.5,
-      "last_volume": 577.5,
+      "last_date": "2026-08-10",
+      "last_weight": 60.0,
+      "last_volume": 360.0,
       "pr": true,
-      "pr_weight": 52.5
+      "pr_weight": 60.0
     }
   }
 }
