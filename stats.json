@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-10T18:54:05",
+  "updated": "2026-08-10T18:59:37",
   "weight": 87.9,
   "weight_date": "2026-08-10",
   "training_days_total": 136,
@@ -137,6 +137,13 @@
       "last_volume": 360.0,
       "pr": true,
       "pr_weight": 60.0
+    },
+    "Speed OHP": {
+      "last_date": "2026-08-10",
+      "last_weight": 40.0,
+      "last_volume": 240.0,
+      "pr": false,
+      "pr_weight": 50.0
     }
   }
 }
