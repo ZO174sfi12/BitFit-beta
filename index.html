@@ -17084,14 +17084,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const ZA_SQUAT = [87.5, 90, 92.5];
         const ZA_DL    = [115, 117.5, 120];
         const ZA_OHP   = [57.5, 60, 62.5];
-        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     '3 × 5 — gecontroleerd', ZA_SQUAT[wk], '3 min',   'Heupen naar voren · billen aanspannen', true);
+        // Volume verlaagd in wk3: Squat/DL/OHP werden al zwaar gedaan via de
+        // DI+ inhaalsessie (di 11 aug, zelfde week) — 2 volle Lower-sessies in
+        // 4 dagen is meer dan bedoeld. Minder sets, zelfde gewicht (Bert, 11 aug).
+        const zaVolLow = (wk === DI_CATCHUP_WK);
+        if (zaVolLow) {
+          tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">Volume verlaagd deze week — DI+ inhaal (di 11 aug) deed Squat/DL/OHP al zwaar</div>';
+        }
+        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     (zaVolLow ? '2 × 5 — verlaagd' : '3 × 5 — gecontroleerd'), ZA_SQUAT[wk], '3 min',   'Heupen naar voren · billen aanspannen', true);
         tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5 — geen AMRAP',    ZA_DL[wk],    '3–5 min', 'Explosief blok: sets afmaken, niet uitknijpen', true);
-        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', '3 × 5',                 ZA_OHP[wk],   '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
-        tiersHtml += _t3Block(
-          _t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false) +
-          _t3Item('Leg Curl',                  '3×12', 'Leg Curl',   false) +
-          _t3Item('Abductor Machine',          '3×15', 'Abductor',   false)
-        );
+        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', (zaVolLow ? '2 × 5 — verlaagd' : '3 × 5'), ZA_OHP[wk],   '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
+        tiersHtml += zaVolLow
+          ? _t3Block(_t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false))
+          : _t3Block(
+              _t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false) +
+              _t3Item('Leg Curl',                  '3×12', 'Leg Curl',   false) +
+              _t3Item('Abductor Machine',          '3×15', 'Abductor',   false)
+            );
       }
 
       cardEl.innerHTML =
