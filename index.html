@@ -17084,18 +17084,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const ZA_SQUAT = [87.5, 90, 92.5];
         const ZA_DL    = [115, 117.5, 120];
         const ZA_OHP   = [57.5, 60, 62.5];
-        // Volume verlaagd in wk3: Squat/DL/OHP werden al zwaar gedaan via de
-        // DI+ inhaalsessie (di 11 aug, zelfde week) — 2 volle Lower-sessies in
-        // 4 dagen is meer dan bedoeld. Minder sets, zelfde gewicht (Bert, 11 aug).
+        // Primer i.p.v. volle ZA-sessie in wk3: DI+ inhaal (di 11 aug, zelfde
+        // week) deed Squat/DL/OHP al zwaar mét nieuwe PR's, en za 15 aug moet
+        // fris houden voor Lotte-kalibratie ma 17 aug. Licht + kort, techniek/
+        // bar-snelheid, geen belaste T3 — incline walk als cooldown i.p.v.
+        // stairmaster (minder beenvermoeidheid). Bert, 11 aug.
         const zaVolLow = (wk === DI_CATCHUP_WK);
         if (zaVolLow) {
-          tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">Volume verlaagd deze week — DI+ inhaal (di 11 aug) deed Squat/DL/OHP al zwaar</div>';
+          tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">Primer i.p.v. volle sessie — DI+ inhaal (di 11 aug) deed Squat/DL/OHP al zwaar, fris houden voor Lotte-kalibratie ma 17 aug</div>';
         }
-        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     (zaVolLow ? '2 × 5 — verlaagd' : '3 × 5 — gecontroleerd'), ZA_SQUAT[wk], '3 min',   'Heupen naar voren · billen aanspannen', true);
-        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       '2 × 5 — geen AMRAP',    ZA_DL[wk],    '3–5 min', 'Explosief blok: sets afmaken, niet uitknijpen', true);
-        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', (zaVolLow ? '2 × 5 — verlaagd' : '3 × 5'), ZA_OHP[wk],   '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
+        tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     (zaVolLow ? '2 × 5 — primer' : '3 × 5 — gecontroleerd'), (zaVolLow ? 65 : ZA_SQUAT[wk]), '3 min',   'Heupen naar voren · billen aanspannen', true);
+        tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       (zaVolLow ? '2 × 3 — primer' : '2 × 5 — geen AMRAP'), (zaVolLow ? 60 : ZA_DL[wk]),    '3–5 min', 'Explosief blok: sets afmaken, niet uitknijpen', true);
+        tiersHtml += _tierCard('T2','OHP',      'OVERHEAD PRESS', (zaVolLow ? '2 × 5 — primer' : '3 × 5'), (zaVolLow ? 45 : ZA_OHP[wk]),   '2–3 min', 'Buik aanspannen · bovenlijf als plank', false);
         tiersHtml += zaVolLow
-          ? _t3Block(_t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false))
+          ? _t3Block(_t3Item('Incline walk (cooldown, geen stairmaster)', '15 min · zone 2', null, false))
           : _t3Block(
               _t3Item('Hip Thrust (plate-loaded)', '3×15', 'Hip Thrust', false) +
               _t3Item('Leg Curl',                  '3×12', 'Leg Curl',   false) +
