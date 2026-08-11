@@ -1,23 +1,23 @@
 {
-  "updated": "2026-08-10T21:48:31",
-  "weight": 87.9,
-  "weight_date": "2026-08-10",
-  "training_days_total": 136,
-  "last_training_day": "2026-08-10",
+  "updated": "2026-08-11T18:24:20",
+  "weight": 87.8,
+  "weight_date": "2026-08-11",
+  "training_days_total": 137,
+  "last_training_day": "2026-08-11",
   "lifts": {
     "Squat": {
-      "last_date": "2026-07-31",
-      "last_weight": 90.0,
-      "last_volume": 1920.0,
+      "last_date": "2026-08-11",
+      "last_weight": 100.0,
+      "last_volume": 1840.0,
       "pr": false,
       "pr_weight": 100.0
     },
     "Deadlift": {
-      "last_date": "2026-07-31",
-      "last_weight": 115.0,
-      "last_volume": 1605.0,
-      "pr": false,
-      "pr_weight": 115.0
+      "last_date": "2026-08-11",
+      "last_weight": 120.0,
+      "last_volume": 1620.0,
+      "pr": true,
+      "pr_weight": 120.0
     },
     "Bench": {
       "last_date": "2026-08-05",
@@ -34,11 +34,11 @@
       "pr_weight": 72.0
     },
     "OHP": {
-      "last_date": "2026-08-05",
-      "last_weight": 50.0,
-      "last_volume": 970.0,
-      "pr": false,
-      "pr_weight": 60.0
+      "last_date": "2026-08-11",
+      "last_weight": 62.5,
+      "last_volume": 1125.0,
+      "pr": true,
+      "pr_weight": 62.5
     },
     "Lat PD": {
       "last_date": "2026-08-05",
