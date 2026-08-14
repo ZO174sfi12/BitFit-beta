@@ -13,14 +13,14 @@
       "label": "27 jul – 20 aug"
     },
     "STRENGTH": {
-      "start": "2026-08-21",
-      "eind": "2026-09-27",
-      "label": "21 aug – 27 sep"
+      "start": "2026-08-24",
+      "eind": "2026-10-04",
+      "label": "24 aug – 4 okt"
     },
     "TEST": {
-      "start": "2026-09-28",
-      "eind": "2026-10-04",
-      "label": "28 sep – 4 okt"
+      "start": "2026-10-05",
+      "eind": "2026-10-11",
+      "label": "5 – 11 okt"
     }
   },
   "speed": {

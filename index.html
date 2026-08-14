@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608141236</span>
+        <span class="meta-value" style="color:var(--muted)">202608141526</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -16403,8 +16403,8 @@ const PHASES = [
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
   {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
   {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-20",color:"#ff6b35",track:0,desc:"<b>27 jul → 20 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 20 aug."},
-  {label:"STRENGTH",short:"STR",start:"2026-08-21",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>21 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
-  {label:"TEST",short:"TST",start:"2026-09-28",end:"2026-10-04",color:"#ffd600",track:0,desc:"<b>28 sep → 4 okt</b><br>Dubbele test per lift: top 3×5/AMRAP + één zware single (RPE 9, geen max-out) → getest 1RM. Doel-range (Lotte): Squat 115–135 · Bench 95–105 · DL 130–140 · OHP 70–80. Daarna herevaluatie."},
+  {label:"STRENGTH",short:"STR",start:"2026-08-24",end:"2026-10-04",color:"#ff3d6b",track:0,desc:"<b>24 aug → 4 okt</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
+  {label:"TEST",short:"TST",start:"2026-10-05",end:"2026-10-11",color:"#ffd600",track:0,desc:"<b>5 → 11 okt</b><br>Dubbele test per lift: top 3×5/AMRAP + één zware single (RPE 9, geen max-out) → getest 1RM. Doel-range (Lotte): Squat 115–135 · Bench 95–105 · DL 130–140 · OHP 70–80. Daarna herevaluatie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
@@ -16940,8 +16940,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!el) return;
     const P = [
       {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-20', color:'#ff6b35', totalWks:3},
-      {name:'STRENGTH',  start:'2026-08-21', end:'2026-09-27', color:'#ff3d6b', totalWks:5},
-      {name:'TEST',      start:'2026-09-28', end:'2026-10-04', color:'#ffd600', totalWks:1}
+      {name:'STRENGTH',  start:'2026-08-24', end:'2026-10-04', color:'#ff3d6b', totalWks:6},
+      {name:'TEST',      start:'2026-10-05', end:'2026-10-11', color:'#ffd600', totalWks:1}
     ];
     const ph = P.find(x => todayStr >= x.start && todayStr <= x.end);
     if (!ph) return;
