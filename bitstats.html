@@ -334,6 +334,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
           <div style="display:flex;align-items:baseline;gap:3px;">
             <span class="stat-value" id="s-gymdays">—</span>
             <span style="font-family:monospace;color:var(--muted);font-size:11px" id="s-totaldays"></span>
+            <span style="font-family:monospace;color:var(--muted);font-size:11px" id="s-avgweek"></span>
           </div>
           <div id="s-activity-split" style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:4px;line-height:1.7;"></div>
         </div>
@@ -16844,13 +16845,16 @@ function computeStats(start) {
     prs[key] = {weight: bestPt.weight, est1rm: est, firstWeight: firstPt.weight, rm_gain: Math.round((est - estFirst)*10)/10, color: lift.color};
   });
   const top3 = Object.entries(prs).sort((a,b) => b[1].rm_gain - a[1].rm_gain).slice(0,3);
-  return {td, totalDays, wFirst, wLast, wDelta, wDeltaLabel, fatDelta, leanDelta, top3, gymN, muayN, otherN, totalAct};
+  const avgPerWeek = totalDays > 0 ? Math.round((totalAct || td) / (totalDays / 7) * 10) / 10 : null;
+  return {td, totalDays, wFirst, wLast, wDelta, wDeltaLabel, fatDelta, leanDelta, top3, gymN, muayN, otherN, totalAct, avgPerWeek};
 }
 
 function renderStats(stats) {
   const $ = id => document.getElementById(id);
   $('s-gymdays').textContent = stats.totalAct || stats.td;
   $('s-totaldays').textContent = '/ ' + stats.totalDays + 'd';
+  const avgEl = $('s-avgweek');
+  if (avgEl) avgEl.textContent = stats.avgPerWeek !== null ? '≈' + stats.avgPerWeek.toFixed(1).replace('.', ',') + '/wk' : '';
   const splitEl = $('s-activity-split');
   if (splitEl) {
     const muayLine = stats.muayN > 0 ? `Muay Thai: ${stats.muayN}<br>` : `Muay Thai: —<br>`;
