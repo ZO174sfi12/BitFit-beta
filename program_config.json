@@ -9,13 +9,13 @@
     },
     "EXPLOSIVE": {
       "start": "2026-07-27",
-      "eind": "2026-08-16",
-      "label": "27 jul – 16 aug"
+      "eind": "2026-08-20",
+      "label": "27 jul – 20 aug"
     },
     "STRENGTH": {
-      "start": "2026-08-17",
+      "start": "2026-08-21",
       "eind": "2026-09-27",
-      "label": "17 aug – 27 sep"
+      "label": "21 aug – 27 sep"
     },
     "TEST": {
       "start": "2026-09-28",
@@ -111,6 +111,6 @@
       "Twee lagen."
     ]
   },
-  "kalibratie_lotte": "17 aug",
+  "kalibratie_lotte": "20 aug",
   "test_aanpak": "dubbele test — top 3×5/AMRAP + zware single RPE 9 (geen max-out)"
 }

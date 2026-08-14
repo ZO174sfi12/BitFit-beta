@@ -16402,8 +16402,8 @@ const PHASES = [
   {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2026-04-19",color:"#ff8a65",track:1,desc:"<b>3 apr → 19 apr</b><br>Operatie. Herstelperiode afgerond."},
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
   {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
-  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-16",color:"#ff6b35",track:0,desc:"<b>27 jul → 16 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 17 aug."},
-  {label:"STRENGTH",short:"STR",start:"2026-08-17",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>17 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Start 17 aug = kalibratie met Lotte. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
+  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-20",color:"#ff6b35",track:0,desc:"<b>27 jul → 20 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 20 aug."},
+  {label:"STRENGTH",short:"STR",start:"2026-08-21",end:"2026-09-27",color:"#ff3d6b",track:0,desc:"<b>21 aug → 27 sep</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
   {label:"TEST",short:"TST",start:"2026-09-28",end:"2026-10-04",color:"#ffd600",track:0,desc:"<b>28 sep → 4 okt</b><br>Dubbele test per lift: top 3×5/AMRAP + één zware single (RPE 9, geen max-out) → getest 1RM. Doel-range (Lotte): Squat 115–135 · Bench 95–105 · DL 130–140 · OHP 70–80. Daarna herevaluatie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
@@ -16939,8 +16939,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const el = document.getElementById('taper-banner');
     if (!el) return;
     const P = [
-      {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-16', color:'#ff6b35', totalWks:3},
-      {name:'STRENGTH',  start:'2026-08-17', end:'2026-09-27', color:'#ff3d6b', totalWks:6},
+      {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-20', color:'#ff6b35', totalWks:3},
+      {name:'STRENGTH',  start:'2026-08-21', end:'2026-09-27', color:'#ff3d6b', totalWks:5},
       {name:'TEST',      start:'2026-09-28', end:'2026-10-04', color:'#ffd600', totalWks:1}
     ];
     const ph = P.find(x => todayStr >= x.start && todayStr <= x.end);
@@ -17084,8 +17084,57 @@ document.addEventListener('DOMContentLoaded', function() {
       if (todayStr === DI_CATCHUP.date && wk === curWk) newIdx = 1; // vandaag zelf én op de actieve week → toon de DI-tab
       return {dayp: out, dIdx: newIdx};
     }
+    // Afbouwweek naar de 1RM-kalibratie. Die verschoof van ma 17 naar do 20 aug
+    // (Bert, 14 aug), waardoor de laatste EXPLOSIVE-week een eigen dagindeling
+    // krijgt: VR 14 (laatste zware sessie) · MA 17 (upper + openers) · DI 18
+    // (primer) · WO 19 rust · DO 20 (test). Vervangt de MA/WO/ZA-tabs volledig
+    // zolang vandaag in het venster valt; daarna keert de normale indeling
+    // vanzelf terug. Elke testlift krijgt nog één zware aanraking (lower op
+    // vrijdag, bench op maandag) en daarna twee dagen echte rust.
+    const TEST_PREP = { from: '2026-08-14', to: '2026-08-20' };
+    const TEST_PREP_WK = Math.floor((new Date(TEST_PREP.from) - new Date(ph.start)) / (7*86400000));
+    function testPrepActive() {
+      return ph.name === 'EXPLOSIVE' && todayStr >= TEST_PREP.from && todayStr <= TEST_PREP.to;
+    }
+    function testPrepDays() {
+      return [
+        {key:'VR 14', color:'#b388ff', flat:true, wu:'za', card:{h:'VR 14 · LOWER · laatste zware sessie · ±65 MIN', r:[
+          ['tb-wu','WU','Squat opbouw 60×5 · 80×3 — DL opbouw 60×5 · 90×3'],
+          ['','T1','Back Squat 3×5 · 100 kg — push: een schone 3×5 is het doel (di was 4-3-5)'],
+          ['','T1','Deadlift 2×5 · 120 kg — bevestigen, niet uitbreiden. Set 2 mag 125 als set 1 snel voelt'],
+          ['','T2','OHP 3×5 · 62,5 kg — consolideren, schoon afmaken'],
+          ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15'],
+          ['tb-cd','CD','20–30 min zone 2']]}},
+        {key:'MA 17', color:'#64b5f6', flat:true, wu:'wo', card:{h:'MA 17 · UPPER + OPENERS · 3 dagen voor de test · ±50 MIN', r:[
+          ['tb-wu','WU','Bench opbouw naar werkgewicht'],
+          ['','T2','Bench 3×3 · 82,5 kg — laatste zware aanraking voor de test'],
+          ['','T2','Barbell Row 3×8 · 60 kg'],
+          ['','T1','Back Squat 2×2 · 100 kg — zwaar gevoel terughalen, niet uitknijpen'],
+          ['tb-cd','CD','15–20 min zone 2 · geen T3']]}},
+        {key:'DI 18', color:'#00ffb3', flat:true, wu:'ma', card:{h:'DI 18 · PRIMER · 2 dagen voor de test · ±35 MIN', r:[
+          ['tb-wu','WU','Mobiliteit, geen belasting'],
+          ['','T1','Back Squat 2×5 · 65 kg — barsnelheid, ver van vermoeidheid'],
+          ['','T2','Bench 2×5 · 50 kg'],
+          ['','T1','Deadlift 2×3 · 60 kg — patroon primen'],
+          ['','T2','OHP 2×5 · 45 kg'],
+          ['tb-cd','CD','Incline walk 10% · ~5 km/h · 15 min (geen stairmaster)']]}},
+        {key:'DO 20', color:'#ffd600', flat:true, wu:'za', card:{h:'DO 20 · 1RM-KALIBRATIE BIJ LOTTE', r:[
+          ['tb-wu','WU','Grondig opwarmen, rustig opbouwen naar zwaar'],
+          ['','T1','Squat · Bench · Deadlift · OHP — geen max-out, zware single op RPE 9'],
+          ['tb-t3','◈','Doelranges: squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80'],
+          ['tb-cd','CD','Uitkomst bepaalt de startgewichten van STRENGTH']]}}
+      ];
+    }
+    function testPrepIdx() {
+      if (todayStr <= '2026-08-14') return 0;
+      if (todayStr <= '2026-08-17') return 1;
+      if (todayStr <= '2026-08-19') return 2;
+      return 3;
+    }
     const multiWk = ph.totalWks > 1;
-    const expNote = 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 17 aug → startgewichten STRENGTH.';
+    const expNote = testPrepActive()
+      ? 'Afbouw naar de kalibratie bij Lotte op do 20 aug (verplaatst van 17 aug). WO 19 = volledige rust. Vrijdag is de laatste zware sessie, maandag de laatste zware bench, dinsdag enkel snelheid.'
+      : 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 20 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
     const noteText = ph.name === 'EXPLOSIVE' ? expNote : strNote;
 
@@ -17099,10 +17148,19 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="taper-note">' + noteText + '</div>' +
       '</div>';
 
+    // Testweek-taper heeft voorrang op de DI+-inhaaltab: in dat venster wordt de
+    // hele dagindeling vervangen, dus de inhaaldag is dan niet meer relevant.
+    function applyWeekOverrides(dayp, wk, dIdx) {
+      if (testPrepActive() && wk === TEST_PREP_WK) {
+        return {dayp: testPrepDays(), dIdx: testPrepIdx()};
+      }
+      return applyDiCatchup(dayp, wk, dIdx);
+    }
+
     let activeWk = curWk;
-    const _diApplied0 = applyDiCatchup(buildDayp(activeWk), activeWk, defDayIdxBase);
-    let currentDayp   = _diApplied0.dayp;
-    let defDayIdx     = _diApplied0.dIdx;
+    const _ovr0 = applyWeekOverrides(buildDayp(activeWk), activeWk, defDayIdxBase);
+    let currentDayp   = _ovr0.dayp;
+    let defDayIdx     = _ovr0.dIdx;
     let activeDayIdx  = defDayIdx;
 
     const wkRow  = document.getElementById('prog-wk-btns');
@@ -17150,9 +17208,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const wk = activeWk;
 
       // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
-      if (ph.name !== 'EXPLOSIVE' || d.key === 'DI') {
+      if (ph.name !== 'EXPLOSIVE' || d.key === 'DI' || d.flat) {
         cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
-          _mobWuHtml(d.key) +
+          _mobWuHtml(d.wu || d.key) +
           d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
         return;
       }
@@ -17263,12 +17321,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const ZA_OHP   = [57.5, 60, 62.5];
         // Primer i.p.v. volle ZA-sessie in wk3: DI+ inhaal (di 11 aug, zelfde
         // week) deed Squat/DL/OHP al zwaar mét nieuwe PR's, en za 15 aug moet
-        // fris houden voor Lotte-kalibratie ma 17 aug. Licht + kort, techniek/
+        // fris houden voor Lotte-kalibratie (do 20 aug). Licht + kort, techniek/
         // bar-snelheid, geen belaste T3 — incline walk als cooldown i.p.v.
         // stairmaster (minder beenvermoeidheid). Bert, 11 aug.
         const zaVolLow = (wk === DI_CATCHUP_WK);
         if (zaVolLow) {
-          tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">Primer i.p.v. volle sessie — DI+ inhaal (di 11 aug) deed Squat/DL/OHP al zwaar, fris houden voor Lotte-kalibratie ma 17 aug</div>';
+          tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">Primer i.p.v. volle sessie — DI+ inhaal (di 11 aug) deed Squat/DL/OHP al zwaar, fris houden voor Lotte-kalibratie do 20 aug</div>';
         }
         tiersHtml += _tierCard('T1','Squat',    'BACK SQUAT',     (zaVolLow ? '2 × 5 — primer' : '3 × 5 — gecontroleerd'), (zaVolLow ? 65 : ZA_SQUAT[wk]), '3 min',   'Heupen naar voren · billen aanspannen', true);
         tiersHtml += _tierCard('T1','Deadlift', 'DEADLIFT',       (zaVolLow ? '2 × 3 — primer' : '2 × 5 — geen AMRAP'), (zaVolLow ? 60 : ZA_DL[wk]),    '3–5 min', 'Explosief blok: sets afmaken, niet uitknijpen', true);
@@ -17294,7 +17352,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const prevKey = currentDayp[activeDayIdx] ? currentDayp[activeDayIdx].key : null;
       activeWk = w;
       const baseIdx = (w === curWk) ? defDayIdxBase : 0;
-      const _r = applyDiCatchup(buildDayp(w), w, baseIdx);
+      const _r = applyWeekOverrides(buildDayp(w), w, baseIdx);
       currentDayp = _r.dayp;
       let newIdx = _r.dIdx;
       if (prevKey) {
