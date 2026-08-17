@@ -17518,6 +17518,24 @@ document.addEventListener('DOMContentLoaded', function() {
     function testPrepActive() {
       return ph.name === 'EXPLOSIVE' && todayStr >= TEST_PREP.from && todayStr <= TEST_PREP.to;
     }
+    const _BBL_RAMP = new Set(['Squat','Deadlift','Bench','OHP','Front Squat','Row']);
+    // Opwarmramp voor de testdag: zelfde accordeon-opmaak als _wuHtml, maar
+    // met expliciete stappen i.p.v. de 3-stapsformule van t1Warmup — bij een
+    // zware single wil je fijnere sprongen vlak onder het doel.
+    function _rampHtml(lk, rows, target, c) {
+      if (!rows || !rows.length) return '';
+      const restRow = '<div class="gzclp-wu-rest">— rust</div>';
+      const body = rows.map(function(r, i){
+        const plts = _BBL_RAMP.has(lk) ? platesPerSide(r[0]) : null;
+        const pltsH = plts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + plts + ']</span>' : '';
+        const pct = target ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">' + Math.round(r[0]/target*100) + '%</span>' : '';
+        return '<div class="gzclp-wu-inline-row"><span style="color:' + c + ';min-width:48px">' + r[0] + ' kg</span><span style="color:var(--text)">× ' + r[1] + '</span>' + pltsH + pct + '</div>' + (i < rows.length-1 ? restRow : '');
+      }).join('');
+      const tPlts = _BBL_RAMP.has(lk) ? platesPerSide(target) : null;
+      const tPltsH = tPlts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + tPlts + ']</span>' : '';
+      return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMRAMP <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + body + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 3–5 min</div><div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span style="min-width:48px">' + target + ' kg</span><span style="color:var(--text)">attempt</span>' + tPltsH + '</div></div></details>';
+    }
+
     function testPrepDays() {
       // Tier-definities i.p.v. platte regels, zodat deze dagen dezelfde
       // kaartopmaak krijgen als de rest van EXPLOSIVE. Argumenten volgen
@@ -17561,10 +17579,14 @@ document.addEventListener('DOMContentLoaded', function() {
          card:{h:'DO 20 · 1RM-KALIBRATIE BIJ LOTTE'},
          banner:'Geen max-out: zware single op RPE 9 (≈95% van een echte max), dus verwacht iets ónder je e1RM. Elke lift toont waar die schatting vandaan komt — de laatste zware set. Voelt een opwarmsingle op 90% traag? Dan zakken met de attempt. Uitkomst bepaalt de startgewichten van STRENGTH (24 aug).',
          tiers:[
-           ['T1','Squat','BACK SQUAT — TEST','zware single · RPE 9',null,'3–5 min','Basis: 100×5-5-4 op 14 aug → e1RM 117 · verwacht 110–115 · doel 115–135 · ramp 20×8 · 45×5 · 62,5×3 · 80×2 · 90×1 · 102,5×1',true,true],
-           ['T1','Bench','BENCH PRESS — TEST','zware single · RPE 9',null,'3–5 min','Basis: 75×8-8-8 op 12 aug → e1RM 95 (beste ooit 85×6 op 14 jul → 102) · verwacht 90–97,5 · doel 95–105 · ramp 20×10 · 40×5 · 52,5×3 · 67,5×2 · 77,5×1 · 87,5×1',true,true],
-           ['T1','Deadlift','DEADLIFT — TEST','zware single · RPE 9',null,'3–5 min','Basis: 120×5-5 op 14 aug → e1RM 140 · verwacht 130–137,5 · doel 130–140 · ramp 60×5 · 90×3 · 110×2 · 122,5×1',true,true],
-           ['T2','OHP','OVERHEAD PRESS — TEST','zware single · RPE 9',null,'3–5 min','Basis: 62,5×5-5-3-5 op 11 aug → e1RM 73 · verwacht 67,5–72,5 · doel 70–80 · ramp 20×8 · 30×5 · 40×3 · 50×2 · 57,5×1 · 65×1',false,true]],
+           ['T1','Squat','BACK SQUAT — TEST','zware single · RPE 9 · richtwaarde',112.5,'3–5 min','uit 100×5-5-4 op 14 aug → e1RM 117 · doel 115–135',true,true,
+            _rampHtml('Squat',[[20,8],[45,5],[62.5,3],[80,2],[90,1],[102.5,1]],112.5,liftColor('Squat'))],
+           ['T1','Bench','BENCH PRESS — TEST','zware single · RPE 9 · richtwaarde',95,'3–5 min','uit 75×8-8-8 op 12 aug → e1RM 95 · beste ooit 85×6 (14 jul) → 102 · doel 95–105',true,true,
+            _rampHtml('Bench',[[20,10],[40,5],[52.5,3],[67.5,2],[77.5,1],[87.5,1]],95,liftColor('Bench'))],
+           ['T1','Deadlift','DEADLIFT — TEST','zware single · RPE 9 · richtwaarde',135,'3–5 min','uit 120×5-5 op 14 aug → e1RM 140 · doel 130–140',true,true,
+            _rampHtml('Deadlift',[[60,5],[90,3],[110,2],[122.5,1]],135,liftColor('Deadlift'))],
+           ['T2','OHP','OVERHEAD PRESS — TEST','zware single · RPE 9 · richtwaarde',70,'3–5 min','uit 62,5×5-5-3-5 op 11 aug → e1RM 73 · doel 70–80',false,true,
+            _rampHtml('OHP',[[20,8],[30,5],[40,3],[50,2],[57.5,1],[65,1]],70,liftColor('OHP'))]],
          t3:[]}
       ];
     }
@@ -17677,7 +17699,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + rowsHtml + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div><div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span style="min-width:48px">' + w + ' kg</span><span style="color:var(--text)">werkgewicht</span>' + wPltsH + '</div></div></details>';
       }
 
-      function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1, noWu) {
+      function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1, noWu, extraHtml) {
         const c = liftColor(lk) || d.color;
         const pW = lastW(lk), pD = lastDate(lk);
         const plts = (_BBL.has(lk) && w) ? platesPerSide(w) : null;
@@ -17685,7 +17707,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const pctStr = (ref && w) ? ' <span style="font-size:11px;color:' + c + 'cc">· ' + Math.round(w/ref*100) + '% 1RM</span>' : '';
         const pltsLine = plts ? '<div style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:2px">◧ ' + plts + '</div>' : '';
         const prevLine = pW ? '<div style="font-size:11px;color:' + c + 'cc;margin-bottom:4px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
-        const wu = noWu ? '' : _wuHtml(lk, w, isT1 !== false, c);
+        const wu = (noWu ? '' : _wuHtml(lk, w, isT1 !== false, c)) + (extraHtml || '');
         return '<div class="gzclp-tier" style="border-color:' + c + '33">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,' + c + ',transparent 70%);box-shadow:0 0 6px ' + c + '66"></div>' +
           '<div class="gzclp-tier-body"><div class="gzclp-tier-main">' +
