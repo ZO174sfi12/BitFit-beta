@@ -17522,6 +17522,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // Tier-definities i.p.v. platte regels, zodat deze dagen dezelfde
       // kaartopmaak krijgen als de rest van EXPLOSIVE. Argumenten volgen
       // _tierCard(badge, liftKey, naam, schema, gewicht, rust, cue, isT1, noWu).
+      const WANDEL_DI = ['Wandelen 3 km/h · vlak · zone 0–1', '60–90 min bureau of 30–45 min wijk', null, false];
+      const WANDEL_WO = ['Wandelen 3 km/h · vlak · zone 0–1', '60–90 min bureau of 20–30 min wijk', null, false];
+      const REV_RATH  = ['Rathleff Heel Raise', '3×20', null, true];
+      const REV_TOE   = ['Toe Dorsiflex Lunge', '2×10/kant', null, true];
       return [
         {key:'VR 14', color:'#b388ff', wu:'za',
          card:{h:'VR 14 · LOWER · laatste zware sessie · ±65 MIN'},
@@ -17530,26 +17534,30 @@ document.addEventListener('DOMContentLoaded', function() {
            ['T1','Squat','BACK SQUAT','3 × 5 — push',100,'3 min','Dinsdag was 4-3-5 · een schone 3×5 is het doel',true],
            ['T1','Deadlift','DEADLIFT','2 × 5 — bevestigen',120,'3–5 min','Niet uitbreiden. Set 2 mag 125 als set 1 snel voelt',true],
            ['T2','OHP','OVERHEAD PRESS','3 × 5 — consolideren',62.5,'2–3 min','Schoon afmaken, geen extra set',false]],
-         t3:[['Hip Thrust (plate-loaded)','3×15','Hip Thrust',false]]},
+         t3:[['Hip Thrust (plate-loaded)','3×15','Hip Thrust',false], REV_RATH]},
 
-        {key:'MA 17', color:'#64b5f6', wu:'wo',
-         card:{h:'MA 17 · UPPER + OPENERS · 3 dagen voor de test · ±50 MIN'},
-         banner:'Laatste zware bench voor de test · squat enkel om het zware gevoel terug te halen',
+        {key:'MA 17', color:'#64b5f6', wu:'ma',
+         card:{h:'MA 17 · SPEED (afgeweken van plan) · ±45 MIN'},
+         banner:'Werd per ongeluk een volledige speed-sessie i.p.v. upper+openers — de taperkaart verscheen niet door een weeknummer-bug. Telt alsnog als primer, dus DI is ingekort.',
          tiers:[
-           ['T2','Bench','BARBELL BENCH PRESS','3 × 3',82.5,'2–3 min','Hielen op grond · billen op de bank',false],
-           ['T2','Row','BARBELL ROW','3 × 8',60,'2 min',null,false],
-           ['T1','Squat','BACK SQUAT','2 × 2',100,'3 min','Niet uitknijpen · stoppen zodra het traag wordt',true]],
+           ['SPEED','Squat','SPEED SQUAT','3 × 4',60,'90 sec',null,false,true],
+           ['SPEED','Deadlift','SPEED DEADLIFT','3 × 4',80,'90 sec',null,false,true],
+           ['SPEED','Row','SPEED ROW','3 × 4',60,'90 sec',null,false,true],
+           ['SPEED','OHP','SPEED OHP','3 × 4',40,'90 sec',null,false,true]],
          t3:[]},
 
-        {key:'DI 18', color:'#00ffb3', wu:'ma',
-         card:{h:'DI 18 · PRIMER · 2 dagen voor de test · ±35 MIN'},
-         banner:'Alleen snelheid en techniek — ver van vermoeidheid blijven. WO 19 = volledige rust',
+        {key:'DI 18', color:'#00ffb3', wu:'wo',
+         card:{h:'DI 18 · ENKEL BENCH · 2 dagen voor de test · ±25 MIN'},
+         banner:'Alleen bench — de speed-sessie van ma 17 deed het primer-werk al. Geen squat of deadlift meer voor de test. Zone 2 vervalt deze week.',
          tiers:[
-           ['SPEED','Squat','BACK SQUAT','2 × 5',65,'90 sec','Barsnelheid, geen belasting opbouwen',false,true],
-           ['SPEED','Bench','BENCH PRESS','2 × 5',50,'90 sec',null,false,true],
-           ['SPEED','Deadlift','DEADLIFT','2 × 3',60,'90 sec','Patroon primen',false,true],
-           ['SPEED','OHP','OVERHEAD PRESS','2 × 5',45,'90 sec',null,false,true]],
-         t3:[['Incline walk · 10% · ~5 km/h','15 min · zone 2',null,false]]},
+           ['T2','Bench','BARBELL BENCH PRESS','2 × 3 — laatste zware aanraking',82.5,'3 min','Enige lift die nog mist · stoppen zodra de bar traag wordt',false]],
+         t3:[WANDEL_DI, REV_RATH, REV_TOE]},
+
+        {key:'WO 19', color:'#8888aa', wu:'ma',
+         card:{h:'WO 19 · RUST · geen belasting'},
+         banner:'Volledige rust voor de kalibratie van morgen. Alleen doorbloeding en mobiliteit — als het aanvoelt als training, is het te veel.',
+         tiers:[],
+         t3:[WANDEL_WO, REV_RATH, REV_TOE]},
 
         {key:'DO 20', color:'#ffd600', wu:'za',
          card:{h:'DO 20 · 1RM-KALIBRATIE BIJ LOTTE'},
@@ -17565,8 +17573,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function testPrepIdx() {
       if (todayStr <= '2026-08-14') return 0;
       if (todayStr <= '2026-08-17') return 1;
-      if (todayStr <= '2026-08-19') return 2;
-      return 3;
+      if (todayStr === '2026-08-18') return 2;
+      if (todayStr === '2026-08-19') return 3;
+      return 4;
     }
     const multiWk = ph.totalWks > 1;
     const expNote = testPrepActive()
