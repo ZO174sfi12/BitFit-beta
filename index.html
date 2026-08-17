@@ -17579,14 +17579,14 @@ document.addEventListener('DOMContentLoaded', function() {
          card:{h:'DO 20 · 1RM-KALIBRATIE BIJ LOTTE'},
          banner:'Geen max-out: zware single op RPE 9 (≈95% van een echte max), dus verwacht iets ónder je e1RM. Elke lift toont waar die schatting vandaan komt — de laatste zware set. Voelt een opwarmsingle op 90% traag? Dan zakken met de attempt. Uitkomst bepaalt de startgewichten van STRENGTH (24 aug).',
          tiers:[
-           ['T1','Squat','BACK SQUAT — TEST','zware single · RPE 9 · richtwaarde',112.5,'3–5 min','uit 100×5-5-4 op 14 aug → e1RM 117 · doel 115–135',true,true,
-            _rampHtml('Squat',[[20,8],[45,5],[62.5,3],[80,2],[90,1],[102.5,1]],112.5,liftColor('Squat'))],
-           ['T1','Bench','BENCH PRESS — TEST','zware single · RPE 9 · richtwaarde',95,'3–5 min','uit 75×8-8-8 op 12 aug → e1RM 95 · beste ooit 85×6 (14 jul) → 102 · doel 95–105',true,true,
-            _rampHtml('Bench',[[20,10],[40,5],[52.5,3],[67.5,2],[77.5,1],[87.5,1]],95,liftColor('Bench'))],
-           ['T1','Deadlift','DEADLIFT — TEST','zware single · RPE 9 · richtwaarde',135,'3–5 min','uit 120×5-5 op 14 aug → e1RM 140 · doel 130–140',true,true,
-            _rampHtml('Deadlift',[[60,5],[90,3],[110,2],[122.5,1]],135,liftColor('Deadlift'))],
-           ['T2','OHP','OVERHEAD PRESS — TEST','zware single · RPE 9 · richtwaarde',70,'3–5 min','uit 62,5×5-5-3-5 op 11 aug → e1RM 73 · doel 70–80',false,true,
-            _rampHtml('OHP',[[20,8],[30,5],[40,3],[50,2],[57.5,1],[65,1]],70,liftColor('OHP'))]],
+           ['T1','Squat','BACK SQUAT — TEST','zware single',112.5,'3–5 min','uit 100×5-5-4 op 14 aug → e1RM 117 · doel 115–135',true,true,
+            _rampHtml('Squat',[[20,8],[45,5],[62.5,3],[80,2],[90,1],[102.5,1]],112.5,liftColor('Squat')),true],
+           ['T1','Bench','BENCH PRESS — TEST','zware single',95,'3–5 min','uit 75×8-8-8 op 12 aug → e1RM 95 · beste ooit 85×6 (14 jul) → 102 · doel 95–105',true,true,
+            _rampHtml('Bench',[[20,10],[40,5],[52.5,3],[67.5,2],[77.5,1],[87.5,1]],95,liftColor('Bench')),true],
+           ['T1','Deadlift','DEADLIFT — TEST','zware single',135,'3–5 min','uit 120×5-5 op 14 aug → e1RM 140 · doel 130–140',true,true,
+            _rampHtml('Deadlift',[[60,5],[90,3],[110,2],[122.5,1]],135,liftColor('Deadlift')),true],
+           ['T2','OHP','OVERHEAD PRESS — TEST','zware single',70,'3–5 min','uit 62,5×5-5-3-5 op 11 aug → e1RM 73 · doel 70–80',false,true,
+            _rampHtml('OHP',[[20,8],[30,5],[40,3],[50,2],[57.5,1],[65,1]],70,liftColor('OHP')),true]],
          t3:[]}
       ];
     }
@@ -17699,14 +17699,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + rowsHtml + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div><div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span style="min-width:48px">' + w + ' kg</span><span style="color:var(--text)">werkgewicht</span>' + wPltsH + '</div></div></details>';
       }
 
-      function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1, noWu, extraHtml) {
+      function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1, noWu, extraHtml, noPrev) {
         const c = liftColor(lk) || d.color;
         const pW = lastW(lk), pD = lastDate(lk);
         const plts = (_BBL.has(lk) && w) ? platesPerSide(w) : null;
         const ref = REF1RM[lk];
         const pctStr = (ref && w) ? ' <span style="font-size:11px;color:' + c + 'cc">· ' + Math.round(w/ref*100) + '% 1RM</span>' : '';
         const pltsLine = plts ? '<div style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:2px">◧ ' + plts + '</div>' : '';
-        const prevLine = pW ? '<div style="font-size:11px;color:' + c + 'cc;margin-bottom:4px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
+        const prevLine = (pW && !noPrev) ? '<div style="font-size:11px;color:' + c + 'cc;margin-bottom:4px">vorig: ' + pW + ' kg' + (pD ? ' · ' + pD : '') + '</div>' : '';
         const wu = (noWu ? '' : _wuHtml(lk, w, isT1 !== false, c)) + (extraHtml || '');
         return '<div class="gzclp-tier" style="border-color:' + c + '33">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,' + c + ',transparent 70%);box-shadow:0 0 6px ' + c + '66"></div>' +
