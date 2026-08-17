@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-15T09:27:13",
-  "weight": 86.8,
-  "weight_date": "2026-08-14",
-  "training_days_total": 140,
-  "last_training_day": "2026-08-14",
+  "updated": "2026-08-17T22:08:34",
+  "weight": 87.9,
+  "weight_date": "2026-08-17",
+  "training_days_total": 142,
+  "last_training_day": "2026-08-17",
   "lifts": {
     "Squat": {
       "last_date": "2026-08-14",
@@ -41,11 +41,11 @@
       "pr_weight": 62.5
     },
     "Lat PD": {
-      "last_date": "2026-08-05",
-      "last_weight": 40.0,
-      "last_volume": 1400.0,
-      "pr": false,
-      "pr_weight": 60.0
+      "last_date": "2026-08-17",
+      "last_weight": 70.0,
+      "last_volume": 1100.0,
+      "pr": true,
+      "pr_weight": 70.0
     },
     "DIP-BW": {
       "last_date": "2026-07-10",
@@ -76,9 +76,9 @@
       "pr_weight": 30.0
     },
     "Face Pull": {
-      "last_date": "2026-08-12",
-      "last_weight": 10.0,
-      "last_volume": 420.0,
+      "last_date": "2026-08-17",
+      "last_weight": 15.0,
+      "last_volume": 505.0,
       "pr": false,
       "pr_weight": 20.0
     },
@@ -90,11 +90,11 @@
       "pr_weight": 60.0
     },
     "Abductor": {
-      "last_date": "2026-07-27",
-      "last_weight": 35.0,
-      "last_volume": 1295.0,
-      "pr": false,
-      "pr_weight": 35.0
+      "last_date": "2026-08-17",
+      "last_weight": 40.0,
+      "last_volume": 1290.0,
+      "pr": true,
+      "pr_weight": 40.0
     },
     "Leg Curl": {
       "last_date": "2026-08-14",
@@ -111,17 +111,17 @@
       "pr_weight": 115.0
     },
     "Speed Squat": {
-      "last_date": "2026-08-10",
-      "last_weight": 65.0,
-      "last_volume": 555.0,
+      "last_date": "2026-08-17",
+      "last_weight": 60.0,
+      "last_volume": 720.0,
       "pr": false,
       "pr_weight": 65.0
     },
     "Speed Deadlift": {
-      "last_date": "2026-08-10",
+      "last_date": "2026-08-17",
       "last_weight": 80.0,
-      "last_volume": 720.0,
-      "pr": true,
+      "last_volume": 1440.0,
+      "pr": false,
       "pr_weight": 80.0
     },
     "Speed Bench": {
@@ -132,18 +132,25 @@
       "pr_weight": 65.0
     },
     "Speed Row": {
-      "last_date": "2026-08-10",
+      "last_date": "2026-08-17",
       "last_weight": 60.0,
-      "last_volume": 360.0,
-      "pr": true,
+      "last_volume": 720.0,
+      "pr": false,
       "pr_weight": 60.0
     },
     "Speed OHP": {
-      "last_date": "2026-08-10",
+      "last_date": "2026-08-17",
       "last_weight": 40.0,
-      "last_volume": 240.0,
+      "last_volume": 480.0,
       "pr": false,
       "pr_weight": 50.0
+    },
+    "Speed DB Bench": {
+      "last_date": "2026-08-17",
+      "last_weight": 30.0,
+      "last_volume": 328.0,
+      "pr": true,
+      "pr_weight": 30.0
     }
   }
 }
