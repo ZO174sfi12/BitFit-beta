@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-17T22:08:34",
-  "weight": 87.9,
-  "weight_date": "2026-08-17",
-  "training_days_total": 142,
-  "last_training_day": "2026-08-17",
+  "updated": "2026-08-18T16:35:02",
+  "weight": 86.9,
+  "weight_date": "2026-08-18",
+  "training_days_total": 143,
+  "last_training_day": "2026-08-18",
   "lifts": {
     "Squat": {
       "last_date": "2026-08-14",
@@ -20,9 +20,9 @@
       "pr_weight": 120.0
     },
     "Bench": {
-      "last_date": "2026-08-12",
-      "last_weight": 75.0,
-      "last_volume": 1800.0,
+      "last_date": "2026-08-18",
+      "last_weight": 85.0,
+      "last_volume": 810.0,
       "pr": false,
       "pr_weight": 85.0
     },
