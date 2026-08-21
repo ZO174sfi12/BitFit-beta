@@ -155,14 +155,17 @@
     "Squat": 130,
     "Bench": 105,
     "Deadlift": 150,
-    "SBD": 385
+    "SBD": 385,
+    "OHP": 80,
+    "Row": 87.5
   },
-  "doel_1rm_bron": "Hertest 28 sep – 4 okt. Afgeleid uit het werkgewicht van week 4 via Epley plus de winst van de deload. SBD nu 360 (20 aug).",
+  "doel_1rm_bron": "Hertest 28 sep – 4 okt. Squat/bench/deadlift afgeleid uit het werkgewicht van week 4. OHP en Row hebben nog geen geteste 1RM — hun linkerzijde is de verwachte 1RM uit de 3RM-test van 22 aug (3RM x 1,1), rechterzijde dezelfde relatieve sprong als de andere liften. SBD nu 360 (20 aug).",
   "doel_1rm_range": {
     "Squat": "120–130",
     "Bench": "100–105",
     "Deadlift": "140–150",
-    "OHP": "70–80"
+    "OHP": "74–80",
+    "Row": "80–87,5"
   },
   "doel_1rm_range_bron": "Band in de voortgangsband: van de geteste 1RM van 20 aug naar het doel van 4 okt. Vervangt Lotte’s schattingsranges, die nu in historiek staan.",
   "test_22aug": {
