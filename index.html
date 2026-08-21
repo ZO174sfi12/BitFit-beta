@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608210847</span>
+        <span class="meta-value" style="color:var(--muted)">202608210919</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -17545,8 +17545,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!el) return;
     const P = [
       {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-20', color:'#ff6b35', totalWks:4},
-      {name:'STRENGTH',  start:'2026-08-24', end:'2026-10-04', color:'#ff3d6b', totalWks:6},
-      {name:'TEST',      start:'2026-10-05', end:'2026-10-11', color:'#ffd600', totalWks:1}
+      {name:'STRENGTH',  start:'2026-08-24', end:'2026-09-20', color:'#ff3d6b', totalWks:4},
+      {name:'DELOAD',    start:'2026-09-21', end:'2026-09-27', color:'#8888aa', totalWks:1},
+      {name:'TEST',      start:'2026-09-28', end:'2026-10-04', color:'#ffd600', totalWks:1}
     ];
     const ph = P.find(x => todayStr >= x.start && todayStr <= x.end);
     if (!ph) return;
@@ -17554,10 +17555,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (std) std.removeAttribute('open');
     const curWk = Math.floor((new Date(todayStr) - new Date(ph.start)) / (7*86400000));
     const f = x => (x % 1 ? x.toFixed(1) : x) + ' kg';
-    // 1RM-referenties (schatting jul 2026) voor % en plaat-berekening (20 kg olympische bar)
+    // 1RM-referenties voor % en plaat-berekening (20 kg olympische bar).
+    // Squat/bench/deadlift zijn sinds 20 aug 2026 GETESTE waarden (kalibratie Lotte),
+    // geen Epley-schatting meer. OHP blijft schatting tot de test van 22 aug.
     // ⚠ CANONIEK: program_config.json (ref_1rm). Bij wijzigen: sync config + program.html + build.js,
     //   draai daarna Downloads/check_program_consistency.py.
-    const REF1RM = {Squat:117, Bench:102, Deadlift:134, OHP:70, Front:76};
+    const REF1RM = {Squat:120, Bench:100, Deadlift:140, OHP:73, Front:76};
     const pct = (w,ref) => ref ? ' · ' + Math.round(w/ref*100) + '% 1RM' : '';
     function platesTxt(w){
       let per = (w-20)/2;
@@ -17620,37 +17623,83 @@ document.addEventListener('DOMContentLoaded', function() {
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
       } else if (ph.name === 'STRENGTH') {
-        sq = {h:'MA · SQUAT · ±70 MIN', r:[
-          ['tb-wu','WU','Opbouwsets Squat naar werkgewicht'],
-          ...W('T1','Back Squat 3×5', 92.5+2.5*wk, REF1RM.Squat, '— 3 min rust; enkel als vorige week gelukt'),
-          ...W('T2','OHP 3×5', 57.5+2.5*Math.floor(wk/2), REF1RM.OHP, '— +2,5 kg per twee weken'),
-          ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Cable Bicep Curl 3×15'],
-          ['tb-rev','REV','REV-oefening 3×20'],
-          ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
-        be = {h:'WO · BENCH · ±70 MIN', r:[
-          ['tb-wu','WU','Opbouwsets Bench naar werkgewicht'],
-          ...W('T1','Barbell Bench 3×5', 75+2.5*wk, REF1RM.Bench, '— 3 min rust'),
-          ...W('T2','Barbell Row 3×10', 65, null, '→'),
-          ['tb-t3','T3','Lat PD 3×15 · Triceps Pushdown 3×15'],
-          ['tb-rev','REV','REV-oefening 3×20'],
-          ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
-        dl = {h:'ZA · DEADLIFT · ±70 MIN', r:[
-          ['tb-wu','WU','Opbouwsets DL naar werkgewicht'],
-          ...W('T1','Deadlift 2×5+AMRAP', 112.5+2.5*wk, REF1RM.Deadlift, '(Greyskull door)'),
-          ...W('T2','Front Squat 3×10', 60, REF1RM.Front, '→'),
-          ['tb-t3','T3','DB Bench ×2 3×12 · Hammer Curl 3×15'],
-          ['tb-rev','REV','REV-oefening 3×20'],
-          ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
+        // v7 · 24 aug – 20 sep. Alles 3 sets x 3-4 reps met explosieve intentie,
+        // lineair +5 kg lower / +2,5 kg upper per week. Maandag is een fullbody
+        // BEVESTIGINGSdag: die draait de gewichten van de week ervoor.
+        // OHP heeft nog geen geteste 1RM — Bert test die 22 aug, tot dan null.
+        const V7_SQ  = [97.5, 102.5, 107.5, 112.5];
+        const V7_DL  = [112.5, 117.5, 122.5, 127.5];
+        const V7_BE  = [80, 82.5, 85, 87.5];
+        const V7_ROW = [70, 72.5, 75, 77.5];
+        const V7_OHP = [null, null, null, null];
+        const iw = Math.min(Math.max(wk,0), 3);        // huidige week
+        const ip = Math.max(0, iw - 1);                 // week ervoor (maandag)
+        sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±60 MIN',
+              banner: iw === 0
+                ? 'Week 1: maandag draait de startgewichten (80% van je geteste 1RM).'
+                : 'Bevestigingsdag — zelfde gewichten als week ' + (ip+1) + '. Niet zwaarder gaan.',
+              tiers:[
+                ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[ip],'3 min','Explosief omhoog · stoppen zodra de staaf traag wordt',true],
+                ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[ip],'3–5 min','Meer hinge · minder squat',true]],
+              t3:[]};
+        be = {h:'WO · UPPER · ±60 MIN',
+              tiers:[
+                ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','Geen geteste 1RM — startgewicht afgeleid uit 62,5×10',true],
+                ['T1','OHP','OVERHEAD PRESS','3 × 3-4', V7_OHP[iw],'2–3 min','Startgewicht volgt na de OHP-test van 22 aug',true]],
+              t3:[['Dips','3×3-5','DIP-BW',false],
+                  ['Triceps Pushdown (rope)','3×3-5',null,false],
+                  ['DB Clean','3×3-5','DB Clean',false]]};
+        dl = {h:'ZA · LOWER · ±65 MIN',
+              tiers:[
+                ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
+                ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
+              t3:[['Hip Thrust (plate-loaded)','3×3-5','Hip Thrust',false],
+                  ['Front Squat of Zercher','3×3-5','Front Squat',false],
+                  ['Lat Pulldown','3×3-5','Lat PD',false],
+                  ['Seated Cable Row','3×3-5','Cable Row',false]]};
+      } else if (ph.name === 'DELOAD') {
+        // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
+        sq = {h:'MA · FULLBODY · DELOAD',
+              banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt deze week.',
+              tiers:[
+                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel',true],
+                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
+                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
+              t3:[]};
+        be = {h:'WO · UPPER · DELOAD',
+              banner:'Techniek en snelheid, geen belasting opbouwen.',
+              tiers:[
+                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
+                ['T1','Row','BARBELL ROW','2 × 3', 52.5,'2 min',null,true],
+                ['T1','OHP','OVERHEAD PRESS','2 × 3', null,'2 min','Volgt na de OHP-test',true]],
+              t3:[]};
+        dl = {h:'ZA · LOWER · DELOAD',
+              banner:'Laatste sessie voor de hertest. Fris eindigen.',
+              tiers:[
+                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min',null,true],
+                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
+              t3:[]};
       } else {
-        sq = {h:'MA · SQUAT-TEST', r:[['','T1','3×5/AMRAP → zware single RPE 9 · 1RM-doel 115–135 kg'],['tb-rev','REV','REV-oefening 3×20']]};
-        be = {h:'WO · BENCH-TEST', r:[['','T1','3×5/AMRAP → zware single RPE 9 · 1RM-doel 95–105 kg'],['','T2','OHP 3×5-test'],['tb-rev','REV','REV-oefening 3×20']]};
-        dl = {h:'ZA · DEADLIFT-TEST', r:[['','T1','Greyskull + zware single RPE 9 · 1RM-doel 130–140 kg'],['tb-rev','REV','REV-oefening 3×20']]};
+        // 28 sep – 4 okt · hertest. Richtwaarden = de doelen uit v7.
+        const tb = 'Zware single op RPE 9, geen max-out. Opwarmramp: 3 sets, laatste rond 90% van het doel.';
+        sq = {h:'MA · SQUAT-HERTEST', banner:tb, tiers:[
+                ['T1','Squat','BACK SQUAT — TEST','zware single', 130,'3–5 min','Doel 130 · getest 120 op 20 aug',true,true]], t3:[]};
+        be = {h:'WO · BENCH- EN OHP-HERTEST', banner:tb, tiers:[
+                ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','Doel 105 · getest 100 op 20 aug',true,true],
+                ['T1','OHP','OVERHEAD PRESS — TEST','zware single', null,'3–5 min','Doel volgt uit de test van 22 aug',true,true]], t3:[]};
+        dl = {h:'ZA · DEADLIFT-HERTEST', banner:tb, tiers:[
+                ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','Doel 150 · getest 140 op 20 aug',true,true]], t3:[]};
       }
       const isExp = ph.name === 'EXPLOSIVE';
+      // Sinds v7 heten de dagen in elke fase MA/WO/ZA. De tier-velden staan op het
+      // dag-object zelf (niet in card), zodat renderCard ze tiered kan tekenen.
+      const mk = (key, color, c) => ({key, color, card:{h:c.h, r:c.r}, tiers:c.tiers, t3:c.t3, banner:c.banner});
       const days = [
-        {key: isExp ? 'MA' : 'SQUAT',    color:'#b388ff', card:sq},
-        {key: isExp ? 'WO' : 'BENCH',    color:'#64b5f6', card:be},
-        {key: isExp ? 'ZA' : 'DEADLIFT', color:'#ffd600', card:dl}
+        mk('MA', '#b388ff', sq),
+        mk('WO', '#64b5f6', be),
+        mk('ZA', '#ffd600', dl)
       ];
       if (!isExp) days.splice(1, 0, {key:'DI', color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}});
       return days;
@@ -17861,7 +17910,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const wk = activeWk;
 
       // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
-      if (ph.name !== 'EXPLOSIVE' || d.key === 'DI' || d.flat) {
+      if (d.flat || (!d.tiers && (ph.name !== 'EXPLOSIVE' || d.key === 'DI'))) {
         cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
           _mobWuHtml(d.wu || d.key) +
           d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
