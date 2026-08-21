@@ -17654,14 +17654,24 @@ document.addEventListener('DOMContentLoaded', function() {
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
                 ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
-                ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]],
+                ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]]
+                .concat(iw === 3 ? [['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true]] : []),
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
                   ['DB Clean','3×3-5','DB Clean',false]]};
-        dl = {h:'ZA · LOWER · ±75 MIN',
+        // Week 4 (14-20 sep): één zware single ná de werksets, ~90% van de 1RM.
+        // Negen dagen voor de hertest van 28 sep, met de deload ertussen. Doel is
+        // je opener ijken en de single-vaardigheid oefenen — geen max-poging.
+        const topWk = (iw === 3);
+        const TOP = {Squat:110, Deadlift:125, Bench:90};
+        const topTier = (lk, naam) => ['T1', lk, naam + ' — TOPSET', '1 zware single · RPE 8-9', TOP[lk],
+              '3–5 min', 'Alleen als de werksets explosief waren. Traag? Overslaan.', true, true];
+        dl = {h:'ZA · LOWER · ±75 MIN' + (topWk ? ' + TOPSET' : ''),
+              banner: topWk ? 'Laatste zware week. Na de werksets één single op ~90% om je opener voor 28 sep te ijken.' : undefined,
               tiers:[
                 ['T1','Squat','BACK SQUAT',V7_REPS[iw], V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
-                ['T1','Deadlift','DEADLIFT',V7_REPS[iw], V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
+                ['T1','Deadlift','DEADLIFT',V7_REPS[iw], V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]]
+                .concat(topWk ? [topTier('Squat','BACK SQUAT'), topTier('Deadlift','DEADLIFT')] : []),
               t3:[['Hip Thrust (plate-loaded)','3×3-5','Hip Thrust',false],
                   ['Front Squat of Zercher','3×3-5','Front Squat',false],
                   ['Lat Pulldown','3×3-5','Lat PD',false],

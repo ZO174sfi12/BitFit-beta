@@ -187,5 +187,11 @@
   },
   "pct_regel": "Start op 70% van de geteste 1RM en push elke week het gewicht omhoog tot 80%, maximaal 85%. Criterium is niet het percentage maar de uitvoering: het gewicht moet in één beweging verplaatst worden, niet hakkelend. Gaat het hoger dan 85% en blijft het explosief, dan mag dat.",
   "deload_core": true,
-  "lotte_feedback_21aug": "Startpercentage van 80 naar 70, plafond van 94 naar 80-85%, rep-schema begint op 3x4 en gaat naar 3x3, en core blijft ook tijdens de deloadweek staan (in de opwarming) omdat die sessie toch korter is."
+  "lotte_feedback_21aug": "Startpercentage van 80 naar 70, plafond van 94 naar 80-85%, rep-schema begint op 3x4 en gaat naar 3x3, en core blijft ook tijdens de deloadweek staan (in de opwarming) omdat die sessie toch korter is.",
+  "topset_week4": {
+    "Squat": 110,
+    "Bench": 90,
+    "Deadlift": 125,
+    "bron": "Eén zware single op ~90% ná de werksets in week 4 (14-20 sep), negen dagen voor de hertest van 28 sep met de deload ertussen. Doel: de opener ijken en de single-vaardigheid oefenen — geen max-poging. Alleen doen als de werksets explosief aanvoelden. Wijkt af van Lotte's plafond van 85%; Bert koos hiervoor op 21 aug."
+  }
 }
