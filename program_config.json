@@ -25,7 +25,7 @@
     "TEST": {
       "start": "2026-09-28",
       "eind": "2026-10-04",
-      "label": "28 sep – 4 okt"
+      "label": "ma 28 sep"
     }
   },
   "speed": {
@@ -125,7 +125,7 @@
     ]
   },
   "kalibratie_lotte": "20 aug",
-  "test_aanpak": "hertest 28 sep – 4 okt: zware single RPE 9 per lift, geen max-out",
+  "test_aanpak": "Hertest bij Lotte op ma 28 sep — alle liften in één sessie, per lift een zware single op RPE 9, geen max-out. Rest van die week vrij. (Was eerst verspreid over MA/WO/ZA; Bert corrigeerde dat 21 aug.)",
   "getest_1rm": {
     "Squat": 120,
     "Bench": 100,
@@ -148,9 +148,9 @@
     "Squat": 130,
     "Bench": 105,
     "Deadlift": 150,
-    "SBD": 385,
     "OHP": 80,
-    "Row": 87.5
+    "Row": 87.5,
+    "SBD": 385
   },
   "doel_1rm_bron": "Hertest 28 sep – 4 okt. Squat/bench/deadlift afgeleid uit het werkgewicht van week 4. OHP en Row hebben nog geen geteste 1RM — hun linkerzijde is de verwachte 1RM uit de 3RM-test van 22 aug (3RM x 1,1), rechterzijde dezelfde relatieve sprong als de andere liften. SBD nu 360 (20 aug).",
   "doel_1rm_range": {

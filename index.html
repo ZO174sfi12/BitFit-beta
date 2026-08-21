@@ -17703,15 +17703,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
               t3:[]};
       } else {
-        // 28 sep – 4 okt · hertest. Richtwaarden = de doelen uit v7.
-        const tb = 'Zware single op RPE 9, geen max-out. Opwarmramp: 3 sets, laatste rond 90% van het doel.';
-        sq = {h:'MA · SQUAT-HERTEST · ±20 MIN', banner:tb, tiers:[
-                ['T1','Squat','BACK SQUAT — TEST','zware single', 130,'3–5 min','Doel 130 · getest 120 op 20 aug',true,true]], t3:[]};
-        be = {h:'WO · BENCH- EN OHP-HERTEST · ±35 MIN', banner:tb, tiers:[
-                ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','Doel 105 · getest 100 op 20 aug',true,true],
-                ['T1','OHP','OVERHEAD PRESS — TEST','zware single', null,'3–5 min','Doel volgt uit de test van 22 aug',true,true]], t3:[]};
-        dl = {h:'ZA · DEADLIFT-HERTEST · ±20 MIN', banner:tb, tiers:[
-                ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','Doel 150 · getest 140 op 20 aug',true,true]], t3:[]};
+        // 28 sep · hertest bij Lotte — ALLE liften in één sessie, niet verspreid
+        // over MA/WO/ZA zoals ik eerst had (Bert corrigeerde dat op 21 aug).
+        const tb = 'Alles in één sessie bij Lotte. Per lift een zware single op RPE 9, geen max-out. Opwarmramp: 3 sets, de laatste rond 90% van het doel. Voelt een opwarmsingle traag? Dan zakken met de attempt.';
+        sq = {h:'MA 28 SEP · HERTEST BIJ LOTTE · alle liften · ±90 MIN', banner:tb, tiers:[
+                ['T1','Squat','BACK SQUAT — TEST','zware single', 130,'3–5 min','getest 120 op 20 aug · werkgewicht wk4 100 kg',true,true,
+                 _rampHtml('Squat',[[60,5],[95,3],[117.5,1]],130,liftColor('Squat')),true],
+                ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','getest 100 op 20 aug · werkgewicht wk4 80 kg',true,true,
+                 _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
+                ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','getest 140 op 20 aug · werkgewicht wk4 115 kg',true,true,
+                 _rampHtml('Deadlift',[[70,3],[110,2],[135,1]],150,liftColor('Deadlift')),true],
+                ['T2','OHP','OVERHEAD PRESS — TEST','zware single', 80,'3–5 min','3RM-test 22 aug · werkgewicht wk4 60 kg',true,true,
+                 _rampHtml('OHP',[[20,5],[55,3],[72.5,1]],80,liftColor('OHP')),true],
+                ['T2','Row','BARBELL ROW — TEST','zware single', 87.5,'3 min','3RM-test 22 aug · werkgewicht wk4 65 kg',true,true,
+                 _rampHtml('Row',[[40,5],[65,3],[80,1]],87.5,liftColor('Row')),true]], t3:[]};
+        be = {h:'WO · VRIJ NA DE HERTEST', banner:'De hertest was maandag. Deze dag is vrij — lichte beweging of rust, afhankelijk van hoe maandag ging.', tiers:[], t3:[]};
+        dl = {h:'ZA · VRIJ NA DE HERTEST', banner:'Uitkomst van de hertest bepaalt het volgende blok.', tiers:[], t3:[]};
       }
       const isExp = actPh.name === 'EXPLOSIVE';
       // Sinds v7 heten de dagen in elke fase MA/WO/ZA. De tier-velden staan op het
