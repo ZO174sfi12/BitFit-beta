@@ -17874,20 +17874,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stond eerder alleen op de PROGRAM-pagina; hoort hier, want dit is de
     // pagina die je in de gym openhebt. Per dagslot: ma/wo/za, ook geldig
     // voor de STRENGTH-namen (SQUAT=ma, BENCH=wo, DEADLIFT=za).
+    // Core bijgestuurd op 21 aug 2026 naar wat Bert feitelijk logt sinds juni:
+    // Sit-Up is zijn meest gedane core-oefening (7x) maar stond nergens in het
+    // schema; Heel Touch stond op maandag terwijl hij hem op woensdag doet.
+    // Superman blijft staan als enige rug-extensie — Berts eigen keuze.
     const WU_MOB = {
-      ma: {core:'core zijkant', rows:[
-        ['Side Heel Touches','2 × 10/kant','core zijkant'],
+      ma: {core:'core voorkant', rows:[
+        ['Sit-Up','2 × 15','core voorkant'],
         ['Leg Swings voor + opzij','10/kant','heup · hamstrings'],
         ['Hip Circles','10/kant','heup activatie'],
         ['Arm Swings','15×','schouder activatie'],
         ["World's Greatest Stretch",'5/kant','thoracaal']]},
-      wo: {core:'core voorkant', rows:[
-        ['Dead Bug','1 × 8','core voorkant'],
+      wo: {core:'core voor + zijkant', rows:[
+        ['Dead Bug','1 × 12 + 60 sec','core voorkant'],
+        ['Alternating Heel Touch','2 × 8','core zijkant'],
         ['Cat-Cow','6×','rugmobiliteit'],
-        ['Side Heel Touches','1 × 10/kant','core zijkant'],
         ['Push-ups','2 × 12','borst/schouder']]},
-      za: {core:'core rug', rows:[
+      za: {core:'core rug + voorkant', rows:[
         ['Superman','1 × 10','core rug'],
+        ['Sit-Up','2 × 15','core voorkant'],
+        ['Alternating Heel Touch','2 × 8','core zijkant'],
         ['Leg Swings voor + opzij','10/kant','hamstrings · heup'],
         ['Glute Bridge BW','15×','glute activatie'],
         ["World's Greatest Stretch",'5/kant','thoracaal']]}
