@@ -17555,6 +17555,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const std = document.getElementById('gzclp-standard');
     if (std) std.removeAttribute('open');
     const curWk = Math.floor((new Date(todayStr) - new Date(ph.start)) / (7*86400000));
+    // actPh = de fase die je nu BEKIJKT (kan vooruit staan via de weekknoppen),
+    // ph = de fase waar je vandaag in zit. Alles wat de kaart tekent kijkt naar actPh.
+    let actPh = ph;
     const f = x => (x % 1 ? x.toFixed(1) : x) + ' kg';
     // 1RM-referenties voor % en plaat-berekening (20 kg olympische bar).
     // Squat/bench/deadlift zijn sinds 20 aug 2026 GETESTE waarden (kalibratie Lotte),
@@ -17585,7 +17588,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function buildDayp(wk) {
       let sq, be, dl;
-      if (ph.name === 'EXPLOSIVE') {
+      if (actPh.name === 'EXPLOSIVE') {
         const expReps = wk === 1 ? '4-3-4' : wk === 2 ? '3×3' : '3×4';
         const expRest = '90 sec · langer als snelheid daalt';
         // Speed Squat wijkt af van de lineaire +2,5/wk-formule (index = wk, 0-based):
@@ -17623,7 +17626,7 @@ document.addEventListener('DOMContentLoaded', function() {
           ['tb-t3','T3','Hip Thrust (plate-loaded) 3×15 · Leg Curl 3×12 · Abductor Machine 3×15'],
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
-      } else if (ph.name === 'STRENGTH') {
+      } else if (actPh.name === 'STRENGTH') {
         // v7 · 24 aug – 20 sep. Alles 3 sets x 3-4 reps met explosieve intentie,
         // lineair +5 kg lower / +2,5 kg upper per week. Maandag is een fullbody
         // BEVESTIGINGSdag: die draait de gewichten van de week ervoor.
@@ -17660,7 +17663,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['Front Squat of Zercher','3×3-5','Front Squat',false],
                   ['Lat Pulldown','3×3-5','Lat PD',false],
                   ['Seated Cable Row','3×3-5','Cable Row',false]]};
-      } else if (ph.name === 'TEST 3RM') {
+      } else if (actPh.name === 'TEST 3RM') {
         // Losse test za 22 aug: OHP en Row kregen op 20 aug geen beurt. Bewust een
         // 3RM en geen single — bij row meet een maximale single vooral hoeveel
         // body english je toelaat, en voor werkgewichten heb je aan een 3RM meer.
@@ -17671,8 +17674,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','OHP','OVERHEAD PRESS — 3RM','3 reps', 67.5,'3–5 min','uit 62,5×5 op 11 aug → e1RM 73 · geeft 1RM ≈ 74',true,true,
                  _rampHtml('OHP',[[20,5],[42.5,3],[60,1]],67.5,liftColor('OHP')),true],
                 ['T1','Row','BARBELL ROW — 3RM','3 reps', 72.5,'3 min','uit 62,5×10 op 10 jul → e1RM 79 · geeft 1RM ≈ 80',true,true,
-                 _rampHtml('Row',[[40,5],[55,3],[65,1]],72.5,liftColor('Row')),true]], t3:[]};
-      } else if (ph.name === 'DELOAD') {
+                 _rampHtml('Row',[[40,5],[55,3],[65,1]],72.5,liftColor('Row')),true]],
+              t3:[['Dips','2-3 sets · ver van falen','DIP-BW',false],
+                  ['Triceps Pushdown (rope)','2-3 sets · ver van falen',null,false]]};
+      } else if (actPh.name === 'DELOAD') {
         // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
         sq = {h:'MA · FULLBODY · DELOAD',
               banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt deze week.',
@@ -17705,7 +17710,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dl = {h:'ZA · DEADLIFT-HERTEST', banner:tb, tiers:[
                 ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','Doel 150 · getest 140 op 20 aug',true,true]], t3:[]};
       }
-      const isExp = ph.name === 'EXPLOSIVE';
+      const isExp = actPh.name === 'EXPLOSIVE';
       // Sinds v7 heten de dagen in elke fase MA/WO/ZA. De tier-velden staan op het
       // dag-object zelf (niet in card), zodat renderCard ze tiered kan tekenen.
       const mk = (key, color, c) => ({key, color, card:{h:c.h, r:c.r}, tiers:c.tiers, t3:c.t3, banner:c.banner});
@@ -17846,7 +17851,22 @@ document.addEventListener('DOMContentLoaded', function() {
       if (todayStr === '2026-08-19') return 3;
       return 4;
     }
-    const multiWk = ph.totalWks > 1;
+    // Weekselector over de fasegrenzen heen: één knop per week van elke fase die
+    // vandaag nog niet voorbij is. Zo kan Bert vooruitkijken naar STRENGTH, de
+    // deload en de hertest zonder te wachten tot die fase actief wordt.
+    const SHORT = {'EXPLOSIVE':'EXP','TEST 3RM':'3RM','STRENGTH':'STR','DELOAD':'DELOAD','TEST':'HERTEST'};
+    const PLAN = [];
+    P.forEach(function(x){
+      if (x.end < todayStr) return;
+      const tw = x.totalWks || 1;
+      for (let w = 0; w < tw; w++) {
+        const st = new Date(new Date(x.start).getTime() + w*7*86400000).toISOString().slice(0,10);
+        PLAN.push({phase:x, wk:w, start:st, label:(tw > 1 ? SHORT[x.name]+' '+(w+1) : SHORT[x.name])});
+      }
+    });
+    let curPlanIdx = PLAN.findIndex(function(e){ return e.phase === ph && e.wk === curWk; });
+    if (curPlanIdx < 0) curPlanIdx = 0;
+    const multiWk = PLAN.length > 1;
     const expNote = testPrepActive()
       ? 'Afbouw naar de kalibratie bij Lotte op do 20 aug (verplaatst van 17 aug). WO 19 = volledige rust. Vrijdag is de laatste zware sessie, maandag de laatste zware bench, dinsdag enkel snelheid.'
       : 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 20 aug → startgewichten STRENGTH.';
@@ -17873,6 +17893,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let activeWk = curWk;
+    let activePlanIdx = 0;
     const _ovr0 = applyWeekOverrides(buildDayp(activeWk), activeWk, defDayIdxBase);
     let currentDayp   = _ovr0.dayp;
     let defDayIdx     = _ovr0.dIdx;
@@ -17933,7 +17954,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const wk = activeWk;
 
       // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
-      if (d.flat || (!d.tiers && (ph.name !== 'EXPLOSIVE' || d.key === 'DI'))) {
+      if (d.flat || (!d.tiers && (actPh.name !== 'EXPLOSIVE' || d.key === 'DI'))) {
         cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
           _mobWuHtml(d.wu || d.key) +
           d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
@@ -17998,7 +18019,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Eigen blok i.p.v. een regel in de opwarming: core heeft nu een tijdsbudget
       // en rusttijd, net als T1/T3. Geen core tijdens DELOAD.
       function _coreBlock(dayKey) {
-        const items = (ph.name === 'DELOAD') ? null : CORE_BLOK[dayKey];
+        const items = (actPh.name === 'DELOAD') ? null : CORE_BLOK[dayKey];
         if (!items || !items.length) return '';
         const rows = items.map(function(t){
           return '<div class="gzclp-t3-item" style="border-color:#00e5ff33;background:#06121a">' +
@@ -18098,48 +18119,52 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + _mobWuHtml(d.wu || d.key) + tiersHtml + '</div>';
     }
 
-    function switchWeek(w) {
-      // Dagkey onthouden vóór de switch, zodat we (indien mogelijk) op dezelfde
-      // dag blijven staan i.p.v. altijd terug te vallen op de standaarddag —
-      // behalve de DI+ inhaal-tab, die enkel bestaat in curWk.
+    function switchWeek(idx) {
+      const e = PLAN[idx];
+      if (!e) return;
+      // Dagkey onthouden zodat je bij het bladeren op dezelfde dag blijft staan.
       const prevKey = currentDayp[activeDayIdx] ? currentDayp[activeDayIdx].key : null;
-      activeWk = w;
-      const baseIdx = (w === curWk) ? defDayIdxBase : 0;
-      const _r = applyWeekOverrides(buildDayp(w), w, baseIdx);
+      actPh = e.phase;
+      activeWk = e.wk;
+      activePlanIdx = idx;
+      const isCur = (idx === curPlanIdx);
+      const baseIdx = isCur ? defDayIdxBase : 0;
+      const _r = applyWeekOverrides(buildDayp(e.wk), e.wk, baseIdx);
       currentDayp = _r.dayp;
       let newIdx = _r.dIdx;
       if (prevKey) {
-        const found = currentDayp.findIndex(x => x.key === prevKey);
+        const found = currentDayp.findIndex(function(x){ return x.key === prevKey; });
         if (found >= 0) newIdx = found;
       }
       activeDayIdx = newIdx;
-      const isCur = (w === curWk);
-      phHead.textContent = '◈ ' + ph.name + ' · WEEK ' + (w+1) + (isCur ? '' : ' (vooruitblik)');
-      phHead.style.opacity = isCur ? '1' : '0.7';
-      if (wkRow) wkRow.querySelectorAll('.prog-wk-btn').forEach((b,j) => {
-        b.style.fontWeight = j === w ? 'bold' : 'normal';
-        b.style.opacity = j === w ? '1' : '0.5';
-        b.style.borderBottomWidth = j === w ? '2px' : '1px';
+      const wkTxt = (e.phase.totalWks > 1) ? ' · WEEK ' + (e.wk+1) : '';
+      phHead.textContent = '◈ ' + e.phase.name + wkTxt + (isCur ? '' : ' · ' + e.start.slice(8) + '/' + e.start.slice(5,7) + ' (vooruitblik)');
+      phHead.style.color = e.phase.color;
+      phHead.style.opacity = isCur ? '1' : '0.75';
+      if (wkRow) wkRow.querySelectorAll('.prog-wk-btn').forEach(function(b,j){
+        b.style.fontWeight = j === idx ? 'bold' : 'normal';
+        b.style.opacity = j === idx ? '1' : '0.45';
+        b.style.borderBottomWidth = j === idx ? '2px' : '1px';
       });
       renderDayButtons();
       renderCard(activeDayIdx);
     }
 
-    // Week buttons
+    // Week buttons — één per week van het resterende plan
     if (wkRow && multiWk) {
-      for (let w = 0; w < ph.totalWks; w++) {
+      PLAN.forEach(function(e, i){
         const b = document.createElement('button');
         b.className = 'gzclp-day-btn prog-wk-btn';
-        b.textContent = 'WK ' + (w+1);
-        b.style.borderColor = ph.color; b.style.color = ph.color;
-        b.style.fontWeight = w === curWk ? 'bold' : 'normal';
-        b.style.opacity = w === curWk ? '1' : '0.5';
-        b.style.borderBottomWidth = w === curWk ? '2px' : '1px';
+        b.textContent = e.label;
+        b.title = e.phase.name + ' · week van ' + e.start;
+        b.style.borderColor = e.phase.color; b.style.color = e.phase.color;
+        b.style.fontWeight = i === curPlanIdx ? 'bold' : 'normal';
+        b.style.opacity = i === curPlanIdx ? '1' : '0.45';
+        b.style.borderBottomWidth = i === curPlanIdx ? '2px' : '1px';
         b.style.fontSize = '10px';
-        const ww = w;
-        b.onclick = () => switchWeek(ww);
+        b.onclick = function(){ switchWeek(i); };
         wkRow.appendChild(b);
-      }
+      });
     }
 
     // Day buttons — herbruikbaar zodat switchWeek() ze kan herbouwen (aantal
