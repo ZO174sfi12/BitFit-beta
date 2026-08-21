@@ -45,10 +45,10 @@
     "Squat": 97.5,
     "Bench": 80,
     "Deadlift": 112.5,
-    "OHP": null,
-    "Row": 70
+    "OHP": 60,
+    "Row": 65
   },
-  "strength_start_bron": "80% van de geteste 1RM van 20 aug, afgerond naar boven op 2,5 kg. Row heeft geen geteste 1RM — 70 kg is afgeleid uit 62,5×10 (10 jul). OHP volgt na de test van 22 aug.",
+  "strength_start_bron": "80% van de 1RM, afgerond naar boven op 2,5 kg. Squat/bench/deadlift uit de geteste 1RM van 20 aug; OHP en Row uit hun e1RM (73 en 79) omdat die pas op 22 aug getest worden — als 3RM, niet als single: bij row meet een maximale single vooral hoeveel body english je toelaat.",
   "proces_doel_3x5": {
     "Squat": 105,
     "Bench": 87.5,
@@ -148,7 +148,8 @@
     "Squat": 112.5,
     "Bench": 87.5,
     "Deadlift": 127.5,
-    "Row": 77.5
+    "Row": 72.5,
+    "OHP": 67.5
   },
   "doel_1rm_4okt": {
     "Squat": 130,
@@ -163,5 +164,16 @@
     "Deadlift": "140–150",
     "OHP": "70–80"
   },
-  "doel_1rm_range_bron": "Band in de voortgangsband: van de geteste 1RM van 20 aug naar het doel van 4 okt. Vervangt Lotte’s schattingsranges, die nu in historiek staan."
+  "doel_1rm_range_bron": "Band in de voortgangsband: van de geteste 1RM van 20 aug naar het doel van 4 okt. Vervangt Lotte’s schattingsranges, die nu in historiek staan.",
+  "test_22aug": {
+    "OHP": {
+      "3RM_doel": 67.5,
+      "afgeleide_1RM": 74
+    },
+    "Row": {
+      "3RM_doel": 72.5,
+      "afgeleide_1RM": 80
+    },
+    "formule": "1RM = 3RM x 1,1 (Epley)"
+  }
 }

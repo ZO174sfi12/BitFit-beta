@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608210941</span>
+        <span class="meta-value" style="color:var(--muted)">202608210950</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -17545,6 +17545,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!el) return;
     const P = [
       {name:'EXPLOSIVE', start:'2026-07-27', end:'2026-08-20', color:'#ff6b35', totalWks:4},
+      {name:'TEST 3RM',  start:'2026-08-21', end:'2026-08-23', color:'#ffd600', totalWks:1},
       {name:'STRENGTH',  start:'2026-08-24', end:'2026-09-20', color:'#ff3d6b', totalWks:4},
       {name:'DELOAD',    start:'2026-09-21', end:'2026-09-27', color:'#8888aa', totalWks:1},
       {name:'TEST',      start:'2026-09-28', end:'2026-10-04', color:'#ffd600', totalWks:1}
@@ -17630,8 +17631,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const V7_SQ  = [97.5, 102.5, 107.5, 112.5];
         const V7_DL  = [112.5, 117.5, 122.5, 127.5];
         const V7_BE  = [80, 82.5, 85, 87.5];
-        const V7_ROW = [70, 72.5, 75, 77.5];
-        const V7_OHP = [null, null, null, null];   // ingevuld na de test van 22 aug
+        const V7_ROW = [65, 67.5, 70, 72.5];
+        const V7_OHP = [60, 62.5, 65, 67.5];
         const iw = Math.min(Math.max(wk,0), 3);        // huidige week
         const ip = Math.max(0, iw - 1);                 // week ervoor (maandag)
         sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±60 MIN',
@@ -17646,8 +17647,8 @@ document.addEventListener('DOMContentLoaded', function() {
         be = {h:'WO · UPPER · ±60 MIN',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','Startgewicht afgeleid uit 62,5×10 — herzien na de test van 22 aug',true],
-                ['T1','OHP','OVERHEAD PRESS','3 × 3-4', V7_OHP[iw],'2–3 min','Startgewicht volgt na de OHP-test van 22 aug',true]],
+                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
+                ['T1','OHP','OVERHEAD PRESS','3 × 3-4', V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]],
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
                   ['DB Clean','3×3-5','DB Clean',false]]};
@@ -17659,6 +17660,18 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['Front Squat of Zercher','3×3-5','Front Squat',false],
                   ['Lat Pulldown','3×3-5','Lat PD',false],
                   ['Seated Cable Row','3×3-5','Cable Row',false]]};
+      } else if (ph.name === 'TEST 3RM') {
+        // Losse test za 22 aug: OHP en Row kregen op 20 aug geen beurt. Bewust een
+        // 3RM en geen single — bij row meet een maximale single vooral hoeveel
+        // body english je toelaat, en voor werkgewichten heb je aan een 3RM meer.
+        const tb3 = 'Laatste rep moet nog schoon zijn. Lukt de derde niet, dan telt het gewicht eronder — 3RM x 1,1 geeft je 1RM.';
+        sq = {h:'VR 21 · RUST', banner:'Vrij voor de test van morgen.', tiers:[], t3:[]};
+        be = {h:'ZO 23 · RUST OF MUAY THAI', banner:'Maandag start STRENGTH week 1.', tiers:[], t3:[]};
+        dl = {h:'ZA 22 · 3RM-TEST · OHP + ROW', banner:tb3, tiers:[
+                ['T1','OHP','OVERHEAD PRESS — 3RM','3 reps', 67.5,'3–5 min','uit 62,5×5 op 11 aug → e1RM 73 · geeft 1RM ≈ 74',true,true,
+                 _rampHtml('OHP',[[20,5],[42.5,3],[60,1]],67.5,liftColor('OHP')),true],
+                ['T1','Row','BARBELL ROW — 3RM','3 reps', 72.5,'3 min','uit 62,5×10 op 10 jul → e1RM 79 · geeft 1RM ≈ 80',true,true,
+                 _rampHtml('Row',[[40,5],[55,3],[65,1]],72.5,liftColor('Row')),true]], t3:[]};
       } else if (ph.name === 'DELOAD') {
         // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
         sq = {h:'MA · FULLBODY · DELOAD',
@@ -17673,7 +17686,7 @@ document.addEventListener('DOMContentLoaded', function() {
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
                 ['T1','Row','BARBELL ROW','2 × 3', 52.5,'2 min',null,true],
-                ['T1','OHP','OVERHEAD PRESS','2 × 3', null,'2 min','Volgt na de OHP-test',true]],
+                ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min',null,true]],
               t3:[]};
         dl = {h:'ZA · LOWER · DELOAD',
               banner:'Laatste sessie voor de hertest. Fris eindigen.',
