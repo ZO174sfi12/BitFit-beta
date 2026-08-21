@@ -178,5 +178,11 @@
       "afgeleide_1RM": 80
     },
     "formule": "1RM = 3RM x 1,1 (Epley)"
-  }
+  },
+  "sessieduur": {
+    "MA": 70,
+    "WO": 75,
+    "ZA": 75
+  },
+  "sessieduur_bron": "Geijkt op werkelijke sessies uit de Jefit-export (WORKOUT SESSIONS -> total_time, 55-73 min), niet op een theoretisch model. Per dagtype een echte sessie als ijkpunt plus de v7-toevoegingen: langere T1-rust, T3-rust van 60 naar 120 sec, core als blok van 10 min. Let op: workout_time uit Jefit is onbruikbaar als noemer — die telt alleen expliciet getimede sets (3-20 min/sessie)."
 }
