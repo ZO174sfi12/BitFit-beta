@@ -17922,7 +17922,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ["World's Greatest Stretch",'5/kant','thoracaal']]},
       wo: {core:'mobiliteit', rows:[
         ['Cat-Cow','6×','rugmobiliteit'],
-        ['Push-ups','2 × 12','borst/schouder']]},
+        ['Push-ups','1 × 12','borst/schouder']]},
       za: {core:'mobiliteit', rows:[
         ['Leg Swings voor + opzij','10/kant','hamstrings · heup'],
         ['Glute Bridge BW','15×','glute activatie'],
@@ -18028,7 +18028,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00e5ff33;grid-column:1/-1">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent 70%)"></div>' +
           '<span class="gzclp-badge" style="color:var(--cyan);border-color:var(--cyan);background:#00e5ff15">CORE</span>' +
-          '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">10 min totaal · 45 sec rust telt mee</div>' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">10 min totaal · 45 sec rust telt mee · vóór de liften</div>' +
           '<div class="gzclp-t3-grid">' + rows + '</div></div>';
       }
 
@@ -18054,11 +18054,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (d.banner) {
           tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">' + d.banner + '</div>';
         }
+        // Core staat vóór de liften — Berts eigen volgorde (21 aug).
+        tiersHtml += _coreBlock(d.key);
         d.tiers.forEach(function(t){ tiersHtml += _tierCard.apply(null, t); });
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''));
         }
-        tiersHtml += _coreBlock(d.key);
       } else if (d.key === 'MA') {
         // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
         // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
