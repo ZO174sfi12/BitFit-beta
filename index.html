@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608210919</span>
+        <span class="meta-value" style="color:var(--muted)">202608210941</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -17631,7 +17631,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const V7_DL  = [112.5, 117.5, 122.5, 127.5];
         const V7_BE  = [80, 82.5, 85, 87.5];
         const V7_ROW = [70, 72.5, 75, 77.5];
-        const V7_OHP = [null, null, null, null];
+        const V7_OHP = [null, null, null, null];   // ingevuld na de test van 22 aug
         const iw = Math.min(Math.max(wk,0), 3);        // huidige week
         const ip = Math.max(0, iw - 1);                 // week ervoor (maandag)
         sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±60 MIN',
@@ -17646,7 +17646,7 @@ document.addEventListener('DOMContentLoaded', function() {
         be = {h:'WO · UPPER · ±60 MIN',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','Geen geteste 1RM — startgewicht afgeleid uit 62,5×10',true],
+                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','Startgewicht afgeleid uit 62,5×10 — herzien na de test van 22 aug',true],
                 ['T1','OHP','OVERHEAD PRESS','3 × 3-4', V7_OHP[iw],'2–3 min','Startgewicht volgt na de OHP-test van 22 aug',true]],
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],

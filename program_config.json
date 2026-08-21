@@ -130,9 +130,10 @@
     "Squat": 120,
     "Bench": 100,
     "Deadlift": 140,
-    "OHP": null
+    "OHP": null,
+    "Row": null
   },
-  "getest_1rm_bron": "Kalibratie bij Lotte 20 aug 2026, zware single RPE 9. OHP niet getest die dag — Bert test die los op 22 aug.",
+  "getest_1rm_bron": "Kalibratie bij Lotte 20 aug 2026, zware single RPE 9 op squat, bench en deadlift. OHP en Row zijn die dag niet getest — Bert test beide op 22 aug; tot dan blijven hun startgewichten afgeleid en staan ze in de app als \"—\".",
   "progressie_per_week": {
     "lower": 5.0,
     "upper": 2.5
