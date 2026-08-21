@@ -17638,7 +17638,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const V7_OHP = [60, 62.5, 65, 67.5];
         const iw = Math.min(Math.max(wk,0), 3);        // huidige week
         const ip = Math.max(0, iw - 1);                 // week ervoor (maandag)
-        sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±60 MIN',
+        sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±70 MIN',
               banner: iw === 0
                 ? 'Week 1: maandag draait de startgewichten (80% van je geteste 1RM).'
                 : 'Bevestigingsdag — zelfde gewichten als week ' + (ip+1) + '. Niet zwaarder gaan.',
@@ -17647,7 +17647,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
                 ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[ip],'3–5 min','Meer hinge · minder squat',true]],
               t3:[]};
-        be = {h:'WO · UPPER · ±70 MIN',
+        be = {h:'WO · UPPER · ±75 MIN',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
                 ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
@@ -17655,7 +17655,7 @@ document.addEventListener('DOMContentLoaded', function() {
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
                   ['DB Clean','3×3-5','DB Clean',false]]};
-        dl = {h:'ZA · LOWER · ±70 MIN',
+        dl = {h:'ZA · LOWER · ±75 MIN',
               tiers:[
                 ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
                 ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
