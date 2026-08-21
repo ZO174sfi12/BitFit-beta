@@ -17647,7 +17647,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
                 ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[ip],'3–5 min','Meer hinge · minder squat',true]],
               t3:[]};
-        be = {h:'WO · UPPER · ±60 MIN',
+        be = {h:'WO · UPPER · ±70 MIN',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
                 ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
@@ -17655,7 +17655,7 @@ document.addEventListener('DOMContentLoaded', function() {
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
                   ['DB Clean','3×3-5','DB Clean',false]]};
-        dl = {h:'ZA · LOWER · ±65 MIN',
+        dl = {h:'ZA · LOWER · ±70 MIN',
               tiers:[
                 ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
                 ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
@@ -17670,7 +17670,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tb3 = 'Laatste rep moet nog schoon zijn. Lukt de derde niet, dan telt het gewicht eronder — 3RM x 1,1 geeft je 1RM.';
         sq = {h:'VR 21 · RUST', banner:'Vrij voor de test van morgen.', tiers:[], t3:[]};
         be = {h:'ZO 23 · RUST OF MUAY THAI', banner:'Maandag start STRENGTH week 1.', tiers:[], t3:[]};
-        dl = {h:'ZA 22 · 3RM-TEST · OHP + ROW', banner:tb3, tiers:[
+        dl = {h:'ZA 22 · 3RM-TEST · OHP + ROW · ±60 MIN', banner:tb3, tiers:[
                 ['T1','OHP','OVERHEAD PRESS — 3RM','3 reps', 67.5,'3–5 min','uit 62,5×5 op 11 aug → e1RM 73 · geeft 1RM ≈ 74',true,true,
                  _rampHtml('OHP',[[20,5],[42.5,3],[60,1]],67.5,liftColor('OHP')),true],
                 ['T1','Row','BARBELL ROW — 3RM','3 reps', 72.5,'3 min','uit 62,5×10 op 10 jul → e1RM 79 · geeft 1RM ≈ 80',true,true,
@@ -17679,21 +17679,21 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['Triceps Pushdown (rope)','2-3 sets · ver van falen',null,false]]};
       } else if (actPh.name === 'DELOAD') {
         // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
-        sq = {h:'MA · FULLBODY · DELOAD',
+        sq = {h:'MA · FULLBODY · DELOAD · ±30 MIN',
               banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt deze week.',
               tiers:[
                 ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel',true],
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
                 ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
               t3:[]};
-        be = {h:'WO · UPPER · DELOAD',
+        be = {h:'WO · UPPER · DELOAD · ±30 MIN',
               banner:'Techniek en snelheid, geen belasting opbouwen.',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
                 ['T1','Row','BARBELL ROW','2 × 3', 52.5,'2 min',null,true],
                 ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min',null,true]],
               t3:[]};
-        dl = {h:'ZA · LOWER · DELOAD',
+        dl = {h:'ZA · LOWER · DELOAD · ±25 MIN',
               banner:'Laatste sessie voor de hertest. Fris eindigen.',
               tiers:[
                 ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min',null,true],
@@ -17702,12 +17702,12 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         // 28 sep – 4 okt · hertest. Richtwaarden = de doelen uit v7.
         const tb = 'Zware single op RPE 9, geen max-out. Opwarmramp: 3 sets, laatste rond 90% van het doel.';
-        sq = {h:'MA · SQUAT-HERTEST', banner:tb, tiers:[
+        sq = {h:'MA · SQUAT-HERTEST · ±20 MIN', banner:tb, tiers:[
                 ['T1','Squat','BACK SQUAT — TEST','zware single', 130,'3–5 min','Doel 130 · getest 120 op 20 aug',true,true]], t3:[]};
-        be = {h:'WO · BENCH- EN OHP-HERTEST', banner:tb, tiers:[
+        be = {h:'WO · BENCH- EN OHP-HERTEST · ±35 MIN', banner:tb, tiers:[
                 ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','Doel 105 · getest 100 op 20 aug',true,true],
                 ['T1','OHP','OVERHEAD PRESS — TEST','zware single', null,'3–5 min','Doel volgt uit de test van 22 aug',true,true]], t3:[]};
-        dl = {h:'ZA · DEADLIFT-HERTEST', banner:tb, tiers:[
+        dl = {h:'ZA · DEADLIFT-HERTEST · ±20 MIN', banner:tb, tiers:[
                 ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','Doel 150 · getest 140 op 20 aug',true,true]], t3:[]};
       }
       const isExp = actPh.name === 'EXPLOSIVE';
