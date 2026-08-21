@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608211002</span>
+        <span class="meta-value" style="color:var(--muted)">202608211240</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -17627,15 +17627,18 @@ document.addEventListener('DOMContentLoaded', function() {
           ['tb-rev','REV','REV-oefening 3×20'],
           ['tb-cd','CD','20–30 min zone 2 (vast · naar keuze)']]};
       } else if (actPh.name === 'STRENGTH') {
-        // v7 · 24 aug – 20 sep. Alles 3 sets x 3-4 reps met explosieve intentie,
-        // lineair +5 kg lower / +2,5 kg upper per week. Maandag is een fullbody
+        // v7 · 24 aug – 20 sep. Herzien 21 aug na feedback van Lotte: start op 70%
+        // i.p.v. 80% en loop op tot 80-85% i.p.v. 94%; 3x4 in week 1-2, 3x3 daarna.
+        // Criterium blijft de uitvoering: in één beweging, niet hakkelend. Maandag is een fullbody
         // BEVESTIGINGSdag: die draait de gewichten van de week ervoor.
         // OHP heeft nog geen geteste 1RM — Bert test die 22 aug, tot dan null.
-        const V7_SQ  = [97.5, 102.5, 107.5, 112.5];
-        const V7_DL  = [112.5, 117.5, 122.5, 127.5];
-        const V7_BE  = [80, 82.5, 85, 87.5];
-        const V7_ROW = [65, 67.5, 70, 72.5];
-        const V7_OHP = [60, 62.5, 65, 67.5];
+        const V7_SQ  = [85, 90, 95, 100];
+        const V7_DL  = [100, 105, 110, 115];
+        const V7_BE  = [72.5, 75, 77.5, 80];
+        const V7_ROW = [57.5, 60, 62.5, 65];
+        const V7_OHP = [52.5, 55, 57.5, 60];
+        // Lotte, 21 aug: 3x4 in week 1-2, daarna 3x3 als het gewicht klimt.
+        const V7_REPS = ['3 × 4', '3 × 4', '3 × 3', '3 × 3'];
         const iw = Math.min(Math.max(wk,0), 3);        // huidige week
         const ip = Math.max(0, iw - 1);                 // week ervoor (maandag)
         sq = {h:'MA · FULLBODY · bevestigt week ' + (ip+1) + ' · ±70 MIN',
@@ -17643,22 +17646,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 ? 'Week 1: maandag draait de startgewichten (80% van je geteste 1RM).'
                 : 'Bevestigingsdag — zelfde gewichten als week ' + (ip+1) + '. Niet zwaarder gaan.',
               tiers:[
-                ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[ip],'3 min','Explosief omhoog · stoppen zodra de staaf traag wordt',true],
-                ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[ip],'3–5 min','Meer hinge · minder squat',true]],
+                ['T1','Squat','BACK SQUAT',V7_REPS[ip], V7_SQ[ip],'3 min','Explosief omhoog · stoppen zodra de staaf traag wordt',true],
+                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[ip], V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Deadlift','DEADLIFT',V7_REPS[ip], V7_DL[ip],'3–5 min','Meer hinge · minder squat',true]],
               t3:[]};
         be = {h:'WO · UPPER · ±75 MIN',
               tiers:[
-                ['T1','Bench','BARBELL BENCH PRESS','3 × 3-4', V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Row','BARBELL ROW','3 × 3-4', V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
-                ['T1','OHP','OVERHEAD PRESS','3 × 3-4', V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]],
+                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
+                ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]],
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
                   ['DB Clean','3×3-5','DB Clean',false]]};
         dl = {h:'ZA · LOWER · ±75 MIN',
               tiers:[
-                ['T1','Squat','BACK SQUAT','3 × 3-4', V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
-                ['T1','Deadlift','DEADLIFT','3 × 3-4', V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
+                ['T1','Squat','BACK SQUAT',V7_REPS[iw], V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
+                ['T1','Deadlift','DEADLIFT',V7_REPS[iw], V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]],
               t3:[['Hip Thrust (plate-loaded)','3×3-5','Hip Thrust',false],
                   ['Front Squat of Zercher','3×3-5','Front Squat',false],
                   ['Lat Pulldown','3×3-5','Lat PD',false],
@@ -17680,7 +17683,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (actPh.name === 'DELOAD') {
         // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
         sq = {h:'MA · FULLBODY · DELOAD · ±30 MIN',
-              banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt deze week.',
+              banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt, core blijft staan.',
               tiers:[
                 ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel',true],
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
@@ -17690,7 +17693,7 @@ document.addEventListener('DOMContentLoaded', function() {
               banner:'Techniek en snelheid, geen belasting opbouwen.',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
-                ['T1','Row','BARBELL ROW','2 × 3', 52.5,'2 min',null,true],
+                ['T1','Row','BARBELL ROW','2 × 3', 47.5,'2 min',null,true],
                 ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min',null,true]],
               t3:[]};
         dl = {h:'ZA · LOWER · DELOAD · ±25 MIN',
@@ -18019,7 +18022,9 @@ document.addEventListener('DOMContentLoaded', function() {
       // Eigen blok i.p.v. een regel in de opwarming: core heeft nu een tijdsbudget
       // en rusttijd, net als T1/T3. Geen core tijdens DELOAD.
       function _coreBlock(dayKey) {
-        const items = (actPh.name === 'DELOAD') ? null : CORE_BLOK[dayKey];
+        // Lotte, 21 aug: core blijft ook in de deloadweek staan — kleine moeite,
+        // geen extra belasting, en die sessie is toch korter.
+        const items = CORE_BLOK[dayKey];
         if (!items || !items.length) return '';
         const rows = items.map(function(t){
           return '<div class="gzclp-t3-item" style="border-color:#00e5ff33;background:#06121a">' +

@@ -42,20 +42,20 @@
   },
   "ref_1rm_bron": "Sinds 20 aug 2026 de GETESTE 1RM voor squat/bench/deadlift (geen Epley-schatting meer). OHP nog reps-Epley tot de test van 22 aug. Bij bijsturen: sync config + index REF1RM + bitstats.html.",
   "strength_start": {
-    "Squat": 97.5,
-    "Bench": 80,
-    "Deadlift": 112.5,
-    "OHP": 60,
-    "Row": 65
+    "Squat": 85,
+    "Bench": 72.5,
+    "Deadlift": 100,
+    "OHP": 52.5,
+    "Row": 57.5
   },
-  "strength_start_bron": "80% van de 1RM, afgerond naar boven op 2,5 kg. Squat/bench/deadlift uit de geteste 1RM van 20 aug; OHP en Row uit hun e1RM (73 en 79) omdat die pas op 22 aug getest worden — als 3RM, niet als single: bij row meet een maximale single vooral hoeveel body english je toelaat.",
+  "strength_start_bron": "70% van de 1RM, naar boven afgerond op 2,5 kg. Herzien 21 aug na feedback van Lotte: starten op 80% en oplopen tot 94% is te zwaar om 3 sets explosief te houden. Nu 71-73% start.",
   "proces_doel_3x5": {
     "Squat": 105,
     "Bench": 87.5,
     "Deadlift": 125,
     "OHP": 62.5
   },
-  "proces_doel_bron": "Werkgewicht in week 4 (14 sep) bij lineaire progressie vanaf de 80%-start. Vervangt proces_doel_3x5 uit het GZCLP/STRENGTH-tijdperk.",
+  "proces_doel_bron": "Werkgewicht in week 4 (14 sep), 80-83% van de 1RM. Lotte: bouw op tot 80%, max 85% — hoger is niet houdbaar voor 3 explosieve sets.",
   "doel_5rm": {
     "Squat": "105–115",
     "Bench": "87,5–90",
@@ -140,16 +140,9 @@
   },
   "progressie_bron": "Bert, 21 aug: +5 kg/week op squat en deadlift, +2,5 kg/week op bench, OHP en row. Lineair t/m week 4 (14 sep); daarna deload, want week 5-6 zou boven 95% van de 1RM uitkomen en dat is niet houdbaar op 3×3-4.",
   "rep_schema": {
-    "hoofdliften": "3 sets × 3-4 reps, explosieve intentie",
-    "t3": "3 sets × 3-5 reps",
-    "deload": "2 sets × 3 op ~60% 1RM"
-  },
-  "proces_doel_3x4": {
-    "Squat": 112.5,
-    "Bench": 87.5,
-    "Deadlift": 127.5,
-    "Row": 72.5,
-    "OHP": 67.5
+    "hoofdliften": "week 1-2: 3 sets x 4 reps · week 3-4: 3 sets x 3 reps, altijd explosief",
+    "t3": "3 sets x 3-5 reps",
+    "deload": "2 sets x 3 op ~60% 1RM"
   },
   "doel_1rm_4okt": {
     "Squat": 130,
@@ -184,5 +177,15 @@
     "WO": 75,
     "ZA": 75
   },
-  "sessieduur_bron": "Geijkt op werkelijke sessies uit de Jefit-export (WORKOUT SESSIONS -> total_time, 55-73 min), niet op een theoretisch model. Per dagtype een echte sessie als ijkpunt plus de v7-toevoegingen: langere T1-rust, T3-rust van 60 naar 120 sec, core als blok van 10 min. Let op: workout_time uit Jefit is onbruikbaar als noemer — die telt alleen expliciet getimede sets (3-20 min/sessie)."
+  "sessieduur_bron": "Geijkt op werkelijke sessies uit de Jefit-export (WORKOUT SESSIONS -> total_time, 55-73 min), niet op een theoretisch model. Per dagtype een echte sessie als ijkpunt plus de v7-toevoegingen: langere T1-rust, T3-rust van 60 naar 120 sec, core als blok van 10 min. Let op: workout_time uit Jefit is onbruikbaar als noemer — die telt alleen expliciet getimede sets (3-20 min/sessie).",
+  "proces_doel_eindblok": {
+    "Squat": 100,
+    "Bench": 80,
+    "Deadlift": 115,
+    "OHP": 60,
+    "Row": 65
+  },
+  "pct_regel": "Start op 70% van de geteste 1RM en push elke week het gewicht omhoog tot 80%, maximaal 85%. Criterium is niet het percentage maar de uitvoering: het gewicht moet in één beweging verplaatst worden, niet hakkelend. Gaat het hoger dan 85% en blijft het explosief, dan mag dat.",
+  "deload_core": true,
+  "lotte_feedback_21aug": "Startpercentage van 80 naar 70, plafond van 94 naar 80-85%, rep-schema begint op 3x4 en gaat naar 3x3, en core blijft ook tijdens de deloadweek staan (in de opwarming) omdat die sessie toch korter is."
 }
