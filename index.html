@@ -17878,25 +17878,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sit-Up is zijn meest gedane core-oefening (7x) maar stond nergens in het
     // schema; Heel Touch stond op maandag terwijl hij hem op woensdag doet.
     // Superman blijft staan als enige rug-extensie — Berts eigen keuze.
+    // Core is op 21 aug 2026 uit de opwarming gehaald: het is een eigen blok van
+    // 10 min mét rust geworden (zie CORE_BLOK). Hier blijft alleen mobiliteit.
     const WU_MOB = {
-      ma: {core:'core voorkant', rows:[
-        ['Sit-Up','2 × 15','core voorkant'],
+      ma: {core:'mobiliteit', rows:[
         ['Leg Swings voor + opzij','10/kant','heup · hamstrings'],
         ['Hip Circles','10/kant','heup activatie'],
         ['Arm Swings','15×','schouder activatie'],
         ["World's Greatest Stretch",'5/kant','thoracaal']]},
-      wo: {core:'core voor + zijkant', rows:[
-        ['Dead Bug','1 × 12 + 60 sec','core voorkant'],
-        ['Alternating Heel Touch','2 × 8','core zijkant'],
+      wo: {core:'mobiliteit', rows:[
         ['Cat-Cow','6×','rugmobiliteit'],
         ['Push-ups','2 × 12','borst/schouder']]},
-      za: {core:'core rug + voorkant', rows:[
-        ['Superman','1 × 10','core rug'],
-        ['Sit-Up','2 × 15','core voorkant'],
-        ['Alternating Heel Touch','2 × 8','core zijkant'],
+      za: {core:'mobiliteit', rows:[
         ['Leg Swings voor + opzij','10/kant','hamstrings · heup'],
         ['Glute Bridge BW','15×','glute activatie'],
         ["World's Greatest Stretch",'5/kant','thoracaal']]}
+    };
+    // Corekaart per dag — 10 min inclusief 45 sec rust tussen de sets.
+    // Samengesteld uit wat Bert feitelijk logt, met ab wheel en leg raise terug
+    // (die deed hij in juni en liet hij vallen) en plank erbij op zijn verzoek.
+    const CORE_BLOK = {
+      MA: ['Ab wheel 3×8', 'Plank 3×45 sec'],
+      WO: ['Dead Bug 3×12 + 30 sec hold', 'Alternating Heel Touch 3×10'],
+      ZA: ['Parallel Bar Leg Raise 3×8', 'Sit-Up 2×12', 'Superman 2×10']
     };
     const WU_SLOT = {MA:'ma', WO:'wo', ZA:'za', SQUAT:'ma', BENCH:'wo', DEADLIFT:'za', 'DI+':'za'};
 
@@ -17978,6 +17982,22 @@ document.addEventListener('DOMContentLoaded', function() {
           '</div>' + prevLine + '</div>';
       }
 
+      // Eigen blok i.p.v. een regel in de opwarming: core heeft nu een tijdsbudget
+      // en rusttijd, net als T1/T3. Geen core tijdens DELOAD.
+      function _coreBlock(dayKey) {
+        const items = (ph.name === 'DELOAD') ? null : CORE_BLOK[dayKey];
+        if (!items || !items.length) return '';
+        const rows = items.map(function(t){
+          return '<div class="gzclp-t3-item" style="border-color:#00e5ff33;background:#06121a">' +
+            '<div style="font-size:12px;color:var(--text)">' + t + '</div></div>';
+        }).join('');
+        return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00e5ff33;grid-column:1/-1">' +
+          '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent 70%)"></div>' +
+          '<span class="gzclp-badge" style="color:var(--cyan);border-color:var(--cyan);background:#00e5ff15">CORE</span>' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">10 min totaal · 45 sec rust telt mee</div>' +
+          '<div class="gzclp-t3-grid">' + rows + '</div></div>';
+      }
+
       function _t3Block(mainItems) {
         const revItems = _t3Item('Rathleff Heel Raise','3×20',null,true) + _t3Item('Toe Dorsiflex / Unipodale RDL','3×20',null,true);
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333;grid-column:1/-1">' +
@@ -18004,6 +18024,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''));
         }
+        tiersHtml += _coreBlock(d.key);
       } else if (d.key === 'MA') {
         // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
         // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
