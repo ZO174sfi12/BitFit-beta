@@ -18186,10 +18186,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const dagN = {MA:0, WO:1, ZA:2}[dayKey];
         if (dagN === undefined) return '';
         const n = (typeof activeWk === 'number' ? activeWk : 0) * 3 + dagN;
-        // (week + dag) voor de mobilisatie: met 3 oefeningen én 3 sessies per week
-        // zou n % 3 elke maandag dezelfde geven.
-        const wkN = (typeof activeWk === 'number' ? activeWk : 0);
-        const paar = [REV_MOB[(wkN + dagN) % REV_MOB.length], REV_VOET[n % REV_VOET.length]];
+        // Vaste volgorde van 12 sessies i.p.v. twee losse cycli. Met 3 mobilisaties
+        // en 3 sessies per week valt de ene cyclus op de andere: n % 3 maakt de
+        // mobilisatie dagvast, en (week + dag) % 3 laat 2 van de 12 paren dubbel
+        // voorkomen terwijl 2 andere nooit langskomen. Deze tabel haalt alles
+        // tegelijk: 12 unieke paren, elke mobilisatie 4x, elke voetboog 3x, en
+        // elke dag krijgt alle drie de mobilisaties.
+        const REV_PLAN = [[0,0],[1,1],[2,2],[1,3],[2,0],[0,1],[2,3],[0,2],[1,0],[0,3],[1,2],[2,1]];
+        const pick = REV_PLAN[n % REV_PLAN.length];
+        const paar = [REV_MOB[pick[0]], REV_VOET[pick[1]]];
         const rows = paar.map(function(x, i){
           return '<div class="gzclp-t3-item" style="border-color:#ff6b3533;background:#130b08">' +
             '<div style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;color:#ff6b35;margin-bottom:2px">' +
