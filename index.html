@@ -18056,6 +18056,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Corekaart per dag — 10 min inclusief 45 sec rust tussen de sets.
     // Samengesteld uit wat Bert feitelijk logt, met ab wheel en leg raise terug
     // (die deed hij in juni en liet hij vallen) en plank erbij op zijn verzoek.
+    // REV roteert: elke sessie één mobilisatie en één voetboog-oefening.
+    // 4 mobilisatie x 3 voetboog over 3 sessies/week -> cyclus rond in 4 weken,
+    // precies de lengte van het blok. Indeling met Bert vastgelegd op 22 aug.
+    const REV_MOB = [
+      ['Toe Dorsiflex Lunge', '2×10/kant', 'MTP-gewricht grote teen'],
+      ['RDL banded mediaal', '3×8', 'heupscharnier · mediale knierotatie'],
+      ['Rathleff Heel Raise', '3×20', 'hiel door volledige range']
+    ];
+    const REV_VOET = [
+      ['Y Balans met elastiek onder teen', '3×4/kant', 'teen- en boogcontrole'],
+      ['Twee platen: tenen en hiel apart', '3×30 sec', 'boog draagt zichzelf'],
+      ['Unipodale RDL met elastiek', '3×8/kant', 'boog onder belasting, eenbenig'],
+      ['Hip Bridge, tenen op bankje', '3×12', 'boog belast in verkorte enkelpositie']
+    ];
     const CORE_BLOK = {
       MA: ['Ab wheel 3×8', 'Plank 3×45 sec'],
       WO: ['Dead Bug 3×12 + 30 sec hold', 'Alternating Heel Touch 3×10'],
@@ -18160,14 +18174,35 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       function _t3Block(mainItems) {
-        const revItems = _t3Item('Rathleff Heel Raise','3×20',null,true) + _t3Item('Toe Dorsiflex / Unipodale RDL','3×20',null,true);
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333;grid-column:1/-1">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>' +
           '<span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>' +
-          '<div class="gzclp-t3-grid">' + mainItems + '</div>' +
-          '<div style="margin-top:10px;padding-top:8px;border-top:1px solid #ff6b3522">' +
-          '<div style="font-family:\'Space Mono\',monospace;font-size:9px;letter-spacing:1px;color:#ff6b35;margin-bottom:6px">REVALIDATIE (altijd doen)</div>' +
-          '<div class="gzclp-t3-grid">' + revItems + '</div></div></div>';
+          '<div class="gzclp-t3-grid">' + mainItems + '</div></div>';
+      }
+
+      // REV als eigen kaart, niet meer vastgeplakt aan T3 — anders viel REV weg
+      // op maandag, want die dag heeft geen T3.
+      function _revBlock(dayKey) {
+        const dagN = {MA:0, WO:1, ZA:2}[dayKey];
+        if (dagN === undefined) return '';
+        const n = (typeof activeWk === 'number' ? activeWk : 0) * 3 + dagN;
+        // (week + dag) voor de mobilisatie: met 3 oefeningen én 3 sessies per week
+        // zou n % 3 elke maandag dezelfde geven.
+        const wkN = (typeof activeWk === 'number' ? activeWk : 0);
+        const paar = [REV_MOB[(wkN + dagN) % REV_MOB.length], REV_VOET[n % REV_VOET.length]];
+        const rows = paar.map(function(x, i){
+          return '<div class="gzclp-t3-item" style="border-color:#ff6b3533;background:#130b08">' +
+            '<div style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;color:#ff6b35;margin-bottom:2px">' +
+            (i ? 'VOETBOOG' : 'MOBILISATIE') + '</div>' +
+            '<div style="font-size:12px;color:var(--text)">' + x[0] + ' · ' + x[1] + '</div>' +
+            '<div style="font-size:10px;color:var(--muted);margin-top:2px">' + x[2] + '</div></div>';
+        }).join('');
+        return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#ff6b3533;grid-column:1/-1">' +
+          '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff6b35,transparent 70%)"></div>' +
+          '<span class="gzclp-badge" style="color:#ff6b35;border-color:#ff6b35;background:#ff6b3515">REV</span>' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">' +
+          'Elke sessie één mobilisatie en één voetboog · roteert per sessie</div>' +
+          '<div class="gzclp-t3-grid">' + rows + '</div></div>';
       }
 
       // ── Per dag opbouwen ─────────────────────────────────────────────
@@ -18187,6 +18222,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''));
         }
+        tiersHtml += _revBlock(d.key);
       } else if (d.key === 'MA') {
         // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
         // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
