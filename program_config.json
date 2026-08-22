@@ -145,15 +145,7 @@
     "t3": "3 sets x 3-5 reps",
     "deload": "2 sets x 3 op ~60% 1RM"
   },
-  "doel_1rm_4okt": {
-    "Squat": 130,
-    "Bench": 105,
-    "Deadlift": 150,
-    "OHP": 80,
-    "Row": 90,
-    "SBD": 385
-  },
-  "doel_1rm_bron": "Hertest 28 sep – 4 okt. Squat/bench/deadlift afgeleid uit het werkgewicht van week 4. OHP en Row hebben nog geen geteste 1RM — hun linkerzijde is de verwachte 1RM uit de 3RM-test van 22 aug (3RM x 1,1), rechterzijde dezelfde relatieve sprong als de andere liften. SBD nu 360 (20 aug).",
+  "doel_1rm_bron": "Hertest ma 28 sep. Squat/bench/deadlift afgeleid uit het werkgewicht van week 4. OHP en Row hebben nog geen geteste 1RM — hun linkerzijde is de verwachte 1RM uit de 3RM-test van 22 aug (3RM x 1,1), rechterzijde dezelfde relatieve sprong als de andere liften. SBD nu 360 (20 aug).",
   "doel_1rm_range": {
     "Squat": "120–130",
     "Bench": "100–105",
@@ -196,5 +188,13 @@
     "Bench": 90,
     "Deadlift": 125,
     "bron": "Eén zware single op ~90% ná de werksets in week 4 (14-20 sep), negen dagen voor de hertest van 28 sep met de deload ertussen. Doel: de opener ijken en de single-vaardigheid oefenen — geen max-poging. Alleen doen als de werksets explosief aanvoelden. Wijkt af van Lotte's plafond van 85%; Bert koos hiervoor op 21 aug."
+  },
+  "doel_1rm_hertest": {
+    "Squat": 130,
+    "Bench": 105,
+    "Deadlift": 150,
+    "OHP": 80,
+    "Row": 90,
+    "SBD": 385
   }
 }
