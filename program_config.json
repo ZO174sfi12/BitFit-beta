@@ -37,16 +37,17 @@
     "Squat": 120,
     "Bench": 100,
     "Deadlift": 140,
-    "OHP": 73,
-    "Front": 76
+    "OHP": 74,
+    "Front": 76,
+    "Row": 82.5
   },
-  "ref_1rm_bron": "Sinds 20 aug 2026 de GETESTE 1RM voor squat/bench/deadlift (geen Epley-schatting meer). OHP nog reps-Epley tot de test van 22 aug. Bij bijsturen: sync config + index REF1RM + bitstats.html.",
+  "ref_1rm_bron": "Squat/bench/deadlift zijn de GETESTE 1RM van 20 aug. OHP en Row zijn afgeleid uit de 3RM-test van 22 aug (x1,1): 74 en 82,5. Geen Epley-schattingen uit werksets meer. Bij bijsturen: sync config + index REF1RM + bitstats.html.",
   "strength_start": {
     "Squat": 85,
     "Bench": 72.5,
     "Deadlift": 100,
     "OHP": 52.5,
-    "Row": 57.5
+    "Row": 60
   },
   "strength_start_bron": "70% van de 1RM, naar boven afgerond op 2,5 kg. Herzien 21 aug na feedback van Lotte: starten op 80% en oplopen tot 94% is te zwaar om 3 sets explosief te houden. Nu 71-73% start.",
   "proces_doel_3x5": {
@@ -130,10 +131,10 @@
     "Squat": 120,
     "Bench": 100,
     "Deadlift": 140,
-    "OHP": null,
-    "Row": null
+    "OHP": 74,
+    "Row": 82.5
   },
-  "getest_1rm_bron": "Kalibratie bij Lotte 20 aug 2026, zware single RPE 9 op squat, bench en deadlift. OHP en Row zijn die dag niet getest — Bert test beide op 22 aug; tot dan blijven hun startgewichten afgeleid en staan ze in de app als \"—\".",
+  "getest_1rm_bron": "Squat 120 · bench 100 · deadlift 140 getest bij Lotte op 20 aug (zware single RPE 9). OHP en Row op 22 aug als 3RM getest (67,5 en 75 kg) — 1RM afgeleid via 3RM x 1,1: 74,25 en 82,5.",
   "progressie_per_week": {
     "lower": 5.0,
     "upper": 2.5
@@ -149,7 +150,7 @@
     "Bench": 105,
     "Deadlift": 150,
     "OHP": 80,
-    "Row": 87.5,
+    "Row": 90,
     "SBD": 385
   },
   "doel_1rm_bron": "Hertest 28 sep – 4 okt. Squat/bench/deadlift afgeleid uit het werkgewicht van week 4. OHP en Row hebben nog geen geteste 1RM — hun linkerzijde is de verwachte 1RM uit de 3RM-test van 22 aug (3RM x 1,1), rechterzijde dezelfde relatieve sprong als de andere liften. SBD nu 360 (20 aug).",
@@ -158,17 +159,19 @@
     "Bench": "100–105",
     "Deadlift": "140–150",
     "OHP": "74–80",
-    "Row": "80–87,5"
+    "Row": "82,5–90"
   },
   "doel_1rm_range_bron": "Band in de voortgangsband: van de geteste 1RM van 20 aug naar het doel van 4 okt. Vervangt Lotte’s schattingsranges, die nu in historiek staan.",
   "test_22aug": {
     "OHP": {
-      "3RM_doel": 67.5,
-      "afgeleide_1RM": 74
+      "3RM": 67.5,
+      "afgeleide_1RM": 74,
+      "doel_was": 67.5
     },
     "Row": {
-      "3RM_doel": 72.5,
-      "afgeleide_1RM": 80
+      "3RM": 75,
+      "afgeleide_1RM": 82.5,
+      "doel_was": 72.5
     },
     "formule": "1RM = 3RM x 1,1 (Epley)"
   },
@@ -183,7 +186,7 @@
     "Bench": 80,
     "Deadlift": 115,
     "OHP": 60,
-    "Row": 65
+    "Row": 67.5
   },
   "pct_regel": "Start op 70% van de geteste 1RM en push elke week het gewicht omhoog tot 80%, maximaal 85%. Criterium is niet het percentage maar de uitvoering: het gewicht moet in één beweging verplaatst worden, niet hakkelend. Gaat het hoger dan 85% en blijft het explosief, dan mag dat.",
   "deload_core": true,

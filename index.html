@@ -298,11 +298,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">87.5</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">86.5</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202608211240</span>
+        <span class="meta-value" style="color:var(--muted)">202608221700</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -5215,6 +5215,36 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-08-22",
+          "weight": 67.5,
+          "volume": 490.0,
+          "sets": 4,
+          "pr": true,
+          "work_reps": 3,
+          "sets_detail": [
+            {
+              "w": 20.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 42.5,
+              "r": 3,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 1,
+              "warmup": true
+            },
+            {
+              "w": 67.5,
+              "r": 3,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -6167,6 +6197,31 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-08-22",
+          "weight": 86.0,
+          "volume": 2236.0,
+          "sets": 3,
+          "pr": false,
+          "work_reps": 26,
+          "sets_detail": [
+            {
+              "w": 86.0,
+              "r": 10,
+              "warmup": false
+            },
+            {
+              "w": 86.0,
+              "r": 8,
+              "warmup": false
+            },
+            {
+              "w": 86.0,
+              "r": 8,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -7116,6 +7171,36 @@ const DATA = {
             {
               "w": 60.0,
               "r": 7,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-08-22",
+          "weight": 75.0,
+          "volume": 655.0,
+          "sets": 4,
+          "pr": true,
+          "work_reps": 3,
+          "sets_detail": [
+            {
+              "w": 40.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 55.0,
+              "r": 3,
+              "warmup": true
+            },
+            {
+              "w": 65.0,
+              "r": 1,
+              "warmup": true
+            },
+            {
+              "w": 75.0,
+              "r": 3,
               "warmup": false
             }
           ]
@@ -10291,6 +10376,10 @@ const DATA = {
     {
       "date": "2026-08-20",
       "weight": 87.5
+    },
+    {
+      "date": "2026-08-22",
+      "weight": 86.5
     }
   ],
   "muscle_daily": [
@@ -11918,6 +12007,16 @@ const DATA = {
       "date": "2026-08-20",
       "muscle": "Chest",
       "volume": 745.0
+    },
+    {
+      "date": "2026-08-22",
+      "muscle": "Shoulders",
+      "volume": 490.0
+    },
+    {
+      "date": "2026-08-22",
+      "muscle": "Back",
+      "volume": 655.0
     }
   ],
   "training_days": [
@@ -12065,7 +12164,8 @@ const DATA = {
     "2026-08-17",
     "2026-08-18",
     "2026-08-20",
-    "2026-08-21"
+    "2026-08-21",
+    "2026-08-22"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -12475,7 +12575,8 @@ const DATA = {
     "2026-08-16": 0,
     "2026-08-17": 1,
     "2026-08-18": 0,
-    "2026-08-20": 0
+    "2026-08-20": 0,
+    "2026-08-22": 2
   },
   "body_comp": [
     {
@@ -15237,6 +15338,10 @@ const DATA = {
     {
       "date": "2026-08-20",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-08-22",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -17564,7 +17669,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // geen Epley-schatting meer. OHP blijft schatting tot de test van 22 aug.
     // ⚠ CANONIEK: program_config.json (ref_1rm). Bij wijzigen: sync config + program.html + build.js,
     //   draai daarna Downloads/check_program_consistency.py.
-    const REF1RM = {Squat:120, Bench:100, Deadlift:140, OHP:73, Front:76};
+    const REF1RM = {Squat:120, Bench:100, Deadlift:140, OHP:74, Row:82.5, Front:76};
     const pct = (w,ref) => ref ? ' · ' + Math.round(w/ref*100) + '% 1RM' : '';
     function platesTxt(w){
       let per = (w-20)/2;
@@ -17635,7 +17740,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const V7_SQ  = [85, 90, 95, 100];
         const V7_DL  = [100, 105, 110, 115];
         const V7_BE  = [72.5, 75, 77.5, 80];
-        const V7_ROW = [57.5, 60, 62.5, 65];
+        const V7_ROW = [60, 62.5, 65, 67.5];
         const V7_OHP = [52.5, 55, 57.5, 60];
         // Lotte, 21 aug: 3x4 in week 1-2, daarna 3x3 als het gewicht klimt.
         const V7_REPS = ['3 × 4', '3 × 4', '3 × 3', '3 × 3'];
@@ -17653,8 +17758,8 @@ document.addEventListener('DOMContentLoaded', function() {
         be = {h:'WO · UPPER · ±75 MIN',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','80% van e1RM 79 — definitief na de 3RM-test van 22 aug',true],
-                ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','80% van e1RM 73 — definitief na de 3RM-test van 22 aug',true]]
+                ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','70% van 1RM 82,5 — uit 3RM 75 kg op 22 aug',true],
+                ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','70% van 1RM 74 — uit 3RM 67,5 kg op 22 aug',true]]
                 .concat(iw === 3 ? [['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true]] : []),
               t3:[['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
@@ -17703,7 +17808,7 @@ document.addEventListener('DOMContentLoaded', function() {
               banner:'Techniek en snelheid, geen belasting opbouwen.',
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
-                ['T1','Row','BARBELL ROW','2 × 3', 47.5,'2 min',null,true],
+                ['T1','Row','BARBELL ROW','2 × 3', 50,'2 min',null,true],
                 ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min',null,true]],
               t3:[]};
         dl = {h:'ZA · LOWER · DELOAD · ±25 MIN',
@@ -17723,10 +17828,10 @@ document.addEventListener('DOMContentLoaded', function() {
                  _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
                 ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','getest 140 op 20 aug · werkgewicht wk4 115 kg',true,true,
                  _rampHtml('Deadlift',[[70,3],[110,2],[135,1]],150,liftColor('Deadlift')),true],
-                ['T2','OHP','OVERHEAD PRESS — TEST','zware single', 80,'3–5 min','3RM-test 22 aug · werkgewicht wk4 60 kg',true,true,
+                ['T2','OHP','OVERHEAD PRESS — TEST','zware single', 80,'3–5 min','3RM 67,5 kg op 22 aug → 1RM 74 · werkgewicht wk4 60 kg',true,true,
                  _rampHtml('OHP',[[20,5],[55,3],[72.5,1]],80,liftColor('OHP')),true],
-                ['T2','Row','BARBELL ROW — TEST','zware single', 87.5,'3 min','3RM-test 22 aug · werkgewicht wk4 65 kg',true,true,
-                 _rampHtml('Row',[[40,5],[65,3],[80,1]],87.5,liftColor('Row')),true]], t3:[]};
+                ['T2','Row','BARBELL ROW — TEST','zware single', 90,'3 min','3RM 75 kg op 22 aug → 1RM 82,5 · werkgewicht wk4 67,5 kg',true,true,
+                 _rampHtml('Row',[[40,5],[65,3],[80,1]],90,liftColor('Row')),true]], t3:[]};
         be = {h:'WO · VRIJ NA DE HERTEST', banner:'De hertest was maandag. Deze dag is vrij — lichte beweging of rust, afhankelijk van hoe maandag ging.', tiers:[], t3:[]};
         dl = {h:'ZA · VRIJ NA DE HERTEST', banner:'Uitkomst van de hertest bepaalt het volgende blok.', tiers:[], t3:[]};
       }
