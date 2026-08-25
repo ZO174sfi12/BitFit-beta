@@ -17459,33 +17459,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Warmup sets helpers
   function r25(v) { return Math.round(v / 2.5) * 2.5; }
-  // Bert's warmup protocol (note 2026-05-27):
-  // Set 1: 50% × w, 5 reps (min 40kg; OHP min 20kg)
-  // Set 2: 65% × w, 3 reps (min 50kg — alleen als min < werkgewicht)
-  // Set 3: 88% × w, 1–2 reps (min 60kg — alleen als min < werkgewicht)
-  // Uitzonderingen: DL < 100kg → sla set 1 over; w < 60kg → sla set 3 over.
-  function _wuApplyMin(calc, minW, workW) {
-    // Min alleen toepassen als hij zelf onder het werkgewicht valt
-    const eff = (minW < workW) ? Math.max(calc, minW) : calc;
-    return (eff > 0 && eff < workW) ? eff : null;
-  }
+  // Bert's opwarmprotocol — herzien 2026-08-25 op basis van wat hij feitelijk
+  // logt (heel 2026 nagerekend). Hij denkt niet in percentages maar in platen:
+  // hij hangt liefst minstens twee grote schijven op, dus 60 kg is de ondergrens
+  // zodra de werkset dat toelaat. Vaste regels:
+  //   anker   = 60 kg bij werkset >= 70 kg, anders 40 kg
+  //   stappen = maximaal 20 kg (25 kg als de werkset onder 75 kg ligt)
+  //   gewicht = gelijk verdeeld tussen anker en werkset, afgerond op 5 kg
+  //   reps    = 5 / 3 / 1 van onder naar boven; vanaf vier sets twee vijven
+  // Het aantal sets volgt dus uit het werkgewicht en staat niet vast per lift.
+  // Vervangt de oude 50/65/88-regel, die Bert te veel sets gaf op lichte dagen.
+  function r5(v) { return Math.floor(v / 5 + 0.5) * 5; }
+  const WU_REPS = {1:[5], 2:[5,3], 3:[5,3,1], 4:[5,5,3,1], 5:[5,5,3,2,1]};
   function t1Warmup(w, lk) {
-    if (!w || w <= 0) return [];
-    const isDL = lk === 'Deadlift', isOHP = lk === 'OHP';
-    const showS1 = !(isDL && w < 100);   // DL<100kg: sla set 1 over
-    const showS3 = w >= 60;              // w<60kg: sla set 3 over (te dicht op werkgewicht)
+    if (!w || w < 50) return [];
+    const anchor = w >= 70 ? 60 : 40;
+    if (anchor >= w) return [];
+    const gap = w - anchor;
+    const maxJump = w >= 75 ? 20 : 25;
+    const n = Math.min(Math.ceil(gap / maxJump), 5);
+    const reps = WU_REPS[n];
     const rows = [];
-    if (showS1) {
-      const s1 = _wuApplyMin(r25(w * 0.50), isOHP ? 20 : 40, w);
-      if (s1) rows.push({w: s1, reps: 5});
-    }
-    const prev2 = rows[rows.length-1]?.w || 0;
-    const s2 = _wuApplyMin(r25(w * 0.65), 50, w);
-    if (s2 && s2 > prev2) rows.push({w: s2, reps: 3});
-    if (showS3) {
-      const prev3 = rows[rows.length-1]?.w || 0;
-      const s3 = _wuApplyMin(r25(w * 0.88), 60, w);
-      if (s3 && s3 > prev3) rows.push({w: s3, reps: '1–2'});
+    for (let i = 0; i < n; i++) {
+      const x = r5(anchor + i * gap / n);
+      if (x > 0 && x < w && (!rows.length || x > rows[rows.length-1].w)) {
+        rows.push({w: x, reps: reps[i]});
+      }
     }
     return rows;
   }
