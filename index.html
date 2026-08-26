@@ -17459,25 +17459,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Warmup sets helpers
   function r25(v) { return Math.round(v / 2.5) * 2.5; }
-  // Bert's opwarmprotocol — herzien 2026-08-25 op basis van wat hij feitelijk
-  // logt (heel 2026 nagerekend). Hij denkt niet in percentages maar in platen:
-  // hij hangt liefst minstens twee grote schijven op, dus 60 kg is de ondergrens
-  // zodra de werkset dat toelaat. Vaste regels:
-  //   anker   = 60 kg bij werkset >= 70 kg, anders 40 kg
-  //   stappen = maximaal 20 kg (25 kg als de werkset onder 75 kg ligt)
-  //   gewicht = gelijk verdeeld tussen anker en werkset, afgerond op 5 kg
-  //   reps    = 5 / 3 / 1 van onder naar boven; vanaf vier sets twee vijven
-  // Het aantal sets volgt dus uit het werkgewicht en staat niet vast per lift.
-  // Vervangt de oude 50/65/88-regel, die Bert te veel sets gaf op lichte dagen.
+  // Bert's opwarmprotocol — herzien 26 aug 2026, na twee sessies meten.
+  // Twee soorten lifts, want hij warmt ze aantoonbaar anders op:
+  //
+  //  LADDER (squat, deadlift) — de zware, technische lifts:
+  //    anker 60 kg, dan in stappen van maximaal 20 kg naar de werkset,
+  //    afgerond op 5 kg, reps 5 / 3 / 1 van onder naar boven.
+  //    85 kg -> 60x5 . 75x3   |   100 kg -> 60x5 . 80x3   |   140 kg -> 4 sets
+  //
+  //  ENKELE SET (bench, row, OHP) — hier volstaat er een:
+  //    40 kg, of 60 kg zodra de werkset op 80 kg of hoger ligt.
+  //    Bench 72,5 -> 40x5   |   bench 85 -> 60x5   |   row 60 -> 40x5
+  //
+  // Hij denkt in platen, niet in percentages: 40 = stang + 10 per kant,
+  // 60 = stang + 20. Vandaar ronde getallen en geen 42,5 of 51,25.
+  // Op testdagen zet hij er zelf een set bovenop; die dagen plant hij met de hand.
   function r5(v) { return Math.floor(v / 5 + 0.5) * 5; }
   const WU_REPS = {1:[5], 2:[5,3], 3:[5,3,1], 4:[5,5,3,1], 5:[5,5,3,2,1]};
+  const WU_LADDER = new Set(['Squat', 'Deadlift']);
   function t1Warmup(w, lk) {
     if (!w || w < 50) return [];
-    const anchor = w >= 70 ? 60 : 40;
+    if (!WU_LADDER.has(lk)) {
+      const x = w >= 80 ? 60 : 40;
+      return x < w ? [{w: x, reps: 5}] : [];
+    }
+    const anchor = 60;
     if (anchor >= w) return [];
     const gap = w - anchor;
-    const maxJump = w >= 75 ? 20 : 25;
-    const n = Math.min(Math.ceil(gap / maxJump), 5);
+    const n = Math.min(Math.ceil(gap / 20), 5);
     const reps = WU_REPS[n];
     const rows = [];
     for (let i = 0; i < n; i++) {
