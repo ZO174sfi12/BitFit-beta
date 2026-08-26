@@ -1,29 +1,29 @@
 {
-  "updated": "2026-08-22T17:00:18",
-  "weight": 86.5,
-  "weight_date": "2026-08-22",
-  "training_days_total": 146,
-  "last_training_day": "2026-08-22",
+  "updated": "2026-08-26T15:50:13",
+  "weight": 87.4,
+  "weight_date": "2026-08-26",
+  "training_days_total": 149,
+  "last_training_day": "2026-08-26",
   "lifts": {
     "Squat": {
-      "last_date": "2026-08-20",
-      "last_weight": 120.0,
-      "last_volume": 1330.0,
-      "pr": true,
+      "last_date": "2026-08-24",
+      "last_weight": 85.0,
+      "last_volume": 1492.5,
+      "pr": false,
       "pr_weight": 120.0
     },
     "Deadlift": {
-      "last_date": "2026-08-20",
-      "last_weight": 140.0,
-      "last_volume": 1105.0,
-      "pr": true,
+      "last_date": "2026-08-24",
+      "last_weight": 100.0,
+      "last_volume": 1840.0,
+      "pr": false,
       "pr_weight": 140.0
     },
     "Bench": {
-      "last_date": "2026-08-20",
-      "last_weight": 100.0,
-      "last_volume": 745.0,
-      "pr": true,
+      "last_date": "2026-08-26",
+      "last_weight": 72.5,
+      "last_volume": 1220.0,
+      "pr": false,
       "pr_weight": 100.0
     },
     "DB Bench x2": {
@@ -34,10 +34,10 @@
       "pr_weight": 72.0
     },
     "OHP": {
-      "last_date": "2026-08-22",
-      "last_weight": 67.5,
-      "last_volume": 490.0,
-      "pr": true,
+      "last_date": "2026-08-26",
+      "last_weight": 52.5,
+      "last_volume": 830.0,
+      "pr": false,
       "pr_weight": 67.5
     },
     "Lat PD": {
@@ -48,9 +48,9 @@
       "pr_weight": 70.0
     },
     "DIP-BW": {
-      "last_date": "2026-08-22",
-      "last_weight": 86.0,
-      "last_volume": 2236.0,
+      "last_date": "2026-08-26",
+      "last_weight": 77.4,
+      "last_volume": 1228.5,
       "pr": false,
       "pr_weight": 87.8
     },
@@ -62,10 +62,10 @@
       "pr_weight": 60.0
     },
     "Row": {
-      "last_date": "2026-08-22",
-      "last_weight": 75.0,
-      "last_volume": 655.0,
-      "pr": true,
+      "last_date": "2026-08-26",
+      "last_weight": 60.0,
+      "last_volume": 920.0,
+      "pr": false,
       "pr_weight": 75.0
     },
     "Hip Thrust": {
@@ -151,6 +151,13 @@
       "last_volume": 328.0,
       "pr": true,
       "pr_weight": 30.0
+    },
+    "Pull-Up": {
+      "last_date": "2026-08-26",
+      "last_weight": 1.0,
+      "last_volume": 11.0,
+      "pr": true,
+      "pr_weight": 1.0
     }
   }
 }
