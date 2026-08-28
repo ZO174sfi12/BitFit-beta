@@ -18232,6 +18232,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','70% van 1RM 82,5 — uit 3RM 75 kg op 22 aug',true],
                 ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','70% van 1RM 74 — uit 3RM 67,5 kg op 22 aug',true]]
                 .concat(iw === 3 ? [['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true]] : []),
+              t3note:'Keuze — pak eruit wat past in de tijd die je hebt.',
               t3:[['Weighted Pull-Up','3×3-5','Pull-Up',false],
                   ['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
@@ -18249,10 +18250,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Squat','BACK SQUAT',V7_REPS[iw], V7_SQ[iw],'3 min','Explosief omhoog · heupen naar voren',true],
                 ['T1','Deadlift','DEADLIFT',V7_REPS[iw], V7_DL[iw],'3–5 min','Drie sets dit blok, geen AMRAP',true]]
                 .concat(topWk ? [topTier('Squat','BACK SQUAT'), topTier('Deadlift','DEADLIFT')] : []),
-              t3:[['Hip Thrust (plate-loaded)','3×3-5','Hip Thrust',false],
+              t3note:'Hip thrust is vast — glutes na de venus magna. De rest is keuze, pak wat past.',
+              t3:[['Hip Thrust (plate-loaded) — vast','3×3-5','Hip Thrust',false],
+                  ['Seated Cable Row','opwarm 45×5 · 3×5+','Cable Row',false],
                   ['Front Squat of Zercher','3×3-5','Front Squat',false],
-                  ['Lat Pulldown','3×3-5','Lat PD',false],
-                  ['Seated Cable Row','3×3-5','Cable Row',false]]};
+                  ['Lat Pulldown','3×3-5','Lat PD',false]]};
       } else if (actPh.name === 'TEST 3RM') {
         // Losse test za 22 aug: OHP en Row kregen op 20 aug geen beurt. Bewust een
         // 3RM en geen single — bij row meet een maximale single vooral hoeveel
@@ -18545,7 +18547,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const CORE_BLOK = {
       MA: ['Ab wheel 3×8', 'Plank 3×45 sec'],
       WO: ['Dead Bug 3×12 + 30 sec hold', 'Alternating Heel Touch 3×10'],
-      ZA: ['Parallel Bar Leg Raise 3×8', 'Sit-Up 2×12', 'Superman 2×10']
+      // Bert 28 aug: side plank en flutter kick erbij, superman blijft staan.
+      // Vijf items past niet in 10 min — dit is een keuzelijst, niet een af te vinken rij.
+      ZA: ['Parallel Bar Leg Raise 3×8', 'Sit-Up 2×12', 'Superman 2×10',
+           'Side Plank 2×40 sec', 'Flutter Kick 1×20']
     };
     const WU_SLOT = {MA:'ma', WO:'wo', ZA:'za', SQUAT:'ma', BENCH:'wo', DEADLIFT:'za', 'DI+':'za'};
 
@@ -18645,10 +18650,11 @@ document.addEventListener('DOMContentLoaded', function() {
           '<div class="gzclp-t3-grid">' + rows + '</div></div>';
       }
 
-      function _t3Block(mainItems) {
+      function _t3Block(mainItems, note) {
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#00ffb333;grid-column:1/-1">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent 70%)"></div>' +
           '<span class="gzclp-badge" style="color:var(--green);border-color:var(--green);background:#00ffb315">T3</span>' +
+          (note ? '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">' + note + '</div>' : '') +
           '<div class="gzclp-t3-grid">' + mainItems + '</div></div>';
       }
 
@@ -18697,7 +18703,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tiersHtml += _coreBlock(d.key);
         d.tiers.forEach(function(t){ tiersHtml += _tierCard.apply(null, t); });
         if (d.t3 && d.t3.length) {
-          tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''));
+          tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''), d.t3note);
         }
         tiersHtml += _revBlock(d.key);
       } else if (d.key === 'MA') {
