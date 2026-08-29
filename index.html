@@ -18660,31 +18660,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // REV als eigen kaart, niet meer vastgeplakt aan T3 — anders viel REV weg
       // op maandag, want die dag heeft geen T3.
+      // REV — één oefening per sessie (Bert, 28 aug: bij tijdgebrek valt REV als
+      // eerste weg, en dan doet hij er nul in plaats van twee). Beter één die
+      // altijd past dan een paar dat sneuvelt.
+      //
+      // Rotatie: even sessies een mobilisatie, oneven een voetboog. Over de twaalf
+      // sessies van het blok geeft dat elke mobilisatie 2x en elke voetboog 1 tot 2x,
+      // en beide categorieën blijven om de sessie terugkomen.
       function _revBlock(dayKey) {
         const dagN = {MA:0, WO:1, ZA:2}[dayKey];
         if (dagN === undefined) return '';
         const n = (typeof activeWk === 'number' ? activeWk : 0) * 3 + dagN;
-        // Vaste volgorde van 12 sessies i.p.v. twee losse cycli. Met 3 mobilisaties
-        // en 3 sessies per week valt de ene cyclus op de andere: n % 3 maakt de
-        // mobilisatie dagvast, en (week + dag) % 3 laat 2 van de 12 paren dubbel
-        // voorkomen terwijl 2 andere nooit langskomen. Deze tabel haalt alles
-        // tegelijk: 12 unieke paren, elke mobilisatie 4x, elke voetboog 3x, en
-        // elke dag krijgt alle drie de mobilisaties.
-        const REV_PLAN = [[0,0],[1,1],[2,2],[1,3],[2,0],[0,1],[2,3],[0,2],[1,0],[0,3],[1,2],[2,1]];
-        const pick = REV_PLAN[n % REV_PLAN.length];
-        const paar = [REV_MOB[pick[0]], REV_VOET[pick[1]]];
-        const rows = paar.map(function(x, i){
-          return '<div class="gzclp-t3-item" style="border-color:#ff6b3533;background:#130b08">' +
-            '<div style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;color:#ff6b35;margin-bottom:2px">' +
-            (i ? 'VOETBOOG' : 'MOBILISATIE') + '</div>' +
-            '<div style="font-size:12px;color:var(--text)">' + x[0] + ' · ' + x[1] + '</div>' +
-            '<div style="font-size:10px;color:var(--muted);margin-top:2px">' + x[2] + '</div></div>';
-        }).join('');
+        const isMob = (n % 2 === 0);
+        const x = isMob ? REV_MOB[(n / 2) % REV_MOB.length]
+                        : REV_VOET[((n - 1) / 2) % REV_VOET.length];
+        const rows = '<div class="gzclp-t3-item" style="border-color:#ff6b3533;background:#130b08">' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;color:#ff6b35;margin-bottom:2px">' +
+          (isMob ? 'MOBILISATIE' : 'VOETBOOG') + '</div>' +
+          '<div style="font-size:12px;color:var(--text)">' + x[0] + ' · ' + x[1] + '</div>' +
+          '<div style="font-size:10px;color:var(--muted);margin-top:2px">' + x[2] + '</div></div>';
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#ff6b3533;grid-column:1/-1">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff6b35,transparent 70%)"></div>' +
           '<span class="gzclp-badge" style="color:#ff6b35;border-color:#ff6b35;background:#ff6b3515">REV</span>' +
           '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">' +
-          'Elke sessie één mobilisatie en één voetboog · roteert per sessie</div>' +
+          'Eén oefening per sessie · mobilisatie en voetboog wisselen elkaar af</div>' +
           '<div class="gzclp-t3-grid">' + rows + '</div></div>';
       }
 
