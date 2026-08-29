@@ -18355,6 +18355,32 @@ document.addEventListener('DOMContentLoaded', function() {
       if (todayStr === DI_CATCHUP.date && wk === curWk) newIdx = 1; // vandaag zelf én op de actieve week → toon de DI-tab
       return {dayp: out, dIdx: newIdx};
     }
+    // Eenmalige dagwissel week 2 (31 aug - 6 sep): Kenny traint woensdag mee en
+    // Bert wil dan fullbody doen. Dus MA krijgt de UPPER-sessie en WO de
+    // FULLBODY-sessie. De tabs blijven in kalendervolgorde staan (MA/DI/WO/ZA);
+    // alleen de inhoud wisselt. sessKey volgt de sessie, zodat core, mobiliteit
+    // en REV meeverhuizen met de training en niet met de kalenderdag.
+    // Gewichten kloppen vanzelf: de fullbody-kaart draait de week ervoor (85 /
+    // 72,5 / 100) en de upper-kaart de huidige week (75 / 62,5 / 55).
+    const DAY_SWAP = { from: '2026-08-29', to: '2026-09-06' };
+    const DAY_SWAP_WK = Math.floor((new Date('2026-08-31') - new Date(ph.start)) / (7*86400000));
+    function applyDaySwap(dayp, wk, dIdx) {
+      if (ph.name !== 'STRENGTH' || wk !== DAY_SWAP_WK) return {dayp, dIdx};
+      if (!(todayStr >= DAY_SWAP.from && todayStr <= DAY_SWAP.to)) return {dayp, dIdx};
+      const iMa = dayp.findIndex(function(d){ return d.key === 'MA'; });
+      const iWo = dayp.findIndex(function(d){ return d.key === 'WO'; });
+      if (iMa < 0 || iWo < 0) return {dayp, dIdx};
+      const out = dayp.slice();
+      const swap = function(from, toKey) {
+        return {key: toKey, sessKey: from.key, color: from.color, card: from.card,
+                tiers: from.tiers, t3: from.t3, t3note: from.t3note,
+                banner: 'Gewisseld deze week — Kenny traint woensdag mee, dus de fullbody schuift naar woensdag.'
+                        + (from.banner ? ' ' + from.banner : '')};
+      };
+      out[iMa] = swap(dayp[iWo], 'MA');
+      out[iWo] = swap(dayp[iMa], 'WO');
+      return {dayp: out, dIdx};
+    }
     // Afbouwweek naar de 1RM-kalibratie. Die verschoof van ma 17 naar do 20 aug
     // (Bert, 14 aug), waardoor de laatste EXPLOSIVE-week een eigen dagindeling
     // krijgt: VR 14 (laatste zware sessie) · MA 17 (upper + openers) · DI 18
@@ -18488,7 +18514,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (testPrepActive() && wk === curWk) {
         return {dayp: testPrepDays(), dIdx: testPrepIdx()};
       }
-      return applyDiCatchup(dayp, wk, dIdx);
+      const di = applyDiCatchup(dayp, wk, dIdx);
+      return applyDaySwap(di.dayp, wk, di.dIdx);
     }
 
     let activeWk = curWk;
@@ -18572,7 +18599,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Flat renderer voor DI (cardio) en niet-EXPLOSIVE fases
       if (d.flat || (!d.tiers && (actPh.name !== 'EXPLOSIVE' || d.key === 'DI'))) {
         cardEl.innerHTML = '<div class="taper-sess" style="min-width:0"><div class="taper-sess-head" style="color:' + d.color + '">' + d.card.h + '</div>' +
-          _mobWuHtml(d.wu || d.key) +
+          _mobWuHtml(d.wu || d.sessKey || d.key) +
           d.card.r.map(l => '<span class="tb ' + l[0] + '">' + l[1] + '</span> ' + l[2]).join('<br>') + '</div>';
         return;
       }
@@ -18700,12 +18727,12 @@ document.addEventListener('DOMContentLoaded', function() {
           tiersHtml += '<div style="grid-column:1/-1;font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);padding:4px 2px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">' + d.banner + '</div>';
         }
         // Core staat vóór de liften — Berts eigen volgorde (21 aug).
-        tiersHtml += _coreBlock(d.key);
+        tiersHtml += _coreBlock(d.sessKey || d.key);
         d.tiers.forEach(function(t){ tiersHtml += _tierCard.apply(null, t); });
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''), d.t3note);
         }
-        tiersHtml += _revBlock(d.key);
+        tiersHtml += _revBlock(d.sessKey || d.key);
       } else if (d.key === 'MA') {
         // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
         // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
@@ -18763,7 +18790,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       cardEl.innerHTML =
         '<div style="font-family:\'Oxanium\',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:' + d.color + ';margin-bottom:10px">' + d.card.h + '</div>' +
-        '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + _mobWuHtml(d.wu || d.key) + tiersHtml + '</div>';
+        '<div class="gzclp-tiers" style="grid-template-columns:repeat(2,1fr)">' + _mobWuHtml(d.wu || d.sessKey || d.key) + tiersHtml + '</div>';
     }
 
     function switchWeek(idx) {
