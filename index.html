@@ -18562,9 +18562,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const iWo = dayp.findIndex(function(d){ return d.key === 'WO'; });
       if (iMa < 0 || iWo < 0) return {dayp, dIdx};
       const out = dayp.slice();
+      // Bert deed de upper-sessie op di 1 sep met de week-1 gewichten (72,5 en
+      // 52,5) omdat hij ze in Jefit niet had verhoogd. Bench haalt hij woensdag
+      // in binnen de fullbody; OHP zit daar niet in, dus die plakken we er los
+      // achter op de week-2 waarde. Eenmalig, verdwijnt met de swap na 6 sep.
+      const OHP_INHAAL = ['T1','OHP','OVERHEAD PRESS — INHAAL','3 × 4', 55,'2–3 min',
+                          'Gemist op dinsdag (deed 52,5). Dit is de week-2 waarde.', true];
       const swap = function(from, toKey) {
+        const tiers = (from.key === 'MA') ? from.tiers.concat([OHP_INHAAL]) : from.tiers;
         return {key: toKey, sessKey: from.key, color: from.color, card: from.card,
-                tiers: from.tiers, t3: from.t3, t3note: from.t3note,
+                tiers: tiers, t3: from.t3, t3note: from.t3note,
                 banner: 'Gewisseld deze week — Kenny traint woensdag mee, dus de fullbody schuift naar woensdag.'
                         + (from.banner ? ' ' + from.banner : '')};
       };
