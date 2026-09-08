@@ -302,7 +302,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202609082220</span>
+        <span class="meta-value" style="color:var(--muted)">202609082235</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -18065,6 +18065,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Lift colors (from DATA)
   const LC = {};
   for (const [k,v] of Object.entries(DATA.lifts||{})) LC[k] = v.color || '#888';
+  // Oefeningen die nog geen punten in DATA hebben krijgen alvast een kleur, anders
+  // valt liftColor() terug op grijs — en grijze tekst is tegen de designregels.
+  // Zodra process_jefit ze oppikt overschrijft de echte kleur deze waarden niet:
+  // de loop hierboven draait eerst, dus dit vult alleen ontbrekende keys aan.
+  if (!LC['Good Morning']) LC['Good Morning'] = LC['Deadlift'] || '#ffd600';
+  if (!LC['Chest Press'])  LC['Chest Press']  = LC['Bench']    || '#64b5f6';
 
   // ── T3 MASTER POOL ─────────────────────────────────────────────
   // Eén grote pool voor alle T3-oefeningen met badge-type en dag-score.
@@ -18957,12 +18963,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Testweek-taper heeft voorrang op de DI+-inhaaltab: in dat venster wordt de
     // hele dagindeling vervangen, dus de inhaaldag is dan niet meer relevant.
+    // Week 3 (7-13 sep) aangepast wegens overbelaste onderarmflexoren. Bert meldde
+    // op 8 sep: spierbuik bij de elleboog, niet het botpuntje, pijn ná de training.
+    // Oorzaak is connective tissue lag - zijn rug volgde de sprong van row 20 naar
+    // 62,5 kg wel, zijn onderarmen niet, en kickboksen stapelt daar bovenop.
+    //
+    // Regel voor deze week: niets dat een greep vraagt. Deadlift en row vallen dus
+    // volledig weg. De hinge blijft overeind via de good morning (stang op de rug,
+    // zelfde handpositie als squat) en de machine back extension. Push komt pas
+    // zaterdag terug, bench 12 kg onder schema met snelheid als doel.
+    // Schema-gewichten blijven waar het kan - Bert wil expliciet op schema blijven.
+    const ELLEBOOG = { from: '2026-09-08', to: '2026-09-13' };
+    const ELLEBOOG_WK = Math.floor((new Date('2026-09-09') - new Date(ph.start)) / (7*86400000));
+    function applyElleboogWeek(dayp, wk, dIdx) {
+      if (ph.name !== 'STRENGTH' || wk !== ELLEBOOG_WK) return {dayp, dIdx};
+      if (!(todayStr >= ELLEBOOG.from && todayStr <= ELLEBOOG.to)) return {dayp, dIdx};
+      const iWo = dayp.findIndex(function(d){ return d.key === 'WO'; });
+      const iZa = dayp.findIndex(function(d){ return d.key === 'ZA'; });
+      if (iWo < 0 || iZa < 0) return {dayp, dIdx};
+      const out = dayp.slice();
+      out[iWo] = {
+        key: 'WO', color: LC['Squat'] || '#b388ff',
+        card: {h: 'WO · LOWER · ONDERARM ONTZIEN · ±60 MIN'},
+        banner: 'Geen deadlift en geen row deze week - dat zijn je twee grootste grijpbelastingen. ' +
+                'De hinge blijft via de good morning: stang op de rug, dus je handen doen niets.',
+        tiers: [
+          ['T1','Squat','BACK SQUAT','3 × 3', 95,'3 min',
+           'Explosief omhoog · stoppen zodra de staaf traag wordt', true],
+          ['T1','Good Morning','BARBELL GOOD MORNING','20×8 techniek → 3 × 8', 40,'2 min',
+           'Nieuw voor jou. Heupen naar achter, knieën zacht, rug vlak. Stoppen zodra de onderrug rondt.',
+           true, true],
+          ['T2','Hip Thrust','HIP THRUST (plate-loaded)','3 × 8', 25,'2 min',
+           'Explosief omhoog · bovenaan knijpen', false, true]
+        ],
+        t3note: 'Alleen als je tijd hebt — brengt de sessie van 56 op 62 minuten.',
+        t3: [['Machine Back Extension','3×12 @ 40', null, false]]
+      };
+      out[iZa] = {
+        key: 'ZA', color: LC['Bench'] || '#64b5f6',
+        card: {h: 'ZA · PUSH · ONDERARM ONTZIEN · ±60 MIN'},
+        banner: 'Push komt terug, trekwerk nog niet. Bench 12 kg onder je schemagewicht met snelheid als doel — ' +
+                'doet het pijn tijdens de set, dan door naar de chest press.',
+        tiers: [
+          ['T1','Bench','BARBELL BENCH PRESS','5 × 3 · explosief', 65,'2 min',
+           'Test na de pijn van 2 sep. Snelheid is het doel, niet het gewicht.', true],
+          ['T1','OHP','OVERHEAD PRESS','3 × 3', 57.5,'2–3 min',
+           'Zak naar 55 als je onderarm meepraat — dat is nog altijd vooruit tegenover 52,5.', true],
+          ['T2','Chest Press','MACHINE CHEST PRESS','4 × 6 explosief', null,'90 sec',
+           'Vaste greep, minder stabilisatie van de onderarm', false, true]
+        ],
+        t3note: 'Assisted dip in plaats van de vrije bars — minder grijpbelasting.',
+        t3: [['Machine Assisted Dip','3×8','DIP-BW',false]]
+      };
+      return {dayp: out, dIdx};
+    }
+
     function applyWeekOverrides(dayp, wk, dIdx) {
       if (testPrepActive() && wk === curWk) {
         return {dayp: testPrepDays(), dIdx: testPrepIdx()};
       }
       const di = applyDiCatchup(dayp, wk, dIdx);
-      return applyDaySwap(di.dayp, wk, di.dIdx);
+      const sw = applyDaySwap(di.dayp, wk, di.dIdx);
+      return applyElleboogWeek(sw.dayp, wk, sw.dIdx);
     }
 
     let activeWk = curWk;
