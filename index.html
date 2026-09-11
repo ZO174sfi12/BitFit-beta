@@ -18852,7 +18852,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // BEVESTIGINGSdag: die draait de gewichten van de week ervoor.
         // OHP heeft nog geen geteste 1RM — Bert test die 22 aug, tot dan null.
         const V7_SQ  = [85, 90, 95, 100];
-        const V7_DL  = [100, 105, 110, 115];
+        // Week 4 op 105 i.p.v. 115 (11 sep): deadlift lag twee weken stil wegens
+        // Berts onderarmklachten, en +15 kg op een ongetrainde beweging negen dagen
+        // voor de hertest is te veel. Met straps, zodat de greep de rug niet limiteert.
+        const V7_DL  = [100, 105, 110, 105];
         const V7_BE  = [72.5, 75, 77.5, 80];
         const V7_ROW = [60, 62.5, 65, 67.5];
         const V7_OHP = [52.5, 55, 57.5, 60];
@@ -18884,7 +18887,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Negen dagen voor de hertest van 28 sep, met de deload ertussen. Doel is
         // je opener ijken en de single-vaardigheid oefenen — geen max-poging.
         const topWk = (iw === 3);
-        const TOP = {Squat:110, Deadlift:125, Bench:90};
+        const TOP = {Squat:110, Deadlift:120, Bench:90};
         const topTier = (lk, naam) => ['T1', lk, naam + ' — TOPSET', '1 zware single · RPE 8-9', TOP[lk],
               '3–5 min', 'Alleen als de werksets explosief waren. Traag? Overslaan.', true, true];
         dl = {h:'ZA · LOWER · ±75 MIN' + (topWk ? ' + TOPSET' : ''),

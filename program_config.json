@@ -176,7 +176,7 @@
   "proces_doel_eindblok": {
     "Squat": 100,
     "Bench": 80,
-    "Deadlift": 115,
+    "Deadlift": 105,
     "OHP": 60,
     "Row": 67.5
   },
@@ -186,8 +186,8 @@
   "topset_week4": {
     "Squat": 110,
     "Bench": 90,
-    "Deadlift": 125,
-    "bron": "Eén zware single op ~90% ná de werksets in week 4 (14-20 sep), negen dagen voor de hertest van 28 sep met de deload ertussen. Doel: de opener ijken en de single-vaardigheid oefenen — geen max-poging. Alleen doen als de werksets explosief aanvoelden. Wijkt af van Lotte's plafond van 85%; Bert koos hiervoor op 21 aug."
+    "Deadlift": 120,
+    "bron": "Eén zware single op ~90% ná de werksets in week 4 (14-20 sep), negen dagen voor de hertest van 28 sep met de deload ertussen. Doel: de opener ijken en de single-vaardigheid oefenen — geen max-poging. Alleen doen als de werksets explosief aanvoelden. Wijkt af van Lotte's plafond van 85%; Bert koos hiervoor op 21 aug. Deadlift bijgesteld op 11 sep 2026 van 115/125 naar 105/120: Bert deed hem twee weken niet wegens overbelaste onderarmflexoren, en +15 kg op een ongetrainde beweging vlak voor de hertest is te veel. Met straps, zodat de greep de rug niet limiteert."
   },
   "doel_1rm_hertest": {
     "Squat": 130,
