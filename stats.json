@@ -1,12 +1,12 @@
 {
-  "updated": "2026-09-08T22:35:49",
-  "weight": 88.5,
-  "weight_date": "2026-09-04",
-  "training_days_total": 156,
-  "last_training_day": "2026-09-04",
+  "updated": "2026-09-11T18:39:40",
+  "weight": 88.4,
+  "weight_date": "2026-09-11",
+  "training_days_total": 159,
+  "last_training_day": "2026-09-11",
   "lifts": {
     "Squat": {
-      "last_date": "2026-09-04",
+      "last_date": "2026-09-11",
       "last_weight": 90.0,
       "last_volume": 1620.0,
       "pr": false,
@@ -69,11 +69,11 @@
       "pr_weight": 75.0
     },
     "Hip Thrust": {
-      "last_date": "2026-08-14",
-      "last_weight": 25.0,
-      "last_volume": 650.0,
-      "pr": false,
-      "pr_weight": 30.0
+      "last_date": "2026-09-11",
+      "last_weight": 45.0,
+      "last_volume": 1135.0,
+      "pr": true,
+      "pr_weight": 45.0
     },
     "Face Pull": {
       "last_date": "2026-08-17",
@@ -158,6 +158,13 @@
       "last_volume": 12.0,
       "pr": false,
       "pr_weight": 1.0
+    },
+    "Good Morning": {
+      "last_date": "2026-09-09",
+      "last_weight": 40.0,
+      "last_volume": 880.0,
+      "pr": true,
+      "pr_weight": 40.0
     }
   }
 }
