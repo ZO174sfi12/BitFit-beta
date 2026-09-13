@@ -18937,13 +18937,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // BEVESTIGINGSdag: die draait de gewichten van de week ervoor.
         // OHP heeft nog geen geteste 1RM — Bert test die 22 aug, tot dan null.
         const V7_SQ  = [85, 90, 95, 100];
-        // Week 4 op 105 i.p.v. 115 (11 sep): deadlift lag twee weken stil wegens
-        // Berts onderarmklachten, en +15 kg op een ongetrainde beweging negen dagen
-        // voor de hertest is te veel. Met straps, zodat de greep de rug niet limiteert.
-        const V7_DL  = [100, 105, 110, 105];
+        // Week 4 op 110 i.p.v. 115 (13 sep): deadlift lag negen dagen stil wegens
+        // Berts onderarmklachten. Eén stap terug over de hele lijn houdt de opbouw
+        // intact zonder een ongetrainde beweging te forceren vlak voor de hertest.
+        const V7_DL  = [100, 105, 110, 110];
+        // De maandag van week 4 draait normaal de week ervoor (110) — dat zou zwaarder
+        // zijn dan de zaterdag erna. Daarom 105: re-entry op zijn laatste werkgewicht
+        // van 4 sep plus één stap, met straps als enige nieuwe variabele.
+        const DL_MA_WK4 = 105;
         const V7_BE  = [72.5, 75, 77.5, 80];
         const V7_ROW = [60, 62.5, 65, 67.5];
-        const V7_OHP = [52.5, 55, 57.5, 60];
+        // Week 4 op 57,5 i.p.v. 60 (13 sep): OHP stond vier weken stil op 52,5.
+        // Eén stap omhoog plus een topset zegt meer over de testdag dan drie
+        // zware triples op een gewicht dat hij nooit heeft gedraaid.
+        const V7_OHP = [52.5, 55, 57.5, 57.5];
         // Lotte, 21 aug: 3x4 in week 1-2, daarna 3x3 als het gewicht klimt.
         const V7_REPS = ['3 × 4', '3 × 4', '3 × 3', '3 × 3'];
         const iw = Math.min(Math.max(wk,0), 3);        // huidige week
@@ -18955,14 +18962,21 @@ document.addEventListener('DOMContentLoaded', function() {
               tiers:[
                 ['T1','Squat','BACK SQUAT',V7_REPS[ip], V7_SQ[ip],'3 min','Explosief omhoog · stoppen zodra de staaf traag wordt',true],
                 ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[ip], V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Deadlift','DEADLIFT',V7_REPS[ip], V7_DL[ip],'3–5 min','Meer hinge · minder squat · STRAPS zolang de elleboog speelt',true]],
+                ['T1','Deadlift','DEADLIFT',V7_REPS[ip], (iw === 3 ? DL_MA_WK4 : V7_DL[ip]),'3–5 min','Meer hinge · minder squat · STRAPS zolang de elleboog speelt',true]],
               t3:[]};
-        be = {h:'WO · UPPER · ±75 MIN',
+        be = {h:'WO · UPPER · ±75 MIN' + (iw === 3 ? ' + TOPSETS' : ''),
+              banner: iw === 3 ? 'Row valt weg deze week — niet getest op 28 sep, en de lift die je onderarm overbelastte. Bench en OHP krijgen elk een topset om je opener te ijken.' : undefined,
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
-                ['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','Strikt, geen body english · straps · stop bij elleboogpijn',true],
                 ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','70% van 1RM 74 — uit 3RM 67,5 kg op 22 aug',true]]
-                .concat(iw === 3 ? [['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true]] : []),
+                // Row valt weg in week 4: hij wordt niet getest op 28 sep en hij is de lift
+                // die Berts onderarm overbelastte. Twee weken zonder is de beste voorbereiding
+                // op een maximale deadlift.
+                .concat(iw !== 3 ? [['T1','Row','BARBELL ROW',V7_REPS[iw], V7_ROW[iw],'2–3 min','Strikt, geen body english · straps · stop bij elleboogpijn',true]] : [])
+                .concat(iw === 3 ? [
+                  ['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true],
+                  ['T1','OHP','OVERHEAD PRESS — TOPSET','1 zware single · RPE 8-9', 65,'3–5 min','88% van je afgeleide 1RM van 74. Alleen als de werksets vlot gingen.',true,true]
+                ] : []),
               t3note:'Keuze — pak eruit wat past. Pull-ups staan geparkeerd zolang de mediale elleboog speelt (2 sep).',
               t3:[
                   ['Dips','3×3-5','DIP-BW',false],
