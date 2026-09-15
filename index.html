@@ -19034,13 +19034,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 : 'Bevestigingsdag — zelfde gewichten als week ' + (ip+1) + '. Niet zwaarder gaan.',
               tiers:[
                 ['T1','Squat','BACK SQUAT',V7_REPS[ip], V7_SQ[ip],'3 min','Explosief omhoog · stoppen zodra de staaf traag wordt',true],
-                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[ip], V7_BE[ip],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[ip], V7_BE[ip],'3 min','Hielen op grond · billen op de bank · ELLEBOOG: stang laag in de handpalm, pols recht boven de elleboog',true],
                 ['T1','Deadlift','DEADLIFT',V7_REPS[ip], (iw === 3 ? DL_MA_WK4 : V7_DL[ip]),'3–5 min','Meer hinge · minder squat · STRAPS zolang de elleboog speelt',true]],
               t3:[]};
         be = {h:'WO · UPPER · ±75 MIN' + (iw === 3 ? ' + TOPSETS' : ''),
-              banner: iw === 3 ? 'Row valt weg deze week — niet getest op 28 sep, en de lift die je onderarm overbelastte. Bench en OHP krijgen elk een topset om je opener te ijken.' : undefined,
+              banner: iw === 3 ? 'Row valt weg deze week — niet getest op 28 sep, en hij raakt beide kanten van je onderarm: bovengreep, hard knijpen, gestrekte arm. Bench en OHP krijgen elk een topset om je opener te ijken.' : undefined,
               tiers:[
-                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank',true],
+                ['T1','Bench','BARBELL BENCH PRESS',V7_REPS[iw], V7_BE[iw],'3 min','Hielen op grond · billen op de bank · ELLEBOOG: stang laag in de handpalm, pols recht boven de elleboog',true],
                 ['T1','OHP','OVERHEAD PRESS',V7_REPS[iw], V7_OHP[iw],'2–3 min','70% van 1RM 74 — uit 3RM 67,5 kg op 22 aug',true]]
                 // Row valt weg in week 4: hij wordt niet getest op 28 sep en hij is de lift
                 // die Berts onderarm overbelastte. Twee weken zonder is de beste voorbereiding
@@ -19050,7 +19050,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['T1','Bench','BARBELL BENCH PRESS — TOPSET','1 zware single · RPE 8-9', 90,'3–5 min','Alleen als de werksets explosief waren. Traag? Overslaan.',true,true],
                   ['T1','OHP','OVERHEAD PRESS — TOPSET','1 zware single · RPE 8-9', 65,'3–5 min','88% van je afgeleide 1RM van 74. Alleen als de werksets vlot gingen.',true,true]
                 ] : []),
-              t3note:'Keuze — pak eruit wat past. Pull-ups staan geparkeerd zolang de mediale elleboog speelt (2 sep).',
+              t3note:'Keuze — pak eruit wat past. Klacht verhuisde op 15 sep naar de buitenkant: bovengreep belast die pees het hardst, dus pull-ups blijven geparkeerd en waar je kan neem je een neutrale greep. Geen dikke greep, geen knijpwerk.',
               t3:[
                   ['Dips','3×3-5','DIP-BW',false],
                   ['Triceps Pushdown (rope)','3×3-5',null,false],
@@ -19764,93 +19764,101 @@ document.addEventListener('DOMContentLoaded', function() {
       _eC = ELB; _eK2 = '#00e5ff';
       return `<div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:${ELB};margin-bottom:10px">ELBOW · ONDERARM — BUREAUPROTOCOL</div>` +
 
-      _eBox(`<b style="color:${ELB}">Waarom aan je bureau en niet in de gym.</b> Pees- en zenuwweefsel reageert op <b>frequentie</b>, niet op één zware sessie. Vijf keer dertig seconden verspreid over je werkdag doet meer dan één blok van tien minuten 's avonds. Alles in sectie 2 tot 6 kan je zittend doen, zonder materiaal. De gym voegt daar drie keer per week één zwaar blok aan toe, meer niet.`, ELB) +
+      _eBox(`<b style="color:${ELB}">De kant is gewisseld.</b> Op 2 september zat het aan de <b>binnenkant</b> (polsflexoren, ulnaire zenuw). Sinds 15 september voel je het aan de <b>buitenkant</b>, op het botpuntje en de eerste centimeters van de bovenkant van je onderarm, bij grijpen en bij optillen met gestrekte arm en palm omlaag. Dat is de aanhechting van de <b>extensor carpi radialis brevis</b> — laterale epicondylalgie, in gewone taal tenniselleboog. Dit paneel gaat daarover; de binnenkant staat achteraan in sectie 9 voor als hij terugkomt.`, ELB) +
+
+      _eBox(`<b style="color:${ELB}">Waarom aan je bureau en niet in de gym.</b> Pees- en zenuwweefsel reageert op <b>frequentie</b>, niet op één zware sessie. Vijf keer dertig seconden verspreid over je werkdag doet meer dan één blok van tien minuten 's avonds. En voor een laterale klacht is je bureau bovendien de grootste dagelijkse belasting die je hebt — zie sectie 7, daar zit je muis.`, 'var(--cyan)') +
 
       _eH('DAGRITME · zo ziet een werkdag eruit') +
       _eRitme([
-        ['ELK UUR · 30 sec', 'Ulnaire glide, 10 keer traag. Zet een herinnering — dit vergeet je anders gegarandeerd.'],
+        ['ELK UUR · 30 sec', 'Radiale glide, 10 keer traag. Zet een herinnering — dit vergeet je anders gegarandeerd.'],
         ['ELK UUR · 30 sec', 'Vingerextensie met een elastiekje, 15 keer. Leg er een handvol in je lade.'],
-        ['2× PER DAG · 4 min', 'Isometrie tegen het bureaublad, 5 × 30-45 sec.'],
+        ['2× PER DAG · 4 min', 'Isometrische polsextensie tegen het bureaublad, 5 × 30-45 sec. De belangrijkste oefening van de dag.'],
         ['1× PER DAG · 1 min', 'Zelfmassage van de spierbuik, niet van het botpuntje.'],
-        ['3× PER WEEK · gym', 'Zwaar en traag: wrist curl en pronatie. Dit is het enige dat de pees echt sterker maakt.']
+        ['3× PER WEEK · gym', 'Zwaar en traag: reverse wrist curl en supinatie. Dit is het enige dat de pees echt sterker maakt.']
       ]) +
 
-      _eH('1 · WELKE KANT IS HET') +
-      _eP(`${_eK('BINNENKANT')} — mediaal, pinkzijde, rond het botpuntje en de spierbuik eronder: polsflexoren en pronator teres, zenuw is de <b>ulnaire</b>. Dit is wat je op 2 september beschreef.`) +
-      _eP(`${_eK('BUITENKANT')} — lateraal, duimzijde: polsextensoren, zenuw is de <b>radialis</b>. Dit is wat medisch "tenniselleboog" heet.`) +
-      _eP(`${_eK('ZELF TESTEN')} Span je pols tegen weerstand van je andere hand. Pijn bij <b>buigen</b> wijst mediaal, pijn bij <b>strekken</b> wijst lateraal. Doe beide — je kan ze allebei hebben, en dan traint de verkeerde oefening iets dat er niet toe doet.`) +
+      _eH('1 · WAT HET IS EN WAAROM HET NU OPKOMT') +
+      _eP(`${_eK('DE PEES')} De polsextensoren komen samen op het botpuntje aan de buitenkant. De ECRB is de gevoeligste van de groep en zit precies waar jij het aanwijst.`) +
+      _eP(`${_eK('GRIJPEN IS DE HOOFDBELASTING')} Elke keer dat je hard knijpt, spannen je polsextensoren isometrisch aan om te verhinderen dat je pols in buiging klapt. Je voelt het dus bij vasthouden, terwijl je pols niets doet. Dat is geen toeval en geen raar symptoom — dat is hoe deze pees werkt.`) +
+      _eP(`${_eK('WAAROM NU')} Twee dingen tegelijk. De row ligt eruit en je gebruikt straps, dus je flexoren kregen rust — de mediale klacht zakte. Tegelijk verschoof je volume naar duwen: push-ups op zondag 13 september en bench 3 × 3 op 80 kg op maandag. Push-ups zetten je pols in maximale extensie onder je lichaamsgewicht, en een bench met een naar achter geknikte pols doet hetzelfde onder de stang. De belasting is niet weggegaan, ze is verhuisd.`) +
+      _eP(`${_eK('GEEN RADIALE TUNNEL')} Dat je het op één centimeter kan aanwijzen en niet vier tot zes centimeter lager in de onderarm, en dat je er 's nachts niet wakker van ligt, pleit tegen een zenuwbeknelling. Dit is de pees.`) +
 
-      _eH('2 · ZENUWGLIJDING · zittend, 10-15 traag') +
-      _eP(`Dit is <b>geen rek</b>. Je verlengt de zenuw aan het ene uiteinde terwijl je hem aan het andere lost, zodat de netto spanning laag blijft. Hou je hem vast op eindbereik, dan zet je hem juist op spanning — daar reageert een geprikkelde zenuw slecht op. Nergens stilstaan, nergens doorduwen.`) +
-      _eP(`${_eK('ULNAIR · binnenkant')}`) +
+      _eH('2 · TWEE ZELFTESTS') +
+      _eP(`${_eK('POLSEXTENSIE')} Arm gestrekt, handpalm omlaag, pols licht omhoog. Laat iemand je hand naar beneden duwen, of duw zelf met je andere hand. Pijn op het botpuntje = positief.`) +
+      _eP(`${_eK('MIDDELVINGER')} Arm gestrekt, hand plat, duw met één vinger je middelvinger naar beneden terwijl je die omhoog houdt. Pijn op het botpuntje wijst specifiek naar de ECRB.`) +
+      _eP(`Doe ze om de week opnieuw. Minder pijn bij dezelfde druk is je duidelijkste maat voor vooruitgang — duidelijker dan hoe het aanvoelt op een willekeurige dag.`) +
+
+      _eH('3 · ZENUWGLIJDING · zittend, 10-15 traag') +
+      _eP(`Dit is <b>geen rek</b>. Je verlengt de zenuw aan het ene uiteinde terwijl je hem aan het andere lost, zodat de netto spanning laag blijft. Hou je hem vast op eindbereik, dan zet je hem juist op spanning. Nergens stilstaan, nergens doorduwen. Twee op tien tijdens de beweging is prima; blijft er ná afloop iets hangen, dan was het te veel.`) +
+      _eP(`${_eK('RADIAAL · jouw kant')}`) +
       _eStep([
-        'Zit rechtop, arm naast je lichaam, elleboog gestrekt, handpalm naar voren.',
-        'Buig de elleboog en breng je handpalm naast je oor, alsof je een telefoon vasthoudt. Pols naar achter geknikt.',
-        'Kantel tegelijk je hoofd <b>naar die schouder toe</b>.',
-        'Terug: elleboog strekken, arm zijwaarts omlaag, en kantel je hoofd <b>weg</b> van die arm.'
-      ]) +
-      _eP(`Dat tegengestelde hoofdwerk is de hele truc: spanning erbij aan de elleboog, spanning eraf aan de nek.`) +
-      _eP(`${_eK('RADIAAL · buitenkant')}`) +
-      _eStep([
-        'Arm langs je lichaam, elleboog gestrekt, handpalm naar achter gedraaid.',
+        'Zit rechtop, arm langs je lichaam, elleboog gestrekt, handpalm naar achter gedraaid.',
         'Pols en vingers buigen, duim in de vuist.',
         'Duw je schouder naar beneden en breng de arm zijwaarts van je lichaam weg.',
         'Kantel tegelijk je hoofd <b>naar de arm toe</b>. Terug: schouder lossen, hoofd weg.'
       ]) +
-      _eP(`Klein bereik. Deze wordt sneller te veel dan de ulnaire.`) +
+      _eP(`Klein bereik. De radiale glijding wordt sneller te veel dan de ulnaire — bouw rustig op.`) +
 
-      _eH('3 · ISOMETRIE TEGEN JE BUREAUBLAD') +
+      _eH('4 · ISOMETRIE TEGEN JE BUREAUBLAD') +
       _eP(`De belangrijkste oefening van de dag, en je hebt er alleen een bureau voor nodig. Isometrie dempt peespijn ter plekke en houdt de pees belast zonder hem te irriteren — precies wat je in een prikkelbare fase wil.`) +
-      _eP(`${_eK('MEDIAAL')} Onderarm op je dij of op het bureau, hand <b>palm omhoog</b> onder het bureaublad. Duw je handpalm omhoog tegen de onderkant van het blad en hou vast.`) +
-      _eP(`${_eK('LATERAAL')} Zelfde positie maar <b>handrug omhoog</b> onder het blad. Duw de rug van je hand omhoog en hou vast.`) +
-      _eP(`${_eK('GEEN BUREAU')} Gebruik je andere hand als weerstand. Werkt even goed en je kan het overal.`) +
-      _eBox(`<b>5 × 30 tot 45 seconden</b> · 60 sec rust ertussen · twee keer per dag · pijn maximaal 3 op 10. Je hoeft niet maximaal te duwen — 50 tot 70 procent volstaat ruimschoots. Adem gewoon door, niet persen.`, 'var(--cyan)') +
+      _eP(`${_eK('POLSEXTENSIE')} Onderarm plat op het bureau, hand over de rand, <b>handrug omhoog</b>. Duw de rug van je hand omhoog tegen je andere hand in, en hou vast. Pols blijft in lichte strekking, hij beweegt niet.`) +
+      _eP(`${_eK('ONDER HET BLAD')} Alternatief zonder tweede hand: handrug tegen de onderkant van het bureaublad en duw omhoog.`) +
+      _eBox(`<b>5 × 30 tot 45 seconden</b> · 60 sec rust ertussen · twee keer per dag · pijn maximaal 3 op 10. Niet maximaal duwen — 50 tot 70 procent volstaat ruimschoots. Gewoon doorademen, niet persen.`, 'var(--cyan)') +
 
-      _eH('4 · ELASTIEKJE EN PEN') +
-      _eP(`${_eK('VINGEREXTENSIE')} Elastiekje om je vingertoppen en duim, open je hand traag tegen de weerstand in, 3 × 15. Je grip is de hele dag flexie — typen, muis, koffiekop, stang. Dit is de enige tegenbeweging die je krijgt, en het is het goedkoopste wat er bestaat.`) +
-      _eP(`${_eK('PRONATIE / SUPINATIE')} Onderarm plat op het bureau, pen of liniaal in je vuist, en draai traag je palm omhoog en weer omlaag. Lichte weerstand met je andere hand op het uiteinde. 3 × 10 per richting. Bij een <b>mediale</b> klacht is dit belangrijker dan de wrist curl: de pronator teres hangt aan diezelfde peesaanhechting.`) +
-      _eP(`${_eK('POLSMOBILITEIT')} Handen tegen elkaar voor je borst, ellebogen omhoog, zak traag tot je rek voelt in de polsen. Daarna omgekeerd, handruggen tegen elkaar. 3 × 20 sec elk. Geen pijn opzoeken.`) +
+      _eH('5 · ELASTIEKJE EN PEN') +
+      _eP(`${_eK('VINGEREXTENSIE')} Elastiekje om je vingertoppen en duim, open je hand traag tegen de weerstand in, 3 × 15. Je vingerstrekkers hechten aan <b>hetzelfde</b> botpuntje als de polsextensoren, dus dit is voor een laterale klacht directe therapie en niet enkel een tegenbeweging. Kost bijna niets — leg er een handvol in je lade.`) +
+      _eP(`${_eK('SUPINATIE')} Onderarm plat op het bureau, pen of liniaal in je vuist, en draai traag je palm omhoog, dan terug. Lichte weerstand met je andere hand op het uiteinde. 3 × 10. De supinator hoort bij dezelfde groep en wordt bij lateraal bijna altijd overgeslagen.`) +
+      _eP(`${_eK('POLSMOBILITEIT')} Arm gestrekt voor je, handpalm omlaag, en trek met je andere hand je hand zachtjes naar beneden. 3 × 20 sec. Zacht — geen pijn opzoeken, dit is mobiliteit en geen rekmarathon.`) +
 
-      _eH('5 · ZELFMASSAGE · 1 minuut per dag') +
-      _eP(`Zoek met je duim de spierbuik <b>één à twee centimeter ónder het botpuntje</b> — de vlezige plek, niet het bot zelf. Op het bot drukken doet pijn en helpt niets. Zoek het gevoelige punt, hou vaste druk zestig seconden aan tot het zakt, en laat het dan met rust. Eén keer per dag volstaat.`) +
+      _eH('6 · ZELFMASSAGE · 1 minuut per dag') +
+      _eP(`Zoek met je duim de spierbuik <b>op de bovenkant van je onderarm, één à twee centimeter ónder het botpuntje</b> — de vlezige plek, niet het bot zelf. Op het bot drukken doet pijn en helpt niets. Zoek het gevoelige punt, hou vaste druk zestig seconden aan tot het zakt, en laat het dan met rust.`) +
 
-      _eH('6 · ERGONOMIE · hier win je het meest') +
-      _eP(`${_eK('NIET LEUNEN')} Leun nooit met je elleboog op de bureaurand of de armsteun. De ulnaire zenuw loopt daar vlak onder de huid door de cubitale tunnel — directe druk erop is een prikkel die uren aanhoudt. Als je vandaag maar één ding verandert, kies dan dit.`) +
-      _eP(`${_eK('MINDER BUIGEN')} Hou je elleboog overdag onder de 90 graden waar het kan. Langdurige buiging rekt diezelfde zenuw in de tunnel. Telefoneren met de hand aan je oor is de klassieke boosdoener — headset of luidspreker.`) +
-      _eP(`${_eK('POLS NEUTRAAL')} Onderarm en handrug in één lijn. Een pols die op de bureaurand omhoog knikt terwijl je typt belast je extensoren acht uur per dag. Toetsenbord laag genoeg, of polssteun vóór het toetsenbord.`) +
-      _eP(`${_eK('MUIS DICHTBIJ')} Muis vlak naast je toetsenbord, niet ver vooruit. Een verticale muis haalt de pronatie eruit — en pronatie is precies wat je mediale pees belast.`) +
-      _eP(`${_eK('S NACHTS')} Slaap je met je arm helemaal opgeplooid, dan lig je uren met een maximaal gerekte ulnaire zenuw, en word je stijver wakker dan je ging slapen. Een handdoek los om de elleboog gewikkeld houdt hem gestrekt. Het klinkt onnozel en het werkt.`) +
-      _eP(`${_eK('RECHTOP STAAN')} Elk halfuur even opstaan. Niet voor je elleboog — voor je rug, die het deze week kan gebruiken.`) +
+      _eH('7 · ERGONOMIE · hier win je het meest') +
+      _eP(`${_eK('JE MUIS')} Dit is voor een laterale klacht de grootste dagelijkse belasting die je hebt. Muis vasthouden en klikken is uren aan een stuk een lage aanspanning van exact de spieren die pijn doen. Een <b>verticale muis</b> haalt zowel de pronatie als een deel van de extensorspanning eruit en is de ingreep met de beste verhouding tussen moeite en resultaat. Anders: muis los vasthouden, niet omklemmen.`) +
+      _eP(`${_eK('POLS NEUTRAAL')} Onderarm en handrug in één lijn. Een pols die op de bureaurand omhoog knikt terwijl je typt houdt je extensoren acht uur per dag licht aangespannen. Klap de pootjes van je toetsenbord <b>in</b>, niet uit — een oplopend toetsenbord duwt je pols precies de verkeerde kant op.`) +
+      _eP(`${_eK('POLSSTEUN')} Als je er een gebruikt: vóór het toetsenbord, om op te rusten tussen het typen door. Niet eronder liggen terwijl je typt, want dan knikt je hand omhoog.`) +
+      _eP(`${_eK('MUIS DICHTBIJ')} Vlak naast je toetsenbord, niet ver vooruit. Hoe verder je reikt, hoe meer je schouder en onderarm moeten stabiliseren.`) +
+      _eP(`${_eK('TILLEN')} Jouw eigen trigger: optillen met gestrekte arm en palm omlaag. Draai dat om — til met de <b>elleboog gebogen en de handpalm omhoog</b>, of met twee handen. Geldt voor de koffiekan, de laptoptas en de kist in de garage. Eén gewoonte die je de hele dag scheelt.`) +
+      _eP(`${_eK('RECHTOP STAAN')} Elk halfuur even opstaan. Niet voor je elleboog — voor je rug, zie de BACK-tab.`) +
 
-      _eH('7 · IN DE GYM · drie keer per week') +
-      _eP(`${_eK('ZWAAR EN TRAAG')} Wrist curl (mediaal, palm omhoog) of reverse wrist curl (lateraal), <b>3 sec omhoog, 3 sec omlaag</b>, 3 × 10-15. Gewicht opdrijven zodra de laatste herhalingen makkelijk worden. Dit moet écht zwaar worden — een pees die niet zwaar belast wordt, remodelleert niet. Plus de pronatie/supinatie met een hamer.`) +
+      _eH('8 · IN DE GYM') +
+      _eP(`${_eK('BENCH')} De stang <b>laag in je handpalm</b>, op de muis van je duim, met je pols recht boven je elleboog. Ligt de stang hoog in je vingers, dan knikt je pols naar achter en trekt die 80 kg rechtstreeks aan je extensoren. Dit is waarschijnlijk je grootste gymfactor.`) +
+      _eP(`${_eK('PUSH-UPS')} Op je vuisten of op push-up handvatten, of met je handen op twee dumbbells. Een push-up op vlakke handen zet je pols in maximale extensie onder je lichaamsgewicht — precies de provocatie.`) +
+      _eP(`${_eK('STRAPS')} blijven, ook al is de klacht verhuisd. Minder knijpen is minder extensorspanning.`) +
+      _eP(`${_eK('GEEN DIKKE GREEP')} Geen fat grips, geen dikke stang, geen knijpwerk als accessoire. Krijt laat je lichter vasthouden en helpt dus ook.`) +
+      _eP(`${_eK('GREEPKEUZE')} Bovengreep (pronatie) belast de ECRB het hardst. Neutraal of ondergreep is vriendelijker: neutrale lat pulldown, chest-supported row met parallelle handvatten, pull-up neutraal in plaats van pronated, hamercurl in plaats van reverse curl.`) +
+      _eP(`${_eK('ZWAAR EN TRAAG')} Reverse wrist curl (handpalm omlaag), <b>3 sec omhoog, 3 sec omlaag</b>, 3 × 10-15, drie keer per week. Gewicht opdrijven zodra de laatste herhalingen makkelijk worden — dit moet écht zwaar worden, een pees die niet zwaar belast wordt remodelleert niet. Een FlexBar met de <b>Tyler twist</b> doet hetzelfde en heeft voor lateraal de meeste onderbouwing.`) +
       _eP(`${_eK('SCHOUDER')} Face pull en externe rotatie met een band, 2 × 15, twee keer per week. Zwakke externe rotatoren en slechte schouderbladcontrole verhogen de belasting op de elleboog meetbaar. Staan al in je T3-pool.`) +
-      _eP(`${_eK('STRAPS')} bij elke deadlift zolang het speelt. De grip is de trigger, niet de hinge.`) +
-      _eP(`${_eK('ROW')} ligt eruit in week 4. Niet vervroegd terugzetten — hij veroorzaakte de klacht en hij wordt op 28 september niet getest.`) +
-      _eP(`${_eK('NEUTRALE GREEP')} lost de geforceerde polsstand op: hamercurl, neutrale lat pulldown, chest-supported row met parallelle handvatten. Dat is de weg terug naar trekwerk.`) +
-      _eP(`${_eK('PULL-UPS')} pas terug na een volle rustige week, en dan eerst neutraal. ${_eK('BENCH')} duimen niet ver om de stang wringen, pols recht boven de elleboog. ${_eK('GEEN TOUWSPRINGEN')} tot het stil is.`) +
+      _eP(`${_eK('ROW')} ligt eruit in week 4 en dat blijft zo — bovengreep, hard knijpen, gestrekte arm: hij raakt beide kanten.`) +
 
-      _eH('8 · WAT MAG JE VERWACHTEN') +
-      _eP(`Peesherstel loopt in <b>weken, niet dagen</b>. Zes tot twaalf weken consequent belasten is normaal. De eerste twee weken merk je vooral dat de piekpijn afvlakt; kracht en belastbaarheid komen daarna. Het gevaarlijkste moment is week drie, wanneer het goed genoeg voelt om alles weer te doen — dat is precies wanneer het terugkomt.`) +
+      _eH('9 · ALS DE BINNENKANT TERUGKOMT') +
+      _eP(`Mediaal is sinds 2 september stil geworden, maar de aanpak verandert volledig als hij terugkeert. Kort wat er dan geldt:`) +
+      _eP(`${_eK('ZELFTEST')} Pijn bij het <b>buigen</b> van je pols tegen weerstand = mediaal. Bij <b>strekken</b> = lateraal, wat je nu hebt.`) +
+      _eP(`${_eK('ZENUW')} Ulnaire glide: handpalm naast je oor als een telefoon, pols naar achter, hoofd <b>naar</b> die schouder — terug met gestrekte elleboog en hoofd <b>weg</b>.`) +
+      _eP(`${_eK('BELASTING')} Isometrie met de handpalm <b>omhoog</b> onder het bureaublad, daarna wrist curl zwaar en traag. Plus pronatie met een hamer — de pronator teres hangt aan dezelfde peesaanhechting.`) +
+      _eP(`${_eK('ERGONOMIE')} Nooit met je elleboog op de bureaurand of armsteun leunen (cubitale tunnel), elleboog overdag onder de 90 graden, en 's nachts een handdoek los om de elleboog zodat hij niet volledig opgeplooid ligt.`) +
+
+      _eH('10 · WAT MAG JE VERWACHTEN') +
+      _eP(`Peesherstel loopt in <b>weken, niet dagen</b>. Zes tot twaalf weken consequent belasten is normaal voor een epicondylalgie, en laterale doet er gemiddeld langer over dan mediale. De eerste twee weken merk je vooral dat de piekpijn afvlakt; kracht en belastbaarheid komen daarna. Het gevaarlijkste moment is week drie, wanneer het goed genoeg voelt om alles weer te doen — dat is precies wanneer het terugkomt.`) +
       _eBox(`<b style="color:var(--red)">De dosisregel die over alles gaat.</b> Pijn tot 3 à 4 op 10 tijdens een oefening mag — dat is belasting, geen schade. Voorwaarde: binnen 24 uur gezakt. Erger de volgende ochtend betekent één stap terug in gewicht of bereik. Bij zenuwwerk is de grens strenger: tintelingen of een doof gevoel die ná de oefening blijven hangen betekenen te ver.`, 'var(--cyan)') +
-      _eBox(`<b style="color:var(--red)">Naar de huisarts</b> als er na zes weken consequent belasten geen enkele verbetering is · tintelingen of doofheid in ring- en pinkvinger aanhouden · je krachtsverlies merkt in de hand, bijvoorbeeld bij het openen van een fles · of als je er 's nachts wakker van wordt. Dan is het meer dan een pees.`, 'var(--red)') +
+      _eBox(`<b style="color:var(--red)">Naar de huisarts</b> als er na zes weken consequent belasten geen enkele verbetering is · je krachtsverlies merkt in de hand, bijvoorbeeld bij het openen van een fles · tintelingen of doofheid in je hand aanhouden · of als je er 's nachts wakker van wordt. Dan is het meer dan een pees.`, 'var(--red)') +
 
-      _eH('9 · ZOEKTERMEN VOOR YOUTUBE') +
-      _eP(`Zoek in het <b>Engels</b> — je krijgt tien keer meer en betere resultaten dan in het Nederlands. Let op wie je bekijkt: een goede video toont de beweging van twee kanten, noemt het aantal herhalingen en de frequentie, en zegt erbij wat je <b>niet</b> mag voelen. Video's die enkel rekken tonen of beloven dat het in vijf minuten weg is, kan je overslaan.`) +
+      _eH('11 · ZOEKTERMEN VOOR YOUTUBE') +
+      _eP(`Zoek in het <b>Engels</b> — je krijgt tien keer meer en betere resultaten. Jouw woord is <b>tennis elbow</b> (buitenkant). <b>Golfer's elbow</b> is de binnenkant; zoek je daarop, dan krijg je oefeningen voor de andere spiergroep. Een goede video toont de beweging van twee kanten, noemt herhalingen en frequentie, en zegt erbij wat je <b>niet</b> mag voelen.`) +
       _eRitme([
-        ['ZENUW · binnenkant', '"ulnar nerve glide exercise" of "ulnar nerve flossing" — let erop dat het hoofd meebeweegt, anders is het een rek en geen glijding.'],
-        ['ZENUW · buitenkant', '"radial nerve glide exercise".'],
-        ['ISOMETRIE', '"isometric wrist flexion golfers elbow" voor de binnenkant, "isometric wrist extension tennis elbow" voor de buitenkant.'],
-        ['ZWAAR EN TRAAG', '"heavy slow resistance wrist curl" of "golfers elbow eccentric wrist curl".'],
-        ['MET EEN FLEXBAR', '"reverse Tyler twist" voor de binnenkant, "Tyler twist" voor de buitenkant. Een FlexBar kost weinig en is de bekendste vorm.'],
+        ['ZENUW', '"radial nerve glide exercise" — let erop dat het hoofd meebeweegt, anders is het een rek en geen glijding.'],
+        ['ISOMETRIE', '"isometric wrist extension tennis elbow".'],
+        ['ZWAAR EN TRAAG', '"heavy slow resistance wrist extension" of "eccentric wrist extension tennis elbow".'],
+        ['MET EEN FLEXBAR', '"Tyler twist tennis elbow" — de bekendste en best onderbouwde vorm.'],
         ['ELASTIEKJE', '"finger extension rubber band exercise".'],
-        ['DRAAIEN', '"hammer pronation supination exercise".'],
-        ['ZELFMASSAGE', '"forearm flexor trigger point release".'],
-        ['BUREAU', '"cubital tunnel ergonomics" — daar zit het niet-leunen en de elleboogstand in.']
+        ['SUPINATIE', '"hammer supination exercise forearm".'],
+        ['ZELFTESTS', '"Cozen test" en "Maudsley test" — dat zijn de twee uit sectie 2.'],
+        ['ZELFMASSAGE', '"forearm extensor trigger point release".'],
+        ['BUREAU', '"mouse ergonomics tennis elbow" of "vertical mouse wrist position".'],
+        ['BINNENKANT', '"ulnar nerve glide" en "reverse Tyler twist" — enkel als mediaal terugkomt.']
       ]) +
-      _eP(`Twee woorden om uit elkaar te houden bij het zoeken: <b>golfer's elbow</b> is de binnenkant (mediale epicondylalgie, jouw kant), <b>tennis elbow</b> is de buitenkant. Zoek je op het verkeerde woord, dan krijg je oefeningen voor de andere spiergroep.`) +
 
-      `<div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:14px;padding-top:8px;border-top:1px solid var(--border)">Opgesteld 15 sep 2026 · klacht gemeld 2 sep · geen medische diagnose, wel de aanpak die bij dit beeld hoort</div>`;
+      `<div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:14px;padding-top:8px;border-top:1px solid var(--border)">Opgesteld 15 sep 2026 · mediaal gemeld 2 sep, lateraal 15 sep · geen medische diagnose, wel de aanpak die bij dit beeld hoort</div>`;
     }
 
     // ── BACK-paneel ─────────────────────────────────────────────────────
