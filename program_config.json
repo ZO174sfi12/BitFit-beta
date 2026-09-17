@@ -150,7 +150,7 @@
     "Squat": "120–130",
     "Bench": "100–105",
     "Deadlift": "140–150",
-    "OHP": "74–80",
+    "OHP": "74–77",
     "Row": "82,5–90"
   },
   "doel_1rm_range_bron": "Band in de voortgangsband: van de geteste 1RM van 20 aug naar het doel van 4 okt. Vervangt Lotte’s schattingsranges, die nu in historiek staan.",
@@ -194,10 +194,14 @@
     "Squat": 130,
     "Bench": 105,
     "Deadlift": 150,
-    "OHP": 75,
+    "OHP": 77,
     "Row": "niet getest",
     "SBD": 385
   },
-  "hertest_28sep_scope": "Squat, bench en deadlift zijn de testliften. OHP mogelijk ook — daarom een topset in week 4. Row wordt niet getest (Bert, 13 sep) en valt daarom uit week 4: hij is de lift die de onderarmflexoren overbelastte, en twee weken zonder is de beste voorbereiding op een maximale deadlift.",
-  "proces_doel_eindblok_bron": "Week 4 stond kort op 57,5 (besluit 13 sep, OHP stond vier weken stil op 52,5). Teruggezet op 60 na 16 sep: Bert draaide 60 kg 3x3 en zette er een single van 70 bovenop — PR en eerste echte OHP-single. De redline in de docx is daarom verworpen (Bert, 17 sep)."
+  "hertest_28sep_scope": "Squat, bench en deadlift zijn de testliften: één zware single op RPE 9. OHP wordt ook getest maar als 3RM, niet als single (Bert, 17 sep): doel 70 kg × 3 → 1RM 77 via × 1,1, dezelfde methode als de 3RM-test van 22 aug (67,5 → 74). Een 3RM levert meteen bruikbare werkgewichten op, een single niet. Row wordt niet getest (Bert, 13 sep) en valt daarom uit week 4: hij is de lift die de onderarmflexoren overbelastte, en twee weken zonder is de beste voorbereiding op een maximale deadlift.",
+  "proces_doel_eindblok_bron": "Week 4 stond kort op 57,5 (besluit 13 sep, OHP stond vier weken stil op 52,5). Teruggezet op 60 na 16 sep: Bert draaide 60 kg 3x3 en zette er een single van 70 bovenop — PR en eerste echte OHP-single. De redline in de docx is daarom verworpen (Bert, 17 sep).",
+  "doel_3rm_hertest": {
+    "OHP": 70,
+    "bron": "70 × 3 op 28 sep → 1RM 77. Referentie: 67,5 × 3 op 22 aug (1RM 74), 60 kg 3×3 plus single 70 op 16 sep."
+  }
 }

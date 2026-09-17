@@ -267,7 +267,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202609170850</span>
+        <span class="meta-value" style="color:var(--muted)">202609170958</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -19233,12 +19233,13 @@ document.addEventListener('DOMContentLoaded', function() {
                  _rampHtml('Squat',[[60,5],[95,3],[117.5,1]],130,liftColor('Squat')),true],
                 ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','getest 100 op 20 aug · werkgewicht wk4 80 kg',true,true,
                  _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
-                ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','getest 140 op 20 aug · werkgewicht wk4 115 kg',true,true,
+                ['T1','Deadlift','DEADLIFT — TEST','zware single', 150,'3–5 min','getest 140 op 20 aug · werkgewicht wk4 110 kg',true,true,
                  _rampHtml('Deadlift',[[70,3],[110,2],[135,1]],150,liftColor('Deadlift')),true],
-                ['T2','OHP','OVERHEAD PRESS — TEST','zware single', 80,'3–5 min','3RM 67,5 kg op 22 aug → 1RM 74 · werkgewicht wk4 60 kg',true,true,
-                 _rampHtml('OHP',[[20,5],[55,3],[72.5,1]],80,liftColor('OHP')),true],
-                ['T2','Row','BARBELL ROW — TEST','zware single', 90,'3 min','3RM 75 kg op 22 aug → 1RM 82,5 · werkgewicht wk4 67,5 kg',true,true,
-                 _rampHtml('Row',[[40,5],[65,3],[80,1]],90,liftColor('Row')),true]], t3:[]};
+                // OHP wordt als 3RM gemeten, niet als single (Bert, 17 sep): dezelfde
+                // methode als de 3RM-test van 22 aug, en een 3RM levert meteen bruikbare
+                // werkgewichten op. 70 x 1,1 = 1RM 77. Row wordt niet getest (13 sep).
+                ['T2','OHP','OVERHEAD PRESS — TEST','3RM · laatste rep schoon', 70,'3–5 min','3RM 67,5 kg op 22 aug → 1RM 74 · 16 sep 60 kg 3×3 én single op 70 · × 1,1 geeft 1RM 77',true,true,
+                 _rampHtml('OHP',[[20,5],[45,3],[62.5,1]],70,liftColor('OHP')),true]], t3:[]};
         be = {h:'WO · VRIJ NA DE HERTEST', banner:'De hertest was maandag. Deze dag is vrij — lichte beweging of rust, afhankelijk van hoe maandag ging.', tiers:[], t3:[]};
         dl = {h:'ZA · VRIJ NA DE HERTEST', banner:'Uitkomst van de hertest bepaalt het volgende blok.', tiers:[], t3:[]};
       }
