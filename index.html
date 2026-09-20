@@ -19254,24 +19254,24 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (actPh.name === 'DELOAD') {
         // 21-27 sep · 2 sets x 3 op ~60% van de geteste 1RM. Geen T3.
         sq = {h:'MA · FULLBODY · DELOAD · ±30 MIN',
-              banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt, core blijft staan.',
+              banner:'Techniek en snelheid, geen belasting opbouwen. T3 vervalt, core blijft staan. RUG: deze week is ook je meting. 72,5 is 27 kg onder waar je zaterdag vastliep — voel je hier íets, dan weten we genoeg over 28 sep.',
               tiers:[
-                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel',true],
-                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
-                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
+                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel · RUG: brace vóór het uitracken · voel je iets, dan stop je hier en niet één set later',true],
+                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min','Stang laag in de handpalm, pols recht',true],
+                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min','Eerste deadlift op gewicht sinds 4 sep · straps · neutraal oppakken, brace vóór je trekt',true]],
               t3:[]};
         be = {h:'WO · UPPER · DELOAD · ±30 MIN',
               banner:'Techniek en snelheid, geen belasting opbouwen.',
               tiers:[
-                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min',null,true],
-                ['T1','Row','BARBELL ROW','2 × 3', 50,'2 min',null,true],
-                ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min',null,true]],
+                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 60,'2 min','Stang laag in de handpalm, pols recht',true],
+                ['T1','Row','BARBELL ROW','2 × 3', 50,'2 min','Eerste row sinds 1 sep · los vasthouden, geen knijpwerk · stop bij elleboogpijn',true],
+                ['T1','OHP','OVERHEAD PRESS','2 × 3', 45,'2 min','Ribben omlaag, billen aan',true]],
               t3:[]};
         dl = {h:'ZA · LOWER · DELOAD · ±25 MIN',
-              banner:'Laatste sessie voor de hertest. Fris eindigen.',
+              banner:'Laatste sessie voor de hertest. Fris eindigen — en dit is het beslismoment: drie schone sessies deze week betekent dat squat en deadlift maandag meekunnen, al dan niet als 3RM. Voel je het hier nog, dan test je maandag enkel bench en OHP.',
               tiers:[
-                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min',null,true],
-                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min',null,true]],
+                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Volledig pijnvrij of niet — dat is de hele vraag',true],
+                ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min','Straps · neutraal oppakken',true]],
               t3:[]};
       } else {
         // 28 sep · hertest bij Lotte — ALLE liften in één sessie, niet verspreid
@@ -20079,8 +20079,11 @@ document.addEventListener('DOMContentLoaded', function() {
       _eP(`${_eK('DEADLIFT')} Neutraal oppakken en brace vóór je trekt, niet tijdens. De opzet is gevoeliger dan de trek zelf.`) +
       _eP(`${_eK('WARMTE')} Werkt nu beter dan ijs — dit is spierbewaking, geen zwelling. Niet laten kraken, en niet in scherpe pijn rekken.`) +
 
-      _eH('5 · ZATERDAG 19 SEP · de go/no-go') +
-      _eBox(`Laat de opwarming beslissen, niet je hoofd halverwege de tweede set.<br><br><b style="color:${BCK}">60 en 80 kg schoon</b> → alles zoals gepland, squat 100 en deadlift 110, en de topsets van 110 en 120 als de werksets explosief waren.<br><br><b style="color:var(--yellow)">Je voelt het onderin terugkomen</b> → werksets afmaken op gewicht, en de topsets laten vallen. Dat kost je niets voor 28 september: de squat-single zegt meer over je opener dan die van de deadlift.<br><br><b style="color:var(--red)">Het bijt al bij 80</b> → stoppen met belaste flexie. Wissel naar hip thrust, leg press en het coreblok, en wandel je cooldown. Je verliest één sessie, geen blok.`, BCK) +
+      _eH('5 · DE DREMPEL · wanneer stop je') +
+      _eBox(`<b style="color:var(--red)">Voel je er íets van in de opwarming, dan is dat je antwoord.</b> Niet "een beetje, dus ik kijk hoe ver ik kom". Op 19 september voelde je het al licht op 60 en 80, ging je door naar 100 en kwam je tot twee reps. De opwarming had de beslissing al genomen. De regel van "60 en 80 schoon" liet te veel ruimte: schoon betekent niets voelen, niet weinig voelen.`, 'var(--red)') +
+      _eP(`${_eK('WEL DOEN')} Blijf trainen wat geen pijn geeft. Een rug wordt niet beter van stilzitten en een sessie stopzetten is geen mislukking — het is de enige manier waarop je volgende week wél kan tillen.`) +
+      _eP(`${_eK('DELOADWEEK 21-27 SEP')} Squat 72,5 en deadlift 85, twee sets van drie. Dat is 27 kg onder waar je zaterdag vastliep, dus dit is meteen je meting: drie sessies volledig pijnvrij betekent dat het een belastingsverhaal was. Voel je het ook daar, dan is dat geen reden tot paniek maar wel het antwoord voor 28 september.`) +
+      _eP(`${_eK('HERTEST 28 SEP')} Bench en OHP staan hier los van — die belasten je onderrug nauwelijks. Squat en deadlift hangen aan de deloadweek. Gaan ze door, dan als 3RM en niet als maximale single: × 1,1 geeft je evengoed een bruikbaar 1RM, zonder je rug te vragen wat hij deze maand twee keer geweigerd heeft.`) +
 
       _eH('6 · WAT MAG JE VERWACHTEN') +
       _eP(`Een eerste episode zonder uitstraling zakt meestal binnen <b>drie tot zeven dagen</b> duidelijk weg, met een restgevoel dat nog een week kan nazeuren. Geen verbetering op dag één is normaal — de eerste echte kentering komt op dag twee tot vier. Wat je vooral niet moet doen is stilzitten en afwachten.`) +
