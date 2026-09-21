@@ -200,10 +200,16 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-tier-body{display:flex;gap:12px;flex-direction:column;}
 @media(min-width:600px){.gzclp-tier-body{flex-direction:row;align-items:flex-start;}}
 .gzclp-tier-main{flex:1;min-width:0;}
-.gzclp-wu-details{flex:0 0 auto;min-width:140px;max-width:180px;}
+.gzclp-wu-details{flex:0 0 auto;min-width:150px;max-width:200px;}
 @media(max-width:599px){.gzclp-wu-details{max-width:100%;}}
-.gzclp-wu-summary{font-family:monospace;font-size:9px;letter-spacing:1px;cursor:pointer;list-style:none;padding:4px 0;text-transform:uppercase;}
+.gzclp-wu-summary{font-family:monospace;font-size:10px;letter-spacing:1px;cursor:pointer;list-style:none;padding:4px 0;text-transform:uppercase;}
 .gzclp-wu-summary::-webkit-details-marker{display:none;}
+/* WU/WERK-markering: wat in JEFIT als "warm-up" moet, en wat als werkset.
+   Kleuren volgen de badges elders in de app (oranje = opwarming, cyaan = werk). */
+.wu-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;padding:1px 4px;border-radius:2px;border:1px solid #ff6b3566;color:#ff8a5c;background:#ff6b3515;flex:0 0 auto;}
+.wu-tag-work{border-color:#00e5ff66;color:#5ff0ff;background:#00e5ff15;}
+.wu-hint{font-family:monospace;font-size:10px;color:var(--text);padding:4px 0 2px;letter-spacing:.3px;}
+.wu-none{font-family:monospace;font-size:10px;color:#5ff0ff;padding:3px 0;letter-spacing:.3px;}
 /* Mobiliteitsopwarming per dag (uitvouwbaar, staat vóór de tiers) */
 .mobwu{grid-column:1/-1;border:1px solid #1a1a2e;border-radius:4px;padding:6px 9px;margin-bottom:9px;}
 .mobwu>summary{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--cyan);cursor:pointer;list-style:none;}
@@ -263,11 +269,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">89.1</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">88.5</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202609200908</span>
+        <span class="meta-value" style="color:var(--muted)">202609211943</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -2201,6 +2207,36 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-09-21",
+          "weight": 72.5,
+          "volume": 925.0,
+          "sets": 4,
+          "pr": false,
+          "work_reps": 6,
+          "sets_detail": [
+            {
+              "w": 50.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 4,
+              "warmup": true
+            },
+            {
+              "w": 72.5,
+              "r": 3,
+              "warmup": false
+            },
+            {
+              "w": 72.5,
+              "r": 3,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -3203,6 +3239,36 @@ const DATA = {
             },
             {
               "w": 75.0,
+              "r": 3,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "weight": 85.0,
+          "volume": 1035.0,
+          "sets": 4,
+          "pr": false,
+          "work_reps": 6,
+          "sets_detail": [
+            {
+              "w": 60.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 75.0,
+              "r": 3,
+              "warmup": true
+            },
+            {
+              "w": 85.0,
+              "r": 3,
+              "warmup": false
+            },
+            {
+              "w": 85.0,
               "r": 3,
               "warmup": false
             }
@@ -4335,6 +4401,31 @@ const DATA = {
             {
               "w": 90.0,
               "r": 4,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "weight": 60.0,
+          "volume": 610.0,
+          "sets": 3,
+          "pr": false,
+          "work_reps": 6,
+          "sets_detail": [
+            {
+              "w": 50.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 60.0,
+              "r": 3,
+              "warmup": false
+            },
+            {
+              "w": 60.0,
+              "r": 3,
               "warmup": false
             }
           ]
@@ -5987,6 +6078,26 @@ const DATA = {
             {
               "w": 70.0,
               "r": 1,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "weight": 40.0,
+          "volume": 400.0,
+          "sets": 2,
+          "pr": false,
+          "work_reps": 10,
+          "sets_detail": [
+            {
+              "w": 40.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 40.0,
+              "r": 5,
               "warmup": false
             }
           ]
@@ -11486,6 +11597,10 @@ const DATA = {
     {
       "date": "2026-09-19",
       "weight": 89.1
+    },
+    {
+      "date": "2026-09-21",
+      "weight": 88.5
     }
   ],
   "muscle_daily": [
@@ -13278,6 +13393,26 @@ const DATA = {
       "date": "2026-09-19",
       "muscle": "Quads/Glutes",
       "volume": 740.0
+    },
+    {
+      "date": "2026-09-21",
+      "muscle": "Quads/Glutes",
+      "volume": 925.0
+    },
+    {
+      "date": "2026-09-21",
+      "muscle": "Chest",
+      "volume": 610.0
+    },
+    {
+      "date": "2026-09-21",
+      "muscle": "Back/Hams",
+      "volume": 1035.0
+    },
+    {
+      "date": "2026-09-21",
+      "muscle": "Shoulders",
+      "volume": 400.0
     }
   ],
   "training_days": [
@@ -13446,7 +13581,8 @@ const DATA = {
     "2026-09-16",
     "2026-09-17",
     "2026-09-18",
-    "2026-09-19"
+    "2026-09-19",
+    "2026-09-21"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -13876,7 +14012,8 @@ const DATA = {
     "2026-09-13": 0,
     "2026-09-16": 2,
     "2026-09-17": 0,
-    "2026-09-19": 1
+    "2026-09-19": 1,
+    "2026-09-21": 2
   },
   "body_comp": [
     {
@@ -16706,6 +16843,10 @@ const DATA = {
     {
       "date": "2026-09-19",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-09-21",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -18893,15 +19034,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Warmup sets helpers
   function r25(v) { return Math.round(v / 2.5) * 2.5; }
-  // Bert's opwarmprotocol — herzien 26 aug 2026, na twee sessies meten.
-  // Twee soorten lifts, want hij warmt ze aantoonbaar anders op:
+  // Bert's opwarmprotocol — herzien 20 sep 2026 tegen zijn eigen JEFIT-log
+  // (29 sessies, 1 aug – 19 sep 2026, kolom set_type: "warm-up" vs "default").
+  // Het plan volgt nu wat hij effectief aanvinkt, niet wat theoretisch netjes is:
   //
-  //  LADDER (squat, deadlift) — de zware, technische lifts:
-  //    anker 60 kg, dan in stappen van maximaal 20 kg naar de werkset,
-  //    afgerond op 5 kg, reps 5 / 3 / 1 van onder naar boven.
-  //    85 kg -> 60x5 . 75x3   |   100 kg -> 60x5 . 80x3   |   140 kg -> 4 sets
+  //   Squat     25/60 sets warm-up · WWDDD in 8 van 12 sessies  -> 2 sets
+  //   Deadlift  17/36 sets warm-up · WWDDD in 4 van 8 sessies   -> 2 sets
+  //   Bench     10/35 sets warm-up · WDDD  in 5 van 8 sessies   -> 1 set
+  //   Row        5/16 sets warm-up · één set, typisch 40x5      -> 1 set
+  //   OHP        5/28 sets warm-up · 3 van 7 sessies zónder     -> 0 (zie hieronder)
+  //   al de rest 0 warm-upsets in de log: machines, core, accessoires,
+  //   revalidatie en elke speed-variant                          -> 0 sets
   //
-  //  ENKELE SET (bench, row, OHP) — hier volstaat er een:
+  // OHP staat bewust op 0: zijn log is daar inconsistent (DDDD in 3 sessies,
+  // WDDD/WDDDD/WWWD elk 1x, DDD 1x), en 0 is wat hij het vaakst doet. Alternatief
+  // is 1 set zoals bij bench — dat is een keuze voor Bert, niet voor de app.
+  //
+  //  LADDER (2 sets, squat + deadlift) — de zware, technische lifts:
+  //    anker 60 kg, dan één tussenstap naar de werkset, afgerond op 5 kg,
+  //    reps 5 / 3.   95 -> 60x5 . 80x3   |   100 -> 60x5 . 80x3   |  120 -> 60x5 . 90x3
+  //
+  //  ENKELE SET (bench, row) — hier volstaat er een:
   //    40 kg, of 60 kg zodra de werkset op 80 kg of hoger ligt.
   //    Bench 72,5 -> 40x5   |   bench 85 -> 60x5   |   row 60 -> 40x5
   //
@@ -18910,21 +19063,33 @@ document.addEventListener('DOMContentLoaded', function() {
   // Op testdagen zet hij er zelf een set bovenop; die dagen plant hij met de hand.
   function r5(v) { return Math.floor(v / 5 + 0.5) * 5; }
   const WU_REPS = {1:[5], 2:[5,3], 3:[5,3,1], 4:[5,5,3,1], 5:[5,5,3,2,1]};
-  const WU_LADDER = new Set(['Squat', 'Deadlift']);
+  // Aantal opwarmsets per lift. Wat hier niet in staat krijgt er GEEN — dat dekt
+  // machinewerk, core, accessoires, revalidatie en de speed-varianten in één keer.
+  // De 0-regels staan er expliciet bij als documentatie: dat zijn de lifts waar de
+  // vraag zich stelt. Alles wat helemaal ontbreekt valt via wuCount() ook op 0.
+  const WU_SETS = {
+    'Squat': 2, 'Deadlift': 2,
+    'Bench': 1, 'Row': 1,
+    'OHP': 0, 'Good Morning': 0, 'DB Bench x2': 0, 'Front Squat': 0
+  };
+  function wuCount(lk) { return WU_SETS[lk] || 0; }
+  // Eén set op een rond plaatgetal — Berts vaste patroon bij bench en row.
+  function wuSingle(w) {
+    const x = w >= 80 ? 60 : 40;
+    return x < w ? [{w: x, reps: 5}] : [];
+  }
   function t1Warmup(w, lk) {
-    if (!w || w < 50) return [];
-    if (!WU_LADDER.has(lk)) {
-      const x = w >= 80 ? 60 : 40;
-      return x < w ? [{w: x, reps: 5}] : [];
-    }
+    const n = wuCount(lk);
+    if (!n || !w || w < 50) return [];
+    if (n === 1) return wuSingle(w);
     const anchor = 60;
     if (anchor >= w) return [];
     const gap = w - anchor;
-    const n = Math.min(Math.ceil(gap / 20), 5);
-    const reps = WU_REPS[n];
+    const steps = Math.min(n, 5);
+    const reps = WU_REPS[steps];
     const rows = [];
-    for (let i = 0; i < n; i++) {
-      const x = r5(anchor + i * gap / n);
+    for (let i = 0; i < steps; i++) {
+      const x = r5(anchor + i * gap / steps);
       if (x > 0 && x < w && (!rows.length || x > rows[rows.length-1].w)) {
         rows.push({w: x, reps: reps[i]});
       }
@@ -18932,18 +19097,10 @@ document.addEventListener('DOMContentLoaded', function() {
     return rows;
   }
   function t2Warmup(w, lk) {
-    // T2: lichaam al warm van T1 → max 2 lichte opwarmsets, geen strikte minima
-    if (!w || w <= 0) return [];
+    // T2: lichaam is al warm van T1 → hooguit één lichte set, ook bij een ladderlift.
+    if (!wuCount(lk) || !w || w <= 0) return [];
     if (lk === 'DB Bench x2') return dbWarmup(w);
-    const rows = [];
-    const s1 = r25(w * 0.50);
-    if (s1 >= 20 && s1 < w) rows.push({w: s1, reps: 5, note: s1 === 20 ? 'lege stang' : undefined});
-    if (w >= 60) {
-      const prev = rows[rows.length-1]?.w || 0;
-      const s2 = r25(w * 0.75);
-      if (s2 > prev && s2 < w) rows.push({w: s2, reps: 3});
-    }
-    return rows;
+    return wuSingle(w);
   }
   // Dumbbell warmup: w is totaal (beide armen). Toon per-arm gewichten.
   function dbWarmup(totalW) {
@@ -19659,19 +19816,27 @@ document.addEventListener('DOMContentLoaded', function() {
       // ── Helpers ─────────────────────────────────────────────────────
       const _BBL = new Set(['Squat','Deadlift','Bench','OHP','Front Squat','Row']);
 
+      // Elke set krijgt een WU- of WERK-markering: dat is precies het onderscheid dat
+      // Bert in JEFIT moet aanvinken (set_type warm-up vs default). Lifts zonder
+      // opwarming zeggen dat óók expliciet — stilte zou hij als "nog niet ingevuld"
+      // kunnen lezen, en dan vinkt hij alsnog een werkset als warm-up aan.
       function _wuHtml(lk, w, isT1, c) {
         if (!w) return '';
         const rows = isT1 ? t1Warmup(w, lk) : t2Warmup(w, lk);
-        if (!rows.length) return '';
+        const wPlts = _BBL.has(lk) ? platesPerSide(w) : null;
+        const wPltsH = wPlts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + wPlts + ']</span>' : '';
+        const workRow = '<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span class="wu-tag wu-tag-work">WERK</span><span style="min-width:48px">' + w + ' kg</span><span style="color:var(--text)">werkgewicht</span>' + wPltsH + '</div>';
+        if (!rows.length) {
+          return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">GEEN OPWARMSET <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline"><div class="wu-none">Alle sets als werkset loggen — niets aanvinken als warm-up in JEFIT.</div>' + workRow + '</div></details>';
+        }
         const restRow = '<div class="gzclp-wu-rest">— 60 sec</div>';
         const rowsHtml = rows.map((r, i) => {
           const plts = _BBL.has(lk) ? platesPerSide(r.w) : null;
           const pltsH = plts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + plts + ']</span>' : '';
-          return '<div class="gzclp-wu-inline-row"><span style="color:' + c + ';min-width:48px">' + r.w + ' kg</span><span style="color:var(--text)">× ' + r.reps + '</span>' + pltsH + '</div>' + (i < rows.length - 1 ? restRow : '');
+          return '<div class="gzclp-wu-inline-row"><span class="wu-tag">WU</span><span style="color:' + c + ';min-width:48px">' + r.w + ' kg</span><span style="color:var(--text)">× ' + r.reps + '</span>' + pltsH + '</div>' + (i < rows.length - 1 ? restRow : '');
         }).join('');
-        const wPlts = _BBL.has(lk) ? platesPerSide(w) : null;
-        const wPltsH = wPlts ? '<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[' + wPlts + ']</span>' : '';
-        return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + rowsHtml + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div><div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:' + c + '"><span style="min-width:48px">' + w + ' kg</span><span style="color:var(--text)">werkgewicht</span>' + wPltsH + '</div></div></details>';
+        const hint = '<div class="wu-hint">' + rows.length + ' × WU in JEFIT aanvinken · de rest is werkset</div>';
+        return '<details class="gzclp-wu-details"><summary class="gzclp-wu-summary" style="color:' + c + '">OPWARMING · ' + rows.length + ' SET' + (rows.length > 1 ? 'S' : '') + ' <span style="color:var(--text);font-size:10px">(klik open)</span></summary><div class="gzclp-wu-inline">' + hint + rowsHtml + '<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>' + workRow + '</div></details>';
       }
 
       function _tierCard(badge, lk, name, scheme, w, rest, cue, isT1, noWu, extraHtml, noPrev) {
@@ -20208,6 +20373,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // workWLabel: optionele string override voor het werkgewicht-label (bv. "30 kg/arm")
     // lk: lift key — voor barbellgewichten worden platen per zijde getoond
     const _BARBELL_LKS = new Set(['Squat','Deadlift','Bench','OHP','Front Squat','Row']);
+    // Zelfde WU/WERK-markering als in het programma-paneel: wat hier WU staat, vinkt
+    // Bert in JEFIT als warm-up aan; al de rest logt hij als gewone set.
     function inlineWarmupHtml(rows, workW, liftC, workWLabel, lk) {
       if (!rows.length && !workW && !workWLabel) return '';
       const isBarbell = _BARBELL_LKS.has(lk);
@@ -20216,6 +20383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const plts = isBarbell ? platesPerSide(r.w) : null;
         const pltsHtml = plts ? `<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[${plts}]</span>` : '';
         return `<div class="gzclp-wu-inline-row">
+          <span class="wu-tag">WU</span>
           <span style="color:${liftC};min-width:48px">${r.w} kg</span>
           <span style="color:var(--text)">× ${r.reps}</span>
           ${r.note ? `<span style="color:var(--cyan);font-size:11px">${r.note}</span>` : ''}
@@ -20226,16 +20394,23 @@ document.addEventListener('DOMContentLoaded', function() {
       const wLabel = workWLabel || (workW + ' kg');
       const workPlts = (isBarbell && workW) ? platesPerSide(workW) : null;
       const workPltsHtml = workPlts ? `<span style="color:var(--muted);font-family:monospace;font-size:10px;margin-left:6px">[${workPlts}]</span>` : '';
-      const preWorkRest = showWork ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
+      const preWorkRest = (showWork && rows.length) ? `<div class="gzclp-wu-rest gzclp-wu-rest-work">— 2 min</div>` : '';
       const workHtml = showWork ? `<div class="gzclp-wu-inline-row gzclp-wu-inline-work" style="color:${liftC}">
+           <span class="wu-tag wu-tag-work">WERK</span>
            <span style="min-width:48px">${wLabel}</span>
            <span style="color:var(--text)">werkgewicht</span>
            ${workPltsHtml}
          </div>` : '';
+      const head = rows.length
+        ? `OPWARMING · ${rows.length} SET${rows.length > 1 ? 'S' : ''}`
+        : 'GEEN OPWARMSET';
+      const hint = rows.length
+        ? `<div class="wu-hint">${rows.length} × WU in JEFIT aanvinken · de rest is werkset</div>`
+        : `<div class="wu-none">Alle sets als werkset loggen — niets aanvinken als warm-up in JEFIT.</div>`;
       return `<details class="gzclp-wu-details">
-    <summary class="gzclp-wu-summary" style="color:${liftC}">OPWARMING <span style="color:var(--text);font-size:10px">(klik open)</span></summary>
+    <summary class="gzclp-wu-summary" style="color:${liftC}">${head} <span style="color:var(--text);font-size:10px">(klik open)</span></summary>
     <div class="gzclp-wu-inline">
-      ${rowsHtml}${preWorkRest}${workHtml}
+      ${hint}${rowsHtml}${preWorkRest}${workHtml}
     </div>
   </details>`;
     }
