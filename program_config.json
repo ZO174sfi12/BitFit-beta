@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-08-21",
+  "laatste_update": "2026-09-24",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -20,12 +20,20 @@
     "DELOAD": {
       "start": "2026-09-21",
       "eind": "2026-09-27",
-      "label": "21 – 27 sep"
+      "label": "21 – 27 sep",
+      "week": 5
     },
     "TEST": {
+      "start": "2026-10-12",
+      "eind": "2026-10-18",
+      "label": "do 15 okt",
+      "week": 8
+    },
+    "OPBOUW": {
       "start": "2026-09-28",
-      "eind": "2026-10-04",
-      "label": "ma 28 sep"
+      "eind": "2026-10-11",
+      "label": "28 sep – 11 okt",
+      "week": "6–7"
     }
   },
   "speed": {
@@ -104,6 +112,22 @@
       "Bench": "95–105",
       "Deadlift": "130–140",
       "OHP": "70–80"
+    },
+    "hertest_datum": {
+      "was": "2026-09-28",
+      "_vervallen": "verschoven naar 2026-10-15 op 24 sep 2026 wegens de rugklacht"
+    },
+    "doel_1rm_hertest_squat_dl": {
+      "Squat": [
+        130
+      ],
+      "Deadlift": [
+        150
+      ],
+      "SBD": [
+        385
+      ],
+      "_vervallen": "vervangen door 3RM op gevoel zonder doelgetal op 24 sep 2026"
     }
   },
   "vervallen_teksten": {
@@ -122,11 +146,14 @@
       "squat 115 · bench 95 · deadlift 140",
       "PROCES-DOEL · 3×5",
       "RECORD NU · JUN–JUL",
-      "Twee lagen."
+      "Twee lagen.",
+      "Hertest bij Lotte op ma 28 sep",
+      "Ma 28 sep: hertest bij Lotte",
+      "Rest van die week vrij"
     ]
   },
   "kalibratie_lotte": "20 aug",
-  "test_aanpak": "Hertest bij Lotte op ma 28 sep — alle liften in één sessie, per lift een zware single op RPE 9, geen max-out. Rest van die week vrij. (Was eerst verspreid over MA/WO/ZA; Bert corrigeerde dat 21 aug.)",
+  "test_aanpak": "Hertest verschoven van ma 28 sep naar do 15 okt (Bert, 24 sep) na twee rugepisodes op 14 en 19 sep. Week 8: ma 12 en wo 14 okt afbouw op ~60%, do 15 okt alles in één sessie bij Lotte. Bench een zware single op RPE 9 (doel 105) en OHP een 3RM (doel 70 → 1RM 77). Squat en deadlift krijgen expres GEEN doelgetal: klimmen in stappen tot de rep traag wordt of de rug praat — wat het eerst komt — en dat is de 3RM. Row wordt niet getest.",
   "getest_1rm": {
     "Squat": 120,
     "Bench": 100,
@@ -191,17 +218,37 @@
     "OHP": 65
   },
   "doel_1rm_hertest": {
-    "Squat": 130,
     "Bench": 105,
-    "Deadlift": 150,
     "OHP": 77,
+    "Squat": "geen doelgetal — 3RM op gevoel",
+    "Deadlift": "geen doelgetal — 3RM op gevoel",
     "Row": "niet getest",
-    "SBD": 385
+    "SBD": "geen doelgetal"
   },
-  "hertest_28sep_scope": "Squat, bench en deadlift zijn de testliften: één zware single op RPE 9. OHP wordt ook getest maar als 3RM, niet als single (Bert, 17 sep): doel 70 kg × 3 → 1RM 77 via × 1,1, dezelfde methode als de 3RM-test van 22 aug (67,5 → 74). Een 3RM levert meteen bruikbare werkgewichten op, een single niet. Row wordt niet getest (Bert, 13 sep) en valt daarom uit week 4: hij is de lift die de onderarmflexoren overbelastte, en twee weken zonder is de beste voorbereiding op een maximale deadlift.",
   "proces_doel_eindblok_bron": "Week 4 stond kort op 57,5 (besluit 13 sep, OHP stond vier weken stil op 52,5). Teruggezet op 60 na 16 sep: Bert draaide 60 kg 3x3 en zette er een single van 70 bovenop — PR en eerste echte OHP-single. De redline in de docx is daarom verworpen (Bert, 17 sep).",
   "doel_3rm_hertest": {
     "OHP": 70,
     "bron": "70 × 3 op 28 sep → 1RM 77. Referentie: 67,5 × 3 op 22 aug (1RM 74), 60 kg 3×3 plus single 70 op 16 sep."
-  }
+  },
+  "opbouw_gewichten": {
+    "_bron": "Bert, 24 sep. Twee opbouwweken tussen de deload en de hertest. Bench en OHP lopen door op schema (die liften hebben nooit iets gemankeerd — 24 sep draaide 82,5 en 60 schoon). Squat en deadlift komen bewust van veel lager terug: de rug is de beperking, niet de kracht. Deadlift week 6 op 75 in plaats van 85, omdat 85 op 21 sep duidelijk voelbaar was en 24 sep pas 60 opnieuw getest is.",
+    "week6": {
+      "Squat": 80,
+      "Deadlift": 75,
+      "Bench": 82.5,
+      "OHP": 60,
+      "Row": 55,
+      "reps": "3 × 4"
+    },
+    "week7": {
+      "Squat": 87.5,
+      "Deadlift": 90,
+      "Bench": 85,
+      "OHP": 62.5,
+      "Row": 60,
+      "reps": "3 × 3"
+    }
+  },
+  "hertest_scope": "Squat, bench en deadlift zijn de testliften: één zware single op RPE 9. OHP wordt ook getest maar als 3RM, niet als single (Bert, 17 sep): doel 70 kg × 3 → 1RM 77 via × 1,1, dezelfde methode als de 3RM-test van 22 aug (67,5 → 74). Een 3RM levert meteen bruikbare werkgewichten op, een single niet. Row wordt niet getest (Bert, 13 sep) en valt daarom uit week 4: hij is de lift die de onderarmflexoren overbelastte, en twee weken zonder is de beste voorbereiding op een maximale deadlift.",
+  "hertest_datum": "2026-10-15"
 }
