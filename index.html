@@ -19718,13 +19718,45 @@ document.addEventListener('DOMContentLoaded', function() {
       return {dayp: out, dIdx};
     }
 
+    // Eenmalige extra gymdag do 24 sep 2026. Bert kon vrijdag en zaterdag niet
+    // naar de gym en wilde donderdag kracht doen in plaats van kickboksen. Dit
+    // is dus zijn LAATSTE sessie van de deloadweek; de geplande ZA-sessie met
+    // squat 72,5 en deadlift 85 vervalt. Daarom schuift de squat-check naar
+    // vandaag: 72,5 is 27 kg onder waar hij op 19 sep strandde en bepaalt of
+    // maandag op 80 start of op 72,5 blijft. Geen deadlift — die sprak op
+    // 21 sep het duidelijkst en de informatie komt maandag toch.
+    const DO_EXTRA = { date: '2026-09-24', from: '2026-09-24', to: '2026-09-27' };
+    function applyDoExtra(dayp, wk, dIdx) {
+      if (actPh.name !== 'DELOAD') return {dayp, dIdx};
+      if (!(todayStr >= DO_EXTRA.from && todayStr <= DO_EXTRA.to)) return {dayp, dIdx};
+      const kaart = {
+        h: 'DO+ · KRACHT · laatste sessie van de week · ±60 MIN',
+        banner: 'Vr en za geen gym, zo kickboksen — dit is je laatste gymdag voor maandag. De ZA-sessie vervalt, dus de squat-check verhuist naar vandaag. Geen deadlift.',
+        tiers: [
+          ['T1','Squat','BACK SQUAT','3 × 3', 72.5,'2–3 min','DE CHECK · schoon = maandag 80, nog voelbaar = maandag 72,5 · brace vóór het uitracken, opnieuw bovenaan elke rep',true],
+          ['T1','Bench','BARBELL BENCH PRESS','3 × 4', 75,'2–3 min','Tussen deload en blokgewicht · stang laag in de handpalm, pols recht boven de elleboog',true],
+          ['T1','OHP','OVERHEAD PRESS','3 × 5', 50,'2 min','Licht en strak · ribben omlaag, billen aan',true]],
+        t3note:'Trek met NEUTRALE greep — geen bovengreep zolang de elleboog speelt. Daarna het elleboogblok uit de ELBOW-tab: radiale glijding, isometrische supinatie, hamersupinatie.',
+        t3:[['Lat Pulldown neutrale greep','3×8-10 licht','Lat PD',false],
+            ['Chest-supported row (parallelle handvatten)','3×8-10 licht','Cable Row',false],
+            ['Face Pull','2×15','Face Pull',false]]
+      };
+      const out = dayp.slice();
+      out.splice(2, 0, {key:'DO+', color:'#ff3d6b', card: kaart, tiers: kaart.tiers, t3: kaart.t3,
+                        t3note: kaart.t3note, banner: kaart.banner, wu:'wo', sessKey:'WO'});
+      let newIdx = dIdx >= 2 ? dIdx + 1 : dIdx;
+      if (todayStr >= DO_EXTRA.from && todayStr <= DO_EXTRA.to && wk === curWk) newIdx = 2;
+      return {dayp: out, dIdx: newIdx};
+    }
+
     function applyWeekOverrides(dayp, wk, dIdx) {
       if (testPrepActive() && wk === curWk) {
         return {dayp: testPrepDays(), dIdx: testPrepIdx()};
       }
       const di = applyDiCatchup(dayp, wk, dIdx);
       const sw = applyDaySwap(di.dayp, wk, di.dIdx);
-      return applyElleboogWeek(sw.dayp, wk, sw.dIdx);
+      const eb = applyElleboogWeek(sw.dayp, wk, sw.dIdx);
+      return applyDoExtra(eb.dayp, wk, eb.dIdx);
     }
 
     let activeWk = curWk;
