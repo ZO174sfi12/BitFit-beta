@@ -20009,6 +20009,61 @@ document.addEventListener('DOMContentLoaded', function() {
       return {dayp: out, dIdx: newIdx};
     }
 
+    // Eenmalige VR-dagkaart, vrijdag 25 sep 2026. Bert traint een dag na de
+    // DO+-krachtsessie en drie dagen voor het opbouwblok start. De rug krijgt
+    // daarom niets: geen stang op de rug, geen hinge. Benen via de machine,
+    // glutes via de hip thrust, en het grootste deel van de tijd naar de
+    // elleboog, want dat is wat het meest zeurt. Verdwijnt vanzelf na 25 sep.
+    const VR_DAG = '2026-09-25';
+    function applyVrijdag(dayp, wk, dIdx) {
+      if (todayStr !== VR_DAG || wk !== curWk) return {dayp, dIdx};
+      const gl = (t) => '<b style="color:#ff6b35">' + t + '</b>';
+      const kaart = {
+        h: 'VR \u00b7 BENEN ZONDER RUG + ELLEBOOG \u00b7 \u00b140 MIN',
+        banner: 'Geen stang op je rug vandaag. Je trainde gisteren, zondag is kickboksen en maandag staat squat 80 met deadlift 75 \u2014 '
+              + 'de zwaarste dag sinds 14 sep. Je rug heeft in elf dagen al vier keer belasting gehad; een vijfde nu laat hem nergens '
+              + 'een rustdag v\u00f3\u00f3r die maandag. Benen mogen wel, zolang de wervelkolom er niet onder staat. '
+              + 'De elleboog krijgt het grootste deel van de tijd, want dat is wat het meest zeurt.',
+        tiers: [
+          ['T2','Front Squat','HACK SQUAT of LEG PRESS','3 \u00d7 10-12','\u2014','2 min',
+           'Stop de beweging v\u00f3\u00f3rdat je bekken van de steun rolt \u2014 dat kantelpunt onderin is waar je rug alsnog meedoet. Gewicht dat de laatste rep nog schoon laat.',true],
+          ['T3','Hip Thrust','HIP THRUST \u00b7 PLATE-LOADED','3 \u00d7 10-15','\u2014','90 sec',
+           'Vast onderdeel na de venus magna. Billen aanspannen bovenaan, niet met de lage rug omhoog duwen.',true]],
+        t3note: 'Elleboog \u2014 de volgorde is niet vrij: eerst glijden, dan isometrisch houden, dan pas traag belasten. '
+              + 'Klap UITVOERING open voor de details. Pijn tot 3 \u00e0 4 op 10 tijdens de oefening mag, als ze binnen 24 uur gezakt is. '
+              + 'Voor het zenuwwerk geldt een strengere grens: tinteling of branderigheid die n\u00e1 de oefening blijft hangen betekent te ver.',
+        t3: [
+          ['Radiale zenuwglijding','2 \u00d7 10-15 \u00b7 traag',null,true,
+           'Sta rechtop, arm langs je lichaam, schouder actief naar beneden gedrukt en daar houden \u2014 dat is het anker van de hele oefening.<br><br>'
+           + 'Strek je elleboog en draai je onderarm naar binnen zodat je handpalm naar achter wijst. Breng de arm zo\u2019n 30 tot 45 graden van je romp weg, naar achter-opzij. Duim naar binnen vouwen, vingers eroverheen.<br><br>'
+           + gl('Dit is het hele punt:') + ' terwijl je je pols naar beneden buigt, kantel je je hoofd n\u00e1\u00e1r die arm toe. En terwijl je de pols weer laat ontspannen, kantel je je hoofd ervan w\u00e9g. '
+           + 'Zo trek je de zenuw aan het ene uiteinde terwijl je hem aan het andere loslaat \u2014 hij schuift heen en weer in plaats van dat de spanning ergens oploopt. Daarom hoort dit v\u00f3\u00f3r de belasting.<br><br>'
+           + 'Traag, klein bereik, en nergens stilstaan op het eindpunt. Het is glijden, geen rek. Voel je tinteling die blijft hangen nadat je gestopt bent, dan ging je te ver.'],
+          ['Isometrische supinatie','5 \u00d7 30-45 sec \u00b7 rust 1-2 min',null,true,
+           'Zit, elleboog in 90 graden en tegen je zij geklemd, onderarm op je dijbeen. Elleboog blijft daar \u2014 gaat hij van je zij af, dan neemt je schouder het over.<br><br>'
+           + 'Pak een hamer onderaan de steel met de kop naar boven, of gebruik gewoon je andere hand als weerstand. Draai je handpalm naar boven en h\u00f3\u00fad die stand tegen de weerstand in.<br><br>'
+           + gl('Waarom dit eerst komt:') + ' weerstand tegen supinatie is precies wat bij jou pijn doet, dus dat is het weefsel dat belasting nodig heeft. Isometrisch vasthouden belast een pees zonder hem door zijn bereik te sleuren, '
+           + 'en geeft bij peesklachten vaak een paar uur echte pijndemping. Dat is meteen je test: voelt je elleboog na deze vijf series beter, dan is dit je ingang.<br><br>'
+           + 'Ongeveer zeventig procent van je kracht, niet maximaal. Rustig doorademen.'],
+          ['Supinatie met hamer of elastiek','3 \u00d7 15 \u00b7 traag terug',null,true,
+           'Zelfde houding als hierboven. Draai naar supinatie in \u00e9\u00e9n tel en laat in drie \u00e0 vier tellen terugzakken naar pronatie.<br><br>'
+           + gl('Alleen doen als de isometrie schoon aanvoelde.') + ' Deed die al pijn boven de 4 op 10, dan sla je dit over en blijf je vandaag bij glijden en houden.<br><br>'
+           + 'De traagheid is het werk, niet het gewicht. Een hamer bij de steel vastgepakt is genoeg; hoe verder je hand van de kop zit, hoe zwaarder het wordt.'],
+          ['\u2014 wat je vandaag niet doet \u2014','','',true,
+           'Geen hard knijpwerk, geen hangen aan een stang, geen eindstandig rekken van de pols. Dat zijn de drie dingen die een gemengd pees-en-zenuwbeeld opjagen. '
+           + 'En geen bovengreep-trekwerk: dat belast de aanhechting van je polsstrekkers het hardst.']]
+      };
+      const out = dayp.slice();
+      let iZa = out.findIndex(function(x){ return x.key === 'ZA'; });
+      if (iZa < 0) iZa = out.length;
+      out.splice(iZa, 0, {key:'VR', color:'#00e5a0', card: kaart, tiers: kaart.tiers,
+                          t3: kaart.t3, t3note: kaart.t3note, banner: kaart.banner, wu:'za', sessKey:'VR'});
+      // sessKey 'VR' bestaat niet in CORE_BLOK, dus geen coreblok vandaag — bewust:
+      // de ZA-core bevat sit-ups en flutter kicks, allebei lumbale flexie, en dat is
+      // precies de richting waar de rug deze maand twee keer op reageerde.
+      return {dayp: out, dIdx: iZa};
+    }
+
     function applyWeekOverrides(dayp, wk, dIdx) {
       if (testPrepActive() && wk === curWk) {
         return {dayp: testPrepDays(), dIdx: testPrepIdx()};
@@ -20016,7 +20071,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const di = applyDiCatchup(dayp, wk, dIdx);
       const sw = applyDaySwap(di.dayp, wk, di.dIdx);
       const eb = applyElleboogWeek(sw.dayp, wk, sw.dIdx);
-      return applyDoExtra(eb.dayp, wk, eb.dIdx);
+      const de = applyDoExtra(eb.dayp, wk, eb.dIdx);
+      return applyVrijdag(de.dayp, wk, de.dIdx);
     }
 
     let activeWk = curWk;
@@ -20152,7 +20208,9 @@ document.addEventListener('DOMContentLoaded', function() {
           '</div>' + wu + '</div></div>';
       }
 
-      function _t3Item(name, reps, lk, isRev) {
+      // 5e argument (optioneel): uitvoeringsuitleg die onder het item uitklapt.
+      // Bestaande aanroepen geven vier argumenten en blijven ongewijzigd werken.
+      function _t3Item(name, reps, lk, isRev, uitleg) {
         const bc = isRev ? '#ff6b35' : '#4caf50';
         const bg = isRev ? '#130b08' : '#0e1a0e33';
         const bd = isRev ? '#ff6b3533' : '#4caf5033';
@@ -20165,7 +20223,14 @@ document.addEventListener('DOMContentLoaded', function() {
           '<span style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border:1px solid ' + bc + '55;border-radius:2px;color:' + bc + ';background:' + bg + '">' + badge + '</span>' +
           '<span style="font-family:\'Oxanium\',sans-serif;font-size:11px;font-weight:700;color:var(--text)">' + name + '</span>' +
           (reps ? '<span style="color:var(--cyan);font-family:\'Space Mono\',monospace;font-size:11px;margin-left:auto">' + reps + '</span>' : '') +
-          '</div>' + prevLine + '</div>';
+          '</div>' + prevLine +
+          (uitleg
+            ? '<details style="margin-top:5px">' +
+              '<summary style="font-family:\'Space Mono\',monospace;font-size:10px;color:' + bc + ';cursor:pointer;user-select:none">\u25b8 UITVOERING</summary>' +
+              '<div style="font-size:11px;line-height:1.65;color:var(--text);padding:6px 2px 2px">' + uitleg + '</div>' +
+              '</details>'
+            : '') +
+          '</div>';
       }
 
       // Eigen blok i.p.v. een regel in de opwarming: core heeft nu een tijdsbudget
