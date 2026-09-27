@@ -30,6 +30,21 @@ Laatste update: 2026-05-18
 
 ## CSV-run uitvoeren (nieuwe pipeline)
 
+**Stap 0 — KOPIEER EERST, CONTROLEER DAARNA.** Een bestand in `mnt/uploads/`
+is soms maar één keer leesbaar: de eerste `open().read()` geeft de echte inhoud,
+elke lezing daarna geeft louter nulbytes van dezelfde bestandsgrootte. Op 27 sep
+2026 drie keer op rij gezien. Verbruik die ene lezing dus nooit aan een
+controle — kopieer meteen met `cp` naar Downloads en valideer pas de kópie:
+
+```bash
+cp mnt/uploads/scottygambino_*.csv mnt/Downloads/
+python3 -c "d=open('mnt/Downloads/scottygambino_XXXX.csv','rb').read(); print(len(d)-d.count(0),'niet-nul van',len(d))"
+```
+
+Nul niet-nul bytes = de upload is mislukt; vraag om een nieuwe export.
+`process_jefit.py` vangt dit sinds 25 sep zelf af en stopt met exitcode 1
+voordat er iets weggeschreven wordt, dus data-verlies kan niet meer.
+
 **Stap 1** — kopieer nieuwste CSV naar BitFit-beta (vervangt eventuele vorige):
 ```bash
 cp "$(ls -t mnt/Downloads/scottygambino_*.csv | head -1)" mnt/BitFit-beta/
