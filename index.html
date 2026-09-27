@@ -19696,10 +19696,18 @@ document.addEventListener('DOMContentLoaded', function() {
         //
         // Reps dalen van 3×4 naar 3×3 zoals in STRENGTH: het gewicht klimt, de set
         // wordt korter, de snelheid blijft het criterium.
-        const O_SQ   = [80, 87.5];
+        // Bijgesteld 27 sep na de vrije sessie van vrijdag 25 sep: squat 80-80-90
+        // en bench 85-90-95, en de rug was zaterdagochtend én zondag schoon. Eerste
+        // volledig schone zware blootstelling sinds 14 sep, dus de oude getallen
+        // liepen achter. Squat naar 87,5 (drie sets is al meer totaalwerk dan die
+        // ene topset van 90), bench naar 87,5, OHP naar 62,5.
+        // Deadlift blijft bewust op 75: die beweging is sinds 21 sep niet meer
+        // belast, toen was 85 duidelijk voelbaar, en een schone squat zegt niets
+        // over de hinge — daar zit het risico in de opzet, niet in het gewicht.
+        const O_SQ   = [87.5, 92.5];
         const O_DL   = [75, 90];
-        const O_BE   = [82.5, 85];
-        const O_OHP  = [60, 62.5];
+        const O_BE   = [87.5, 90];
+        const O_OHP  = [62.5, 65];
         const O_ROW  = [55, 60];
         const O_REPS = ['3 × 4', '3 × 3'];
         const io = Math.min(Math.max(wk,0), 1);
@@ -19707,7 +19715,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const rugCue = 'RUG: brace vóór het uitracken en opnieuw bovenaan elke rep, nooit onderin · gecontroleerd zakken, hard omhoog — nooit uit het gat stuiteren';
         const dlCue  = 'Elke rep vanaf de grond opnieuw opzetten, geen touch-and-go · straps · de opzet is gevoeliger dan de trek';
         const opb = io === 0
-          ? 'Week 6 · eerste normale week. Squat 80 is 67% — dat is expres laag: je trainde 19 sep nog 100, de kracht is het probleem niet. Deadlift start op 75, tussen de 60 van 24 sep en de 85 die op 21 sep sprak.'
+          ? 'Week 6 · eerste normale week. Squat en bench zijn op 27 sep opgetrokken naar 87,5 nadat je op vrijdag 25 sep 90×4 squatte en 95×3 benchte met een schone rug de ochtend erna. Deadlift blijft wel op 75: die beweging is sinds 21 sep niet meer belast en sprak toen op 85. Maandag geeft daar het antwoord op; gaat hij schoon, dan mag hij zaterdag mee omhoog.'
           : 'Week 7 · laatste opbouwweek. Gewicht omhoog, reps omlaag. Ging week 6 stil, dan mag dit; sprak de rug, dan herhaal je week 6 en schuift 15 okt op.';
         const meet = ' Meetlat blijft de ochtend erna, niet de set zelf: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
 
@@ -19715,7 +19723,7 @@ document.addEventListener('DOMContentLoaded', function() {
               banner: opb + meet,
               tiers:[
                 ['T1','Squat','BACK SQUAT',O_REPS[io], O_SQ[io],'3 min', snel + ' · ' + rugCue, true],
-                ['T1','Bench','BARBELL BENCH PRESS',O_REPS[io], O_BE[io],'3 min','Hielen op grond · billen op de bank · ELLEBOOG: stang laag in de handpalm, pols recht boven de elleboog',true],
+                ['T1','Bench','BARBELL BENCH PRESS',O_REPS[io], O_BE[io],'3 min','Hielen op grond · billen op de bank · ELLEBOOG: stang laag in de handpalm, pols recht boven de elleboog · het %-cijfer rekent nog met de geteste 100 van 20 aug; 95×3 op 25 sep wijst op ~104, dus het leest zwaarder dan het is',true],
                 ['T1','Deadlift','DEADLIFT',O_REPS[io], O_DL[io],'3–5 min', snel + ' · ' + dlCue, true]],
               t3note:'Licht houden. Deze week bouwt blootstelling op, geen vermoeidheid.',
               t3:[['Hip Thrust (plate-loaded)','3×8-10','Hip Thrust',false],
@@ -19732,7 +19740,7 @@ document.addEventListener('DOMContentLoaded', function() {
               tiers:[
                 ['T1','Bench','BARBELL BENCH PRESS',O_REPS[io], O_BE[io],'3 min','Hielen op grond · billen op de bank · ' + snel, true],
                 ['T1','OHP','OVERHEAD PRESS',O_REPS[io], O_OHP[io],'2–3 min','Ribben omlaag, billen aan · ' + snel, true],
-                ['T1','Row','BARBELL ROW','3 × 8', O_ROW[io],'2 min','Bewust licht · los vasthouden, geen knijpwerk · stop bij elleboogpijn, dit is niet de lift die je test',true]],
+                ['T1','Row','BARBELL ROW · MET STRAPS','3 × 8', O_ROW[io],'2 min','STRAPS — 27 sep: de elleboog reageerde op het plots vastgrijpen van een trapleuning, dus de pees is nog reactief op grijpen. Met straps belast je je rug zonder je onderarm te vragen wat hem nu triggert. Bewust licht, dit is niet de lift die je test.',true]],
               t3note:'Vrije keuze, arm- en rugwerk. Geen zware greep.',
               t3:[['Lat Pulldown','3×8-10','Lat PD',false],
                   ['Seated Cable Row','3×10','Cable Row',false],
