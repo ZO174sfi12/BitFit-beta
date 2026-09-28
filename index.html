@@ -19810,7 +19810,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const dow = (new Date(todayStr).getDay()+6)%7; // 0=ma
     // EXPLOSIVE: 3 gym-dagen (MA=0, WO=1, ZA=2) — di/do/vr/zo → dichtstbijzijnde gym dag
     // Andere fases: 4 dagen (SQUAT=0, DI=1, BENCH=2, DEADLIFT=3)
+    // Week 6 schuift een dag op: Bert had maandag 28 sep geen tijd en krijgt
+    // dinsdag om 14u zijn gelekoortsvaccin, dus de fullbody gaat naar dinsdag-
+    // voormiddag. Woensdag is dag 1 na de prik en wordt zone 2 in plaats van
+    // kracht — geen rug, geen deltoide, geen greep. De tweede rugblootstelling
+    // van de week gaat naar vrijdag 2 okt, nog net vóór het venster waarin een
+    // gelekoortsreactie doorgaans opspeelt (dag 4 tot 7).
+    const WEEK6_DAG = {'2026-09-29': 'MA', '2026-09-30': 'DI', '2026-10-02': 'ZA'};
     const defDayIdxBase = (() => {
+      const vast = WEEK6_DAG[todayStr];
+      if (vast) {
+        const i = ['MA','DI','WO','ZA'].indexOf(vast);
+        if (i >= 0) return i;
+      }
       if (ph.name !== 'EXPLOSIVE') return [0,1,2,3,3,3,0][dow];
       const baseIdx = [0,0,1,2,2,2,0][dow];
       // Als vandaag al getraind → toon volgende dag in MA→WO→ZA cyclus
