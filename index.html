@@ -19532,7 +19532,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const cardio = [
       ['','DI','Zone 2 · 60 min — vorm naar keuze'],
       ['tb-cd','GYM','Na ma/wo/za: 20–30 min zone 2 — vast onderdeel van de sessie'],
-      ['tb-wu','HR','Zone 2 = 130–145 bpm (plafond 145) · praattempo · rust ~55, maxHR ~183'],
+      // 28 sep: praattest vooraan, hartslag als aflezing eronder. De 130-145 kwam
+      // uit Karvonen op een maxHR van 183, en die 183 is 220 min leeftijd — een
+      // schatting met een spreiding van 10 a 12 slagen. Bert kan op 125-130 nog
+      // volledige zinnen praten, dus voor hem ligt de grens lager dan de formule zegt.
+      ['tb-wu','TEST','Volledige zinnen kunnen zeggen, een uur lang, zonder ze in te korten — dát is de grens. En je moet het morgen kunnen herhalen.'],
+      ['tb-wu','HR','Aflezing, geen doel: ~120–140 bpm. Opklimmen van ~10 slagen over het uur is normaal (warmte, vochtverlies). Veel meer én zwaarder voelend = te hoog gestart.'],
+      ['tb-wu','≠','Brandende kuiten zeggen dat de máchine je begrenst, niet je hart. Zweten vanaf minuut 40 is kerntemperatuur, geen intensiteit. Allebei geen reden om te zakken — wel om te wisselen.'],
+      ['tb-wu','WISSEL','Om de 15–20 min van machine wisselen verdeelt de lokale belasting. Houd de wissel kort, anders valt je hartslag terug. Geen roeimachine zolang de elleboog speelt.'],
       ['tb-t3','Σ','Weektotaal 120–150 min zuivere zone 2 · muay thai (do/zo) is intensiteit en telt níet mee']];
 
     function buildDayp(wk) {
