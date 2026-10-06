@@ -273,7 +273,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202609270916</span>
+        <span class="meta-value" style="color:var(--muted)">202610031049</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -18923,10 +18923,10 @@ const PHASES = [
   {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-20",color:"#ff6b35",track:0,desc:"<b>27 jul → 20 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 20 aug."},
   {label:"STRENGTH",short:"STR",start:"2026-08-24",end:"2026-09-20",color:"#ff3d6b",track:0,desc:"<b>24 aug → 4 okt</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
   {label:"DELOAD",short:"DEL",start:"2026-09-21",end:"2026-09-27",color:"#8888aa",track:0,desc:"<b>21 → 27 sep</b><br>Week 5. 2×3 op ~60% van de geteste 1RM, geen T3. Tegelijk de meting van de rug na de episodes van 14 en 19 sep."},
-  {label:"OPBOUW",short:"OPB",start:"2026-09-28",end:"2026-10-11",color:"#00e676",track:0,desc:"<b>28 sep → 11 okt</b><br>Week 6–7. Opbouw naar de hertest van do 15 okt. Bench/OHP lopen door (82,5–85 · 60–62,5), squat en deadlift komen laag terug (80–87,5 · 75–90) omdat de rug de beperking is, niet de kracht. Reps 3×4 → 3×3, snelheid is het criterium."},
-  {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-18",color:"#ffd600",track:0,desc:"<b>12 → 18 okt</b><br>Week 8. Ma/wo afbouw op ~60%, do 15 okt meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal."},
+  {label:"OPBOUW",short:"OPB",start:"2026-09-28",end:"2026-10-11",color:"#00e676",track:0,desc:"<b>28 sep → 11 okt</b><br>Week 6 is niet getraind — geen kracht, alleen kickboksen op do 1 okt. Vanaf za 3 okt is dit geen opbouwblok meer maar een aanloop van tien dagen naar de meting van di 13 okt: drie krachtsessies (ma 5, wo 7, za 10 okt), daarna afbouwen. Er komt geen kracht meer bij; het doel is scherp en uitgerust aan de start staan."},
+  {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-18",color:"#ffd600",track:0,desc:"<b>12 → 18 okt</b><br>Week 8. Ma 12 okt korte primer, <b>di 13 okt</b> meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal. Deadlift mag mét straps."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
-  {label:"RUG",short:"RUG",start:"2026-09-14",end:"2026-10-11",color:"#ff3d6b",track:1,desc:"<b>14 sep →</b><br>Lage rug, eenzijdig naast de wervelkolom. Twee episodes: 14 sep squat 95, 19 sep squat 100 (2 reps, gestopt). Flexiegevoelig, extensie verlicht. Aanleiding hertest-uitstel naar 15 okt. Protocol: tab BACK."},
+  {label:"RUG",short:"RUG",start:"2026-09-14",end:"2026-10-11",color:"#ff3d6b",track:1,desc:"<b>14 sep →</b><br>Lage rug, eenzijdig naast de wervelkolom. Twee episodes: 14 sep squat 95, 19 sep squat 100 (2 reps, gestopt). Flexiegevoelig, extensie verlicht. Aanleiding van het hertest-uitstel naar di 13 okt. Protocol: tab BACK."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
 
@@ -19492,10 +19492,13 @@ document.addEventListener('DOMContentLoaded', function() {
       {name:'TEST 3RM',  start:'2026-08-21', end:'2026-08-23', color:'#ffd600', totalWks:1},
       {name:'STRENGTH',  start:'2026-08-24', end:'2026-09-20', color:'#ff3d6b', totalWks:4},
       {name:'DELOAD',    start:'2026-09-21', end:'2026-09-27', color:'#8888aa', totalWks:1, wkNum:5},
-      // Hertest verschoven van 28 sep naar do 15 okt (Bert, 24 sep). Reden: de rug
-      // sprak op 14 en 19 sep en een maximale single op een rug die nog praat is
-      // geen meting maar een gok. Daartussen een opbouwblok van twee weken dat de
-      // belasting stapsgewijs terugbrengt, en een korte afbouw ma/wo in de testweek.
+      // De meting van ma 28 sep is NIET doorgegaan. Verschoven op 24 sep (Bert)
+      // omdat de rug op 14 en 19 sep sprak en een maximale single op een rug die
+      // nog praat geen meting is maar een gok. Eerst naar donderdag 15 oktober,
+      // op 3 okt definitief naar DINSDAG 13 OKTOBER.
+      // Het opbouwblok van twee weken is maar half gelopen: week 6 (28 sep – 4 okt)
+      // is niet getraind — geen kracht, alleen kickboksen op do 1 okt. Vanaf 3 okt
+      // neemt KM_PREP de dagindeling over met een aanloop van tien dagen.
       {name:'OPBOUW',    start:'2026-09-28', end:'2026-10-11', color:'#00e676', totalWks:2, wkNum:6},
       {name:'TEST',      start:'2026-10-12', end:'2026-10-18', color:'#ffd600', totalWks:1, wkNum:8}
     ];
@@ -19689,8 +19692,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['T1','Deadlift','DEADLIFT','2 × 3', 85,'2–3 min','Straps · neutraal oppakken',true]],
               t3:[]};
       } else if (actPh.name === 'OPBOUW') {
-        // 28 sep – 11 okt · twee opbouwweken tussen de deload en de hertest van
-        // do 15 okt. Opgezet 24 sep na de tweede rugepisode (14 en 19 sep).
+        // 28 sep – 11 okt · twee opbouwweken tussen de deload en de hertest.
+        // Opgezet 24 sep na de tweede rugepisode (14 en 19 sep).
+        // LET OP (3 okt): week 6 is niet getraind en de meting staat nu op di 13
+        // okt. Deze tak is daarmee historie — KM_PREP hieronder neemt vanaf
+        // za 3 okt de dagindeling over. Blijft staan voor wie terugbladert.
         //
         // Twee snelheden in één blok, bewust:
         //   • bench en OHP lopen gewoon door waar ze stonden — die liften hebben
@@ -19723,7 +19729,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dlCue  = 'Elke rep vanaf de grond opnieuw opzetten, geen touch-and-go · straps · de opzet is gevoeliger dan de trek';
         const opb = io === 0
           ? 'Week 6 · eerste normale week. Squat en bench zijn op 27 sep opgetrokken naar 87,5 nadat je op vrijdag 25 sep 90×4 squatte en 95×3 benchte met een schone rug de ochtend erna. Deadlift blijft wel op 75: die beweging is sinds 21 sep niet meer belast en sprak toen op 85. Maandag geeft daar het antwoord op; gaat hij schoon, dan mag hij zaterdag mee omhoog.'
-          : 'Week 7 · laatste opbouwweek. Gewicht omhoog, reps omlaag. Ging week 6 stil, dan mag dit; sprak de rug, dan herhaal je week 6 en schuift 15 okt op.';
+          : 'Week 7 als gewone opbouwweek is vervallen (3 okt): week 6 is niet getraind, dus er is niets om op voort te bouwen. Deze week is nu de aanloop naar di 13 okt — zie de dagtabs.';
         const meet = ' Meetlat blijft de ochtend erna, niet de set zelf: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
 
         sq = {h:'MA · FULLBODY · OPBOUW · ±70 MIN',
@@ -19768,28 +19774,30 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['Side Plank','3×30 sec/kant',null,false]]};
 
       } else {
-        // TESTWEEK 12–18 okt · week 8. Verschoven van 28 sep (Bert, 24 sep).
-        // MA en WO zijn een korte afbouw op ~60%, do 15 okt is de meting.
+        // TESTWEEK 12–18 okt · week 8. Verschoven van 28 sep (Bert, 24 sep) en op
+        // 3 okt vastgezet op DINSDAG 13 OKTOBER. MA 12 okt is een korte primer,
+        // DI 13 okt is de meting. De woensdagkaart is herstel geworden: de meting
+        // ligt er dan achter.
         // Bench en OHP houden een doelgetal; squat en deadlift bewust niet —
         // die krijgen een 3RM op gevoel. Een doelgetal op een rug die drie weken
         // geleden nog sprak nodigt uit tot doorbijten, en doorbijten is precies
         // hoe 14 en 19 sep ontstonden. De stang bepaalt waar je stopt.
-        sq = {h:'MA 12 OKT · AFBOUW · ±30 MIN',
-              banner:'Twee dagen afbouw voor de meting van donderdag. Licht en snel — dit voegt geen kracht meer toe, het houdt alleen de beweging vers.',
+        sq = {h:'MA 12 OKT · PRIMER · ±20 MIN',
+              banner:'Eén dag voor de meting. Kort, licht en snel — dit voegt geen kracht meer toe, het houdt alleen de bewegingen vers. Na een week zonder kracht in de aanloop is een korte prikkel waardevoller dan een tweede volledige rustdag. Stop na het laatste setje, ook als het makkelijk voelt.',
               tiers:[
-                ['T1','Squat','BACK SQUAT','2 × 3', 72.5,'2 min','Licht en snel · brace vóór het uitracken',true],
-                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 65,'2 min','Stang laag in de handpalm, pols recht',true],
-                ['T1','Deadlift','DEADLIFT','2 × 3', 80,'2–3 min','Straps · elke rep opnieuw opzetten',true]],
+                ['T1','Squat','BACK SQUAT','2 × 2', 70,'2 min','Licht en snel · brace vóór het uitracken',true],
+                ['T1','Bench','BARBELL BENCH PRESS','2 × 2', 65,'2 min','Stang laag in de handpalm, pols recht',true],
+                ['T1','Deadlift','DEADLIFT · MET STRAPS','2 × 2', 80,'2–3 min','Straps · elke rep opnieuw opzetten · geen grijpwerk sparen voor morgen',true]],
               t3:[]};
-        be = {h:'WO 14 OKT · AFBOUW UPPER · ±25 MIN',
-              banner:'Laatste beweging voor de test. Niets zwaars, niets nieuws. Donderdag is de dag.',
-              tiers:[
-                ['T1','Bench','BARBELL BENCH PRESS','2 × 3', 65,'2 min','Snelheid, geen belasting',true],
-                ['T1','OHP','OVERHEAD PRESS','2 × 3', 47.5,'2 min','Ribben omlaag, billen aan',true]],
-              t3:[]};
+        be = {dayKey:'WO', h:'WO 14 OKT · HERSTEL · geen belasting',
+              banner:'De meting ligt achter je. Vandaag niets zwaars: doorbloeding, mobiliteit en het rehab-dagritme. De uitkomst van dinsdag bepaalt de startgewichten van het volgende blok — dat reken je uit, je traint het niet vandaag.',
+              tiers:[],
+              t3:[['Wandelen of zone 2 · 20–30 min rustig','praattest','',false],
+                  ['Radiale zenuwglijding','10-15 traag · klein bereik','',false],
+                  ['Prone Press-Up','10 × traag','',false]]};
         const tb = 'Alles in één sessie bij Lotte. Opwarmramp: 3 sets, de laatste rond 90% van je attempt. Voelt een opwarmsingle traag, dan zak je met de attempt — dat is geen mislukking maar de meting.';
-        dl = {dayKey:'DO', h:'DO 15 OKT · HERTEST BIJ LOTTE · alle liften · ±90 MIN',
-              banner: tb + ' RUG: squat en deadlift hebben expres geen doelgetal. Je klimt tot de rep traag wordt of de rug praat — wat het eerst komt — en dat getal is je 3RM. Voel je het al in de opwarming, dan test je enkel bench en OHP en schuift de rest op.',
+        dl = {dayKey:'DI', h:'DI 13 OKT · KRACHTMETING BIJ LOTTE · alle liften · ±90 MIN',
+              banner: tb + ' RUG: squat en deadlift hebben expres geen doelgetal. Je klimt tot de rep traag wordt of de rug praat — wat het eerst komt — en dat getal is je 3RM. Voel je het al in de opwarming, dan test je enkel bench en OHP en schuift de rest op. ONDERARM: de deadlift mag mét straps (Lotte) — je greep hoeft hier niet maximaal te zijn. De row wordt niet gemeten.',
               tiers:[
                 ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','getest 100 op 20 aug · 82,5 × 3×4 op 24 sep, opbouw tot 85',true,true,
                  _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
@@ -19797,7 +19805,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  _rampHtml('OHP',[[20,5],[45,3],[62.5,1]],70,liftColor('OHP')),true],
                 ['T1','Squat','BACK SQUAT — 3RM OP GEVOEL','3 reps · geen doelgetal', 100,'3–5 min','Getal is een startpunt, geen doel · klim in stappen van 5 tot de rep traag wordt of de rug praat',true,true,
                  _rampHtml('Squat',[[60,5],[80,3],[90,3]],100,liftColor('Squat')),true],
-                ['T1','Deadlift','DEADLIFT — 3RM OP GEVOEL','3 reps · geen doelgetal', 110,'3–5 min','Getal is een startpunt · straps · elke rep opnieuw opzetten · stop bij de eerste ronde rug, niet één set later',true,true,
+                ['T1','Deadlift','DEADLIFT — 3RM OP GEVOEL · MET STRAPS','3 reps · geen doelgetal', 110,'3–5 min','Getal is een startpunt · STRAPS (Lotte laat ze toe) · elke rep opnieuw opzetten · stop bij de eerste ronde rug, niet één set later · 115 × 1 ging op za 10 okt',true,true,
                  _rampHtml('Deadlift',[[70,3],[90,3],[100,3]],110,liftColor('Deadlift')),true]],
               t3:[]};
       }
@@ -19810,7 +19818,9 @@ document.addEventListener('DOMContentLoaded', function() {
         mk('WO', '#64b5f6', be),
         mk('ZA', '#ffd600', dl)
       ];
-      if (!isExp) days.splice(1, 0, {key:'DI', color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}});
+      // In de testweek is DI de meetdag zelf (13 okt), dus daar geen cardiotab
+      // inschuiven — die zou dezelfde dagsleutel krijgen als de meting.
+      if (!isExp && actPh.name !== 'TEST') days.splice(1, 0, {key:'DI', color:'#00ffb3', card:{h:'DI · CARDIO · ZONE 2', r:cardio}});
       return days;
     }
 
@@ -19987,6 +19997,134 @@ document.addEventListener('DOMContentLoaded', function() {
       if (todayStr === '2026-08-19') return 3;
       return 4;
     }
+
+    // ── AANLOOP NAAR DE KRACHTMETING VAN DI 13 OKT ─────────────────────────
+    // Zelfde mechanisme als TEST_PREP in augustus: zolang vandaag in het venster
+    // valt, vervangen deze kaarten de MA/DI/WO/ZA-tabs volledig. Het venster loopt
+    // over drie weekindexen (OPBOUW wk0 t/m 4 okt, OPBOUW wk1 t/m 11 okt, TEST wk0
+    // vanaf 12 okt), dus niet op een weeknummer pinnen — dat liet de override in
+    // augustus al eens niet vuren.
+    //
+    // Waarom deze opzet (Bert, 3 okt 2026):
+    //   • Tien dagen bouwen geen kracht meer op. Het doel is scherp en uitgerust
+    //     aan de start staan, niet nog iets inhalen dat week 6 heeft gemist.
+    //   • Maar na een week zonder kracht (laatste barbellsessie 25 sep) moet het
+    //     contact met de patronen terug vóór een maximale poging. Daarom drie
+    //     sessies: herstart (5 okt), upper (7 okt), openers (10 okt).
+    //   • Testdag mag NIET de eerste zware grijpbelasting zijn sinds de klachten.
+    //     Die blootstelling valt daarom tweemaal eerder: strapped deadlift 100 op
+    //     5 okt en strapped 110–115 op 10 okt, met de strapless rowtest op 7 okt
+    //     ertussen. 7 okt is het beslismoment — zes dagen vóór de meting, dus een
+    //     slechte reactie kan het plan nog veranderen.
+    //   • Laatste zware sessie: za 10 okt. Daarna zo 11 okt volledig rust (géén
+    //     muay thai) en ma 12 okt enkel een primer van twintig minuten.
+    const KM_PREP = { from: '2026-10-03', to: '2026-10-13' };
+    function kmPrepActive() {
+      return (ph.name === 'OPBOUW' || ph.name === 'TEST')
+             && todayStr >= KM_PREP.from && todayStr <= KM_PREP.to;
+    }
+    function kmPrepDays() {
+      const REHAB = [
+        ['— ONDERARM · eerst glijden, dan belasten —','','',false],
+        ['Radiale zenuwglijding','10-15 traag · klein bereik · nergens stilstaan',null,false],
+        ['Supinatie met hamer','3×10-12 · 3 sec heen, 3 sec terug',null,false],
+        ['Reverse wrist curl','3×10-15 · zelfde tempo',null,false],
+        ['— RUG · extensie is je richting —','','',false],
+        ['Prone Press-Up','10 × traag',null,false],
+        ['Bird Dog','3×8/kant',null,false],
+        ['— VOET · hallux rigidus —','','',false],
+        ['Rathleff Heel Raise','3×20',null,false],
+        ['Toe Dorsiflex Lunge','3×10',null,false]
+      ];
+      const DOSIS = ' Dosisregel blijft: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
+      return [
+        {key:'ZA 3', color:'#8888aa', wu:'ma',
+         card:{h:'ZA 3 OKT · RUST + NULMETING · ±15 MIN'},
+         banner:'Geen kracht vandaag. Je onderarmen voelen uitgerust aan en dat is precies het moment om te meten in plaats van te hopen: doe de drie zelftests uit het elleboogprotocol (polsextensie, middelvinger, supinatie) en schrijf op wat je voelt. Dat getal is je nulpunt voor woensdag. Morgen kickboksen zoals gepland, zonder hard knijpwerk.',
+         tiers:[],
+         t3:REHAB},
+
+        {key:'MA 5', color:'#b388ff', wu:'ma',
+         card:{h:'MA 5 OKT · HERSTART FULLBODY · ±60 MIN'},
+         banner:'Eerste barbellsessie in negen dagen (laatste was vrijdag 25 sep). Dit is hernieuwd contact, geen inhaalwerk: alle drie de gewichten liggen onder wat je in september al schoon deed. Squat 85 tegen de 90×4 van 25 sep · bench 82,5 is het gewicht van 24 sep · deadlift 100 is wat je op 2 en 4 sep driemaal vier reps trok. Dit is ook je eerste grijpbelasting met straps — let op hoe de onderarm de ochtend erna aanvoelt.' + DOSIS,
+         tiers:[
+           ['T1','Squat','BACK SQUAT','3 × 3', 85,'3 min','Brace vóór het uitracken en opnieuw bovenaan elke rep, nooit onderin · gecontroleerd zakken, hard omhoog — nooit uit het gat stuiteren',true],
+           ['T1','Bench','BARBELL BENCH PRESS','3 × 3', 82.5,'3 min','Hielen op grond · billen op de bank · ELLEBOOG: stang laag in de handpalm, pols recht boven de elleboog — de doorgeknikte pols was op 13 sep mede de trigger',true],
+           ['T1','Deadlift','DEADLIFT · MET STRAPS','3 × 3', 100,'3–5 min','STRAPS — Lotte laat ze toe op de meting, dus je hoeft de greep hier niet te sparen of te testen · elke rep vanaf de grond opnieuw opzetten, geen touch-and-go · de opzet is gevoeliger dan de trek',true]],
+         t3note:'Licht houden. Deze sessie bouwt blootstelling op, geen vermoeidheid.',
+         t3:[['Hip Thrust (plate-loaded)','3×10','Hip Thrust',false]].concat(REHAB)},
+
+        {key:'DI 6', color:'#00ffb3', wu:'wo',
+         card:{h:'DI 6 OKT · ZONE 2 + ZELFTEST · 60 MIN'},
+         banner:'Zone 2, 60 minuten, vorm naar keuze — maar geen roeimachine en niets waar je aanhoudend moet vasthouden. Daarna de elleboog-zelftests opnieuw: het protocol vraagt een hertest rond vandaag, en je hebt sinds zaterdag een nulpunt om tegen af te zetten. Beter of gelijk? Dan gaat de rowtest morgen door zoals gepland.',
+         tiers:[],
+         t3:REHAB},
+
+        {key:'WO 7', color:'#64b5f6', wu:'wo',
+         card:{h:'WO 7 OKT · UPPER + GRIJPTEST · ±60 MIN'},
+         banner:'DIT IS HET BESLISMOMENT voor je onderarm, zes dagen voor de meting — vroeg genoeg dat een slechte reactie het plan nog kan veranderen. Bench en OHP hebben nooit iets gemankeerd en lopen gewoon door. De row is het punt: je hebt sinds 1 september niet meer gerowd en dat is ook je laatste zware greep zónder hulpmiddel. Omdat Lotte straps toelaat op de deadlift, hoeft je greep nergens anders maximaal te zijn — de row is dus de énige lift waar je hem echt test, en dat doe je vandaag. Vasthouden, niet knijpen. Reageert set 1 met meer dan 2 op 10, dan straps om voor set 2 en 3. Is het de ochtend erna erger, dan gaat de row eruit tot na 13 okt — hij wordt niet gemeten, dus dat kost je niets.',
+         tiers:[
+           ['T1','Bench','BARBELL BENCH PRESS','3 × 3', 87.5,'3 min','Hielen op grond · billen op de bank · explosief omhoog · stang laag in de handpalm, pols recht',true],
+           ['T1','OHP','OVERHEAD PRESS','3 × 3', 62.5,'2–3 min','Ribben omlaag, billen aan · 16 sep stond er 60 × 3×3 plus een single van 70',true],
+           ['T1','Row','BARBELL ROW · ZONDER STRAPS','3 × 6', 55,'2 min','GRIJPTEST — bewust zonder straps, dit is de hele bedoeling van de set · 55 is 67% van je row-1RM en ligt onder de 62,5 van 1 sep, maar vraagt wel 30-40 sec aanhoudende greep · los vasthouden in plaats van knijpen · stop bij een scherp signaal op het botpuntje, niet één rep later',true]],
+         t3note:'Vrije keuze, arm- en rugwerk. Geen zware greep meer na de row.',
+         t3:[['Lat Pulldown','3×10','Lat PD',false],
+             ['Cable Chest Fly','3×12',null,false],
+             ['Triceps Pushdown (rope)','3×12',null,false],
+             ['Face Pull','3×15','Face Pull',false]].concat(REHAB)},
+
+        {key:'DO 8', color:'#00e676', wu:'ma',
+         card:{h:'DO 8 OKT · KICKBOKSEN · voorwaardelijk'},
+         banner:'Gaat door als woensdag schoon was. Sprak de onderarm wél, dan vandaag enkel voetwerk, shadow en techniek — geen zakwerk en geen hard knijpen in de handschoen. Vrijdag is rust plus het rehab-dagritme.',
+         tiers:[],
+         t3:REHAB},
+
+        {key:'ZA 10', color:'#ffd600', wu:'za',
+         card:{h:'ZA 10 OKT · OPENERS · LAATSTE ZWARE SESSIE · ±50 MIN'},
+         banner:'Dit is je laatste zware sessie — drie dagen voor de meting. Doel is de opener ijken, niet maximaal gaan: één single per lift, en de tweede alleen als de eerste snel was. Squat 90 is bewezen schoon (25 sep); de 100 staat voorwaardelijk omdat precies dat gewicht op 19 sep de tweede rugepisode uitlokte — voelt 90 niet volledig schoon, dan stop je daar en is 90 je opener. Deadlift 115 is 82% van de geteste 140 en de zwaarste strapped belasting van de hele aanloop. Die hóórt hier te vallen en niet dinsdag. Morgen zondag: volledige rust, géén muay thai.' + DOSIS,
+         tiers:[
+           ['T1','Squat','BACK SQUAT — OPENER','1 × 1, dan 1 × 1 voorwaardelijk', 90,'3–5 min','Eerst 90 × 1. Was die snel en de rug stil, dan 100 × 1 — anders klaar · brace vóór het uitracken',true,true,
+            _rampHtml('Squat',[[60,5],[75,3],[85,1]],90,liftColor('Squat')),true],
+           ['T1','Deadlift','DEADLIFT — OPENER · MET STRAPS','1 × 1, dan 1 × 1 voorwaardelijk', 110,'3–5 min','Eerst 110 × 1. Snel en schoon? Dan 115 × 1 en daarmee stop je · STRAPS · elke rep opnieuw opzetten · dit is je zwaarste grijp- en hingebelasting vóór de meting — let op de onderarm morgen, niet vandaag',true,true,
+            _rampHtml('Deadlift',[[60,5],[85,3],[100,1]],110,liftColor('Deadlift')),true]],
+         t3note:'Alleen glutes, en licht. Geen volume meer toevoegen zo kort voor de meting.',
+         t3:[['Hip Thrust (plate-loaded)','2×10 licht','Hip Thrust',false]].concat(REHAB)},
+
+        {key:'MA 12', color:'#b388ff', wu:'ma',
+         card:{h:'MA 12 OKT · PRIMER · ±20 MIN'},
+         banner:'Eén dag voor de meting. Twintig minuten, licht en snel: de bewegingen vers houden zonder vermoeidheid toe te voegen. Na een week zonder kracht in de aanloop is dat waardevoller dan een tweede volledige rustdag. Stop na het laatste setje, ook als het makkelijk voelt — vooral dan.',
+         tiers:[
+           ['T1','Squat','BACK SQUAT','2 × 2', 70,'2 min','Licht en snel · brace vóór het uitracken',true],
+           ['T1','Bench','BARBELL BENCH PRESS','2 × 2', 65,'2 min','Stang laag in de handpalm, pols recht',true],
+           ['T1','Deadlift','DEADLIFT · MET STRAPS','2 × 2', 80,'2–3 min','Straps · elke rep opnieuw opzetten',true]],
+         t3:[]},
+
+        {key:'DI 13', color:'#ffd600', wu:'za',
+         card:{h:'DI 13 OKT · KRACHTMETING BIJ LOTTE · ±90 MIN'},
+         banner:'Alles in één sessie. Opwarmramp per lift: 3 sets, de laatste rond 90% van je attempt. Voelt een opwarmsingle traag, dan zak je met de attempt — dat is geen mislukking maar de meting. RUG: squat en deadlift hebben expres geen doelgetal; je klimt tot de rep traag wordt of de rug praat, wat het eerst komt, en dát getal is je 3RM. Voel je het al in de opwarming, dan test je enkel bench en OHP. ONDERARM: deadlift mét straps, dus je greep hoeft hier niet maximaal te zijn. De row wordt niet gemeten. Zaterdag heb je 110-115 al getrokken, dus dit is niet je eerste zware greep sinds de klachten.',
+         tiers:[
+           ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','getest 100 op 20 aug · 95 × 3 op 25 sep wijst op ~104 · 87,5 × 3×3 op 7 okt',true,true,
+            _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
+           ['T1','OHP','OVERHEAD PRESS — TEST','3RM · laatste rep schoon', 70,'3–5 min','3RM 67,5 op 22 aug → 1RM 74 · 16 sep 60 kg 3×3 én single op 70 · × 1,1 geeft 1RM 77',true,true,
+            _rampHtml('OHP',[[20,5],[45,3],[62.5,1]],70,liftColor('OHP')),true],
+           ['T1','Squat','BACK SQUAT — 3RM OP GEVOEL','3 reps · geen doelgetal', 100,'3–5 min','Getal is een startpunt, geen doel · klim in stappen van 5 tot de rep traag wordt of de rug praat',true,true,
+            _rampHtml('Squat',[[60,5],[80,3],[90,3]],100,liftColor('Squat')),true],
+           ['T1','Deadlift','DEADLIFT — 3RM OP GEVOEL · MET STRAPS','3 reps · geen doelgetal', 110,'3–5 min','Getal is een startpunt · STRAPS (Lotte laat ze toe) · elke rep opnieuw opzetten · stop bij de eerste ronde rug, niet één set later',true,true,
+            _rampHtml('Deadlift',[[70,3],[90,3],[100,3]],110,liftColor('Deadlift')),true]],
+         t3:[]}
+      ];
+    }
+    function kmPrepIdx() {
+      // Index in kmPrepDays(): ZA3, MA5, DI6, WO7, DO8, ZA10, MA12, DI13
+      if (todayStr <= '2026-10-04') return 0;
+      if (todayStr === '2026-10-05') return 1;
+      if (todayStr === '2026-10-06') return 2;
+      if (todayStr === '2026-10-07') return 3;
+      if (todayStr === '2026-10-08') return 4;
+      if (todayStr <= '2026-10-10') return 5;   // vr 9 okt = rust → toon de zaterdag
+      if (todayStr <= '2026-10-12') return 6;   // zo 11 okt = rust → toon de primer
+      return 7;
+    }
     // Weekselector over de fasegrenzen heen: één knop per week van elke fase die
     // vandaag nog niet voorbij is. Zo kan Bert vooruitkijken naar STRENGTH, de
     // deload en de hertest zonder te wachten tot die fase actief wordt.
@@ -20011,8 +20149,11 @@ document.addEventListener('DOMContentLoaded', function() {
       ? 'Afbouw naar de kalibratie bij Lotte op do 20 aug (verplaatst van 17 aug). WO 19 = volledige rust. Vrijdag is de laatste zware sessie, maandag de laatste zware bench, dinsdag enkel snelheid.'
       : 'Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Gewicht blijft in 60–70% zone. Rust: 90 sec, langer als snelheid daalt. 1RM-test bij Lotte op 20 aug → startgewichten STRENGTH.';
     const strNote = 'Kaartgewichten = minimumlijn (+2,5/wk na een gelukte week). Strength: alle 15 reps strak én RPE ≤ 7 → +5 i.p.v. +2,5. Deadlift: AMRAP ≥ 8 → +5 (beide blokken). Details: PROGRAM-pagina en programmadocument.';
-    const opbNote = 'Opbouwblok tussen de deload en de hertest van do 15 okt. Bench en OHP lopen door op schema; squat en deadlift komen bewust van laag terug — de rug is de beperking, niet de kracht. Reps 3×4 in week 6, 3×3 in week 7. Snelheid is het criterium: wordt een rep traag, dan is de set klaar. Dosisregel: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
-    const testNote = 'Week 8: ma en wo licht afbouwen, do 15 okt meten bij Lotte. Bench single en OHP 3RM hebben een doelgetal; squat en deadlift zijn een 3RM op gevoel zonder doelgetal.';
+    const kmNote = 'Aanloop naar de krachtmeting van di 13 okt. Week 6 is niet getraind, dus dit is geen opbouw meer: in tien dagen komt er geen kracht bij. Drie sessies om het contact met de patronen terug te krijgen (ma 5 · wo 7 · za 10 okt), dan zo 11 okt volledig rust en ma 12 okt enkel een primer. Laatste zware sessie: za 10 okt. Beslismoment onderarm: wo 7 okt, de strapless row. Deadlift mag mét straps — ook in de aanloop.';
+    const opbNote = kmPrepActive() ? kmNote
+      : 'Opbouwblok tussen de deload en de meting. Bench en OHP lopen door op schema; squat en deadlift komen bewust van laag terug — de rug is de beperking, niet de kracht. Reps 3×4 in week 6, 3×3 in week 7. Snelheid is het criterium: wordt een rep traag, dan is de set klaar. Dosisregel: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
+    const testNote = kmPrepActive() ? kmNote
+      : 'Week 8: ma 12 okt een korte primer, di 13 okt meten bij Lotte, wo 14 okt herstel. Bench single en OHP 3RM hebben een doelgetal; squat en deadlift zijn een 3RM op gevoel zonder doelgetal. Deadlift mét straps.';
     const noteText = ph.name === 'EXPLOSIVE' ? expNote
                    : ph.name === 'OPBOUW'    ? opbNote
                    : ph.name === 'TEST'      ? testNote
@@ -20188,6 +20329,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyWeekOverrides(dayp, wk, dIdx) {
       if (testPrepActive() && wk === curWk) {
         return {dayp: testPrepDays(), dIdx: testPrepIdx()};
+      }
+      // Aanloop naar di 13 okt — vervangt de dagtabs van de actieve week volledig.
+      if (kmPrepActive() && wk === curWk) {
+        return {dayp: kmPrepDays(), dIdx: kmPrepIdx()};
       }
       const di = applyDiCatchup(dayp, wk, dIdx);
       const sw = applyDaySwap(di.dayp, wk, di.dIdx);
