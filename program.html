@@ -167,7 +167,10 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 <!-- BLOKOVERZICHT:START -->
 <div class="sec-title">◈ HET BLOK IN ÉÉN OOGOPSLAG · W1 tot de meting</div>
 <style>
-.bo-weg{color:#8888aa;text-decoration:line-through}
+/* Doorhaling = gepland en vervallen/niet uitgevoerd. Eén gedeelde regel voor
+   alle doorhaling (losse cel + volledig gemiste week), één tint. Zet hier geen
+   tweede kleurklasse bij: pas deze regel aan. Bron: build_blokoverzicht.py */
+.bo-weg,.bo-gemist td:nth-child(-n+6){color:#c08a98;text-decoration:line-through}
 .bo-echt{color:var(--text)}
 .bo-nee{color:#8888aa}
 .bo-wk{white-space:nowrap}
@@ -178,9 +181,7 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 .bo-gemist td{background:#2e1118;border-top:1px solid var(--red);border-bottom:1px solid var(--red)}
 .bo-gemist td:first-child{border-left:4px solid var(--red)}
 .bo-gemist td:last-child{border-right:1px solid var(--red)}
-.bo-gemist td:nth-child(-n+6){text-decoration:line-through;color:#c08a98}
 .bo-gemist .bo-noot{color:var(--red);font-weight:600}
-.bo-weg-rood{color:var(--red)}
 .bo-nee{color:var(--red);font-weight:700}
 .bo-verlies td{background:#1d1016}
 .bo-verlies td:first-child{border-left:4px solid var(--red)}
@@ -224,10 +225,10 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 <tr><th>Week</th><th>SQ</th><th>DL</th><th>BP</th><th>OHP</th><th>Reps</th><th>Noot</th></tr>
 <tr><td class="bo-wk">W1 &middot; 24/8</td><td>85</td><td>100</td><td>72,5</td><td>52,5</td><td>3 × 4</td><td class="bo-noot">volledig</td></tr>
 <tr><td class="bo-wk">W2 &middot; 31/8</td><td>90</td><td><s class="bo-weg">105</s> <b class="bo-echt">100</b></td><td><s class="bo-weg">75</s> <b class="bo-echt">72,5</b></td><td><s class="bo-weg">55</s> <b class="bo-echt">52,5</b></td><td>3 × 4</td><td class="bo-noot">drie liften bleven staan</td></tr>
-<tr class="bo-verlies"><td class="bo-wk">W3 &middot; 7/9</td><td>95</td><td><s class="bo-weg bo-weg-rood">110</s> <span class="bo-nee">&mdash;</span></td><td>77,5</td><td><s class="bo-weg bo-weg-rood">57,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 3</td><td class="bo-noot">elleboogweek · DL en row eruit</td></tr>
-<tr class="bo-verlies"><td class="bo-wk">W4 &middot; 14/9</td><td><s class="bo-weg">100</s> <b class="bo-echt">95</b></td><td><s class="bo-weg bo-weg-rood">110</s> <span class="bo-nee">&mdash;</span></td><td>80</td><td>60</td><td>3 × 3</td><td class="bo-noot">rug · BP 90×4 en OHP 70×1 — PR</td></tr>
+<tr class="bo-verlies"><td class="bo-wk">W3 &middot; 7/9</td><td>95</td><td><s class="bo-weg">110</s> <span class="bo-nee">&mdash;</span></td><td>77,5</td><td><s class="bo-weg">57,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 3</td><td class="bo-noot">elleboogweek · DL en row eruit</td></tr>
+<tr class="bo-verlies"><td class="bo-wk">W4 &middot; 14/9</td><td><s class="bo-weg">100</s> <b class="bo-echt">95</b></td><td><s class="bo-weg">110</s> <span class="bo-nee">&mdash;</span></td><td>80</td><td>60</td><td>3 × 3</td><td class="bo-noot">rug · BP 90×4 en OHP 70×1 — PR</td></tr>
 <tr><td class="bo-wk">W5 &middot; 21/9</td><td><s class="bo-weg">72,5</s> <b class="bo-echt">75</b></td><td>85</td><td><s class="bo-weg">60</s> <b class="bo-echt">82,5</b></td><td><s class="bo-weg">45</s> <b class="bo-echt">60</b></td><td>2 × 3</td><td class="bo-noot">deload · 25/9 vrij: SQ 90×4, BP 95×3</td></tr>
-<tr class="bo-gemist"><td class="bo-wk">W6 &middot; 28/9</td><td><s class="bo-weg bo-weg-rood">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg bo-weg-rood">75</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg bo-weg-rood">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg bo-weg-rood">62,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 4</td><td class="bo-noot">niet getraind · vaccin</td></tr>
+<tr class="bo-gemist"><td class="bo-wk">W6 &middot; 28/9</td><td><s class="bo-weg">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">75</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">62,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 4</td><td class="bo-noot">niet getraind · vaccin</td></tr>
 <tr class="bo-deels bo-nu"><td class="bo-wk"><b>W7 &middot; 5/10</b> <span class="bo-badge">nu</span></td><td><s class="bo-weg">92,5</s> <b class="bo-echt">80</b></td><td><s class="bo-weg">90</s> <b class="bo-echt">95</b></td><td><s class="bo-weg">90</s> <b class="bo-echt">82,5</b></td><td><s class="bo-weg">65</s> <b class="bo-echt">60</b></td><td>3 × 3</td><td class="bo-noot">aanloop · 3–6/10 gemist</td></tr>
 <tr class="bo-toekomst"><td class="bo-wk">W8 &middot; 12/10</td><td>70</td><td>80</td><td>65</td><td>45</td><td>2 × 2</td><td class="bo-noot">primer · <b>di 13/10 meting</b></td></tr>
 </table>
