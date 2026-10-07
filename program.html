@@ -136,6 +136,25 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 @media(max-width:480px){
   .goal-row{grid-template-columns:1fr;}
 }
+/* ── MOBIEL ≤600px: elke tabelrij wordt een kaartje ───────────────────────────
+   Op 375px paste geen enkele tabel hier nog: het blokoverzicht (7 kolommen,
+   white-space:nowrap) liep 105px buiten beeld en omdat body{overflow-x:hidden}
+   staat viel de Noot-kolom onbereikbaar weg — je kón er niet eens naartoe
+   scrollen. De prozatabellen (AANLOOP, WEEKINDELING, DAGINDELING) pasten wel,
+   maar knepen hun tekstkolommen dicht tot ~100px. Horizontaal scrollen lost
+   geen van beide op; stapelen wel. Elke rij wordt daarom een blokje met het
+   kolomlabel boven de waarde — die labels zet het scriptje onderaan de pagina
+   uit de kopregel, zodat nieuwe tabellen (ook gegenereerde) vanzelf meedoen.
+   Lettergroottes blijven op of boven 10px. Boven 600px verandert er niets. */
+@media(max-width:600px){
+  table,tbody,tr,td{display:block;}
+  table{width:100%;}
+  tr:first-child{display:none;}                     /* kopregel: labels staan nu bij de cel */
+  tr{border:1px solid var(--border);border-left:2px solid var(--accent);background:#0a0a15;margin:0 0 8px;padding:8px 10px;}
+  td{border-bottom:none;padding:3px 0;}
+  td:first-child{font-size:13px;color:#e8e8ff;white-space:normal;padding:0 0 5px;margin-bottom:5px;border-bottom:1px solid var(--border);}
+  td[data-l]:not(:first-child)::before{content:attr(data-l);display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);margin-bottom:1px;}
+}
 </style>
 </head>
 <body>
@@ -173,6 +192,31 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 .bo-nu td:first-child{border-left:4px solid var(--cyan)}
 .bo-nu td:last-child{border-right:1px solid var(--cyan)}
 .bo-badge{font-size:10px;letter-spacing:1px;color:var(--cyan);border:1px solid var(--cyan);border-radius:2px;padding:0 4px;margin-left:4px}
+/* Mobiel <=600px: per week een kaartje van drie regels (week + reps, de vier
+   liften naast elkaar, noot over de volle breedte). Zonder dit liep de tabel
+   op 375px ~105px buiten beeld en viel de nootkolom weg. */
+@media(max-width:600px){
+#blokoverzicht tr:not(:first-child){display:grid;grid-template-columns:repeat(4,1fr)}
+#blokoverzicht td,#blokoverzicht th{white-space:normal}
+#blokoverzicht td:nth-child(n+2):nth-child(-n+5){padding-right:8px}
+#blokoverzicht td:first-child{grid-column:1/4;grid-row:1}
+#blokoverzicht td:nth-child(2){grid-column:1;grid-row:2}
+#blokoverzicht td:nth-child(3){grid-column:2;grid-row:2}
+#blokoverzicht td:nth-child(4){grid-column:3;grid-row:2}
+#blokoverzicht td:nth-child(5){grid-column:4;grid-row:2}
+#blokoverzicht td:nth-child(6){grid-column:4;grid-row:1;text-align:right;padding:0 0 5px;margin-bottom:5px;border-bottom:1px solid var(--border)}
+#blokoverzicht td:nth-child(6)::before{text-align:right}
+#blokoverzicht td:last-child{grid-column:1/-1;grid-row:3;padding-top:4px}
+#blokoverzicht td:last-child::before{display:none}
+#blokoverzicht .bo-gemist td,#blokoverzicht .bo-deels td,#blokoverzicht .bo-nu td,#blokoverzicht .bo-verlies td{background:none;border:none}
+#blokoverzicht .bo-gemist td:first-child,#blokoverzicht .bo-deels td:first-child,#blokoverzicht .bo-nu td:first-child,#blokoverzicht .bo-verlies td:first-child,
+#blokoverzicht .bo-gemist td:nth-child(6),#blokoverzicht .bo-deels td:nth-child(6),#blokoverzicht .bo-nu td:nth-child(6),#blokoverzicht .bo-verlies td:nth-child(6){border-bottom:1px solid var(--border)}
+#blokoverzicht tr.bo-verlies{background:#1d1016;border-left:4px solid var(--red)}
+#blokoverzicht tr.bo-gemist{background:#2e1118;border-color:var(--red);border-left-width:4px}
+#blokoverzicht tr.bo-deels{background:#2a2110;border-color:var(--yellow);border-left-width:4px}
+#blokoverzicht tr.bo-nu{background:#10243a;border-color:var(--cyan);border-left-width:4px}
+#blokoverzicht tr.bo-toekomst{border-left-color:var(--border)}
+}
 </style>
 <div id="blokoverzicht">
 <table>
@@ -388,5 +432,18 @@ De app rangschikt T3-opties per sessie dynamisch: <b>glute-behoefte</b> (7 dagen
 </details>
 
 </main>
+<script>
+/* Zet de kolomkop als data-l op elke cel. Op schermen ≤600px toont de CSS die
+   waarde als label boven de waarde, zodat een gestapelde rij leesbaar blijft.
+   Werkt generiek: elke tabel met een kopregel doet vanzelf mee, ook de tabel
+   die build_blokoverzicht.py genereert. Op desktop verandert er niets. */
+document.querySelectorAll('table').forEach(function(t){
+  if(!t.rows.length) return;
+  var kop = [].map.call(t.rows[0].cells, function(c){ return c.textContent.trim(); });
+  [].slice.call(t.rows, 1).forEach(function(r){
+    [].forEach.call(r.cells, function(c, i){ if(kop[i]) c.setAttribute('data-l', kop[i]); });
+  });
+});
+</script>
 </body>
 </html>
