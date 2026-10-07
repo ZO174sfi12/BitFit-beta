@@ -403,5 +403,166 @@
   },
   "hertest_scope": "Squat, bench en deadlift zijn de testliften: één zware single op RPE 9. OHP wordt ook getest maar als 3RM, niet als single (Bert, 17 sep): doel 70 kg × 3 → 1RM 77 via × 1,1, dezelfde methode als de 3RM-test van 22 aug (67,5 → 74). Een 3RM levert meteen bruikbare werkgewichten op, een single niet. Row wordt niet getest (Bert, 13 sep): hij is de lift die de onderarmflexoren overbelastte. Sinds 3 okt is de row daardoor juist de plek waar de greep getest wordt in de aanloop, niet op de meting zelf.",
   "hertest_datum": "2026-10-13",
-  "hertest_datum_label": "di 13 okt"
+  "hertest_datum_label": "di 13 okt",
+  "blokoverzicht": {
+    "_doel": "Bron voor de blokoverzichtstabel bovenaan program.html. Per week het geplande werkgewicht en wat er werkelijk gedraaid is. NIET automatisch af te leiden uit DATA.lifts: de set_type-bug in process_jefit.py maakt werkgewichten onbetrouwbaar (zie set_type_bug). Deze cijfers zijn handmatig gecorrigeerd en zijn de waarheid.",
+    "_regels": "gepland = wat op schema stond · werkelijk = wat gedraaid is · null = niet gedaan. Wijkt werkelijk af van gepland, dan toont de tabel het geplande getal doorstreept met het werkelijke ernaast. Een week met gemist=true wordt in zijn geheel doorstreept. noot = kort, noot_lang = de volledige toelichting (nu niet getoond).",
+    "weken": [
+      {
+        "wk": "W1",
+        "datum": "24/8",
+        "reps": "3 × 4",
+        "gepland": {
+          "Squat": 85,
+          "Deadlift": 100,
+          "Bench": 72.5,
+          "OHP": 52.5
+        },
+        "werkelijk": {
+          "Squat": 85,
+          "Deadlift": 100,
+          "Bench": 72.5,
+          "OHP": 52.5
+        },
+        "noot": "volledig",
+        "noot_lang": "volledig gedraaid"
+      },
+      {
+        "wk": "W2",
+        "datum": "31/8",
+        "reps": "3 × 4",
+        "gepland": {
+          "Squat": 90,
+          "Deadlift": 105,
+          "Bench": 75,
+          "OHP": 55
+        },
+        "werkelijk": {
+          "Squat": 90,
+          "Deadlift": 100,
+          "Bench": 72.5,
+          "OHP": 52.5
+        },
+        "noot": "drie liften bleven staan",
+        "noot_lang": "drie liften bleven op het gewicht van week 1"
+      },
+      {
+        "wk": "W3",
+        "datum": "7/9",
+        "reps": "3 × 3",
+        "gepland": {
+          "Squat": 95,
+          "Deadlift": 110,
+          "Bench": 77.5,
+          "OHP": 57.5
+        },
+        "werkelijk": {
+          "Squat": 95,
+          "Deadlift": null,
+          "Bench": 77.5,
+          "OHP": null
+        },
+        "noot": "elleboogweek · DL en row eruit",
+        "noot_lang": "elleboogweek — deadlift en row eruit, geen greepwerk"
+      },
+      {
+        "wk": "W4",
+        "datum": "14/9",
+        "reps": "3 × 3",
+        "gepland": {
+          "Squat": 100,
+          "Deadlift": 110,
+          "Bench": 80,
+          "OHP": 60
+        },
+        "werkelijk": {
+          "Squat": 95,
+          "Deadlift": null,
+          "Bench": 80,
+          "OHP": 60
+        },
+        "noot": "rug · BP 90×4 en OHP 70×1 — PR",
+        "noot_lang": "eerste rugepisode op 14/9, deadliftsessie afgebroken. Wél PR’s: bench 90×4 en OHP single 70"
+      },
+      {
+        "wk": "W5",
+        "datum": "21/9",
+        "reps": "2 × 3",
+        "gepland": {
+          "Squat": 72.5,
+          "Deadlift": 85,
+          "Bench": 60,
+          "OHP": 45
+        },
+        "werkelijk": {
+          "Squat": 75,
+          "Deadlift": 85,
+          "Bench": 82.5,
+          "OHP": 60
+        },
+        "noot": "deload · 25/9 vrij: SQ 90×4, BP 95×3",
+        "noot_lang": "deload. Tweede rugepisode op 19/9 (squat 100, 2 reps). Op 25/9 een vrije sessie: squat 90×4 en bench 95×3, rug schoon — beste sessie van het blok"
+      },
+      {
+        "wk": "W6",
+        "datum": "28/9",
+        "reps": "3 × 4",
+        "gemist": true,
+        "gepland": {
+          "Squat": 87.5,
+          "Deadlift": 75,
+          "Bench": 87.5,
+          "OHP": 62.5
+        },
+        "werkelijk": {
+          "Squat": null,
+          "Deadlift": null,
+          "Bench": null,
+          "OHP": null
+        },
+        "noot": "niet getraind · vaccin",
+        "noot_lang": "niet getraind. Gelekoortsvaccin 29/9, reactie dag 4–7. Alleen kickboksen op 27/9 en 1/10"
+      },
+      {
+        "wk": "W7",
+        "datum": "5/10",
+        "reps": "3 × 3",
+        "gemist_deels": true,
+        "gepland": {
+          "Squat": 92.5,
+          "Deadlift": 90,
+          "Bench": 90,
+          "OHP": 65
+        },
+        "werkelijk": {
+          "Squat": 80,
+          "Deadlift": 95,
+          "Bench": 82.5,
+          "OHP": 60
+        },
+        "noot": "aanloop · 3–6/10 gemist",
+        "noot_lang": "opbouwweek vervallen. 3 t/m 6 okt niet uitgevoerd; vanaf wo 7/10 aanloop naar de meting — cijfers zijn sessie 1, za 10/10 volgen de openers (squat 90 · bench 90 · deadlift 110)"
+      },
+      {
+        "wk": "W8",
+        "datum": "12/10",
+        "reps": "2 × 2",
+        "toekomst": true,
+        "gepland": {
+          "Squat": 70,
+          "Deadlift": 80,
+          "Bench": 65,
+          "OHP": 45
+        },
+        "werkelijk": {
+          "Squat": null,
+          "Deadlift": null,
+          "Bench": null,
+          "OHP": null
+        },
+        "noot": "primer · <b>di 13/10 meting</b>",
+        "noot_lang": "ma 12/10 primer · <b>di 13/10 krachtmeting bij Lotte</b>"
+      }
+    ]
+  }
 }

@@ -145,6 +145,40 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 <!-- ⚠ Waarden (data, %, rust, doelen) = canoniek in program_config.json. Bij bijsturen: sync index.html + build.js (docx) + deze pagina, draai check_program_consistency.py. -->
 
 <!-- ══ ACTUEEL PROGRAMMA ═══════════════════════════════════════════════ -->
+<!-- BLOKOVERZICHT:START -->
+<div class="sec-title">◈ HET BLOK IN ÉÉN OOGOPSLAG · W1 tot de meting</div>
+<style>
+.bo-weg{color:#8888aa;text-decoration:line-through}
+.bo-echt{color:var(--text)}
+.bo-nee{color:#8888aa}
+.bo-wk{white-space:nowrap}
+#blokoverzicht table{width:100%}
+#blokoverzicht td,#blokoverzicht th{white-space:nowrap}
+#blokoverzicht .bo-noot{white-space:normal;width:99%}
+.bo-weg{font-size:11px}
+.bo-gemist td{background:#2a1416}
+.bo-gemist td:nth-child(-n+6){text-decoration:line-through;color:#8888aa}
+.bo-deels td{background:#231c10}
+.bo-toekomst td{color:#8888aa}
+.bo-nu td{background:#10243a;border-top:1px solid var(--cyan);border-bottom:1px solid var(--cyan)}
+.bo-badge{font-size:10px;letter-spacing:1px;color:var(--cyan);border:1px solid var(--cyan);border-radius:2px;padding:0 4px;margin-left:4px}
+</style>
+<div id="blokoverzicht">
+<table>
+<tr><th>Week</th><th>SQ</th><th>DL</th><th>BP</th><th>OHP</th><th>Reps</th><th>Noot</th></tr>
+<tr><td class="bo-wk">W1 &middot; 24/8</td><td>85</td><td>100</td><td>72,5</td><td>52,5</td><td>3 × 4</td><td class="bo-noot">volledig</td></tr>
+<tr><td class="bo-wk">W2 &middot; 31/8</td><td>90</td><td><s class="bo-weg">105</s> <b class="bo-echt">100</b></td><td><s class="bo-weg">75</s> <b class="bo-echt">72,5</b></td><td><s class="bo-weg">55</s> <b class="bo-echt">52,5</b></td><td>3 × 4</td><td class="bo-noot">drie liften bleven staan</td></tr>
+<tr><td class="bo-wk">W3 &middot; 7/9</td><td>95</td><td><s class="bo-weg">110</s> <span class="bo-nee">&mdash;</span></td><td>77,5</td><td><s class="bo-weg">57,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 3</td><td class="bo-noot">elleboogweek · DL en row eruit</td></tr>
+<tr><td class="bo-wk">W4 &middot; 14/9</td><td><s class="bo-weg">100</s> <b class="bo-echt">95</b></td><td><s class="bo-weg">110</s> <span class="bo-nee">&mdash;</span></td><td>80</td><td>60</td><td>3 × 3</td><td class="bo-noot">rug · BP 90×4 en OHP 70×1 — PR</td></tr>
+<tr><td class="bo-wk">W5 &middot; 21/9</td><td><s class="bo-weg">72,5</s> <b class="bo-echt">75</b></td><td>85</td><td><s class="bo-weg">60</s> <b class="bo-echt">82,5</b></td><td><s class="bo-weg">45</s> <b class="bo-echt">60</b></td><td>2 × 3</td><td class="bo-noot">deload · 25/9 vrij: SQ 90×4, BP 95×3</td></tr>
+<tr class="bo-gemist"><td class="bo-wk">W6 &middot; 28/9</td><td><s class="bo-weg">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">75</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">87,5</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">62,5</s> <span class="bo-nee">&mdash;</span></td><td>3 × 4</td><td class="bo-noot">niet getraind · vaccin</td></tr>
+<tr class="bo-deels bo-nu"><td class="bo-wk"><b>W7 &middot; 5/10</b> <span class="bo-badge">nu</span></td><td><s class="bo-weg">92,5</s> <b class="bo-echt">80</b></td><td><s class="bo-weg">90</s> <b class="bo-echt">95</b></td><td><s class="bo-weg">90</s> <b class="bo-echt">82,5</b></td><td><s class="bo-weg">65</s> <b class="bo-echt">60</b></td><td>3 × 3</td><td class="bo-noot">aanloop · 3–6/10 gemist</td></tr>
+<tr class="bo-toekomst"><td class="bo-wk">W8 &middot; 12/10</td><td><s class="bo-weg">70</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">80</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">65</s> <span class="bo-nee">&mdash;</span></td><td><s class="bo-weg">45</s> <span class="bo-nee">&mdash;</span></td><td>2 × 2</td><td class="bo-noot">primer · <b>di 13/10 meting</b></td></tr>
+</table>
+</div>
+<div class="note">Doorstreept = wat gepland stond en niet gehaald is; het getal ernaast is wat er wél gedraaid werd. Een volledig doorstreepte rij is een week die niet getraind is. Werkgewichten zijn handmatig gecorrigeerd voor de set_type-bug in process_jefit.py — een topset ná de werksets maakt die werksets daar retroactief tot opwarming, waardoor DATA te hoge gewichten toont. Gegenereerd uit program_config.json door GYM/scripts/build_blokoverzicht.py op 2026-10-07.</div>
+<!-- BLOKOVERZICHT:EIND -->
+
 <div class="sec-title">◈ RECORDS & DOELEN</div>
 <div class="goals-wrap">
 <!--GOALS_START-->
