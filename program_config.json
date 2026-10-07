@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-10-06",
+  "laatste_update": "2026-10-07",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -299,81 +299,53 @@
     "_row": "Row met straps sinds 27 sep: de elleboog reageerde op het plots vastgrijpen van een trapleuning, dus de pees is nog reactief op grijpen. Herzien 3 okt: Lotte laat straps toe op de deadlift, dus de greep hoeft voor die lift niet maximaal getraind te worden. Daarmee is de row de enige plek waar de greep nog getest moet worden, en die test gaat juist zónder straps — zie aanloop_13okt.grijp."
   },
   "aanloop_13okt": {
-    "_bron": "Bert, 3 okt 2026. Tien dagen tot de krachtmeting van di 13 okt. Uitgangspunt: in tien dagen komt er geen kracht meer bij, dus het doel is scherp en uitgerust aan de start staan. Na een week zonder krachttraining (laatste barbellsessie 25 sep) is hernieuwd contact met de patronen nodig vóór een maximale poging — drie sessies, oplopend, en daarna twee dagen zonder zware belasting.",
+    "_bron": "Oorspronkelijk Bert, 3 okt 2026. HERZIEN 7 okt 2026 nadat bleek dat geen enkele dag van de aanloop (3 t/m 6 okt) en geen enkele sessie van opbouwweek 6 is uitgevoerd (opgave Bert 7 okt, bevestigd door JEFIT-export scottygambino_20261006.csv van 6 okt 17:25). Laatste barbellsessie blijft 25 sep; op 7 okt is dat twaalf dagen onbelast met de meting over zes dagen. Twaalf dagen kost weinig echte kracht maar wel de technische groef en de gewenning aan zware belasting; het risico is van nul naar maximaal gaan op een rug die in september twee keer opspeelde. Omdat hij onbelast is en niet vermoeid, weegt hernieuwde blootstelling zwaarder dan taper: twee echte sessies plus een korte primer.",
     "_grondslag_cijfers": "Werkgewichten handmatig gecorrigeerd voor de set_type-bug in process_jefit.py (zie set_type_bug). Gebruikte uitgangscijfers: bench werkgewicht 16 sep = 80 (niet 90) · deadlift 14 sep = geen werkset (niet 75) · laatste echte deadliftwerk = 85 × 3 × 2 op 21 sep mét straps · laatste deadlift boven 100 = 100 × 4 × 3 op 4 sep · laatste squatwerk = 80 × 4 × 2 plus 90 × 4 op 25 sep · laatste OHP-werk = 60 × 4 × 3 op 24 sep plus single 70 op 16 sep · laatste row = 62,5 × 5-4-5 op 1 sep zónder straps.",
     "sessies": [
-      {
-        "datum": "2026-10-03",
-        "dag": "ZA",
-        "type": "rust",
-        "inhoud": "Geen kracht. Rehab-dagritme plus de drie zelftests uit het elleboogprotocol als nulmeting, nu de onderarmen uitgerust aanvoelen."
-      },
-      {
-        "datum": "2026-10-04",
-        "dag": "ZO",
-        "type": "kickboksen",
-        "inhoud": "Zoals gepland. Geen hard knijpwerk."
-      },
-      {
-        "datum": "2026-10-05",
-        "dag": "MA",
-        "type": "kracht",
-        "titel": "HERSTART FULLBODY",
-        "Squat": 85,
-        "Bench": 82.5,
-        "Deadlift": 100,
-        "reps": "3 × 3",
-        "straps": "Deadlift mét straps",
-        "waarom": "Eerste barbellsessie na negen dagen. 85 ligt ruim onder de 90 × 4 die hij op 25 sep schoon deed; 82,5 is het gewicht van 24 sep; 100 is het deadliftgewicht dat hij op 2 en 4 sep driemaal vier reps aankon en dus een bekende, veilige herintroductie van de hinge én de eerste grijpbelasting met straps."
-      },
-      {
-        "datum": "2026-10-06",
-        "dag": "DI",
-        "type": "zone 2",
-        "inhoud": "60 min zone 2 plus de elleboog-zelftests — het protocol vraagt een hertest rond 6 okt. Geen grijpcardio (geen roeimachine)."
-      },
       {
         "datum": "2026-10-07",
         "dag": "WO",
         "type": "kracht",
-        "titel": "UPPER + GRIJPBESLISMOMENT",
-        "Bench": 87.5,
-        "OHP": 62.5,
+        "titel": "SESSIE 1 · HERSTART + GRIJPTEST",
+        "Squat": 80,
+        "Bench": 82.5,
+        "Deadlift": 95,
+        "OHP": 60,
         "Row": 55,
-        "reps": "3 × 3 (row 3 × 6)",
-        "straps": "Row ZONDER straps — dit is de grijptest",
-        "waarom": "Bench en OHP hebben nooit iets gemankeerd en lopen door op de blokgewichten. De row is de enige lift waar de greep nog getest moet worden en de enige die de klacht heeft uitgelokt; 55 is 67% van zijn row-1RM en ligt onder de 62,5 van 1 sep, maar vraagt wél dertig tot veertig seconden aanhoudende greep per set. Dit is het beslismoment, zes dagen voor de meting."
+        "reps": "3 × 3 (OHP 2 × 3, row 3 × 6)",
+        "straps": "Deadlift mét straps · row ZONDER straps",
+        "waarom": "Enige herintroductiesessie die overblijft, dus alle vier de te meten liften komen één keer aan bod, allemaal onder wat hij in september schoon deed: squat 80 tegen 90×4 op 25 sep, bench 82,5 is het gewicht van 24 sep, deadlift 95 onder de 100×4×3 van begin september, OHP 60 exact wat hij op 24 sep deed. De row is de grijptest en staat bewust vandaag: do 8 was de laatste zinnige dag, dus een dag eerder laat do 8 vrij als reactiedag."
       },
       {
         "datum": "2026-10-08",
         "dag": "DO",
-        "type": "kickboksen",
-        "inhoud": "Voorwaardelijk: sprak de onderarm woensdag, dan enkel voetwerk en shadow, geen zakwerk."
+        "type": "rust",
+        "inhoud": "Rust en reactiedag voor de onderarm. Kickboksen alleen als de onderarm woensdag zweeg, en dan uitsluitend voetwerk en shadow: geen zakwerk, geen clinch."
       },
       {
         "datum": "2026-10-09",
         "dag": "VR",
-        "type": "rust",
-        "inhoud": "Rust plus rehab-dagritme."
+        "type": "zone 2",
+        "inhoud": "60 min zone 2, geen grijpcardio (geen roeimachine). Rehab-dagritme."
       },
       {
         "datum": "2026-10-10",
         "dag": "ZA",
         "type": "kracht",
-        "titel": "OPENERS · LAATSTE ZWARE SESSIE",
+        "titel": "SESSIE 2 · OPENERS · LAATSTE ZWARE SESSIE",
         "Squat": 90,
-        "Squat_voorwaardelijk": 100,
+        "Bench": 90,
         "Deadlift": 110,
-        "Deadlift_voorwaardelijk": 115,
-        "reps": "singles",
+        "OHP": 62.5,
+        "reps": "singles (OHP een dubbel)",
         "straps": "Deadlift mét straps",
-        "waarom": "Laatste zware sessie, drie dagen voor de meting. Doel is de opener ijken, niet maximaal gaan. Squat 90 is bewezen schoon (25 sep); de 100 is voorwaardelijk omdat precies dat gewicht op 19 sep de tweede rugepisode uitlokte. Deadlift 115 is 82% van de geteste 140 en de zwaarste strapped blootstelling van de aanloop — die hoort hier te vallen en niet op testdag."
+        "waarom": "Laatste zware sessie, drie dagen voor de meting. Opener ijken, niet maximaal gaan. Squat 90 is bewezen schoon (25 sep); de voorwaardelijke 100 uit het oude plan is geschrapt omdat precies dat gewicht op 19 sep de tweede rugepisode uitlokte en er nu maar één herintroductiesessie aan voorafgaat. Deadlift 110 is 79% van de geteste 140 en de zwaarste strapped blootstelling van de aanloop — die hoort hier te vallen en niet op testdag. Bench 90 ijkt de attempt van dinsdag. Geen row, geen T3."
       },
       {
         "datum": "2026-10-11",
         "dag": "ZO",
         "type": "rust",
-        "inhoud": "Volledige rust. Géén muay thai deze zondag: twee dagen voor een maximale meting voegt impact- en schoudervolume niets toe, en dit is ook de dag waarop een reactie op zaterdag zich laat zien."
+        "inhoud": "Volledige rust. Géén muay thai: twee dagen voor een maximale meting voegt impact- en schoudervolume niets toe, en dit is de dag waarop een reactie op zaterdag zich laat zien."
       },
       {
         "datum": "2026-10-12",
@@ -383,23 +355,39 @@
         "Squat": 70,
         "Bench": 65,
         "Deadlift": 80,
+        "OHP": 45,
         "reps": "2 × 2",
         "straps": "Deadlift mét straps",
-        "waarom": "Twintig minuten, snel en licht. Na een week zonder kracht is een korte prikkel waardevoller dan een tweede volledige rustdag — de bewegingen blijven vers zonder vermoeidheid toe te voegen."
+        "waarom": "Twintig minuten, snel en licht. Patronen vers houden zonder vermoeidheid toe te voegen."
       },
       {
         "datum": "2026-10-13",
         "dag": "DI",
         "type": "meting",
         "titel": "KRACHTMETING BIJ LOTTE",
-        "inhoud": "Bench zware single (doel 105) · OHP 3RM (doel 70 → 1RM 77) · Squat 3RM op gevoel, geen doelgetal · Deadlift 3RM op gevoel mét straps, geen doelgetal · Row niet getest."
+        "inhoud": "Bench zware single (doel op papier 105; realistisch venster 95–100) · OHP 3RM (doel 70 → 1RM 77, blijft haalbaar) · Squat 3RM op gevoel, geen doelgetal · Deadlift 3RM op gevoel mét straps, geen doelgetal · Row niet getest."
       }
     ],
     "laatste_zware_sessie": "2026-10-10",
-    "rustdagen_na_laatste_zware": "zo 11 okt volledig rust, ma 12 okt alleen een korte primer — twee dagen zonder zware belasting voor de meting",
-    "beslismoment_onderarm": "wo 7 okt (strapless row), bevestigd op za 10 okt (zware strapped pull)",
+    "rustdagen_na_laatste_zware": "zo 11 okt volledige rust, ma 12 okt alleen een korte primer — twee dagen zonder zware belasting voor de meting",
+    "beslismoment_onderarm": "wo 7 okt (strapless row), reactie beoordeeld op do 8 okt, bevestigd op za 10 okt (zware strapped pull)",
     "grijp": "Lotte laat straps toe op de deadlift (Bert, 3 okt). Daarmee hoeft de greep voor die lift niet tot maximaal getraind te worden en valt de grijpbelasting van de hele aanloop fors lager uit: deadlift op 5, 10 en 12 okt én op testdag mét straps. De row is apart: straps zijn daar minder vanzelfsprekend, want je rowt met een onderhandse of dubbel-overhandse greep en de strap zit in de weg bij het trekken naar de buik. Voorstel: de row is dé lift waar hij zijn greep wél echt test, op wo 7 okt, zónder straps, op 55 kg, 3 × 6, los vasthouden in plaats van knijpen. Reageert set 1, dan straps om voor set 2 en 3 en de grijpvraag staat open. Polsmanchetten zijn hier geen alternatief: die stabiliseren de pols tegen extensie onder een stang en nemen geen grijpwerk over — nuttig op de bench (de doorgeknikte pols was mede-oorzaak op 13 sep), niet op de row.",
-    "wat_als_het_opspeelt": "Tijdens de row meer dan 2 op 10: straps om voor de resterende sets. Erger de ochtend erna: row eruit tot na 13 okt, de rest van het plan blijft staan (de row wordt niet gemeten). Speelt het op bij de zware pull van 10 okt: de deadlift blijft in de meting maar met een lagere start en de onderarm wordt het stopcriterium naast de rug; bij echte pijn schrapt hij de deadlift uit de meting en houden bench, OHP en squat over. Dat besluit valt op zondag of maandag, niet dinsdag in de gym. Geen push-ups in deze tien dagen — die waren op 13 sep mede de trigger."
+    "wat_als_het_opspeelt": "Rug tijdens wo 7: stoppen op het laatste gewicht dat schoon ging en de sessie afmaken met bench, OHP en row; de openers van za 10 zakken dan naar squat 80 en deadlift 100 en op 13 okt starten squat en deadlift lager. Rug bij de openers van za 10: de deadlift blijft in de meting maar met een lagere start en de rug wordt het stopcriterium; bij echte pijn schrapt hij squat en/of deadlift en houden bench en OHP over — dat besluit valt op zondag of maandag, niet dinsdag in de gym. Onderarm tijdens de row: meer dan 2 op 10 → straps om voor set 2 en 3 en de grijpvraag blijft open; erger de ochtend erna → row eruit tot na 13 okt, hij wordt toch niet gemeten. Omdat Lotte straps toelaat op de deadlift brengt een gevoelige onderarm de meting zelf niet in gevaar. Geen push-ups in deze zes dagen — die waren op 13 sep mede de trigger.",
+    "_herzien": "2026-10-07",
+    "_vervallen": "Oude opzet van 3 okt: tien dagen vanaf za 3 okt met drie krachtsessies (ma 5 fullbody 85/82,5/100, wo 7 upper 87,5/62,5 + rowtest, za 10 openers squat 90-100 / deadlift 110-115). Volledig vervallen: de dagen 3 t/m 6 okt zijn niet uitgevoerd.",
+    "niet_uitgevoerd": {
+      "2026-09-28/2026-10-04": "opbouwweek 6 — geen enkele krachtsessie",
+      "2026-10-03": "rust + elleboog-zelftests als nulmeting — niet afgenomen",
+      "2026-10-04": "kickboksen — niet doorgegaan",
+      "2026-10-05": "fullbody 85/82,5/100 — niet uitgevoerd",
+      "2026-10-06": "zone 2 + hertest zelftests — niet uitgevoerd"
+    },
+    "wel_geregistreerd": [
+      "2026-09-27 kickboksen 2 u (JEFIT, ingevoerd 2 okt)",
+      "2026-10-01 kickboksen 2 u (JEFIT, ingevoerd 2 okt)",
+      "2026-10-02 weging 88,5 kg"
+    ],
+    "verwachtingswaarde_meting": "Geen piekprestatie maar een momentopname. Met twaalf dagen onbelast, één herintroductiesessie en één openersessie meet hij zijn huidige staat, niet zijn potentieel. Bench 105 is 105% van de echte single van 20 aug en is met deze aanloop niet realistisch; 95–100 is het eerlijke venster. OHP 3RM 70 blijft haalbaar — die lift heeft nooit iets gemankeerd en stond op 24 sep nog op 60×4×3. Squat en deadlift komen op gevoel ruim onder 120 en 140 uit; dat is geen krachtverlies maar gebrek aan recente blootstelling, en juist dat onderscheid kan deze meting niet maken. Te gebruiken als ijkpunt om het volgende blok mee te bouwen."
   },
   "set_type_bug": {
     "status": "NIET rechtgezet per 3 okt 2026",
