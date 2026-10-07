@@ -156,11 +156,19 @@ details.wu-block .wu-inner{padding:4px 14px 14px;}
 #blokoverzicht td,#blokoverzicht th{white-space:nowrap}
 #blokoverzicht .bo-noot{white-space:normal;width:99%}
 .bo-weg{font-size:11px}
-.bo-gemist td{background:#2a1416}
-.bo-gemist td:nth-child(-n+6){text-decoration:line-through;color:#8888aa}
-.bo-deels td{background:#231c10}
-.bo-toekomst td{color:#8888aa}
+.bo-gemist td{background:#2e1118;border-top:1px solid var(--red);border-bottom:1px solid var(--red)}
+.bo-gemist td:first-child{border-left:4px solid var(--red)}
+.bo-gemist td:last-child{border-right:1px solid var(--red)}
+.bo-gemist td:nth-child(-n+6){text-decoration:line-through;color:#c08a98}
+.bo-gemist .bo-noot{color:var(--red);font-weight:600}
+.bo-deels td{background:#2a2110;border-top:1px solid var(--yellow);border-bottom:1px solid var(--yellow)}
+.bo-deels td:first-child{border-left:4px solid var(--yellow)}
+.bo-deels td:last-child{border-right:1px solid var(--yellow)}
+.bo-deels .bo-noot{color:var(--yellow)}
+.bo-toekomst td{color:var(--muted)}
 .bo-nu td{background:#10243a;border-top:1px solid var(--cyan);border-bottom:1px solid var(--cyan)}
+.bo-nu td:first-child{border-left:4px solid var(--cyan)}
+.bo-nu td:last-child{border-right:1px solid var(--cyan)}
 .bo-badge{font-size:10px;letter-spacing:1px;color:var(--cyan);border:1px solid var(--cyan);border-radius:2px;padding:0 4px;margin-left:4px}
 </style>
 <div id="blokoverzicht">
