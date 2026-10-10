@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-10-07",
+  "laatste_update": "2026-10-10",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -174,6 +174,10 @@
         ]
       },
       "_vervallen": "opgetrokken op 27 sep 2026 na de sessie van 25 sep"
+    },
+    "hertest_scope_deadlift": {
+      "was": "deadlift als 3RM op gevoel met straps, start 105",
+      "_vervallen": "geschrapt op 10 okt 2026 — negentien dagen zonder deadlift in de aanloop"
     }
   },
   "vervallen_teksten": {
@@ -276,7 +280,7 @@
     "Bench": 105,
     "OHP": 77,
     "Squat": "geen doelgetal — 3RM op gevoel",
-    "Deadlift": "geen doelgetal — 3RM op gevoel",
+    "Deadlift": "niet getest — geschrapt op 10 okt 2026",
     "Row": "niet getest",
     "SBD": "geen doelgetal"
   },
@@ -401,7 +405,7 @@
     },
     "aanpak_3okt": "Niet in de pipeline gerepareerd — dat raakt de hele historiek en elke PR-vlag, en hoort een eigen beslissing van Bert te zijn. De uitgangscijfers van het aanloopplan zijn handmatig gecorrigeerd; zie aanloop_13okt._grondslag_cijfers."
   },
-  "hertest_scope": "Squat, bench en deadlift zijn de testliften: één zware single op RPE 9. OHP wordt ook getest maar als 3RM, niet als single (Bert, 17 sep): doel 70 kg × 3 → 1RM 77 via × 1,1, dezelfde methode als de 3RM-test van 22 aug (67,5 → 74). Een 3RM levert meteen bruikbare werkgewichten op, een single niet. Row wordt niet getest (Bert, 13 sep): hij is de lift die de onderarmflexoren overbelastte. Sinds 3 okt is de row daardoor juist de plek waar de greep getest wordt in de aanloop, niet op de meting zelf.",
+  "hertest_scope": "Bench, OHP en squat worden gemeten op di 13 okt. DEADLIFT GESCHRAPT (Bert, 10 okt 2026): laatst getrokken op 24 sep (60 kg), daarvoor 85 kg op 21 sep — negentien dagen zonder hinge. Een 3RM op een bewegingspatroon dat zo lang stilligt meet vooral risico en geen kracht, en de opzet is bij hem het gevoelige moment, niet de trek. Bench: zware single, doel op papier 105 maar realistisch venster 95–100 na deze aanloop. OHP: 3RM, doel 70 → 1RM 77. Squat: 3RM op gevoel zonder doelgetal; 90 × 5 ging schoon op vr 9 okt. Row wordt niet gemeten.",
   "hertest_datum": "2026-10-13",
   "hertest_datum_label": "di 13 okt",
   "blokoverzicht": {

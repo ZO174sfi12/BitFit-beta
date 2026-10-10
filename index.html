@@ -19983,7 +19983,7 @@ document.addEventListener('DOMContentLoaded', function() {
               tiers:[
                 ['T1','Squat','BACK SQUAT','2 × 2', 70,'2 min','Licht en snel · brace vóór het uitracken',true],
                 ['T1','Bench','BARBELL BENCH PRESS','2 × 2', 65,'2 min','Stang laag in de handpalm, pols recht',true],
-                ['T1','Deadlift','DEADLIFT · MET STRAPS','2 × 2', 80,'2–3 min','Straps · elke rep opnieuw opzetten · geen grijpwerk sparen voor morgen',true]],
+                ['T1','OHP','OVERHEAD PRESS','2 × 2', 45,'2 min','Ribben omlaag, billen aan',true]],
               t3:[]};
         be = {dayKey:'WO', h:'WO 14 OKT · HERSTEL · geen belasting',
               banner:'De meting ligt achter je. Vandaag niets zwaars: doorbloeding, mobiliteit en het rehab-dagritme. De uitkomst van dinsdag bepaalt de startgewichten van het volgende blok — dat reken je uit, je traint het niet vandaag.',
@@ -19992,17 +19992,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   ['Radiale zenuwglijding','10-15 traag · klein bereik','',false],
                   ['Prone Press-Up','10 × traag','',false]]};
         const tb = 'Alles in één sessie bij Lotte. Opwarmramp: 3 sets, de laatste rond 90% van je attempt. Voelt een opwarmsingle traag, dan zak je met de attempt — dat is geen mislukking maar de meting.';
-        dl = {dayKey:'DI', h:'DI 13 OKT · KRACHTMETING BIJ LOTTE · alle liften · ±90 MIN',
-              banner: tb + ' RUG: squat en deadlift hebben expres geen doelgetal. Je klimt tot de rep traag wordt of de rug praat — wat het eerst komt — en dat getal is je 3RM. Voel je het al in de opwarming, dan test je enkel bench en OHP en schuift de rest op. ONDERARM: de deadlift mag mét straps (Lotte) — je greep hoeft hier niet maximaal te zijn. De row wordt niet gemeten.',
+        dl = {dayKey:'DI', h:'DI 13 OKT \u00b7 KRACHTMETING \u00b7 BENCH \u00b7 OHP \u00b7 SQUAT \u00b7 \u00b175 MIN',
+              banner: tb + ' DEADLIFT VALT WEG (Bert, 10 okt). Laatste keer getrokken was 24 sep op 60 kg, daarvóór 85 op 21 sep — negentien dagen zonder hinge. Een 3RM op een patroon dat zo lang stil lag meet risico, geen kracht. Drie liften blijft drie van de vier. RUG: de squat heeft expres geen doelgetal. Je klimt tot de rep traag wordt of de rug praat — wat het eerst komt — en dat getal is je 3RM. Row wordt evenmin gemeten.',
               tiers:[
                 ['T1','Bench','BENCH PRESS — TEST','zware single', 105,'3–5 min','getest 100 op 20 aug · 82,5 × 3×4 op 24 sep, opbouw tot 85',true,true,
                  _rampHtml('Bench',[[40,5],[75,3],[95,1]],105,liftColor('Bench')),true],
                 ['T1','OHP','OVERHEAD PRESS — TEST','3RM · laatste rep schoon', 70,'3–5 min','3RM 67,5 op 22 aug → 1RM 74 · 16 sep 60 kg 3×3 én single op 70 · × 1,1 geeft 1RM 77',true,true,
                  _rampHtml('OHP',[[20,5],[45,3],[62.5,1]],70,liftColor('OHP')),true],
-                ['T1','Squat','BACK SQUAT — 3RM OP GEVOEL','3 reps · geen doelgetal', 100,'3–5 min','Getal is een startpunt, geen doel · klim in stappen van 5 tot de rep traag wordt of de rug praat',true,true,
-                 _rampHtml('Squat',[[60,5],[80,3],[90,3]],100,liftColor('Squat')),true],
-                ['T1','Deadlift','DEADLIFT — 3RM OP GEVOEL · MET STRAPS','3 reps · geen doelgetal', 110,'3–5 min','Getal is een startpunt · STRAPS (Lotte laat ze toe) · elke rep opnieuw opzetten · stop bij de eerste ronde rug, niet één set later · 115 × 1 ging op za 10 okt',true,true,
-                 _rampHtml('Deadlift',[[70,3],[90,3],[100,3]],110,liftColor('Deadlift')),true]],
+                ['T1','Squat','BACK SQUAT — 3RM OP GEVOEL','3 reps · geen doelgetal', 100,'3–5 min','Getal is een startpunt, geen doel · klim in stappen van 5 tot de rep traag wordt of de rug praat · 90 × 5 ging schoon op vr 9 okt',true,true,
+                 _rampHtml('Squat',[[60,5],[80,3],[90,3]],100,liftColor('Squat')),true]],
               t3:[]};
       }
       const isExp = actPh.name === 'EXPLOSIVE';
@@ -20294,22 +20292,19 @@ document.addEventListener('DOMContentLoaded', function() {
          tiers:[
            ['T1','Squat','BACK SQUAT','2 \u00d7 2', 70,'2 min','Licht en snel \u00b7 brace v\u00f3\u00f3r het uitracken',true],
            ['T1','Bench','BARBELL BENCH PRESS','2 \u00d7 2', 65,'2 min','Stang laag in de handpalm, pols recht',true],
-           ['T1','Deadlift','DEADLIFT \u00b7 MET STRAPS','2 \u00d7 2', 80,'2\u20133 min','Straps \u00b7 elke rep opnieuw opzetten',true],
            ['T1','OHP','OVERHEAD PRESS','2 \u00d7 2', 45,'2 min','Heel licht \u00b7 alleen het patroon',true]],
          t3:[]},
 
         {key:'DI 13', color:'#ffd600', wu:'za',
-         card:{h:'DI 13 OKT · KRACHTMETING BIJ LOTTE · \u00b190 MIN'},
-         banner:'Alles in \u00e9\u00e9n sessie. Wees eerlijk over wat dit is: met twaalf dagen onbelast, \u00e9\u00e9n herintroductiesessie en \u00e9\u00e9n openersessie meet je vandaag je huidige staat, niet je potentieel. Dit wordt geen piek maar een ijkpunt om het volgende blok mee te bouwen. Bench 105 is 105% van je echte single van 20 aug en is met deze aanloop niet realistisch \u2014 95 tot 100 is het eerlijke venster. OHP 3RM 70 blijft w\u00e9l haalbaar: die lift heeft nooit iets gemankeerd. Squat en deadlift komen op gevoel ruim onder de 120 en 140 van augustus uit, en dat is geen krachtverlies maar gebrek aan recente blootstelling \u2014 het verschil tussen die twee kan deze meting niet uitsplitsen. Opwarmramp per lift: 3 sets, de laatste rond 90% van je attempt. Voelt een opwarmsingle traag, dan zak je met de attempt \u2014 dat is geen mislukking maar de meting. RUG: squat en deadlift hebben expres geen doelgetal; je klimt tot de rep traag wordt of de rug praat, wat het eerst komt. Voel je het al in de opwarming, dan test je enkel bench en OHP. ONDERARM: deadlift m\u00e9t straps, dus je greep hoeft hier niet maximaal te zijn. De row wordt niet gemeten.',
+         card:{h:'DI 13 OKT · KRACHTMETING · BENCH · OHP · SQUAT · \u00b175 MIN'},
+         banner:'Alles in \u00e9\u00e9n sessie. Wees eerlijk over wat dit is: met twaalf dagen onbelast, \u00e9\u00e9n herintroductiesessie en \u00e9\u00e9n openersessie meet je vandaag je huidige staat, niet je potentieel. Dit wordt geen piek maar een ijkpunt om het volgende blok mee te bouwen. Bench 105 is 105% van je echte single van 20 aug en is met deze aanloop niet realistisch \u2014 95 tot 100 is het eerlijke venster. OHP 3RM 70 blijft w\u00e9l haalbaar: die lift heeft nooit iets gemankeerd. De squat komt op gevoel ruim onder de 120 van augustus uit, en dat is geen krachtverlies maar gebrek aan recente blootstelling \u2014 het verschil tussen die twee kan deze meting niet uitsplitsen. Opwarmramp per lift: 3 sets, de laatste rond 90% van je attempt. Voelt een opwarmsingle traag, dan zak je met de attempt \u2014 dat is geen mislukking maar de meting. DEADLIFT VALT WEG (Bert, 10 okt). Laatste keer getrokken: 24 sep op 60 kg, daarvoor 85 op 21 sep \u2014 negentien dagen zonder hinge. Een 3RM op een patroon dat zo lang stillag meet risico en geen kracht; drie liften blijft drie van de vier. RUG: de squat heeft expres geen doelgetal; je klimt tot de rep traag wordt of de rug praat, wat het eerst komt. Voel je het al in de opwarming, dan test je enkel bench en OHP. Row wordt evenmin gemeten.',
          tiers:[
            ['T1','Bench','BENCH PRESS \u2014 TEST','zware single', 100,'3\u20135 min','Doel op papier 105 \u00b7 realistisch venster 95\u2013100 na deze aanloop \u00b7 getest 100 op 20 aug \u00b7 82,5 \u00d7 3\u00d73 op 7 okt \u00b7 90 \u00d7 1 op 10 okt is je ijkpunt',true,true,
             _rampHtml('Bench',[[40,5],[70,3],[90,1]],100,liftColor('Bench')),true],
            ['T1','OHP','OVERHEAD PRESS \u2014 TEST','3RM \u00b7 laatste rep schoon', 70,'3\u20135 min','3RM 67,5 op 22 aug \u2192 1RM 74 \u00b7 60 \u00d7 4 \u00d7 3 op 24 sep \u00b7 \u00d7 1,1 geeft 1RM 77',true,true,
             _rampHtml('OHP',[[20,5],[45,3],[62.5,1]],70,liftColor('OHP')),true],
            ['T1','Squat','BACK SQUAT \u2014 3RM OP GEVOEL','3 reps \u00b7 geen doelgetal', 95,'3\u20135 min','Getal is een startpunt, geen doel \u00b7 klim in stappen van 5 tot de rep traag wordt of de rug praat',true,true,
-            _rampHtml('Squat',[[60,5],[75,3],[85,3]],95,liftColor('Squat')),true],
-           ['T1','Deadlift','DEADLIFT \u2014 3RM OP GEVOEL \u00b7 MET STRAPS','3 reps \u00b7 geen doelgetal', 105,'3\u20135 min','Getal is een startpunt \u00b7 STRAPS (Lotte laat ze toe) \u00b7 elke rep opnieuw opzetten \u00b7 stop bij de eerste ronde rug, niet \u00e9\u00e9n set later',true,true,
-            _rampHtml('Deadlift',[[60,3],[85,3],[100,3]],105,liftColor('Deadlift')),true]],
+            _rampHtml('Squat',[[60,5],[75,3],[85,3]],95,liftColor('Squat')),true]],
          t3:[]}
       ];
     }
