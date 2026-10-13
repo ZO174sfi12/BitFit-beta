@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-10-10",
+  "laatste_update": "2026-10-13",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -568,5 +568,26 @@
         "noot_lang": "ma 12/10 primer · <b>di 13/10 krachtmeting bij Lotte</b>"
       }
     ]
+  },
+  "lotte_sessies": {
+    "_doel": "Bijhouden hoeveel sessies Bert met Lotte gehad heeft. Stond nergens, waardoor ik op 13 okt niet kon zeggen of het de tweede of de derde was.",
+    "sessies": [
+      {
+        "nr": 1,
+        "datum": "onbekend",
+        "wat": "Eerste sessie, vóór de meting van augustus (Bert, 13 okt). Datum nog aan te vullen. Lotte was al betrokken bij het blok Beweeg Meer (Lotte & Hans), 4 jun – 26 jul."
+      },
+      {
+        "nr": 2,
+        "datum": "2026-08-20",
+        "wat": "1RM-kalibratie: squat 120 · bench 100 · deadlift 140, zware single op RPE 9. Oorspronkelijk gepland op 17 aug, verschoven naar 20 aug."
+      },
+      {
+        "nr": 3,
+        "datum": "2026-10-13",
+        "wat": "Krachtmeting: bench zware single, OHP 3RM, squat 3RM op gevoel. Deadlift op 10 okt geschrapt. Verschoven van 28 sep en 15 okt."
+      }
+    ],
+    "_overleg": "21 aug feedback van Lotte (startpercentage 80→70%, plafond 94→80-85%, repschema 3×4→3×3, core blijft in de deloadweek). Niet duidelijk of dat een sessie was of overleg. De 3RM-test van 22 aug (OHP, row) staat niet op haar naam."
   }
 }
