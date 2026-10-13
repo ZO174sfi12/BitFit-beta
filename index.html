@@ -187,6 +187,16 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-period{font-family:monospace;font-size:11px;color:var(--text);padding:4px 12px;background:#080810;border-top:1px solid var(--border);}
 .gzclp-t3-full{grid-column:1/-1;border:1px solid var(--border);background:#0a0a15;position:relative;overflow:hidden;padding:12px 13px 11px;}
 .gzclp-t3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.ss-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.ss-rounds{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;display:flex;align-items:center;gap:4px;}
+.ss-dot{display:inline-block;width:8px;height:8px;border:1px solid;border-radius:50%;}
+.ss-flow{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:stretch;}
+.ss-item{border:1px solid var(--border);background:#0d0d1a;padding:8px 10px;}
+.ss-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;border:1px solid;padding:0 5px;margin-bottom:4px;}
+.ss-link{display:flex;align-items:center;justify-content:center;font-size:18px;}
+.ss-cue{font-family:monospace;font-size:10px;color:var(--muted);font-style:italic;margin-bottom:4px;}
+.ss-start{font-size:11px;color:var(--text);margin-top:3px;}
+@media(max-width:600px){.ss-flow{grid-template-columns:1fr;}.ss-link{transform:rotate(90deg);height:16px;}}
 @media(max-width:500px){.gzclp-t3-grid{grid-template-columns:1fr;}}
 .gzclp-t3-item{padding:7px 10px;border:1px solid var(--border);background:#0d0d18;}
 .gzclp-rest-line{font-family:monospace;font-size:11px;margin-top:7px;padding-top:6px;border-top:1px solid #1a1a2e;}
@@ -19120,7 +19130,8 @@ const PHASES = [
   {label:"STRENGTH",short:"STR",start:"2026-08-24",end:"2026-09-20",color:"#ff3d6b",track:0,desc:"<b>24 aug → 4 okt</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
   {label:"DELOAD",short:"DEL",start:"2026-09-21",end:"2026-09-27",color:"#8888aa",track:0,desc:"<b>21 → 27 sep</b><br>Week 5. 2×3 op ~60% van de geteste 1RM, geen T3. Tegelijk de meting van de rug na de episodes van 14 en 19 sep."},
   {label:"OPBOUW",short:"OPB",start:"2026-09-28",end:"2026-10-11",color:"#00e676",track:0,desc:"<b>28 sep → 11 okt</b><br>Het volledige blok is onbetraind gebleven — geen enkele krachtsessie, alleen kickboksen op 27 sep en 1 okt. Ook de aanloop van 3 t/m 6 okt is uitgevallen. Laatste barbellsessie blijft 25 sep, dus op 7 okt staat de teller op twaalf dagen onbelast. Herzien op 7 okt: nog zes dagen, twee echte sessies (wo 7, za 10) plus een primer (ma 12). Er komt geen kracht meer bij; het doel is de patronen terughalen en veilig kunnen meten."},
-  {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-18",color:"#ffd600",track:0,desc:"<b>12 → 18 okt</b><br>Week 8. Ma 12 okt korte primer, <b>di 13 okt</b> meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal. Deadlift mag mét straps."},
+  {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-13",color:"#ffd600",track:0,desc:"<b>12 → 13 okt</b><br>Week 8. Ma 12 okt korte primer, <b>di 13 okt</b> meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal. Deadlift mag mét straps."},
+  {label:"FULLBODY",short:"FB",start:"2026-10-14",end:"2026-11-18",color:"#00e5ff",track:0,desc:"<b>14 okt → 18 nov</b><br>Tot het vertrek naar Colombia. Twee keer fullbody: A (ma) squat + bench, B (za) deadlift met straps + OHP, 3 × 5–6. Unipodaal werk en T3 in superset, REV voor de tenen. Di zone 2, do en zo kickboksen. Gewichten uit de logs; wat je logt bepaalt de volgende sessie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"RUG",short:"RUG",start:"2026-09-14",end:"2026-10-11",color:"#ff3d6b",track:1,desc:"<b>14 sep →</b><br>Lage rug, eenzijdig naast de wervelkolom. Twee episodes: 14 sep squat 95, 19 sep squat 100 (2 reps, gestopt). Flexiegevoelig, extensie verlicht. Aanleiding van het hertest-uitstel naar di 13 okt. Protocol: tab BACK."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
@@ -19697,7 +19708,11 @@ document.addEventListener('DOMContentLoaded', function() {
       // Ook de aanloop van 3 t/m 6 okt is uitgevallen (Bert, 7 okt; bevestigd
       // door de CSV-export van 6 okt). KM_PREP neemt de dagindeling over.
       {name:'OPBOUW',    start:'2026-09-28', end:'2026-10-11', color:'#00e676', totalWks:2, wkNum:6},
-      {name:'TEST',      start:'2026-10-12', end:'2026-10-18', color:'#ffd600', totalWks:1, wkNum:8}
+      {name:'TEST',      start:'2026-10-12', end:'2026-10-13', color:'#ffd600', totalWks:1, wkNum:8},
+      // FULLBODY · 14 okt – 18 nov (Bert, 13 okt). Start hier op ma 12 okt zodat de
+      // weken ma–zo lopen; in program_config.json begint het blok op 14 okt. TEST
+      // staat eerst in de lijst, dus 12–13 okt blijft de testweek tonen.
+      {name:'FULLBODY',  start:'2026-10-12', end:'2026-11-18', color:'#00e5ff', totalWks:6}
     ];
     const ph = P.find(x => todayStr >= x.start && todayStr <= x.end);
     if (!ph) return;
@@ -19742,7 +19757,71 @@ document.addEventListener('DOMContentLoaded', function() {
       ['tb-wu','WISSEL','Om de 15–20 min van machine wisselen verdeelt de lokale belasting. Houd de wissel kort, anders valt je hartslag terug. Geen roeimachine zolang de elleboog speelt.'],
       ['tb-t3','Σ','Weektotaal 120–150 min zuivere zone 2 · muay thai (do/zo) is intensiteit en telt níet mee']];
 
+    // ── FULLBODY · 14 okt – 18 nov 2026 ─────────────────────────────────────
+    // Bert, 13 okt. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B
+    // (mag naar VR). Weken lopen ma–zo vanaf 12 okt: week 1 heeft enkel B (za 17),
+    // week 6 enkel A (ma 16 nov, twee dagen voor vertrek — nog open of die lichter
+    // wordt). Index = week, 0-based.
+    // ⚠ CANONIEK: program_config.json → blok_fullbody.sessies. Kaartgewicht = plafond;
+    //   wat gelogd wordt stuurt bij (alle sets 6 → +2,5 · 5 → houden · minder → −2,5).
+    const FB_SQ  = [null, 82.5, 85, 85, 87.5, 87.5];
+    const FB_BP  = [null, 77.5, 80, 80, 82.5, 82.5];
+    const FB_DL  = [85, 90, 92.5, 95, 95, null];
+    const FB_OHP = [52.5, 52.5, 55, 55, 57.5, null];
+    const FB_MAAND = ['JAN','FEB','MRT','APR','MEI','JUN','JUL','AUG','SEP','OKT','NOV','DEC'];
+    function fbDatum(wk, plus) {
+      const dt = new Date(new Date('2026-10-12T12:00:00').getTime() + (wk*7 + plus)*86400000);
+      return dt.getDate() + ' ' + FB_MAAND[dt.getMonth()];
+    }
+    function fbDays(wk) {
+      const i = Math.min(Math.max(wk, 0), 5);
+      const regel = 'Gewicht = plafond. Alle sets 6 reps → volgende keer +2,5 · sets van 5 → houden · onder 5 → −2,5.';
+      const onderarm = {name:'ONDERARM', scheme:'10–15', start:'oefeningen van Lotte', cue:'Rustig tempo · pijn de ochtend erna = stap terug'};
+      let ma, za;
+      if (FB_SQ[i] == null) {
+        ma = {key:'MA', color:'#b388ff', flat:true,
+              card:{h:'MA ' + fbDatum(i,0) + ' · GEEN SESSIE', r:[['tb-wu','—','Dit blok start za 17 okt met sessie B.']]}};
+      } else {
+        const bss = (i % 2 === 1);   // week 2, 4, 6 Bulgarian split squat · week 3, 5 step-ups of lunges
+        ma = {key:'MA', color:'#b388ff',
+          card:{h:'MA ' + fbDatum(i,0) + ' · A · SQUAT + BENCH · ±65 MIN'},
+          banner: regel + (i === 5 ? ' Twee dagen voor vertrek naar Colombia: lichter houden of laten vallen staat nog open.' : ''),
+          tiers:[
+            ['T1','Squat','BACK SQUAT','3 × 5–6', FB_SQ[i], '2–3 min', 'Brace vóór het uitracken · gecontroleerd zakken, hard omhoog', true],
+            ['T1','Bench','BARBELL BENCH PRESS','3 × 5–6', FB_BP[i], '2–3 min', 'Stang laag in de handpalm, pols recht · hielen op de grond', true],
+            {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
+              bss ? {name:'BULGARIAN SPLIT SQUAT', scheme:'6 / been', start:'lichaamsgewicht → dumbbells', cue:'Achterste voet op de bank · romp licht voorover'}
+                  : {name:'STEP-UPS OF LUNGES', scheme:'6 / been', start:'lichaamsgewicht → dumbbells', cue:'Wisselt om de week met de Bulgarian split squat'},
+              {name:'HIP THRUST · ÉÉN BEEN', scheme:'6 / been', start:'plate-loaded · licht → schijf erbij', cue:'Bovenaan knijpen · niet met de lage rug omhoog'}]},
+            {ss:true, badge:'T3', rounds:2, rest:'60 sec na elke ronde', items:[
+              onderarm,
+              {name:'RUG · ELASTIEK', scheme:'12–15', start:'elastiek', cue:'Trekken met de ellebogen · schouders laag'}]}],
+          t3:[]};
+      }
+      if (FB_DL[i] == null) {
+        za = {key:'ZA', color:'#ffd600', flat:true,
+              card:{h:'ZA ' + fbDatum(i,5) + ' · GEEN SESSIE', r:[['tb-wu','—','Vertrek naar Colombia op wo 18 nov.']]}};
+      } else {
+        za = {key:'ZA', color:'#ffd600',
+          card:{h:'ZA ' + fbDatum(i,5) + ' · B · DEADLIFT + OHP · ±65 MIN'},
+          banner: regel + ' Deadlift alleen omhoog als de rug de dag erna rustig is. Lukt zaterdag niet, dan schuift B naar vrijdag.',
+          tiers:[
+            ['T1','Deadlift','DEADLIFT · MET STRAPS','3 × 5', FB_DL[i], '3 min', 'Straps · elke rep vanaf de grond opnieuw opzetten · de opzet is gevoeliger dan de trek', true],
+            ['T1','OHP','OVERHEAD PRESS','3 × 5–6', FB_OHP[i], '2–3 min', 'Ribben omlaag, billen aan', true],
+            {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
+              {name:'SINGLE-LEG RDL', scheme:'6 / been', start:'lege stang 20 kg → dumbbells 2×10', cue:'Heup naar achter · bekken recht houden'},
+              {name:'BOX SIT-TO-STAND · ÉÉN BEEN', scheme:'5 / been', start:'lichaamsgewicht · lagere box = vooruitgang', cue:'Traag zitten, niet ploffen · knie boven de voet'}]},
+            {ss:true, badge:'T3', rounds:2, rest:'60 sec na elke ronde', items:[
+              onderarm,
+              {name:'SCHOUDERS · ELASTIEK', scheme:'12–15', start:'elastiek', cue:'Schouders laag · licht genoeg om netjes te blijven'}]}],
+          t3:[]};
+      }
+      const di = {key:'DI', color:'#00ffb3', flat:true, card:{h:'DI ' + fbDatum(i,1) + ' · CARDIO · ZONE 2 · 60 MIN', r:cardio}};
+      return [ma, di, za];
+    }
+
     function buildDayp(wk) {
+      if (actPh.name === 'FULLBODY') return fbDays(wk);
       let sq, be, dl;
       if (actPh.name === 'EXPLOSIVE') {
         const expReps = wk === 1 ? '4-3-4' : wk === 2 ? '3×3' : '3×4';
@@ -20035,6 +20114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const i = ['MA','DI','WO','ZA'].indexOf(vast);
         if (i >= 0) return i;
       }
+      if (ph.name === 'FULLBODY') return [0,1,2,2,2,2,0][dow]; // MA · DI · ZA
       if (ph.name !== 'EXPLOSIVE') return [0,1,2,3,3,3,0][dow];
       const baseIdx = [0,0,1,2,2,2,0][dow];
       // Als vandaag al getraind → toon volgende dag in MA→WO→ZA cyclus
@@ -20324,7 +20404,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Weekselector over de fasegrenzen heen: één knop per week van elke fase die
     // vandaag nog niet voorbij is. Zo kan Bert vooruitkijken naar STRENGTH, de
     // deload en de hertest zonder te wachten tot die fase actief wordt.
-    const SHORT = {'EXPLOSIVE':'EXP','TEST 3RM':'3RM','STRENGTH':'STR','DELOAD':'DELOAD','OPBOUW':'OPB','TEST':'HERTEST'};
+    const SHORT = {'EXPLOSIVE':'EXP','TEST 3RM':'3RM','STRENGTH':'STR','DELOAD':'DELOAD','OPBOUW':'OPB','TEST':'HERTEST','FULLBODY':'FB'};
     const PLAN = [];
     P.forEach(function(x){
       if (x.end < todayStr) return;
@@ -20350,7 +20430,9 @@ document.addEventListener('DOMContentLoaded', function() {
       : 'Opbouwblok tussen de deload en de meting. Bench en OHP lopen door op schema; squat en deadlift komen bewust van laag terug — de rug is de beperking, niet de kracht. Reps 3×4 in week 6, 3×3 in week 7. Snelheid is het criterium: wordt een rep traag, dan is de set klaar. Dosisregel: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
     const testNote = kmPrepActive() ? kmNote
       : 'Week 8: ma 12 okt een korte primer, di 13 okt meten bij Lotte, wo 14 okt herstel. Bench single en OHP 3RM hebben een doelgetal; squat en deadlift zijn een 3RM op gevoel zonder doelgetal. Deadlift mét straps.';
-    const noteText = ph.name === 'EXPLOSIVE' ? expNote
+    const fbNote = 'Fullbody tot het vertrek op 18 nov. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B (mag naar VR). ±65 min van core tot REV. Het kaartgewicht is het plafond: wat je logt bepaalt de volgende sessie. Superset: A1 → A2 → rust, twee rondes.';
+    const noteText = ph.name === 'FULLBODY' ? fbNote
+                   : ph.name === 'EXPLOSIVE' ? expNote
                    : ph.name === 'OPBOUW'    ? opbNote
                    : ph.name === 'TEST'      ? testNote
                    : strNote;
@@ -20670,6 +20752,30 @@ document.addEventListener('DOMContentLoaded', function() {
           '</div>' + wu + '</div></div>';
       }
 
+      // Superset (FULLBODY, 13 okt): twee oefeningen om beurt met één rustpauze per
+      // ronde. Eén kaart over de volle breedte, A1 ⇄ A2 naast elkaar (op gsm onder
+      // elkaar), zodat je in de gym ziet dat ze samen horen. T3-superset heet B1/B2.
+      function _supersetCard(s) {
+        const c = s.badge === 'T3' ? '#00ffb3' : '#00e5ff';
+        const L = s.badge === 'T3' ? 'B' : 'A';
+        let dots = '';
+        for (let k = 0; k < s.rounds; k++) dots += '<span class="ss-dot" style="border-color:' + c + '"></span>';
+        const item = function(x, j) {
+          return '<div class="ss-item">' +
+            '<span class="ss-tag" style="color:' + c + ';border-color:' + c + '">' + L + (j+1) + '</span>' +
+            '<div class="gzclp-exname" style="color:' + c + '">' + x.name + '</div>' +
+            (x.cue ? '<div class="ss-cue">' + x.cue + '</div>' : '') +
+            '<div class="gzclp-scheme">' + x.scheme + '</div>' +
+            (x.start ? '<div class="ss-start">' + x.start + '</div>' : '') + '</div>';
+        };
+        return '<div class="gzclp-tier ss-card" style="grid-column:1/-1;border-color:' + c + '44">' +
+          '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,' + c + ',transparent 70%)"></div>' +
+          '<div class="ss-head"><span class="gzclp-badge" style="color:' + c + ';border-color:' + c + ';background:' + c + '15">' + s.badge + ' · SUPERSET</span>' +
+          '<span class="ss-rounds" style="color:' + c + '">' + dots + ' ' + s.rounds + ' RONDES</span></div>' +
+          '<div class="ss-flow">' + item(s.items[0], 0) + '<div class="ss-link" style="color:' + c + '">⇄</div>' + item(s.items[1], 1) + '</div>' +
+          '<div class="gzclp-rest-line" style="color:' + c + '">⏱ ' + L + '1 → ' + L + '2 → ' + s.rest + '</div></div>';
+      }
+
       // 5e argument (optioneel): uitvoeringsuitleg die onder het item uitklapt.
       // Bestaande aanroepen geven vier argumenten en blijven ongewijzigd werken.
       function _t3Item(name, reps, lk, isRev, uitleg) {
@@ -20764,7 +20870,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         // Core staat vóór de liften — Berts eigen volgorde (21 aug).
         tiersHtml += _coreBlock(d.sessKey || d.key);
-        d.tiers.forEach(function(t){ tiersHtml += _tierCard.apply(null, t); });
+        d.tiers.forEach(function(t){ tiersHtml += (t && t.ss) ? _supersetCard(t) : _tierCard.apply(null, t); });
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''), d.t3note);
         }

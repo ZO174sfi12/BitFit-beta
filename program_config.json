@@ -25,7 +25,7 @@
     },
     "TEST": {
       "start": "2026-10-12",
-      "eind": "2026-10-18",
+      "eind": "2026-10-13",
       "label": "di 13 okt",
       "week": 8
     },
@@ -34,6 +34,11 @@
       "eind": "2026-10-11",
       "label": "28 sep – 11 okt",
       "week": "6–7"
+    },
+    "FULLBODY": {
+      "start": "2026-10-14",
+      "eind": "2026-11-18",
+      "label": "14 okt – 18 nov"
     }
   },
   "speed": {
@@ -585,9 +590,174 @@
       {
         "nr": 3,
         "datum": "2026-10-13",
-        "wat": "Krachtmeting: bench zware single, OHP 3RM, squat 3RM op gevoel. Deadlift op 10 okt geschrapt. Verschoven van 28 sep en 15 okt."
+        "wat": "Gepland als krachtmeting (bench single, OHP 3RM, squat 3RM). Werd een gewone sessie van ±60 min (Bert, 13 okt): 15 min core-opwarming · squat 60×6, 80×6, 80×6 (drie werksets) · unipodale RDL met lege stang 20 kg · onderarmoefeningen · schouders en rug met elastiek · hip thrust op één en twee benen. Niet in Jefit gelogd; staat in bitfit-data/t3_log.json. De meting zelf is niet doorgegaan."
       }
     ],
     "_overleg": "21 aug feedback van Lotte (startpercentage 80→70%, plafond 94→80-85%, repschema 3×4→3×3, core blijft in de deloadweek). Niet duidelijk of dat een sessie was of overleg. De 3RM-test van 22 aug (OHP, row) staat niet op haar naam."
+  },
+  "blok_fullbody": {
+    "_bron": "Bert, 13 okt 2026. Vervangt het phase-programma na de krachtmeting die een gewone sessie werd. Loopt tot het vertrek naar Colombia op 18 nov.",
+    "periode": "14 okt – 18 nov",
+    "weekindeling": {
+      "MA": "Kracht A",
+      "DI": "Zone 2 · 60 min",
+      "WO": "Rust",
+      "DO": "Kickboksen",
+      "VR": "Rust · of kracht B als ZA niet lukt",
+      "ZA": "Kracht B",
+      "ZO": "Kickboksen"
+    },
+    "sessieduur": {
+      "A": 65,
+      "B": 65
+    },
+    "sessieduur_regel": "60–75 min totaal, van opwarming tot REV",
+    "volgorde": "Core 10 min → T1 (2 hoofdliften × 3 sets) → T2 superset unipodaal (2 rondes) → T3 superset (2 rondes) → REV tenen",
+    "sessie_A": {
+      "T1": [
+        "Back Squat 3 × 5–6",
+        "Barbell Bench Press 3 × 5–6"
+      ],
+      "T2_superset": [
+        "Bulgarian split squat 6/been (om de week: step-ups of lunges)",
+        "Hip thrust één been 6/been (plate-loaded)"
+      ],
+      "T3_superset": [
+        "Onderarmoefeningen (Lotte) 10–15",
+        "Rug met elastiek 12–15"
+      ]
+    },
+    "sessie_B": {
+      "T1": [
+        "Deadlift met straps 3 × 5",
+        "Overhead Press 3 × 5–6"
+      ],
+      "T2_superset": [
+        "Single-leg RDL 6/been",
+        "Box sit-to-stand één been 5/been"
+      ],
+      "T3_superset": [
+        "Onderarmoefeningen (Lotte) 10–15",
+        "Schouders met elastiek 12–15"
+      ]
+    },
+    "rust": {
+      "T1": "2–3 min (deadlift 3 min)",
+      "superset": "60–90 sec na elke ronde",
+      "T3": "60 sec na elke ronde"
+    },
+    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · onder 5 → −2,5 kg. Deadlift alleen omhoog als de rug de dag erna rustig is.",
+    "gewichten_bron": "Uit de logs, opwarmsets eruit en gecorrigeerd voor de set_type-bug: squat 80×6×3 (13 okt) · bench 82,5×4×3 (24 sep), 90×3×2 (10 okt) · deadlift 85×3×2 met straps (21 sep), 100×4×3 (4 sep), rug sprak in sep twee keer · OHP 52,5×6,6 (2 sep), 60×4×3 (24 sep), 50×6,5 (10 okt).",
+    "sessies": [
+      {
+        "datum": "2026-10-17",
+        "dag": "ZA",
+        "sessie": "B",
+        "wk": 1,
+        "gewichten": {
+          "Deadlift": 85,
+          "OHP": 52.5
+        }
+      },
+      {
+        "datum": "2026-10-19",
+        "dag": "MA",
+        "sessie": "A",
+        "wk": 2,
+        "gewichten": {
+          "Squat": 82.5,
+          "Bench": 77.5
+        }
+      },
+      {
+        "datum": "2026-10-24",
+        "dag": "ZA",
+        "sessie": "B",
+        "wk": 2,
+        "gewichten": {
+          "Deadlift": 90,
+          "OHP": 52.5
+        }
+      },
+      {
+        "datum": "2026-10-26",
+        "dag": "MA",
+        "sessie": "A",
+        "wk": 3,
+        "gewichten": {
+          "Squat": 85,
+          "Bench": 80
+        }
+      },
+      {
+        "datum": "2026-10-31",
+        "dag": "ZA",
+        "sessie": "B",
+        "wk": 3,
+        "gewichten": {
+          "Deadlift": 92.5,
+          "OHP": 55
+        }
+      },
+      {
+        "datum": "2026-11-02",
+        "dag": "MA",
+        "sessie": "A",
+        "wk": 4,
+        "gewichten": {
+          "Squat": 85,
+          "Bench": 80
+        }
+      },
+      {
+        "datum": "2026-11-07",
+        "dag": "ZA",
+        "sessie": "B",
+        "wk": 4,
+        "gewichten": {
+          "Deadlift": 95,
+          "OHP": 55
+        }
+      },
+      {
+        "datum": "2026-11-09",
+        "dag": "MA",
+        "sessie": "A",
+        "wk": 5,
+        "gewichten": {
+          "Squat": 87.5,
+          "Bench": 82.5
+        }
+      },
+      {
+        "datum": "2026-11-14",
+        "dag": "ZA",
+        "sessie": "B",
+        "wk": 5,
+        "gewichten": {
+          "Deadlift": 95,
+          "OHP": 57.5
+        }
+      },
+      {
+        "datum": "2026-11-16",
+        "dag": "MA",
+        "sessie": "A",
+        "wk": 6,
+        "gewichten": {
+          "Squat": 87.5,
+          "Bench": 82.5
+        }
+      }
+    ],
+    "unipodaal_start": {
+      "Single-leg RDL": "lege stang 20 kg → dumbbells 2×10",
+      "Hip thrust één been": "licht → schijf erbij",
+      "Bulgarian split squat": "lichaamsgewicht → dumbbells",
+      "Step-ups of lunges": "lichaamsgewicht → dumbbells",
+      "Box sit-to-stand één been": "lichaamsgewicht · vooruitgang = lagere box"
+    },
+    "buiten_schema": "Row blijft eruit (onderarm); trekwerk voor de rug met elastiek.",
+    "open": "Ma 16 nov, twee dagen voor vertrek: lichter houden of laten vallen — nog te beslissen. Voorlopig gelijk aan week 5."
   }
 }
