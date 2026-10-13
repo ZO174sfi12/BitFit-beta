@@ -213,7 +213,8 @@
       "Twee lagen.",
       "Hertest bij Lotte op ma 28 sep",
       "Ma 28 sep: hertest bij Lotte",
-      "Rest van die week vrij"
+      "Rest van die week vrij",
+      "sets van 5 → houden · onder 5"
     ]
   },
   "kalibratie_lotte": "20 aug",
@@ -598,6 +599,7 @@
   "blok_fullbody": {
     "_bron": "Bert, 13 okt 2026. Vervangt het phase-programma na de krachtmeting die een gewone sessie werd. Loopt tot het vertrek naar Colombia op 18 nov.",
     "periode": "14 okt – 18 nov",
+    "doel": "Gewicht verliezen met spierbehoud · kracht onderhouden (Bert, 13 okt)",
     "weekindeling": {
       "MA": "Kracht A",
       "DI": "Zone 2 · 60 min",
@@ -646,7 +648,7 @@
       "superset": "60–90 sec na elke ronde",
       "T3": "60 sec na elke ronde"
     },
-    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · onder 5 → −2,5 kg. Deadlift alleen omhoog als de rug de dag erna rustig is.",
+    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Deadlift alleen omhoog als de rug de dag erna rustig is.",
     "gewichten_bron": "Uit de logs, opwarmsets eruit en gecorrigeerd voor de set_type-bug: squat 80×6×3 (13 okt) · bench 82,5×4×3 (24 sep), 90×3×2 (10 okt) · deadlift 85×3×2 met straps (21 sep), 100×4×3 (4 sep), rug sprak in sep twee keer · OHP 52,5×6,6 (2 sep), 60×4×3 (24 sep), 50×6,5 (10 okt).",
     "sessies": [
       {
@@ -758,6 +760,14 @@
       "Box sit-to-stand één been": "lichaamsgewicht · vooruitgang = lagere box"
     },
     "buiten_schema": "Row blijft eruit (onderarm); trekwerk voor de rug met elastiek.",
-    "open": "Ma 16 nov, twee dagen voor vertrek: lichter houden of laten vallen — nog te beslissen. Voorlopig gelijk aan week 5."
+    "open": "Ma 16 nov, twee dagen voor vertrek: lichter houden of laten vallen — nog te beslissen. Voorlopig gelijk aan week 5.",
+    "progressie_kort": "twee sessies op rij onder 5",
+    "voeding": {
+      "tekort": "300–500 kcal per dag · ±0,4–0,5 kg per week",
+      "eiwit": "1,6–2,2 g per kg · ±140–195 g per dag",
+      "extra_verbruik": "stappen en zone 2, geen extra gymwerk",
+      "meten": "weekgemiddelde van de weegschaal, niet de losse weging",
+      "_basis": "gewicht 88,5–88,8 kg op 2–10 okt (DATA.weight)"
+    }
   }
 }

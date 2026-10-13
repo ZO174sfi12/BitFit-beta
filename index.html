@@ -19131,7 +19131,7 @@ const PHASES = [
   {label:"DELOAD",short:"DEL",start:"2026-09-21",end:"2026-09-27",color:"#8888aa",track:0,desc:"<b>21 → 27 sep</b><br>Week 5. 2×3 op ~60% van de geteste 1RM, geen T3. Tegelijk de meting van de rug na de episodes van 14 en 19 sep."},
   {label:"OPBOUW",short:"OPB",start:"2026-09-28",end:"2026-10-11",color:"#00e676",track:0,desc:"<b>28 sep → 11 okt</b><br>Het volledige blok is onbetraind gebleven — geen enkele krachtsessie, alleen kickboksen op 27 sep en 1 okt. Ook de aanloop van 3 t/m 6 okt is uitgevallen. Laatste barbellsessie blijft 25 sep, dus op 7 okt staat de teller op twaalf dagen onbelast. Herzien op 7 okt: nog zes dagen, twee echte sessies (wo 7, za 10) plus een primer (ma 12). Er komt geen kracht meer bij; het doel is de patronen terughalen en veilig kunnen meten."},
   {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-13",color:"#ffd600",track:0,desc:"<b>12 → 13 okt</b><br>Week 8. Ma 12 okt korte primer, <b>di 13 okt</b> meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal. Deadlift mag mét straps."},
-  {label:"FULLBODY",short:"FB",start:"2026-10-14",end:"2026-11-18",color:"#00e5ff",track:0,desc:"<b>14 okt → 18 nov</b><br>Tot het vertrek naar Colombia. Twee keer fullbody: A (ma) squat + bench, B (za) deadlift met straps + OHP, 3 × 5–6. Unipodaal werk en T3 in superset, REV voor de tenen. Di zone 2, do en zo kickboksen. Gewichten uit de logs; wat je logt bepaalt de volgende sessie."},
+  {label:"FULLBODY",short:"FB",start:"2026-10-14",end:"2026-11-18",color:"#00e5ff",track:0,desc:"<b>14 okt → 18 nov</b><br>Doel: gewicht verliezen met spierbehoud. Tot het vertrek naar Colombia. Twee keer fullbody: A (ma) squat + bench, B (za) deadlift met straps + OHP, 3 × 5–6. Unipodaal werk en T3 in superset, REV voor de tenen. Di zone 2, do en zo kickboksen. Gewichten uit de logs; wat je logt bepaalt de volgende sessie."},
   {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
   {label:"RUG",short:"RUG",start:"2026-09-14",end:"2026-10-11",color:"#ff3d6b",track:1,desc:"<b>14 sep →</b><br>Lage rug, eenzijdig naast de wervelkolom. Twee episodes: 14 sep squat 95, 19 sep squat 100 (2 reps, gestopt). Flexiegevoelig, extensie verlicht. Aanleiding van het hertest-uitstel naar di 13 okt. Protocol: tab BACK."},
   {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
@@ -19763,7 +19763,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // week 6 enkel A (ma 16 nov, twee dagen voor vertrek — nog open of die lichter
     // wordt). Index = week, 0-based.
     // ⚠ CANONIEK: program_config.json → blok_fullbody.sessies. Kaartgewicht = plafond;
-    //   wat gelogd wordt stuurt bij (alle sets 6 → +2,5 · 5 → houden · minder → −2,5).
+    //   wat gelogd wordt stuurt bij (alle sets 6 → +2,5 · 5 → houden · twee keer op rij minder → −2,5).
     const FB_SQ  = [null, 82.5, 85, 85, 87.5, 87.5];
     const FB_BP  = [null, 77.5, 80, 80, 82.5, 82.5];
     const FB_DL  = [85, 90, 92.5, 95, 95, null];
@@ -19775,7 +19775,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function fbDays(wk) {
       const i = Math.min(Math.max(wk, 0), 5);
-      const regel = 'Gewicht = plafond. Alle sets 6 reps → volgende keer +2,5 · sets van 5 → houden · onder 5 → −2,5.';
+      const regel = 'Doel: gewicht verliezen, spier en kracht houden. Gewicht = plafond. Alle sets 6 reps → volgende keer +2,5 · sets van 5 → houden · twee sessies op rij onder 5 → −2,5. Stilstaan is normaal in een tekort.';
       const onderarm = {name:'ONDERARM', scheme:'10–15', start:'oefeningen van Lotte', cue:'Rustig tempo · pijn de ochtend erna = stap terug'};
       let ma, za;
       if (FB_SQ[i] == null) {
@@ -20430,7 +20430,7 @@ document.addEventListener('DOMContentLoaded', function() {
       : 'Opbouwblok tussen de deload en de meting. Bench en OHP lopen door op schema; squat en deadlift komen bewust van laag terug — de rug is de beperking, niet de kracht. Reps 3×4 in week 6, 3×3 in week 7. Snelheid is het criterium: wordt een rep traag, dan is de set klaar. Dosisregel: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
     const testNote = kmPrepActive() ? kmNote
       : 'Week 8: ma 12 okt een korte primer, di 13 okt meten bij Lotte, wo 14 okt herstel. Bench single en OHP 3RM hebben een doelgetal; squat en deadlift zijn een 3RM op gevoel zonder doelgetal. Deadlift mét straps.';
-    const fbNote = 'Fullbody tot het vertrek op 18 nov. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B (mag naar VR). ±65 min van core tot REV. Het kaartgewicht is het plafond: wat je logt bepaalt de volgende sessie. Superset: A1 → A2 → rust, twee rondes.';
+    const fbNote = 'Doel: gewicht verliezen met spierbehoud — zwaar blijven tillen, geen extra sets. Fullbody tot het vertrek op 18 nov. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B (mag naar VR). ±65 min van core tot REV. Het kaartgewicht is het plafond: wat je logt bepaalt de volgende sessie. Superset: A1 → A2 → rust, twee rondes.';
     const noteText = ph.name === 'FULLBODY' ? fbNote
                    : ph.name === 'EXPLOSIVE' ? expNote
                    : ph.name === 'OPBOUW'    ? opbNote
