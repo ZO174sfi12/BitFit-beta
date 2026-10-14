@@ -19751,17 +19751,12 @@ document.addEventListener('DOMContentLoaded', function() {
       ];
     }
     const cardio = [
-      ['','DI','Zone 2 · 60 min — vorm naar keuze'],
-      ['tb-cd','GYM','Na ma/wo/za: 20–30 min zone 2 — vast onderdeel van de sessie'],
+      ['','DI','Zone 2 · 60 min · vorm naar keuze'],
       // 28 sep: praattest vooraan, hartslag als aflezing eronder. De 130-145 kwam
       // uit Karvonen op een maxHR van 183, en die 183 is 220 min leeftijd — een
       // schatting met een spreiding van 10 a 12 slagen. Bert kan op 125-130 nog
       // volledige zinnen praten, dus voor hem ligt de grens lager dan de formule zegt.
-      ['tb-wu','TEST','Volledige zinnen kunnen zeggen, een uur lang, zonder ze in te korten — dát is de grens. En je moet het morgen kunnen herhalen.'],
-      ['tb-wu','HR','Aflezing, geen doel: ~120–140 bpm. Opklimmen van ~10 slagen over het uur is normaal (warmte, vochtverlies). Veel meer én zwaarder voelend = te hoog gestart.'],
-      ['tb-wu','≠','Brandende kuiten zeggen dat de máchine je begrenst, niet je hart. Zweten vanaf minuut 40 is kerntemperatuur, geen intensiteit. Allebei geen reden om te zakken — wel om te wisselen.'],
-      ['tb-wu','WISSEL','Om de 15–20 min van machine wisselen verdeelt de lokale belasting. Houd de wissel kort, anders valt je hartslag terug. Geen roeimachine zolang de elleboog speelt.'],
-      ['tb-t3','Σ','Weektotaal 120–150 min zuivere zone 2 · muay thai (do/zo) is intensiteit en telt níet mee']];
+      ];
 
     // ── FULLBODY · 14 okt – 18 nov 2026 ─────────────────────────────────────
     // Bert, 13 okt. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B
@@ -19781,8 +19776,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function fbDays(wk) {
       const i = Math.min(Math.max(wk, 0), 5);
-      const regel = 'Doel: gewicht verliezen, spier en kracht houden. Gewicht = plafond. Alle sets 6 reps → volgende keer +2,5 · sets van 5 → houden · twee sessies op rij onder 5 → −2,5. Stilstaan is normaal in een tekort.';
-      const onderarm = {name:'ONDERARM', scheme:'10–15', start:'oefeningen van Lotte', cue:'Rustig tempo · pijn de ochtend erna = stap terug'};
+      const regel = 'Gewicht = plafond · 6/6/6 → +2,5 · 5 → houden · twee sessies op rij onder 5 → −2,5';
+      const onderarm = {name:'ONDERARM', scheme:'10–15', start:'oefeningen Lotte', cue:'Pijn ochtend erna = stap terug'};
       let ma, za;
       if (FB_SQ[i] == null) {
         ma = {key:'MA', color:'#b388ff', flat:true,
@@ -19791,17 +19786,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const bss = (i % 2 === 1);   // week 2, 4, 6 Bulgarian split squat · week 3, 5 step-ups of lunges
         ma = {key:'MA', color:'#b388ff',
           card:{h:'MA ' + fbDatum(i,0) + ' · A · SQUAT + BENCH · ±65 MIN'},
-          banner: regel + (i === 5 ? ' Twee dagen voor vertrek naar Colombia: lichter houden of laten vallen staat nog open.' : ''),
+          banner: regel + (i === 5 ? ' · lichter of schrappen (vertrek 18 nov)' : ''),
           tiers:[
-            ['T1','Squat','BACK SQUAT','3 × 5–6', FB_SQ[i], '2–3 min', 'Brace vóór het uitracken · gecontroleerd zakken, hard omhoog', true],
-            ['T1','Bench','BARBELL BENCH PRESS','3 × 5–6', FB_BP[i], '2–3 min', 'Stang laag in de handpalm, pols recht · hielen op de grond', true],
+            ['T1','Squat','BACK SQUAT','3 × 5–6', FB_SQ[i], '2–3 min', 'Brace · hard omhoog', true],
+            ['T1','Bench','BARBELL BENCH PRESS','3 × 5–6', FB_BP[i], '2–3 min', 'Pols recht · hielen neer', true],
             {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
-              bss ? {name:'BULGARIAN SPLIT SQUAT', scheme:'6 / been', start:'lichaamsgewicht → dumbbells', cue:'Achterste voet op de bank · romp licht voorover'}
-                  : {name:'STEP-UPS OF LUNGES', scheme:'6 / been', start:'lichaamsgewicht → dumbbells', cue:'Wisselt om de week met de Bulgarian split squat'},
-              {name:'HIP THRUST · ÉÉN BEEN', scheme:'6 / been', start:'plate-loaded · licht → schijf erbij', cue:'Bovenaan knijpen · niet met de lage rug omhoog'}]},
+              bss ? {name:'BULGARIAN SPLIT SQUAT', scheme:'6 / been', start:'lichaamsgewicht → DB', cue:'Achterste voet op de bank'}
+                  : {name:'STEP-UPS OF LUNGES', scheme:'6 / been', start:'lichaamsgewicht → DB', cue:''},
+              {name:'HIP THRUST · ÉÉN BEEN', scheme:'6 / been', start:'plate-loaded', cue:'Bovenaan knijpen'}]},
             {ss:true, badge:'T3', rounds:2, rest:'60 sec na elke ronde', items:[
               onderarm,
-              {name:'RUG · ELASTIEK', scheme:'12–15', start:'elastiek', cue:'Trekken met de ellebogen · schouders laag'}]}],
+              {name:'RUG · ELASTIEK', scheme:'12–15', start:'', cue:'Trek met de ellebogen'}]}],
           t3:[]};
       }
       if (FB_DL[i] == null) {
@@ -19810,16 +19805,16 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         za = {key:'ZA', color:'#ffd600',
           card:{h:'ZA ' + fbDatum(i,5) + ' · B · DEADLIFT + OHP · ±65 MIN'},
-          banner: regel + ' Deadlift alleen omhoog als de rug de dag erna rustig is. Lukt zaterdag niet, dan schuift B naar vrijdag.',
+          banner: regel + ' · za lukt niet → vr',
           tiers:[
-            ['T1','Deadlift','DEADLIFT · MET STRAPS','3 × 5', FB_DL[i], '3 min', 'Straps · elke rep vanaf de grond opnieuw opzetten · de opzet is gevoeliger dan de trek', true],
+            ['T1','Deadlift','DEADLIFT · MET STRAPS','3 × 5', FB_DL[i], '3 min', 'Elke rep opnieuw opzetten · +2,5 enkel bij rustige rug', true],
             ['T1','OHP','OVERHEAD PRESS','3 × 5–6', FB_OHP[i], '2–3 min', 'Ribben omlaag, billen aan', true],
             {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
-              {name:'SINGLE-LEG RDL', scheme:'6 / been', start:'lege stang 20 kg → dumbbells 2×10', cue:'Heup naar achter · bekken recht houden'},
-              {name:'BOX SIT-TO-STAND · ÉÉN BEEN', scheme:'5 / been', start:'lichaamsgewicht · lagere box = vooruitgang', cue:'Traag zitten, niet ploffen · knie boven de voet'}]},
+              {name:'SINGLE-LEG RDL', scheme:'6 / been', start:'stang 20 kg → DB', cue:'Heup naar achter'},
+              {name:'BOX SIT-TO-STAND · ÉÉN BEEN', scheme:'5 / been', start:'lagere box = vooruitgang', cue:'Traag zitten · knie boven voet'}]},
             {ss:true, badge:'T3', rounds:2, rest:'60 sec na elke ronde', items:[
               onderarm,
-              {name:'SCHOUDERS · ELASTIEK', scheme:'12–15', start:'elastiek', cue:'Schouders laag · licht genoeg om netjes te blijven'}]}],
+              {name:'SCHOUDERS · ELASTIEK', scheme:'12–15', start:'', cue:'Licht en netjes'}]}],
           t3:[]};
       }
       const di = {key:'DI', color:'#00ffb3', flat:true, card:{h:'DI ' + fbDatum(i,1) + ' · CARDIO · ZONE 2 · 60 MIN', r:cardio}};
@@ -20436,7 +20431,7 @@ document.addEventListener('DOMContentLoaded', function() {
       : 'Opbouwblok tussen de deload en de meting. Bench en OHP lopen door op schema; squat en deadlift komen bewust van laag terug — de rug is de beperking, niet de kracht. Reps 3×4 in week 6, 3×3 in week 7. Snelheid is het criterium: wordt een rep traag, dan is de set klaar. Dosisregel: 2 op 10 tijdens de oefening mag, erger de volgende ochtend is een stap terug.';
     const testNote = kmPrepActive() ? kmNote
       : 'Week 8: ma 12 okt een korte primer, di 13 okt meten bij Lotte, wo 14 okt herstel. Bench single en OHP 3RM hebben een doelgetal; squat en deadlift zijn een 3RM op gevoel zonder doelgetal. Deadlift mét straps.';
-    const fbNote = 'Doel: gewicht verliezen met spierbehoud — zwaar blijven tillen, geen extra sets. Fullbody tot het vertrek op 18 nov. MA kracht A · DI zone 2 · DO en ZO kickboksen · ZA kracht B (mag naar VR). ±65 min van core tot REV. Het kaartgewicht is het plafond: wat je logt bepaalt de volgende sessie. Superset: A1 → A2 → rust, twee rondes.';
+    const fbNote = 'Gewicht verliezen, spier houden · tot 18 nov.';
     const noteText = ph.name === 'FULLBODY' ? fbNote
                    : ph.name === 'EXPLOSIVE' ? expNote
                    : ph.name === 'OPBOUW'    ? opbNote
