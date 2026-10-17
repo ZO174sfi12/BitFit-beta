@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-10-13",
+  "laatste_update": "2026-10-17",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -214,7 +214,12 @@
       "Hertest bij Lotte op ma 28 sep",
       "Ma 28 sep: hertest bij Lotte",
       "Rest van die week vrij",
-      "sets van 5 → houden · onder 5"
+      "sets van 5 → houden · onder 5",
+      "Rug met elastiek 12–15",
+      "Onderarmoefeningen (Lotte) 10–15",
+      "lichter houden of laten vallen",
+      "Core 10 min → T1",
+      "T3 superset (2 rondes)"
     ]
   },
   "kalibratie_lotte": "20 aug",
@@ -597,12 +602,12 @@
     "_overleg": "21 aug feedback van Lotte (startpercentage 80→70%, plafond 94→80-85%, repschema 3×4→3×3, core blijft in de deloadweek). Niet duidelijk of dat een sessie was of overleg. De 3RM-test van 22 aug (OHP, row) staat niet op haar naam."
   },
   "blok_fullbody": {
-    "_bron": "Bert, 13 okt 2026. Vervangt het phase-programma na de krachtmeting die een gewone sessie werd. Loopt tot het vertrek naar Colombia op 18 nov.",
+    "_bron": "Bert, 13 okt 2026; herzien 17 okt 2026 na een logica-doorlichting. Vervangt het phase-programma na de krachtmeting die een gewone sessie werd. Loopt tot het vertrek naar Colombia op 18 nov.",
     "periode": "14 okt – 18 nov",
     "doel": "Gewicht verliezen met spierbehoud · kracht onderhouden (Bert, 13 okt)",
     "weekindeling": {
-      "MA": "Kracht A",
-      "DI": "Zone 2 · 60 min",
+      "MA": "Zone 2 · 60 min",
+      "DI": "Kracht A",
       "WO": "Rust",
       "DO": "Kickboksen",
       "VR": "Rust · of kracht B als ZA niet lukt",
@@ -611,11 +616,15 @@
     },
     "sessieduur": {
       "A": 65,
-      "B": 65
+      "B": 70
     },
     "sessieduur_regel": "60–75 min totaal, van opwarming tot REV",
-    "volgorde": "Core 10 min → T1 (2 hoofdliften × 3 sets) → T2 superset unipodaal (2 rondes) → T3 superset (2 rondes) → REV tenen",
+    "volgorde": "Core anti-flexie → T1 (2 hoofdliften × 3 sets) → [B: lat pulldown] → T2 superset unipodaal (2 rondes) → T3 superset (3 rondes) → core flexie → REV tenen",
     "sessie_A": {
+      "core_voor": [
+        "Ab wheel 3 × 10",
+        "Plank 3 × 45 sec"
+      ],
       "T1": [
         "Back Squat 3 × 5–6",
         "Barbell Bench Press 3 × 5–6"
@@ -625,30 +634,48 @@
         "Hip thrust één been 6/been (plate-loaded)"
       ],
       "T3_superset": [
-        "Onderarmoefeningen (Lotte) 10–15",
-        "Rug met elastiek 12–15"
+        "Excentrische polsextensie 3 × 8 · 3 kg · 3–4 tellen zakken",
+        "Rug · cable row neutrale greep 3 × 10–12 (elastiek als alternatief)"
+      ],
+      "core_na": [
+        "Sit-Up 3 × 15"
       ]
     },
     "sessie_B": {
+      "core_voor": [
+        "Plank 3 × 45 sec",
+        "Side Plank 2 × 40 sec",
+        "Dead Bug 3 × 12"
+      ],
       "T1": [
-        "Deadlift met straps 3 × 5",
+        "Deadlift met straps 3 × 5–6",
         "Overhead Press 3 × 5–6"
+      ],
+      "pull": [
+        "Lat pulldown neutrale greep 3 × 10–12 · rust 90 sec"
       ],
       "T2_superset": [
         "Single-leg RDL 6/been",
         "Box sit-to-stand één been 5/been"
       ],
       "T3_superset": [
-        "Onderarmoefeningen (Lotte) 10–15",
+        "Excentrische polsextensie 3 × 8 · 3 kg · 3–4 tellen zakken",
         "Schouders met elastiek 12–15"
+      ],
+      "core_na": [
+        "Parallel Bar Leg Raise 3 × 8",
+        "Sit-Up 2 × 12",
+        "Flutter Kick 1 × 20",
+        "Superman 2 × 10"
       ]
     },
     "rust": {
       "T1": "2–3 min (deadlift 3 min)",
+      "pull": "90 sec",
       "superset": "60–90 sec na elke ronde",
-      "T3": "60 sec na elke ronde"
+      "T3": "60 sec na elke ronde · 3 rondes"
     },
-    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Deadlift alleen omhoog als de rug de dag erna rustig is.",
+    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Geldt ook voor de deadlift: die stond op 3 × 5 en kon zijn eigen ladder dus nooit verdienen — nu 3 × 5–6, met de rug als veto: alleen omhoog als de rug de dag erna rustig is.",
     "gewichten_bron": "Uit de logs, opwarmsets eruit en gecorrigeerd voor de set_type-bug: squat 80×6×3 (13 okt) · bench 82,5×4×3 (24 sep), 90×3×2 (10 okt) · deadlift 85×3×2 met straps (21 sep), 100×4×3 (4 sep), rug sprak in sep twee keer · OHP 52,5×6,6 (2 sep), 60×4×3 (24 sep), 50×6,5 (10 okt).",
     "sessies": [
       {
@@ -662,8 +689,8 @@
         }
       },
       {
-        "datum": "2026-10-19",
-        "dag": "MA",
+        "datum": "2026-10-20",
+        "dag": "DI",
         "sessie": "A",
         "wk": 2,
         "gewichten": {
@@ -682,8 +709,8 @@
         }
       },
       {
-        "datum": "2026-10-26",
-        "dag": "MA",
+        "datum": "2026-10-27",
+        "dag": "DI",
         "sessie": "A",
         "wk": 3,
         "gewichten": {
@@ -702,8 +729,8 @@
         }
       },
       {
-        "datum": "2026-11-02",
-        "dag": "MA",
+        "datum": "2026-11-03",
+        "dag": "DI",
         "sessie": "A",
         "wk": 4,
         "gewichten": {
@@ -722,8 +749,8 @@
         }
       },
       {
-        "datum": "2026-11-09",
-        "dag": "MA",
+        "datum": "2026-11-10",
+        "dag": "DI",
         "sessie": "A",
         "wk": 5,
         "gewichten": {
@@ -739,16 +766,6 @@
         "gewichten": {
           "Deadlift": 95,
           "OHP": 57.5
-        }
-      },
-      {
-        "datum": "2026-11-16",
-        "dag": "MA",
-        "sessie": "A",
-        "wk": 6,
-        "gewichten": {
-          "Squat": 87.5,
-          "Bench": 82.5
         }
       }
     ],
@@ -766,8 +783,18 @@
       "tekort": "300–500 kcal per dag · ±0,4–0,5 kg per week",
       "eiwit": "1,6–2,2 g per kg · ±140–195 g per dag",
       "extra_verbruik": "stappen en zone 2, geen extra gymwerk",
-      "meten": "weekgemiddelde van de weegschaal, niet de losse weging",
+      "meten": "Weekgemiddelde van de weegschaal, uit minstens 3 wegingen in die week. Minder dan 3 metingen → geen punt, lijn doortrekken. Nooit op een losse weging sturen.",
       "_basis": "gewicht 88,5–88,8 kg op 2–10 okt (DATA.weight)"
-    }
+    },
+    "weekindeling_bron": "Kracht A stond op maandag, daags na twee uur kickboksen op zondag — squat en bench startten dus structureel vermoeid. Geruild met de zone 2 van dinsdag (Bert, 17 okt).",
+    "core_regel": "Anti-flexie en anti-rotatie vóór de liften, lumbale flexie erná. Reden: de rug reageerde in september twee keer, en sit-ups, leg raises en flutter kicks laden precies die richting — vlak vóór de zwaarste deadlift van het blok is dat de verkeerde volgorde (Bert, 17 okt).",
+    "trekwerk_bron": "Row stond niet in v8 en al het horizontale trekwerk was 2 × 12–15 met elastiek, één dag per week, terwijl drukken bench én OHP zwaar kreeg. In een blok dat over spierbehoud gaat is dat de dunst belaste grote spiergroep. Nu een echte trek per dag, neutrale greep zodat de laterale elleboogaanhechting gespaard blijft; cables mogen (Bert, 17 okt).",
+    "onderarm_bron": "Huisarts wil excentrisch herstel. Dosis zoals Bert ze op 17 okt deed: 3 × 8 met 3 kg en 3–4 tellen laten zakken. Blijft in de T3-superset, die daarom naar 3 rondes gaat.",
+    "winconditie": {
+      "geslaagd_op_2026-11-14": "Squat 82,5 · bench 77,5 · deadlift 85 · OHP 52,5 staan er nog met minstens 5 reps per set, bij een weekgemiddelde rond 86,5 kg.",
+      "waarom": "Spierbehoud is niet te meten met de weegschaal en de vetpercentages uit Apple Health kloppen niet. Het bewijs is dus de werkgewichten: die moeten blijven staan terwijl het lichaamsgewicht zakt. Niet +10 kg deadlift — dat zou progressie meten, geen behoud.",
+      "rekensom": "88,7 kg op 17 okt · 0,4–0,5 kg per week · 5 weken → ±86,3–86,7 kg bij vertrek."
+    },
+    "sessies_bron": "Kracht A verschoven van maandag naar dinsdag. De laatste A-sessie (di 17 nov) geschrapt: een zware squat 24 uur voor een langeafstandsvlucht levert niets op in de laatste week van een behoudsblok (Bert, 17 okt)."
   }
 }
