@@ -279,11 +279,11 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="header-right">
       <div class="meta-item">
         <span class="meta-label">SUBJECT</span>
-        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">88.8</span>KG</span>
+        <span class="meta-value" style="color:var(--cyan)">BERT // 193CM // <span id="hdr-weight">88.7</span>KG</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202610141736</span>
+        <span class="meta-value" style="color:var(--muted)">202610171322</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -3433,6 +3433,41 @@ const DATA = {
               "warmup": false
             }
           ]
+        },
+        {
+          "date": "2026-10-17",
+          "weight": 85.0,
+          "volume": 2035.0,
+          "sets": 5,
+          "pr": false,
+          "work_reps": 15,
+          "sets_detail": [
+            {
+              "w": 60.0,
+              "r": 6,
+              "warmup": true
+            },
+            {
+              "w": 80.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 85.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 85.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 85.0,
+              "r": 5,
+              "warmup": false
+            }
+          ]
         }
       ]
     },
@@ -6407,6 +6442,31 @@ const DATA = {
             },
             {
               "w": 50.0,
+              "r": 5,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-10-17",
+          "weight": 52.5,
+          "volume": 787.5,
+          "sets": 3,
+          "pr": false,
+          "work_reps": 15,
+          "sets_detail": [
+            {
+              "w": 52.5,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 52.5,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 52.5,
               "r": 5,
               "warmup": false
             }
@@ -11931,6 +11991,18 @@ const DATA = {
     {
       "date": "2026-10-10",
       "weight": 88.8
+    },
+    {
+      "date": "2026-10-11",
+      "weight": 88.5
+    },
+    {
+      "date": "2026-10-15",
+      "weight": 88.1
+    },
+    {
+      "date": "2026-10-17",
+      "weight": 88.7
     }
   ],
   "muscle_daily": [
@@ -13798,6 +13870,16 @@ const DATA = {
       "date": "2026-10-10",
       "muscle": "Shoulders",
       "volume": 870.0
+    },
+    {
+      "date": "2026-10-17",
+      "muscle": "Back/Hams",
+      "volume": 2035.0
+    },
+    {
+      "date": "2026-10-17",
+      "muscle": "Shoulders",
+      "volume": 787.5
     }
   ],
   "training_days": [
@@ -13978,9 +14060,13 @@ const DATA = {
     "2026-10-01",
     "2026-10-02",
     "2026-10-07",
+    "2026-10-08",
     "2026-10-09",
     "2026-10-10",
-    "2026-10-13"
+    "2026-10-11",
+    "2026-10-13",
+    "2026-10-15",
+    "2026-10-17"
   ],
   "all_active_days": [
     "2026-01-03",
@@ -14418,7 +14504,11 @@ const DATA = {
     "2026-09-27": 0,
     "2026-10-01": 0,
     "2026-10-09": 1,
-    "2026-10-10": 1
+    "2026-10-10": 1,
+    "2026-10-08": 0,
+    "2026-10-11": 0,
+    "2026-10-15": 0,
+    "2026-10-17": 1
   },
   "body_comp": [
     {
@@ -17272,6 +17362,18 @@ const DATA = {
     {
       "date": "2026-10-10",
       "bf_pct": 20.5
+    },
+    {
+      "date": "2026-10-11",
+      "bf_pct": 20.5
+    },
+    {
+      "date": "2026-10-15",
+      "bf_pct": 20.5
+    },
+    {
+      "date": "2026-10-17",
+      "bf_pct": 20.5
     }
   ],
   "activities": [
@@ -19052,12 +19154,6 @@ const DATA = {
       "duration_min": 120.0
     },
     {
-      "date": "2026-09-04",
-      "type": "Kickboxing",
-      "category": "muay_thai",
-      "duration_min": 120.0
-    },
-    {
       "date": "2026-09-05",
       "type": "Kayak",
       "category": "other",
@@ -19112,10 +19208,28 @@ const DATA = {
       "duration_min": 15.0
     },
     {
+      "date": "2026-10-08",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
+      "date": "2026-10-11",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
+    },
+    {
       "date": "2026-10-14",
       "type": "Stepper + schaduwboksen · 128 bpm",
       "category": "cardio",
       "duration_min": 45.0
+    },
+    {
+      "date": "2026-10-15",
+      "type": "Kickboxing",
+      "category": "muay_thai",
+      "duration_min": 120.0
     }
   ]
 };
