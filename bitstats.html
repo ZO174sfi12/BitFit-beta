@@ -108,6 +108,17 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .lift-tile-weight{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--text);margin-top:2px;line-height:1;}
 .lift-tile.active .lift-tile-weight{color:var(--tc,var(--cyan));}
 .lift-mode-btn.wt-active{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06);}
+/* ── Herstelpaneel (HRV) ── */
+.rec-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:monospace;font-size:10px;color:var(--muted);margin-top:6px;}
+.rec-legend i{display:inline-block;width:10px;height:3px;margin-right:5px;vertical-align:middle;}
+.rec-legend span:nth-child(2) i,.rec-legend span:nth-child(4) i{width:7px;height:7px;}
+.rec-row{display:grid;grid-template-columns:62px 1fr 64px;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-family:monospace;font-size:11px;}
+.rec-row:last-child{border-bottom:none;}
+.rec-bar{height:6px;background:#1a1a2e;position:relative;}
+.rec-bar>div{position:absolute;top:0;bottom:0;}
+.rec-num{text-align:right;font-family:'Space Mono',monospace;font-size:11px;}
+.rec-lbl{color:var(--text);}
+.rec-n{color:var(--muted);font-size:10px;}
 @media(min-width:768px){
   header{padding:16px 24px 14px;}
   .tabs{padding:14px 24px 0;}
@@ -242,7 +253,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202610171722</span>
+        <span class="meta-value" style="color:var(--muted)">202610180707</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -327,13 +338,49 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
     <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
     <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
-    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek.<br>Doelen: KG &Oslash; 85&ndash;88 &middot; VET% &le;19.5 &middot; VET &le;15.6 kg &middot; LEAN &ge;71 kg &mdash; kleur gradueel: <span style="color:var(--red)">slechter dan baseline (apr '26)</span> &rarr; <span style="color:var(--yellow)">baseline</span> &rarr; <span style="color:var(--green)">doel</span></div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek. Aug&ndash;okt = maandgemiddelde van de Xiaomi-metingen via Apple Health (per meting identiek aan de app). Okt = lopende maand.<br>Doelen: KG &Oslash; 85&ndash;88 &middot; VET% &le;19.5 &middot; VET &le;15.6 kg &middot; LEAN &ge;71 kg &mdash; kleur gradueel: <span style="color:var(--red)">slechter dan baseline (apr '26)</span> &rarr; <span style="color:var(--yellow)">baseline</span> &rarr; <span style="color:var(--green)">doel</span></div>
   </div>
 
   <div class="panel analysis-panel" id="primary-lifts-panel">
     <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
     <div class="panel-title">&#9658; PRIMARY LIFTS</div>
     <div id="primary-lifts-body" style="font-family:monospace;font-size:11px;"></div>
+  </div>
+
+  <div class="panel analysis-panel c" id="recovery-panel">
+    <div class="cd tl" style="border-color:var(--cyan)"></div><div class="cd tr" style="border-color:var(--cyan)"></div><div class="cd bl" style="border-color:var(--cyan)"></div><div class="cd br" style="border-color:var(--cyan)"></div>
+    <div class="lift-toggle-row" style="margin-bottom:10px">
+      <div class="panel-title" style="margin-bottom:0">&#9658; HERSTEL &mdash; VERBANDEN</div>
+      <div style="display:flex;gap:5px;" id="rec-range">
+        <button class="lift-mode-btn" data-days="90">90D</button>
+        <button class="lift-mode-btn active" data-days="0">ALLES</button>
+      </div>
+    </div>
+    <div class="analysis-text" id="rec-summary" style="font-size:12px;line-height:1.7"></div>
+    <div style="position:relative;height:clamp(220px,55vw,300px);margin-top:10px;">
+      <canvas id="recChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+    </div>
+    <div class="rec-legend">
+      <span><i style="background:#00e5ff"></i>HRV 7D &Oslash; (&asymp; Bevel-baseline)</span>
+      <span><i style="background:#00e5ff66;border-radius:50%"></i>HRV per nacht</span>
+      <span><i style="background:#ff3d6b"></i>Rustpols 7D &Oslash;</span>
+      <span><i style="background:#ffd600;border-radius:50%"></i>Zware nacht</span>
+    </div>
+    <div class="analysis-blocks" style="margin-top:14px">
+      <div class="analysis-block">
+        <div class="analysis-title c">&#9670; HRV PER NACHT VAN DE WEEK</div>
+        <div id="rec-dow"></div>
+      </div>
+      <div class="analysis-block">
+        <div class="analysis-title y">&#9670; WAT DRUKT JE HRV</div>
+        <div id="rec-drivers"></div>
+      </div>
+      <div class="analysis-block">
+        <div class="analysis-title a">&#9670; HRV PER FASE</div>
+        <div id="rec-phases"></div>
+      </div>
+    </div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:10px;line-height:1.6;">Bron: Apple Health-export (Zepp/Helio Strap, vanaf 6 okt OpenCircuit) &mdash; DATA.recovery via process_jefit.py. Datum = ochtend na de nacht. &ldquo;Zware nacht&rdquo; = rustpols &ge; 6 slagen boven je 28-daagse mediaan. Afwijkingen in ms t.o.v. je eigen 28-daags gemiddelde, zodat de langetermijntrend de vergelijking niet vertekent.</div>
   </div>
 
 </div>
@@ -17008,119 +17055,179 @@ const DATA = {
     },
     {
       "date": "2026-04-16",
-      "bf_pct": 19.0
+      "bf_pct": 19.4
+    },
+    {
+      "date": "2026-04-17",
+      "bf_pct": 19.4
+    },
+    {
+      "date": "2026-04-18",
+      "bf_pct": 20.2
     },
     {
       "date": "2026-04-19",
-      "bf_pct": 19.0
+      "bf_pct": 20.1
+    },
+    {
+      "date": "2026-04-20",
+      "bf_pct": 19.9
     },
     {
       "date": "2026-04-21",
-      "bf_pct": 19.0
+      "bf_pct": 20.0
     },
     {
       "date": "2026-04-22",
-      "bf_pct": 19.0
+      "bf_pct": 19.9
+    },
+    {
+      "date": "2026-04-23",
+      "bf_pct": 20.2
     },
     {
       "date": "2026-04-24",
-      "bf_pct": 19.0
+      "bf_pct": 20.0
     },
     {
       "date": "2026-04-27",
-      "bf_pct": 19.0
+      "bf_pct": 21.6
+    },
+    {
+      "date": "2026-04-28",
+      "bf_pct": 21.2
     },
     {
       "date": "2026-04-29",
-      "bf_pct": 19.0
+      "bf_pct": 20.6
     },
     {
       "date": "2026-04-30",
-      "bf_pct": 19.0
+      "bf_pct": 20.9
     },
     {
       "date": "2026-05-01",
-      "bf_pct": 19.0
+      "bf_pct": 21.3
+    },
+    {
+      "date": "2026-05-02",
+      "bf_pct": 20.4
     },
     {
       "date": "2026-05-03",
-      "bf_pct": 19.0
+      "bf_pct": 20.8
     },
     {
       "date": "2026-05-04",
-      "bf_pct": 19.0
+      "bf_pct": 20.9
     },
     {
       "date": "2026-05-05",
-      "bf_pct": 19.0
+      "bf_pct": 20.7
     },
     {
       "date": "2026-05-06",
-      "bf_pct": 19.0
+      "bf_pct": 20.5
+    },
+    {
+      "date": "2026-05-07",
+      "bf_pct": 20.7
     },
     {
       "date": "2026-05-11",
-      "bf_pct": 19.0
+      "bf_pct": 21.3
     },
     {
       "date": "2026-05-12",
-      "bf_pct": 19.0
+      "bf_pct": 21.2
     },
     {
       "date": "2026-05-13",
-      "bf_pct": 19.0
+      "bf_pct": 20.9
+    },
+    {
+      "date": "2026-05-14",
+      "bf_pct": 20.8
     },
     {
       "date": "2026-05-15",
-      "bf_pct": 19.0
+      "bf_pct": 20.7
+    },
+    {
+      "date": "2026-05-16",
+      "bf_pct": 21.0
     },
     {
       "date": "2026-05-17",
-      "bf_pct": 19.0
+      "bf_pct": 21.0
     },
     {
       "date": "2026-05-18",
-      "bf_pct": 19.0
+      "bf_pct": 20.7
     },
     {
       "date": "2026-05-19",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
     },
     {
       "date": "2026-05-20",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
     },
     {
       "date": "2026-05-21",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-05-22",
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-05-23",
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-05-24",
+      "bf_pct": 21.1
+    },
+    {
+      "date": "2026-05-25",
+      "bf_pct": 21.2
     },
     {
       "date": "2026-05-26",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
     },
     {
       "date": "2026-05-27",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-05-28",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
+    },
+    {
+      "date": "2026-05-29",
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-05-30",
+      "bf_pct": 20.8
     },
     {
       "date": "2026-05-31",
-      "bf_pct": 20.5
+      "bf_pct": 21.3
     },
     {
       "date": "2026-06-01",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
     },
     {
       "date": "2026-06-02",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
     },
     {
       "date": "2026-06-03",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-06-04",
@@ -17128,50 +17235,78 @@ const DATA = {
     },
     {
       "date": "2026-06-05",
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-06-06",
       "bf_pct": 20.5
     },
     {
       "date": "2026-06-07",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-06-08",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-06-09",
-      "bf_pct": 20.5
+      "bf_pct": 20.4
     },
     {
       "date": "2026-06-10",
-      "bf_pct": 20.5
+      "bf_pct": 20.4
     },
     {
       "date": "2026-06-11",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-06-12",
+      "bf_pct": 20.3
     },
     {
       "date": "2026-06-15",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-06-16",
-      "bf_pct": 20.5
+      "bf_pct": 20.8
     },
     {
       "date": "2026-06-17",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-06-18",
-      "bf_pct": 20.5
+      "bf_pct": 20.3
+    },
+    {
+      "date": "2026-06-19",
+      "bf_pct": 20.3
+    },
+    {
+      "date": "2026-06-20",
+      "bf_pct": 20.6
+    },
+    {
+      "date": "2026-06-21",
+      "bf_pct": 20.3
     },
     {
       "date": "2026-06-22",
-      "bf_pct": 20.5
+      "bf_pct": 19.8
     },
     {
       "date": "2026-06-23",
+      "bf_pct": 19.8
+    },
+    {
+      "date": "2026-06-24",
+      "bf_pct": 20.2
+    },
+    {
+      "date": "2026-06-25",
       "bf_pct": 20.5
     },
     {
@@ -17180,11 +17315,11 @@ const DATA = {
     },
     {
       "date": "2026-06-27",
-      "bf_pct": 20.5
+      "bf_pct": 20.1
     },
     {
       "date": "2026-06-28",
-      "bf_pct": 20.5
+      "bf_pct": 20.2
     },
     {
       "date": "2026-06-29",
@@ -17196,23 +17331,31 @@ const DATA = {
     },
     {
       "date": "2026-07-01",
-      "bf_pct": 20.5
+      "bf_pct": 20.3
     },
     {
       "date": "2026-07-02",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-07-03",
-      "bf_pct": 20.5
+      "bf_pct": 20.2
+    },
+    {
+      "date": "2026-07-04",
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-07-05",
+      "bf_pct": 21.1
     },
     {
       "date": "2026-07-06",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-07-07",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-07-08",
@@ -17224,95 +17367,155 @@ const DATA = {
     },
     {
       "date": "2026-07-10",
-      "bf_pct": 20.5
+      "bf_pct": 20.4
+    },
+    {
+      "date": "2026-07-11",
+      "bf_pct": 21.1
+    },
+    {
+      "date": "2026-07-12",
+      "bf_pct": 21.4
     },
     {
       "date": "2026-07-13",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
     },
     {
       "date": "2026-07-14",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-07-15",
-      "bf_pct": 20.5
+      "bf_pct": 20.6
     },
     {
       "date": "2026-07-16",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
     },
     {
       "date": "2026-07-17",
       "bf_pct": 20.5
     },
     {
+      "date": "2026-07-18",
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-07-19",
+      "bf_pct": 20.9
+    },
+    {
       "date": "2026-07-20",
-      "bf_pct": 20.5
+      "bf_pct": 21.0
+    },
+    {
+      "date": "2026-07-21",
+      "bf_pct": 20.7
+    },
+    {
+      "date": "2026-07-22",
+      "bf_pct": 20.7
     },
     {
       "date": "2026-07-23",
-      "bf_pct": 20.5
+      "bf_pct": 21.3
+    },
+    {
+      "date": "2026-07-24",
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-07-25",
+      "bf_pct": 20.9
     },
     {
       "date": "2026-07-27",
-      "bf_pct": 20.5
+      "bf_pct": 21.0
     },
     {
       "date": "2026-07-28",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
     },
     {
       "date": "2026-07-29",
-      "bf_pct": 20.5
+      "bf_pct": 21.0
+    },
+    {
+      "date": "2026-07-30",
+      "bf_pct": 21.0
     },
     {
       "date": "2026-07-31",
-      "bf_pct": 20.5
+      "bf_pct": 20.7
     },
     {
       "date": "2026-08-03",
-      "bf_pct": 20.5
+      "bf_pct": 20.9
+    },
+    {
+      "date": "2026-08-04",
+      "bf_pct": 20.8
     },
     {
       "date": "2026-08-05",
-      "bf_pct": 20.5
+      "bf_pct": 21.0
+    },
+    {
+      "date": "2026-08-06",
+      "bf_pct": 21.0
+    },
+    {
+      "date": "2026-08-07",
+      "bf_pct": 20.8
     },
     {
       "date": "2026-08-10",
-      "bf_pct": 20.5
+      "bf_pct": 21.3
     },
     {
       "date": "2026-08-11",
-      "bf_pct": 20.5
+      "bf_pct": 21.3
     },
     {
       "date": "2026-08-12",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
     },
     {
       "date": "2026-08-13",
-      "bf_pct": 20.5
+      "bf_pct": 21.0
     },
     {
       "date": "2026-08-14",
-      "bf_pct": 20.5
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-08-15",
+      "bf_pct": 21.0
     },
     {
       "date": "2026-08-16",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
     },
     {
       "date": "2026-08-17",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
     },
     {
       "date": "2026-08-18",
-      "bf_pct": 20.5
+      "bf_pct": 20.8
+    },
+    {
+      "date": "2026-08-19",
+      "bf_pct": 21.3
     },
     {
       "date": "2026-08-20",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
+    },
+    {
+      "date": "2026-08-21",
+      "bf_pct": 20.8
     },
     {
       "date": "2026-08-22",
@@ -17320,103 +17523,211 @@ const DATA = {
     },
     {
       "date": "2026-08-23",
-      "bf_pct": 20.5
+      "bf_pct": 20.8
     },
     {
       "date": "2026-08-24",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
+    },
+    {
+      "date": "2026-08-25",
+      "bf_pct": 21.5
     },
     {
       "date": "2026-08-26",
-      "bf_pct": 20.5
+      "bf_pct": 21.1
     },
     {
       "date": "2026-08-27",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
     },
     {
       "date": "2026-08-28",
-      "bf_pct": 20.5
+      "bf_pct": 21.2
+    },
+    {
+      "date": "2026-08-29",
+      "bf_pct": 21.2
     },
     {
       "date": "2026-08-30",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
+    },
+    {
+      "date": "2026-08-31",
+      "bf_pct": 21.4
     },
     {
       "date": "2026-09-01",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
     },
     {
       "date": "2026-09-02",
-      "bf_pct": 20.5
+      "bf_pct": 21.3
     },
     {
       "date": "2026-09-03",
-      "bf_pct": 20.5
+      "bf_pct": 21.7
     },
     {
       "date": "2026-09-04",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
+    },
+    {
+      "date": "2026-09-07",
+      "bf_pct": 21.9
+    },
+    {
+      "date": "2026-09-08",
+      "bf_pct": 22.0
     },
     {
       "date": "2026-09-09",
-      "bf_pct": 20.5
+      "bf_pct": 21.9
     },
     {
       "date": "2026-09-10",
-      "bf_pct": 20.5
+      "bf_pct": 22.1
     },
     {
       "date": "2026-09-11",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
     },
     {
       "date": "2026-09-12",
-      "bf_pct": 20.5
+      "bf_pct": 22.1
+    },
+    {
+      "date": "2026-09-13",
+      "bf_pct": 22.3
     },
     {
       "date": "2026-09-14",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
+    },
+    {
+      "date": "2026-09-15",
+      "bf_pct": 21.4
+    },
+    {
+      "date": "2026-09-17",
+      "bf_pct": 22.0
+    },
+    {
+      "date": "2026-09-18",
+      "bf_pct": 21.5
     },
     {
       "date": "2026-09-19",
-      "bf_pct": 20.5
+      "bf_pct": 21.7
+    },
+    {
+      "date": "2026-09-20",
+      "bf_pct": 21.6
     },
     {
       "date": "2026-09-21",
-      "bf_pct": 20.5
+      "bf_pct": 21.6
+    },
+    {
+      "date": "2026-09-22",
+      "bf_pct": 21.5
+    },
+    {
+      "date": "2026-09-23",
+      "bf_pct": 21.3
     },
     {
       "date": "2026-09-24",
-      "bf_pct": 20.5
+      "bf_pct": 21.7
     },
     {
       "date": "2026-09-25",
-      "bf_pct": 20.5
+      "bf_pct": 21.9
+    },
+    {
+      "date": "2026-09-26",
+      "bf_pct": 21.8
+    },
+    {
+      "date": "2026-09-27",
+      "bf_pct": 22.2
+    },
+    {
+      "date": "2026-09-28",
+      "bf_pct": 22.0
+    },
+    {
+      "date": "2026-09-29",
+      "bf_pct": 21.6
+    },
+    {
+      "date": "2026-09-30",
+      "bf_pct": 21.7
+    },
+    {
+      "date": "2026-10-01",
+      "bf_pct": 21.6
     },
     {
       "date": "2026-10-02",
-      "bf_pct": 20.5
+      "bf_pct": 21.6
+    },
+    {
+      "date": "2026-10-03",
+      "bf_pct": 21.6
+    },
+    {
+      "date": "2026-10-04",
+      "bf_pct": 21.8
+    },
+    {
+      "date": "2026-10-05",
+      "bf_pct": 21.8
+    },
+    {
+      "date": "2026-10-07",
+      "bf_pct": 21.9
+    },
+    {
+      "date": "2026-10-08",
+      "bf_pct": 21.9
     },
     {
       "date": "2026-10-09",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
     },
     {
       "date": "2026-10-10",
-      "bf_pct": 20.5
+      "bf_pct": 21.7
     },
     {
       "date": "2026-10-11",
-      "bf_pct": 20.5
+      "bf_pct": 21.5
+    },
+    {
+      "date": "2026-10-12",
+      "bf_pct": 22.0
+    },
+    {
+      "date": "2026-10-14",
+      "bf_pct": 21.4
     },
     {
       "date": "2026-10-15",
-      "bf_pct": 20.5
+      "bf_pct": 21.4
+    },
+    {
+      "date": "2026-10-16",
+      "bf_pct": 21.0
     },
     {
       "date": "2026-10-17",
-      "bf_pct": 20.5
+      "bf_pct": 21.8
+    },
+    {
+      "date": "2026-10-18",
+      "bf_pct": 21.7
     }
   ],
   "activities": [
@@ -18174,7 +18485,7 @@ const DATA = {
       "date": "2024-11-11",
       "type": "FunctionalStrengthTraining",
       "category": "gym",
-      "duration_min": 4.9
+      "duration_min": 7.8
     },
     {
       "date": "2024-11-14",
@@ -18966,7 +19277,7 @@ const DATA = {
       "date": "2026-04-09",
       "type": "Running",
       "category": "other",
-      "duration_min": 0.1
+      "duration_min": 18.1
     },
     {
       "date": "2026-04-09",
@@ -18999,6 +19310,12 @@ const DATA = {
       "duration_min": 51.2
     },
     {
+      "date": "2026-04-15",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 43.6
+    },
+    {
       "date": "2026-04-16",
       "type": "Kickboxing",
       "category": "muay_thai",
@@ -19006,9 +19323,39 @@ const DATA = {
     },
     {
       "date": "2026-04-19",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 40.2
+    },
+    {
+      "date": "2026-04-19",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-04-20",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 78.9
+    },
+    {
+      "date": "2026-04-21",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 61.9
+    },
+    {
+      "date": "2026-04-22",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 67.5
+    },
+    {
+      "date": "2026-04-23",
+      "type": "Running",
+      "category": "other",
+      "duration_min": 60.0
     },
     {
       "date": "2026-04-23",
@@ -19023,10 +19370,28 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-04-27",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 72.0
+    },
+    {
+      "date": "2026-04-29",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 43.8
+    },
+    {
       "date": "2026-04-30",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-01",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 56.7
     },
     {
       "date": "2026-05-03",
@@ -19035,16 +19400,82 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-05-04",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 58.9
+    },
+    {
+      "date": "2026-05-06",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 50.3
+    },
+    {
+      "date": "2026-05-12",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 74.2
+    },
+    {
+      "date": "2026-05-13",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 16.3
+    },
+    {
+      "date": "2026-05-13",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.2
+    },
+    {
       "date": "2026-05-14",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
     },
     {
+      "date": "2026-05-15",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 56.3
+    },
+    {
+      "date": "2026-05-17",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 60.4
+    },
+    {
       "date": "2026-05-17",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-05-18",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 79.9
+    },
+    {
+      "date": "2026-05-19",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.5
+    },
+    {
+      "date": "2026-05-20",
+      "type": "Running",
+      "category": "other",
+      "duration_min": 10.9
+    },
+    {
+      "date": "2026-05-20",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 65.7
     },
     {
       "date": "2026-05-21",
@@ -19059,6 +19490,30 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-05-25",
+      "type": "Running",
+      "category": "other",
+      "duration_min": 30.0
+    },
+    {
+      "date": "2026-05-26",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 57.3
+    },
+    {
+      "date": "2026-05-27",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 48.7
+    },
+    {
+      "date": "2026-05-28",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.8
+    },
+    {
       "date": "2026-05-28",
       "type": "Kickboxing",
       "category": "muay_thai",
@@ -19071,10 +19526,52 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-06-01",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 69.5
+    },
+    {
+      "date": "2026-06-02",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 66.8
+    },
+    {
+      "date": "2026-06-03",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 45.0
+    },
+    {
+      "date": "2026-06-03",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 48.6
+    },
+    {
+      "date": "2026-06-04",
+      "type": "Running",
+      "category": "other",
+      "duration_min": 5.7
+    },
+    {
       "date": "2026-06-04",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-05",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 59.4
+    },
+    {
+      "date": "2026-06-06",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 22.5
     },
     {
       "date": "2026-06-07",
@@ -19083,10 +19580,58 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-06-08",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 75.5
+    },
+    {
+      "date": "2026-06-09",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 42.4
+    },
+    {
+      "date": "2026-06-10",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.2
+    },
+    {
       "date": "2026-06-11",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-06-15",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.9
+    },
+    {
+      "date": "2026-06-16",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 63.4
+    },
+    {
+      "date": "2026-06-17",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 52.0
+    },
+    {
+      "date": "2026-06-22",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 49.8
+    },
+    {
+      "date": "2026-06-23",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 47.2
     },
     {
       "date": "2026-06-25",
@@ -19095,10 +19640,52 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-06-26",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 55.2
+    },
+    {
+      "date": "2026-06-27",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 73.6
+    },
+    {
+      "date": "2026-06-28",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 48.8
+    },
+    {
+      "date": "2026-06-29",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 63.1
+    },
+    {
+      "date": "2026-06-30",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.8
+    },
+    {
+      "date": "2026-07-01",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 40.0
+    },
+    {
       "date": "2026-07-02",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-07-03",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 37.4
     },
     {
       "date": "2026-07-05",
@@ -19107,10 +19694,46 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-07-07",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 66.5
+    },
+    {
+      "date": "2026-07-08",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 39.8
+    },
+    {
       "date": "2026-07-09",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-07-10",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 52.0
+    },
+    {
+      "date": "2026-07-13",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 45.7
+    },
+    {
+      "date": "2026-07-14",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 45.0
+    },
+    {
+      "date": "2026-07-14",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 63.6
     },
     {
       "date": "2026-07-16",
@@ -19119,10 +19742,22 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-07-17",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 86.5
+    },
+    {
       "date": "2026-07-19",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-07-20",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 57.7
     },
     {
       "date": "2026-07-23",
@@ -19131,10 +19766,34 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-07-27",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 57.8
+    },
+    {
+      "date": "2026-07-28",
+      "type": "Cycling",
+      "category": "other",
+      "duration_min": 45.3
+    },
+    {
+      "date": "2026-07-29",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 59.4
+    },
+    {
       "date": "2026-07-30",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-07-31",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 41.8
     },
     {
       "date": "2026-08-02",
@@ -19143,16 +19802,46 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-08-03",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 73.1
+    },
+    {
+      "date": "2026-08-05",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 64.3
+    },
+    {
       "date": "2026-08-09",
       "type": "Running",
       "category": "other",
-      "duration_min": 17.8
+      "duration_min": 22.4
     },
     {
       "date": "2026-08-09",
       "type": "Cycling",
       "category": "other",
-      "duration_min": 43.2
+      "duration_min": 43.3
+    },
+    {
+      "date": "2026-08-10",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 71.8
+    },
+    {
+      "date": "2026-08-11",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 55.4
+    },
+    {
+      "date": "2026-08-12",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 56.1
     },
     {
       "date": "2026-08-13",
@@ -19161,10 +19850,34 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-08-14",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 62.5
+    },
+    {
       "date": "2026-08-16",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-08-17",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 57.8
+    },
+    {
+      "date": "2026-08-18",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 22.4
+    },
+    {
+      "date": "2026-08-20",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 62.2
     },
     {
       "date": "2026-08-20",
@@ -19173,10 +19886,28 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-08-22",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 47.6
+    },
+    {
       "date": "2026-08-23",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-08-24",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 55.1
+    },
+    {
+      "date": "2026-08-26",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 46.9
     },
     {
       "date": "2026-08-27",
@@ -19185,16 +19916,40 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-08-28",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 71.5
+    },
+    {
       "date": "2026-08-30",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
     },
     {
+      "date": "2026-09-01",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 73.4
+    },
+    {
+      "date": "2026-09-02",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 81.8
+    },
+    {
       "date": "2026-09-03",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-09-04",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 33.6
     },
     {
       "date": "2026-09-05",
@@ -19209,16 +19964,52 @@ const DATA = {
       "duration_min": 240.0
     },
     {
+      "date": "2026-09-08",
+      "type": "Running",
+      "category": "other",
+      "duration_min": 60.3
+    },
+    {
+      "date": "2026-09-09",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 35.0
+    },
+    {
       "date": "2026-09-10",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
     },
     {
+      "date": "2026-09-11",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 60.5
+    },
+    {
+      "date": "2026-09-12",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 66.3
+    },
+    {
       "date": "2026-09-13",
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-09-14",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 47.6
+    },
+    {
+      "date": "2026-09-16",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 45.8
     },
     {
       "date": "2026-09-17",
@@ -19231,6 +20022,30 @@ const DATA = {
       "type": "Stairmaster · 120 bpm",
       "category": "cardio",
       "duration_min": 17.0
+    },
+    {
+      "date": "2026-09-19",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 41.8
+    },
+    {
+      "date": "2026-09-21",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 52.7
+    },
+    {
+      "date": "2026-09-24",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 47.6
+    },
+    {
+      "date": "2026-09-25",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 44.5
     },
     {
       "date": "2026-09-27",
@@ -19257,6 +20072,18 @@ const DATA = {
       "duration_min": 120.0
     },
     {
+      "date": "2026-10-09",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 44.9
+    },
+    {
+      "date": "2026-10-10",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 53.2
+    },
+    {
       "date": "2026-10-11",
       "type": "Kickboxing",
       "category": "muay_thai",
@@ -19273,6 +20100,1369 @@ const DATA = {
       "type": "Kickboxing",
       "category": "muay_thai",
       "duration_min": 120.0
+    },
+    {
+      "date": "2026-10-17",
+      "type": "TraditionalStrengthTraining",
+      "category": "gym",
+      "duration_min": 52.3
+    }
+  ],
+  "recovery": [
+    {
+      "d": "2026-04-21",
+      "hrv": 48.4,
+      "rhr": 58.0,
+      "slp": 8.04,
+      "on": 23.37,
+      "rr": 15.16
+    },
+    {
+      "d": "2026-04-22",
+      "hrv": 54.1,
+      "rhr": 60.0,
+      "slp": 9.23,
+      "on": 21.88,
+      "rr": 15.2
+    },
+    {
+      "d": "2026-04-23",
+      "hrv": 52.9,
+      "rhr": 58.0,
+      "slp": 8.49,
+      "on": 22.92,
+      "rr": 14.98
+    },
+    {
+      "d": "2026-04-24",
+      "hrv": 46.1,
+      "rhr": 62.0,
+      "slp": 5.83,
+      "on": 23.73,
+      "rr": 14.84
+    },
+    {
+      "d": "2026-04-25",
+      "hrv": 35.0,
+      "rhr": 68.0,
+      "slp": 9.61,
+      "on": 22.9,
+      "rr": 16.17
+    },
+    {
+      "d": "2026-04-26",
+      "hrv": 39.0,
+      "rhr": 72.0,
+      "slp": 8.78,
+      "on": 23.53,
+      "rr": 15.35
+    },
+    {
+      "d": "2026-04-27",
+      "hrv": 41.2,
+      "rhr": 63.0,
+      "slp": 9.39,
+      "on": 22.55,
+      "rr": 15.18
+    },
+    {
+      "d": "2026-04-28",
+      "hrv": 41.0,
+      "rhr": 62.0,
+      "slp": 8.32,
+      "on": 23.1,
+      "rr": 14.82
+    },
+    {
+      "d": "2026-04-29",
+      "hrv": 55.2,
+      "rhr": 59.0,
+      "slp": 8.53,
+      "on": 22.42,
+      "rr": 14.11
+    },
+    {
+      "d": "2026-04-30",
+      "hrv": 40.1,
+      "rhr": 67.0,
+      "slp": 7.78,
+      "on": 23.6,
+      "rr": 14.84
+    },
+    {
+      "d": "2026-05-01",
+      "hrv": 47.0,
+      "rhr": 61.0,
+      "slp": 8.69,
+      "on": 23.08,
+      "rr": 14.66
+    },
+    {
+      "d": "2026-05-02",
+      "hrv": 44.0,
+      "rhr": 68.0,
+      "slp": 7.73,
+      "on": 24.32,
+      "rr": 15.36
+    },
+    {
+      "d": "2026-05-03",
+      "hrv": 42.2,
+      "rhr": 60.0,
+      "slp": 10.11,
+      "on": 21.62,
+      "rr": 15.86
+    },
+    {
+      "d": "2026-05-04",
+      "hrv": 47.8,
+      "rhr": 62.0,
+      "slp": 7.88,
+      "on": 24.2,
+      "rr": 15.63
+    },
+    {
+      "d": "2026-05-05",
+      "hrv": 49.9,
+      "rhr": 62.0,
+      "slp": 9.38,
+      "on": 22.88,
+      "rr": 15.37
+    },
+    {
+      "d": "2026-05-06",
+      "hrv": 82.5,
+      "rhr": 59.0,
+      "slp": 8.13,
+      "on": 22.7,
+      "rr": 14.64
+    },
+    {
+      "d": "2026-05-07",
+      "hrv": 42.8,
+      "rhr": 68.5,
+      "slp": 4.38,
+      "on": 19.63,
+      "rr": 14.77
+    },
+    {
+      "d": "2026-05-08",
+      "hrv": 26.0,
+      "rhr": 60.0,
+      "slp": 9.31,
+      "on": 22.87,
+      "rr": 17.04
+    },
+    {
+      "d": "2026-05-09",
+      "hrv": 53.4,
+      "rhr": 71.0,
+      "slp": 8.36,
+      "on": 25.0,
+      "rr": 15.48
+    },
+    {
+      "d": "2026-05-10",
+      "hrv": 29.0,
+      "rhr": 62.0,
+      "slp": 6.26,
+      "on": 27.77,
+      "rr": 17.11
+    },
+    {
+      "d": "2026-05-11",
+      "hrv": 63.5,
+      "rhr": 62.0,
+      "slp": 8.51,
+      "on": 23.18,
+      "rr": 15.79
+    },
+    {
+      "d": "2026-05-12",
+      "hrv": 43.9,
+      "rhr": 58.0,
+      "slp": 8.59,
+      "on": 22.85,
+      "rr": 15.32
+    },
+    {
+      "d": "2026-05-13",
+      "hrv": 58.9,
+      "rhr": 58.0,
+      "slp": 8.69,
+      "on": 22.73,
+      "rr": 14.37
+    },
+    {
+      "d": "2026-05-14",
+      "hrv": 45.2,
+      "rhr": 57.0,
+      "slp": 8.49,
+      "on": 22.87,
+      "rr": 15.0
+    },
+    {
+      "d": "2026-05-15",
+      "hrv": 39.3,
+      "rhr": 62.0,
+      "slp": 7.27,
+      "on": 23.95,
+      "rr": 14.95
+    },
+    {
+      "d": "2026-05-16",
+      "hrv": 33.5,
+      "rhr": 63.0,
+      "slp": 7.09,
+      "on": 23.93,
+      "rr": 15.57
+    },
+    {
+      "d": "2026-05-17",
+      "hrv": 67.1,
+      "rhr": 57.0,
+      "slp": 9.99,
+      "on": 21.98,
+      "rr": 15.21
+    },
+    {
+      "d": "2026-05-18",
+      "hrv": 55.5,
+      "rhr": 57.0,
+      "slp": 9.36,
+      "on": 22.4,
+      "rr": 14.85
+    },
+    {
+      "d": "2026-05-19",
+      "hrv": 61.3,
+      "rhr": 60.0,
+      "slp": 8.31,
+      "on": 23.08,
+      "rr": 14.59
+    },
+    {
+      "d": "2026-05-20",
+      "hrv": 68.9,
+      "rhr": 55.0,
+      "slp": 8.94,
+      "on": 22.8,
+      "rr": 15.23
+    },
+    {
+      "d": "2026-05-21",
+      "hrv": 46.5,
+      "rhr": 57.0,
+      "slp": 8.64,
+      "on": 23.18,
+      "rr": 15.19
+    },
+    {
+      "d": "2026-05-22",
+      "hrv": 51.7,
+      "rhr": 58.0,
+      "slp": 8.38,
+      "on": 23.73,
+      "rr": 15.35
+    },
+    {
+      "d": "2026-05-23",
+      "hrv": 31.3,
+      "rhr": 72.0,
+      "slp": 8.82,
+      "on": 24.87,
+      "rr": 16.91
+    },
+    {
+      "d": "2026-05-24",
+      "hrv": 63.2,
+      "rhr": 52.0,
+      "slp": 9.49,
+      "on": 22.08,
+      "rr": 15.26
+    },
+    {
+      "d": "2026-05-25",
+      "hrv": 31.2,
+      "rhr": 68.0,
+      "slp": 10.24,
+      "on": 22.35,
+      "rr": 17.2
+    },
+    {
+      "d": "2026-05-26",
+      "hrv": 54.9,
+      "rhr": 53.0,
+      "slp": 8.27,
+      "on": 22.65,
+      "rr": 15.46
+    },
+    {
+      "d": "2026-05-27",
+      "hrv": 69.4,
+      "rhr": 55.0,
+      "slp": 9.23,
+      "on": 22.7,
+      "rr": 14.59
+    },
+    {
+      "d": "2026-05-28",
+      "hrv": 67.6,
+      "rhr": 51.0,
+      "slp": 7.18,
+      "on": 22.13,
+      "rr": 14.68
+    },
+    {
+      "d": "2026-05-29",
+      "hrv": 48.0,
+      "rhr": 62.0,
+      "slp": 8.49,
+      "on": 23.38,
+      "rr": 15.01
+    },
+    {
+      "d": "2026-05-30",
+      "hrv": 64.9,
+      "rhr": 53.0,
+      "slp": 8.14,
+      "on": 23.72,
+      "rr": 14.96
+    },
+    {
+      "d": "2026-05-31",
+      "hrv": 44.7,
+      "rhr": 64.0,
+      "slp": 8.78,
+      "on": 23.12,
+      "rr": 15.94
+    },
+    {
+      "d": "2026-06-01",
+      "hrv": 83.2,
+      "rhr": 51.0,
+      "slp": 8.22,
+      "on": 22.77,
+      "rr": 15.23
+    },
+    {
+      "d": "2026-06-02",
+      "hrv": 71.5,
+      "rhr": 54.0,
+      "slp": 8.13,
+      "on": 23.2,
+      "rr": 15.04
+    },
+    {
+      "d": "2026-06-03",
+      "hrv": 76.3,
+      "rhr": 52.0,
+      "slp": 8.11,
+      "on": 22.98,
+      "rr": 14.77
+    },
+    {
+      "d": "2026-06-04",
+      "hrv": 48.3,
+      "rhr": 58.0,
+      "slp": 7.99,
+      "on": 23.65,
+      "rr": 15.38
+    },
+    {
+      "d": "2026-06-05",
+      "hrv": 63.6,
+      "rhr": 55.0,
+      "slp": 8.94,
+      "on": 23.07,
+      "rr": 15.1
+    },
+    {
+      "d": "2026-06-06",
+      "hrv": 84.6,
+      "rhr": 49.0,
+      "slp": 6.68,
+      "on": 23.13,
+      "rr": 14.75
+    },
+    {
+      "d": "2026-06-07",
+      "hrv": 67.7,
+      "rhr": 52.0,
+      "slp": 10.09,
+      "on": 21.87,
+      "rr": 14.59
+    },
+    {
+      "d": "2026-06-08",
+      "hrv": 62.7,
+      "rhr": 53.0,
+      "slp": 10.11,
+      "on": 22.03,
+      "rr": 15.34
+    },
+    {
+      "d": "2026-06-09",
+      "hrv": 70.5,
+      "rhr": 52.0,
+      "slp": 7.76,
+      "on": 23.75,
+      "rr": 14.81
+    },
+    {
+      "d": "2026-06-10",
+      "hrv": 64.8,
+      "rhr": 55.0,
+      "slp": 9.14,
+      "on": 22.92,
+      "rr": 14.9
+    },
+    {
+      "d": "2026-06-11",
+      "hrv": 81.1,
+      "rhr": 53.0,
+      "slp": 8.79,
+      "on": 23.03,
+      "rr": 14.42
+    },
+    {
+      "d": "2026-06-12",
+      "hrv": 80.9,
+      "rhr": 52.0,
+      "slp": 8.27,
+      "on": 23.45,
+      "rr": 14.63
+    },
+    {
+      "d": "2026-06-13",
+      "hrv": 41.9,
+      "rhr": 67.0,
+      "slp": 6.46,
+      "on": 26.47,
+      "rr": 16.32
+    },
+    {
+      "d": "2026-06-16",
+      "hrv": 59.9,
+      "rhr": 53.0,
+      "slp": 8.96,
+      "on": 23.08,
+      "rr": 15.22
+    },
+    {
+      "d": "2026-06-17",
+      "hrv": 63.8,
+      "rhr": 53.0,
+      "slp": 8.66,
+      "on": 23.28,
+      "rr": 14.87
+    },
+    {
+      "d": "2026-06-18",
+      "hrv": 63.7,
+      "rhr": 52.0,
+      "slp": 8.81,
+      "on": 23.15,
+      "rr": 14.41
+    },
+    {
+      "d": "2026-06-19",
+      "hrv": 22.9,
+      "rhr": 78.0,
+      "slp": 7.46,
+      "on": 26.48,
+      "rr": 16.42
+    },
+    {
+      "d": "2026-06-20",
+      "hrv": 24.0
+    },
+    {
+      "d": "2026-06-22",
+      "hrv": 46.0,
+      "rhr": 55.0,
+      "slp": 7.79,
+      "on": 27.97,
+      "rr": 15.34
+    },
+    {
+      "d": "2026-06-23",
+      "hrv": 66.8,
+      "rhr": 53.0,
+      "slp": 8.61,
+      "on": 23.02,
+      "rr": 15.0
+    },
+    {
+      "d": "2026-06-24",
+      "hrv": 54.0,
+      "rhr": 55.0,
+      "slp": 7.72,
+      "on": 22.93,
+      "rr": 14.41
+    },
+    {
+      "d": "2026-06-25",
+      "hrv": 55.7,
+      "rhr": 58.0,
+      "slp": 8.76,
+      "on": 23.65,
+      "rr": 15.39
+    },
+    {
+      "d": "2026-06-26",
+      "hrv": 38.6,
+      "rhr": 63.0,
+      "slp": 7.79,
+      "on": 25.0,
+      "rr": 15.99
+    },
+    {
+      "d": "2026-06-27",
+      "hrv": 88.5,
+      "rhr": 52.0,
+      "slp": 9.31,
+      "on": 22.73,
+      "rr": 14.6
+    },
+    {
+      "d": "2026-06-28",
+      "hrv": 54.4,
+      "rhr": 54.0,
+      "slp": 8.68,
+      "on": 23.03,
+      "rr": 14.53
+    },
+    {
+      "d": "2026-06-30",
+      "hrv": 84.7,
+      "rhr": 53.0,
+      "slp": 8.43,
+      "on": 23.57,
+      "rr": 14.7
+    },
+    {
+      "d": "2026-07-01",
+      "hrv": 64.6,
+      "rhr": 55.0,
+      "slp": 8.76,
+      "on": 23.5,
+      "rr": 15.17
+    },
+    {
+      "d": "2026-07-02",
+      "hrv": 70.4,
+      "rhr": 53.0,
+      "slp": 8.18,
+      "on": 23.88,
+      "rr": 14.38
+    },
+    {
+      "d": "2026-07-03",
+      "hrv": 49.7,
+      "rhr": 57.0,
+      "slp": 8.43,
+      "on": 23.42,
+      "rr": 14.3
+    },
+    {
+      "d": "2026-07-04",
+      "hrv": 39.4,
+      "rhr": 60.0,
+      "slp": 9.61,
+      "on": 24.63,
+      "rr": 15.59
+    },
+    {
+      "d": "2026-07-05",
+      "hrv": 52.0,
+      "rhr": 54.0,
+      "slp": 8.93,
+      "on": 22.83,
+      "rr": 15.11
+    },
+    {
+      "d": "2026-07-06",
+      "hrv": 36.6,
+      "rhr": 62.0,
+      "slp": 7.74,
+      "on": 23.97,
+      "rr": 15.84
+    },
+    {
+      "d": "2026-07-07",
+      "hrv": 65.6,
+      "rhr": 52.0,
+      "slp": 8.58,
+      "on": 23.12,
+      "rr": 14.67
+    },
+    {
+      "d": "2026-07-08",
+      "hrv": 61.1,
+      "rhr": 52.0,
+      "slp": 9.04,
+      "on": 22.8,
+      "rr": 14.38
+    },
+    {
+      "d": "2026-07-09",
+      "hrv": 55.9,
+      "rhr": 53.0,
+      "slp": 8.84,
+      "on": 23.2,
+      "rr": 14.88
+    },
+    {
+      "d": "2026-07-10",
+      "hrv": 47.4,
+      "rhr": 54.0,
+      "slp": 8.31,
+      "on": 23.78,
+      "rr": 14.47
+    },
+    {
+      "d": "2026-07-11",
+      "hrv": 31.9,
+      "rhr": 67.0,
+      "slp": 6.94,
+      "on": 24.3,
+      "rr": 15.84
+    },
+    {
+      "d": "2026-07-12",
+      "hrv": 41.6,
+      "rhr": 58.0,
+      "slp": 8.84,
+      "on": 23.93,
+      "rr": 15.88
+    },
+    {
+      "d": "2026-07-14",
+      "hrv": 65.3,
+      "rhr": 52.0,
+      "slp": 8.61,
+      "on": 23.12,
+      "rr": 14.83
+    },
+    {
+      "d": "2026-07-15",
+      "hrv": 63.3,
+      "rhr": 53.0,
+      "slp": 8.88,
+      "on": 22.95,
+      "rr": 14.73
+    },
+    {
+      "d": "2026-07-16",
+      "hrv": 60.4,
+      "rhr": 53.0,
+      "slp": 8.18,
+      "on": 22.95,
+      "rr": 14.93
+    },
+    {
+      "d": "2026-07-17",
+      "hrv": 59.6,
+      "rhr": 55.0,
+      "slp": 7.99,
+      "on": 23.25,
+      "rr": 14.51
+    },
+    {
+      "d": "2026-07-18",
+      "hrv": 72.2,
+      "rhr": 52.0,
+      "slp": 5.71,
+      "on": 23.78,
+      "rr": 15.32
+    },
+    {
+      "d": "2026-07-19",
+      "hrv": 41.5,
+      "rhr": 63.0,
+      "slp": 8.52,
+      "on": 22.92,
+      "rr": 16.31
+    },
+    {
+      "d": "2026-07-20",
+      "hrv": 61.1,
+      "rhr": 53.0,
+      "slp": 8.88,
+      "on": 23.18,
+      "rr": 15.02
+    },
+    {
+      "d": "2026-07-21",
+      "hrv": 84.5,
+      "rhr": 51.0,
+      "slp": 8.79,
+      "on": 23.4,
+      "rr": 15.1
+    },
+    {
+      "d": "2026-07-22",
+      "hrv": 32.8,
+      "rhr": 70.0,
+      "slp": 8.68,
+      "on": 22.88,
+      "rr": 16.94
+    },
+    {
+      "d": "2026-07-23",
+      "hrv": 71.2,
+      "rhr": 55.0,
+      "slp": 7.23,
+      "on": 24.48,
+      "rr": 15.01
+    },
+    {
+      "d": "2026-07-24",
+      "hrv": 65.1,
+      "rhr": 58.0,
+      "slp": 7.58,
+      "on": 23.75,
+      "rr": 14.56
+    },
+    {
+      "d": "2026-07-25",
+      "hrv": 80.8,
+      "rhr": 54.0,
+      "slp": 8.49,
+      "on": 23.6,
+      "rr": 15.02
+    },
+    {
+      "d": "2026-07-26",
+      "hrv": 29.7,
+      "rhr": 75.0,
+      "slp": 6.83,
+      "on": 25.1,
+      "rr": 16.33
+    },
+    {
+      "d": "2026-07-27",
+      "hrv": 72.9,
+      "rhr": 53.0,
+      "slp": 10.59,
+      "on": 20.73,
+      "rr": 15.08
+    },
+    {
+      "d": "2026-07-28",
+      "hrv": 92.5,
+      "rhr": 54.0,
+      "slp": 7.58,
+      "on": 23.47,
+      "rr": 14.37
+    },
+    {
+      "d": "2026-07-29",
+      "hrv": 70.8,
+      "rhr": 53.0,
+      "slp": 8.09,
+      "on": 23.75,
+      "rr": 15.03
+    },
+    {
+      "d": "2026-07-30",
+      "hrv": 61.2,
+      "rhr": 52.0,
+      "slp": 9.04,
+      "on": 22.95,
+      "rr": 14.83
+    },
+    {
+      "d": "2026-07-31",
+      "hrv": 45.5,
+      "slp": 8.36,
+      "on": 23.37,
+      "rr": 14.88
+    },
+    {
+      "d": "2026-08-01",
+      "hrv": 59.9,
+      "rhr": 55.0,
+      "slp": 6.34,
+      "on": 24.15,
+      "rr": 14.41
+    },
+    {
+      "d": "2026-08-02",
+      "hrv": 59.0,
+      "rhr": 60.0,
+      "slp": 8.16,
+      "on": 23.82,
+      "rr": 15.73
+    },
+    {
+      "d": "2026-08-03",
+      "hrv": 71.9,
+      "rhr": 53.0,
+      "slp": 8.48,
+      "on": 23.43,
+      "rr": 15.12
+    },
+    {
+      "d": "2026-08-04",
+      "hrv": 67.1,
+      "rhr": 53.0,
+      "slp": 8.26,
+      "on": 23.18,
+      "rr": 15.13
+    },
+    {
+      "d": "2026-08-05",
+      "hrv": 54.3,
+      "rhr": 60.0,
+      "slp": 8.17,
+      "on": 23.15,
+      "rr": 16.0
+    },
+    {
+      "d": "2026-08-06",
+      "hrv": 70.0,
+      "rhr": 50.0,
+      "slp": 8.37,
+      "on": 23.4,
+      "rr": 14.87
+    },
+    {
+      "d": "2026-08-07",
+      "hrv": 44.7,
+      "rhr": 61.0,
+      "slp": 7.96,
+      "on": 23.15,
+      "rr": 15.58
+    },
+    {
+      "d": "2026-08-08",
+      "hrv": 62.2,
+      "rhr": 56.0,
+      "slp": 9.49,
+      "on": 22.8,
+      "rr": 15.11
+    },
+    {
+      "d": "2026-08-09",
+      "hrv": 50.6,
+      "rhr": 53.0,
+      "slp": 9.81,
+      "on": 22.82,
+      "rr": 15.66
+    },
+    {
+      "d": "2026-08-10",
+      "hrv": 59.7,
+      "rhr": 52.0,
+      "slp": 8.31,
+      "on": 22.72,
+      "rr": 15.1
+    },
+    {
+      "d": "2026-08-11",
+      "hrv": 57.6,
+      "rhr": 52.0,
+      "slp": 8.32,
+      "on": 23.5,
+      "rr": 14.89
+    },
+    {
+      "d": "2026-08-12",
+      "hrv": 52.0,
+      "rhr": 52.0,
+      "slp": 8.04,
+      "on": 22.28,
+      "rr": 14.45
+    },
+    {
+      "d": "2026-08-13",
+      "hrv": 63.0,
+      "rhr": 56.0,
+      "slp": 7.98,
+      "on": 23.8,
+      "rr": 14.45
+    },
+    {
+      "d": "2026-08-14",
+      "hrv": 45.4,
+      "rhr": 57.0,
+      "slp": 9.03,
+      "on": 22.92,
+      "rr": 14.81
+    },
+    {
+      "d": "2026-08-15",
+      "hrv": 55.3,
+      "rhr": 57.0,
+      "slp": 8.16,
+      "on": 24.42,
+      "rr": 15.79
+    },
+    {
+      "d": "2026-08-16",
+      "hrv": 43.9,
+      "rhr": 62.0,
+      "slp": 7.84,
+      "on": 23.7,
+      "rr": 16.22
+    },
+    {
+      "d": "2026-08-18",
+      "hrv": 76.2,
+      "rhr": 50.0,
+      "slp": 8.43,
+      "on": 22.88,
+      "rr": 15.06
+    },
+    {
+      "d": "2026-08-19",
+      "hrv": 40.5,
+      "rhr": 63.0,
+      "slp": 7.93,
+      "on": 23.83,
+      "rr": 16.32
+    },
+    {
+      "d": "2026-08-20",
+      "hrv": 54.9,
+      "rhr": 54.0,
+      "slp": 8.08,
+      "on": 24.75,
+      "rr": 15.37
+    },
+    {
+      "d": "2026-08-21",
+      "hrv": 50.7,
+      "rhr": 52.0,
+      "slp": 8.78,
+      "on": 23.12,
+      "rr": 14.93
+    },
+    {
+      "d": "2026-08-22",
+      "hrv": 25.8,
+      "rhr": 73.0,
+      "slp": 7.83,
+      "on": 26.8,
+      "rr": 16.89
+    },
+    {
+      "d": "2026-08-23",
+      "hrv": 56.1,
+      "rhr": 56.0,
+      "slp": 7.59,
+      "on": 24.25,
+      "rr": 16.47
+    },
+    {
+      "d": "2026-08-24",
+      "hrv": 46.4,
+      "rhr": 60.0,
+      "slp": 9.46,
+      "on": 22.75,
+      "rr": 17.03
+    },
+    {
+      "d": "2026-08-25",
+      "hrv": 66.7,
+      "rhr": 55.0,
+      "slp": 8.16,
+      "on": 23.15,
+      "rr": 15.1
+    },
+    {
+      "d": "2026-08-26",
+      "hrv": 64.0,
+      "rhr": 57.0,
+      "slp": 9.19,
+      "on": 22.63,
+      "rr": 14.63
+    },
+    {
+      "d": "2026-08-27",
+      "hrv": 44.3,
+      "rhr": 58.0,
+      "slp": 8.19,
+      "on": 23.63,
+      "rr": 15.78
+    },
+    {
+      "d": "2026-08-28",
+      "hrv": 50.2,
+      "rhr": 56.0,
+      "slp": 8.66,
+      "on": 23.05,
+      "rr": 14.42
+    },
+    {
+      "d": "2026-08-29",
+      "hrv": 70.5,
+      "rhr": 53.0,
+      "slp": 8.26,
+      "on": 23.07,
+      "rr": 14.48
+    },
+    {
+      "d": "2026-08-30",
+      "hrv": 37.6,
+      "rhr": 60.0,
+      "slp": 8.79,
+      "on": 23.18,
+      "rr": 16.0
+    },
+    {
+      "d": "2026-08-31",
+      "hrv": 36.7,
+      "rhr": 67.0,
+      "slp": 8.46,
+      "on": 23.3,
+      "rr": 16.86
+    },
+    {
+      "d": "2026-09-01",
+      "hrv": 55.5,
+      "rhr": 57.0,
+      "slp": 8.51,
+      "on": 22.9,
+      "rr": 15.89
+    },
+    {
+      "d": "2026-09-02",
+      "hrv": 46.1,
+      "rhr": 57.0,
+      "slp": 7.13,
+      "on": 23.98,
+      "rr": 15.41
+    },
+    {
+      "d": "2026-09-03",
+      "hrv": 62.1,
+      "rhr": 55.0,
+      "slp": 9.03,
+      "on": 22.78,
+      "rr": 15.23
+    },
+    {
+      "d": "2026-09-04",
+      "hrv": 46.3,
+      "rhr": 58.0,
+      "slp": 9.07,
+      "on": 22.78,
+      "rr": 14.67
+    },
+    {
+      "d": "2026-09-05",
+      "hrv": 29.7,
+      "rhr": 77.0,
+      "slp": 6.01,
+      "on": 26.52,
+      "rr": 17.11
+    },
+    {
+      "d": "2026-09-06",
+      "hrv": 60.0,
+      "rhr": 57.0,
+      "slp": 9.18,
+      "on": 22.53,
+      "rr": 15.45
+    },
+    {
+      "d": "2026-09-07",
+      "hrv": 68.7,
+      "rhr": 52.0,
+      "slp": 9.51,
+      "on": 22.08,
+      "rr": 15.39
+    },
+    {
+      "d": "2026-09-08",
+      "hrv": 71.3,
+      "rhr": 53.0,
+      "slp": 8.71,
+      "on": 22.95,
+      "rr": 15.94
+    },
+    {
+      "d": "2026-09-09",
+      "hrv": 52.5,
+      "rhr": 56.0,
+      "slp": 8.36,
+      "on": 23.03,
+      "rr": 15.13
+    },
+    {
+      "d": "2026-09-10",
+      "hrv": 38.9,
+      "rhr": 60.0,
+      "slp": 8.21,
+      "on": 24.27,
+      "rr": 15.36
+    },
+    {
+      "d": "2026-09-11",
+      "hrv": 54.8,
+      "rhr": 53.0,
+      "slp": 8.78,
+      "on": 23.15,
+      "rr": 14.09
+    },
+    {
+      "d": "2026-09-12",
+      "hrv": 48.4,
+      "rhr": 62.0,
+      "slp": 8.89,
+      "on": 23.67,
+      "rr": 16.12
+    },
+    {
+      "d": "2026-09-13",
+      "hrv": 37.8,
+      "rhr": 58.0,
+      "slp": 7.83,
+      "on": 24.78,
+      "rr": 16.1
+    },
+    {
+      "d": "2026-09-14",
+      "hrv": 62.9,
+      "rhr": 52.0,
+      "slp": 8.61,
+      "on": 22.88,
+      "rr": 15.32
+    },
+    {
+      "d": "2026-09-15",
+      "hrv": 67.6,
+      "rhr": 53.0,
+      "slp": 9.01,
+      "on": 22.22,
+      "rr": 14.95
+    },
+    {
+      "d": "2026-09-16",
+      "hrv": 57.5,
+      "rhr": 55.0,
+      "slp": 9.28,
+      "on": 22.6,
+      "rr": 15.51
+    },
+    {
+      "d": "2026-09-17",
+      "hrv": 53.4,
+      "rhr": 56.0,
+      "slp": 9.19,
+      "on": 22.72,
+      "rr": 15.15
+    },
+    {
+      "d": "2026-09-19",
+      "hrv": 36.2,
+      "rhr": 70.0,
+      "slp": 8.18,
+      "on": 23.95,
+      "rr": 16.02
+    },
+    {
+      "d": "2026-09-20",
+      "hrv": 51.1,
+      "rhr": 57.0,
+      "slp": 8.43,
+      "on": 23.53,
+      "rr": 15.68
+    },
+    {
+      "d": "2026-09-21",
+      "hrv": 40.9,
+      "rhr": 58.0,
+      "slp": 8.64,
+      "on": 23.33,
+      "rr": 16.11
+    },
+    {
+      "d": "2026-09-24",
+      "hrv": 56.8,
+      "rhr": 58.0,
+      "slp": 9.02,
+      "on": 22.58,
+      "rr": 16.09
+    },
+    {
+      "d": "2026-09-25",
+      "hrv": 42.4,
+      "rhr": 62.0,
+      "slp": 9.09,
+      "on": 22.9,
+      "rr": 15.76
+    },
+    {
+      "d": "2026-09-26",
+      "hrv": 27.1,
+      "rhr": 72.0,
+      "slp": 7.64,
+      "on": 23.92,
+      "rr": 16.86
+    },
+    {
+      "d": "2026-09-27",
+      "hrv": 33.4,
+      "rhr": 65.0,
+      "slp": 9.47,
+      "on": 22.45,
+      "rr": 16.68
+    },
+    {
+      "d": "2026-09-28",
+      "hrv": 43.0,
+      "rhr": 61.0,
+      "slp": 9.61,
+      "on": 22.15,
+      "rr": 15.74
+    },
+    {
+      "d": "2026-09-29",
+      "hrv": 60.1,
+      "rhr": 59.0,
+      "slp": 7.99,
+      "on": 23.45,
+      "rr": 14.91
+    },
+    {
+      "d": "2026-09-30",
+      "hrv": 60.0,
+      "rhr": 54.5,
+      "slp": 8.56,
+      "on": 23.32,
+      "rr": 15.88
+    },
+    {
+      "d": "2026-10-01",
+      "rhr": 64.6
+    },
+    {
+      "d": "2026-10-02",
+      "hrv": 37.6,
+      "rhr": 59.8,
+      "slp": 8.21,
+      "on": 23.32,
+      "rr": 15.63
+    },
+    {
+      "d": "2026-10-03",
+      "rhr": 71.0
+    },
+    {
+      "d": "2026-10-04",
+      "hrv": 32.6,
+      "rhr": 64.5,
+      "slp": 7.84,
+      "on": 23.15,
+      "rr": 16.13
+    },
+    {
+      "d": "2026-10-05",
+      "hrv": 42.5,
+      "rhr": 69.0,
+      "slp": 8.56,
+      "on": 22.88,
+      "rr": 17.41
+    },
+    {
+      "d": "2026-10-06",
+      "hrv": 38.7,
+      "rhr": 64.6
+    },
+    {
+      "d": "2026-10-07",
+      "hrv": 51.4,
+      "rhr": 55.0,
+      "slp": 7.88,
+      "on": 23.37,
+      "rr": 15.79
+    },
+    {
+      "d": "2026-10-08",
+      "hrv": 45.9,
+      "rhr": 57.4,
+      "slp": 7.38,
+      "on": 24.32,
+      "rr": 16.03
+    },
+    {
+      "d": "2026-10-09",
+      "hrv": 46.8,
+      "rhr": 59.0,
+      "slp": 8.53,
+      "on": 23.17,
+      "rr": 15.9
+    },
+    {
+      "d": "2026-10-10",
+      "hrv": 57.5,
+      "rhr": 55.0,
+      "slp": 9.43,
+      "on": 22.72,
+      "rr": 15.33
+    },
+    {
+      "d": "2026-10-11",
+      "hrv": 42.6,
+      "rhr": 60.8,
+      "slp": 8.17,
+      "on": 23.35,
+      "rr": 15.59
+    },
+    {
+      "d": "2026-10-12",
+      "hrv": 59.2,
+      "rhr": 52.8,
+      "slp": 8.82,
+      "on": 22.52,
+      "rr": 15.39
+    },
+    {
+      "d": "2026-10-13",
+      "hrv": 67.7,
+      "rhr": 53.0,
+      "slp": 8.33,
+      "on": 22.67,
+      "rr": 15.34
+    },
+    {
+      "d": "2026-10-14",
+      "rhr": 61.0
+    },
+    {
+      "d": "2026-10-15",
+      "hrv": 60.1,
+      "rhr": 52.0,
+      "slp": 8.55,
+      "on": 22.9,
+      "rr": 15.21
+    },
+    {
+      "d": "2026-10-16",
+      "hrv": 44.2,
+      "rhr": 56.2,
+      "slp": 8.07,
+      "on": 22.92,
+      "rr": 15.14
+    },
+    {
+      "d": "2026-10-17",
+      "hrv": 29.6,
+      "rhr": 66.0,
+      "slp": 8.8,
+      "on": 23.42,
+      "rr": 16.98
+    },
+    {
+      "d": "2026-10-18",
+      "hrv": 41.3,
+      "slp": 8.3,
+      "on": 23.82,
+      "rr": 16.45
     }
   ]
 };
@@ -19287,7 +21477,16 @@ const PHASES = [
   {label:"ZIEKTE",short:"ZK",start:"2026-03-24",end:"2026-03-25",color:"#ffaa00",track:1,desc:"<b>Ziekte</b><br>Rustdagen door ziekte/verkoudheid."},
   {label:"RECOVERY",short:"REC",start:"2026-04-03",end:"2026-04-19",color:"#ff8a65",track:1,desc:"<b>3 apr → 19 apr</b><br>Operatie. Herstelperiode afgerond."},
   {label:"GREYSKULL",short:"GS",start:"2026-04-13",end:"2026-06-03",color:"#7b5cff",track:0,desc:"<b>13 apr → 3 jun</b><br>GZCLP Greyskull LP. T1 2×5+AMRAP · T2 3×10 · T3 3×15–25. 4-daagse cyclus."},
-  {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2099-12-31",color:"#00e5ff",track:0,desc:"<b>4 jun →</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
+  {label:"BWGMR",short:"BW",start:"2026-06-04",end:"2026-07-26",color:"#00e5ff",track:0,desc:"<b>4 jun → 26 jul</b><br>Beweeg Meer (Lotte &amp; Hans). Greyskull basis met T1-varianten bij stagnatie · T3 fullbody aanvulling · cues Lotte."},
+  {label:"EXPLOSIVE",short:"EXP",start:"2026-07-27",end:"2026-08-20",color:"#ff6b35",track:0,desc:"<b>27 jul → 20 aug</b><br>Full body explosief (Lotte). Ma: alle grote liften @ 50–60% · Wo: armen/upper accessory · Za: benen/lower + Greyskull DL. Rep-schema: wk1 3×4 · wk2 4-3-4 · wk3 3×3. Core in warmup · 1 opwarmset · 90 sec rust (langer als snelheid daalt) · zone 2 cooldown. Afsluiting: 1RM-test bij Lotte 20 aug."},
+  {label:"STRENGTH",short:"STR",start:"2026-08-24",end:"2026-09-20",color:"#ff3d6b",track:0,desc:"<b>24 aug → 4 okt</b><br>3×5 zwaar (3e set AMRAP, 5 volstaat). Proces-doel eind blok: squat 105 · bench 87,5 · DL 125 (2×5) · OHP 62,5. 1RM-doel testweek (Lotte): squat 115–135 · bench 95–105 · DL 130–140 · OHP 70–80. Kalibratie met Lotte 20 aug bepaalt de startgewichten. +2,5 kg per sessie (OHP +2,5 per twee sessies)."},
+  {label:"DELOAD",short:"DEL",start:"2026-09-21",end:"2026-09-27",color:"#8888aa",track:0,desc:"<b>21 → 27 sep</b><br>Week 5. 2×3 op ~60% van de geteste 1RM, geen T3. Tegelijk de meting van de rug na de episodes van 14 en 19 sep."},
+  {label:"OPBOUW",short:"OPB",start:"2026-09-28",end:"2026-10-11",color:"#00e676",track:0,desc:"<b>28 sep → 11 okt</b><br>Het volledige blok is onbetraind gebleven — geen enkele krachtsessie, alleen kickboksen op 27 sep en 1 okt. Ook de aanloop van 3 t/m 6 okt is uitgevallen. Laatste barbellsessie blijft 25 sep, dus op 7 okt staat de teller op twaalf dagen onbelast. Herzien op 7 okt: nog zes dagen, twee echte sessies (wo 7, za 10) plus een primer (ma 12). Er komt geen kracht meer bij; het doel is de patronen terughalen en veilig kunnen meten."},
+  {label:"HERTEST",short:"TST",start:"2026-10-12",end:"2026-10-13",color:"#ffd600",track:0,desc:"<b>12 → 13 okt</b><br>Week 8. Ma 12 okt korte primer, <b>di 13 okt</b> meten bij Lotte. Bench zware single (doel 105) en OHP 3RM (doel 70 → 1RM 77). Squat en deadlift als 3RM op gevoel, bewust zonder doelgetal. Deadlift mag mét straps."},
+  {label:"FULLBODY",short:"FB",start:"2026-10-14",end:"2026-11-18",color:"#00e5ff",track:0,desc:"<b>14 okt → 18 nov</b><br>Doel: gewicht verliezen met spierbehoud. Tot het vertrek naar Colombia. Twee keer fullbody: A (di) squat + bench, B (za) deadlift met straps + OHP, 3 × 5–6. Core zonder rugbuiging vooraan, de rest erna. Unipodaal werk en T3 in superset, REV voor de tenen. Ma zone 2, do en zo kickboksen. Doel is behoud: geslaagd = de gewichten van half oktober staan er half november nog, bij ±86,5 kg."},
+  {label:"TAPER",short:"TPR",start:"2026-07-20",end:"2026-07-26",color:"#4dd0e1",track:1,desc:"<b>20 jul \u2192 26 jul</b><br>Tapering week. Ma gym \u00b7 di wandeling \u00b7 wo gym \u00b7 do muay thai \u00b7 za wandeling \u00b7 zo gym/rust.<br>Gym: gewichten aanhouden, volume omlaag \u2014 T1 2\u00d75 (AMRAP niet pushen), T2 2\u00d710, T3 optioneel."},
+  {label:"RUG",short:"RUG",start:"2026-09-14",end:"2026-10-11",color:"#ff3d6b",track:1,desc:"<b>14 sep →</b><br>Lage rug, eenzijdig naast de wervelkolom. Twee episodes: 14 sep squat 95, 19 sep squat 100 (2 reps, gestopt). Flexiegevoelig, extensie verlicht. Aanleiding van het hertest-uitstel naar di 13 okt. Protocol: tab BACK."},
+  {label:"CREATINE",short:"CR",start:"2026-03-24",end:"2099-12-31",color:"#00ffb3",track:2,desc:"<b>24 mrt \u2192</b><br>Creatine/dag. Verwacht watergewicht +1-2kg in eerste weken."}
 ];
 
 const PHASE_ANALYSIS = {
@@ -20029,7 +22228,10 @@ const BODYCOMP = [
   { month: "2026-04", weight_avg: 85.8, fat_pct: 20.9, fat_source: "graph" },
   { month: "2026-05", weight_avg: 87.4, fat_pct: 21.2, fat_source: "graph" },
   { month: "2026-06", weight_avg: 86.6, fat_pct: 20.5, fat_source: "graph" },
-  { month: "2026-07", weight_avg: 86.7, fat_pct: 20.6, fat_source: "app" }
+  { month: "2026-07", weight_avg: 86.7, fat_pct: 20.6, fat_source: "app" },
+  { month: "2026-08", weight_avg: 87.5, fat_pct: 21.1, fat_source: "health" },
+  { month: "2026-09", weight_avg: 88.9, fat_pct: 21.7, fat_source: "health" },
+  { month: "2026-10", weight_avg: 88.5, fat_pct: 21.6, fat_source: "health" }
 ];
 
 function renderBodycompMonthly() {
@@ -20066,7 +22268,7 @@ function renderBodycompMonthly() {
     const dFat = prev ? Math.round((m.fat_pct - prev.fat_pct) * 10) / 10 : null;
     const dClr = dFat === null || dFat === 0 ? 'var(--muted)' : (dFat < 0 ? 'var(--green)' : 'var(--red)');
     const dTxt = dFat === null ? '—' : (dFat > 0 ? '+' : '') + dFat.toFixed(1);
-    const est  = m.fat_source !== 'app' ? '<span style="color:var(--muted)">&#177;</span>' : '';
+    const est  = m.fat_source === 'graph' ? '<span style="color:var(--muted)">&#177;</span>' : '';
     const yr = m.month.slice(0, 4), mm = m.month.slice(5, 7);
     return `<tr>
       <td style="${td}text-align:left;color:var(--text)">${MND[mm] || mm} <span style="color:var(--muted);font-size:10px">${yr.slice(2)}</span></td>
@@ -20149,6 +22351,181 @@ function renderPrimaryLifts() {
   container.innerHTML = primaries.map(renderSection).join('');
 }
 renderPrimaryLifts();
+
+// ── HERSTEL: HRV · RUSTPOLS · SLAAP ─────────────────────────────────────────
+// Data: DATA.recovery = [{d, hrv, rhr, slp, on, rr}] — geschreven door
+// process_jefit.py (parse_apple_health_recovery) uit de Apple Health-export.
+// d = ochtend na de nacht. Alles hieronder wordt live berekend, dus elke nieuwe
+// export werkt de grafiek, de patronen en de fasetabel vanzelf bij.
+let recChart = null;
+let recDays = 0;
+function renderRecovery() {
+  const panel = document.getElementById('recovery-panel');
+  const REC = (DATA.recovery || []).slice().sort((a, b) => a.d < b.d ? -1 : 1);
+  if (!panel) return;
+  if (!REC.length) { panel.style.display = 'none'; return; }
+
+  const DAYMS = 86400000;
+  const iso = dt => dt.toISOString().slice(0, 10);
+  const addD = (s, n) => iso(new Date(new Date(s + 'T12:00:00Z').getTime() + n * DAYMS));
+  const byD = {}; REC.forEach(r => byD[r.d] = r);
+  const first = REC[0].d, last = REC[REC.length - 1].d;
+  const allDates = []; for (let s = first; s <= last; s = addD(s, 1)) allDates.push(s);
+  const mean = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+  const median = a => { if (!a.length) return null; const b = [...a].sort((x, y) => x - y); const m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+  const win = (end, n, key) => { const v = []; for (let i = 0; i < n; i++) { const r = byD[addD(end, -i)]; if (r && r[key] != null) v.push(r[key]); } return v; };
+  const roll = (end, n, key, minN) => { const v = win(end, n, key); return v.length >= minN ? mean(v) : null; };
+
+  // Afgeleide reeksen per datum
+  const R = allDates.map(d => {
+    const r = byD[d] || {};
+    const base28 = (() => { const v = []; for (let i = 1; i <= 28; i++) { const x = byD[addD(d, -i)]; if (x && x.hrv != null) v.push(x.hrv); } return v.length >= 10 ? mean(v) : null; })();
+    const rhrMed = (() => { const v = []; for (let i = 1; i <= 28; i++) { const x = byD[addD(d, -i)]; if (x && x.rhr != null) v.push(x.rhr); } return v.length >= 10 ? median(v) : null; })();
+    return {
+      d, hrv: r.hrv ?? null, rhr: r.rhr ?? null, slp: r.slp ?? null, on: r.on ?? null,
+      hrv7: roll(d, 7, 'hrv', 4), rhr7: roll(d, 7, 'rhr', 4),
+      dev: (r.hrv != null && base28 != null) ? r.hrv - base28 : null,
+      heavy: (r.rhr != null && rhrMed != null && r.rhr >= rhrMed + 6)
+    };
+  });
+  const Rby = {}; R.forEach(x => Rby[x.d] = x);
+
+  const fmtH = h => { if (h == null) return '—'; const m = Math.round(h * 60); return Math.floor(m / 60) + 'u' + String(m % 60).padStart(2, '0'); };
+  const fmtClock = h => { if (h == null) return '—'; const m = Math.round((h % 24) * 60); return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+  const DAYN = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+  const MONN = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+  const fmtD = s => { const t = new Date(s + 'T12:00:00'); return `${DAYN[t.getDay()]} ${t.getDate()} ${MONN[t.getMonth()]}`; };
+
+  // ── Grafiek ──
+  const from = recDays ? addD(last, -recDays + 1) : first;
+  const V = R.filter(x => x.d >= from);
+  const labels = V.map(x => x.d);
+  const bandPlugin = {
+    id: 'recPhaseBands',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: a, scales: { x } } = chart;
+      if (typeof PHASES === 'undefined') return;
+      ctx.save();
+      PHASES.filter(p => (p.track || 0) === 0 && p.end >= labels[0] && p.start <= labels[labels.length - 1]).forEach(p => {
+        const i0 = Math.max(0, labels.findIndex(l => l >= p.start));
+        let i1 = labels.length - 1; for (let i = labels.length - 1; i >= 0; i--) { if (labels[i] <= p.end) { i1 = i; break; } }
+        if (i0 > i1) return;
+        const x0 = x.getPixelForValue(i0) - (i0 > 0 ? (x.getPixelForValue(1) - x.getPixelForValue(0)) / 2 : 0);
+        const x1 = x.getPixelForValue(i1);
+        ctx.fillStyle = p.color + '12'; ctx.fillRect(x0, a.top, x1 - x0, a.bottom - a.top);
+        ctx.fillStyle = p.color + 'aa'; ctx.fillRect(x0, a.top, x1 - x0, 2);
+        if (x1 - x0 > 34) { ctx.fillStyle = p.color + 'dd'; ctx.font = "10px 'Space Mono', monospace"; ctx.fillText(x1 - x0 > 70 ? p.label : p.short, x0 + 4, a.top + 13); }
+      });
+      ctx.restore();
+    }
+  };
+  if (recChart) recChart.destroy();
+  const mobile = window.innerWidth < 768;
+  recChart = new Chart(document.getElementById('recChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'HRV', data: V.map(x => x.hrv), showLine: false, pointRadius: mobile ? 1.8 : 2.4, pointBackgroundColor: V.map(x => x.heavy ? '#ffd600' : '#00e5ff66'), pointBorderWidth: 0, yAxisID: 'y' },
+        { label: 'HRV 7D', data: V.map(x => x.hrv7), borderColor: '#00e5ff', borderWidth: 2.2, pointRadius: 0, tension: .35, spanGaps: true, yAxisID: 'y' },
+        { label: 'Rustpols 7D', data: V.map(x => x.rhr7), borderColor: '#ff3d6bcc', borderWidth: 1.4, borderDash: [4, 3], pointRadius: 0, tension: .35, spanGaps: true, yAxisID: 'y2' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      interaction: { mode: 'index', intersect: false },
+      layout: { padding: { top: 6 } },
+      scales: {
+        x: { grid: { color: '#1a1a2e' }, ticks: { color: '#8888aa', autoSkip: true, maxTicksLimit: mobile ? 5 : 10, maxRotation: 0, font: { size: 10 }, callback: function (v) { const s = this.getLabelForValue(v); const t = new Date(s + 'T12:00:00'); return `${t.getDate()} ${MONN[t.getMonth()]}`; } } },
+        y: { position: 'left', grid: { color: '#1a1a2e' }, ticks: { color: '#00e5ffcc', font: { size: 10 }, callback: v => v + 'ms' } },
+        y2: { position: 'right', grid: { display: false }, ticks: { color: '#ff3d6bcc', font: { size: 10 }, callback: v => v } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0a0a15', borderColor: '#1c1c30', borderWidth: 1, titleColor: '#00e5ff', bodyColor: '#c0c0d8',
+          callbacks: {
+            title: items => fmtD(items[0].label),
+            label: c => { const y = c.parsed.y; if (y == null) return null; const u = c.dataset.yAxisID === 'y2' ? ' bpm' : ' ms'; return ` ${c.dataset.label}: ${y.toFixed(1)}${u}`; },
+            afterBody: items => { const x = Rby[items[0].label]; if (!x) return ''; const out = []; if (x.rhr != null) out.push(`Rustpols: ${x.rhr} bpm`); if (x.slp != null) out.push(`Slaap: ${fmtH(x.slp)} (in slaap ${fmtClock(x.on)})`); if (x.heavy) out.push('⚠ zware nacht'); return out; }
+          }
+        }
+      }
+    },
+    plugins: [bandPlugin]
+  });
+
+  // ── Patronen (altijd over alle data) ──
+  const devAll = R.filter(x => x.dev != null);
+  // Nacht van de week: de nacht van vrijdag op zaterdag hoort bij 'vr'
+  const dowOrder = [1, 2, 3, 4, 5, 6, 0];
+  const dowStats = dowOrder.map(w => {
+    const v = devAll.filter(x => new Date(addD(x.d, -1) + 'T12:00:00').getDay() === w).map(x => x.dev);
+    return { w, m: mean(v), n: v.length };
+  });
+  const maxAbs = Math.max(4, ...dowStats.map(s => Math.abs(s.m || 0)));
+  const bar = (m) => { const pct = Math.min(50, Math.abs(m) / maxAbs * 50); const clr = m >= 0 ? 'var(--green)' : 'var(--red)'; return `<div class="rec-bar"><div style="left:50%;width:1px;background:#454560"></div><div style="${m >= 0 ? 'left:50%' : `left:${50 - pct}%`};width:${pct}%;background:${clr}"></div></div>`; };
+  const sgn = m => m == null ? '—' : (m >= 0 ? '+' : '') + m.toFixed(1);
+  const NACHT = { 0: 'zo→ma', 1: 'ma→di', 2: 'di→wo', 3: 'wo→do', 4: 'do→vr', 5: 'vr→za', 6: 'za→zo' };
+  document.getElementById('rec-dow').innerHTML = dowStats.map(s => `<div class="rec-row"><span class="rec-lbl">${NACHT[s.w]}</span>${bar(s.m || 0)}<span class="rec-num" style="color:${(s.m || 0) >= 0 ? 'var(--green)' : 'var(--red)'}">${sgn(s.m)} <span class="rec-n">ms</span></span></div>`).join('')
+    + `<div class="analysis-text" style="font-size:11px;margin-top:6px;color:var(--muted)">Afwijking t.o.v. je eigen 28-daags gemiddelde.</div>`;
+
+  // Drijvers: vergelijk nachten mét en zónder de factor
+  const kickSet = new Set((DATA.activities || []).filter(a => a.category === 'muay_thai').map(a => a.date));
+  const liftSet = new Set(); Object.values(DATA.lifts || {}).forEach(l => (l.points || []).forEach(p => liftSet.add(p.date)));
+  const cmp = (label, test) => {
+    const yes = devAll.filter(test), no = devAll.filter(x => !test(x));
+    if (yes.length < 4 || no.length < 4) return null;
+    return { label, diff: mean(yes.map(x => x.dev)) - mean(no.map(x => x.dev)), n: yes.length };
+  };
+  const drivers = [
+    cmp('Inslapen na 00:00', x => x.on != null && x.on >= 24),
+    cmp('Slaap &lt; 7 uur', x => x.slp != null && x.slp < 7),
+    cmp('Na kickboksen', x => kickSet.has(addD(x.d, -1))),
+    cmp('Na krachttraining', x => liftSet.has(addD(x.d, -1))),
+    cmp('Vr- of za-nacht', x => [5, 6].includes(new Date(addD(x.d, -1) + 'T12:00:00').getDay()))
+  ].filter(Boolean).sort((a, b) => a.diff - b.diff);
+  const maxD = Math.max(4, ...drivers.map(d => Math.abs(d.diff)));
+  const bar2 = (m) => { const pct = Math.min(50, Math.abs(m) / maxD * 50); const clr = m >= 0 ? 'var(--green)' : 'var(--red)'; return `<div class="rec-bar"><div style="left:50%;width:1px;background:#454560"></div><div style="${m >= 0 ? 'left:50%' : `left:${50 - pct}%`};width:${pct}%;background:${clr}"></div></div>`; };
+  document.getElementById('rec-drivers').innerHTML = drivers.map(d => `<div class="rec-row" style="grid-template-columns:118px 1fr 64px"><span class="rec-lbl">${d.label} <span class="rec-n">n=${d.n}</span></span>${bar2(d.diff)}<span class="rec-num" style="color:${d.diff >= 0 ? 'var(--green)' : 'var(--red)'}">${sgn(d.diff)} <span class="rec-n">ms</span></span></div>`).join('')
+    + `<div class="analysis-text" style="font-size:11px;margin-top:6px;color:var(--muted)">Verschil in HRV tussen nachten mét en zónder die factor. Samenhang, geen bewijs van oorzaak.</div>`;
+
+  // Per fase
+  const phRows = (typeof PHASES === 'undefined' ? [] : PHASES).filter(p => (p.track || 0) === 0 && p.end >= first && p.start <= last).map(p => {
+    const v = R.filter(x => x.d >= p.start && x.d <= p.end);
+    const h = v.filter(x => x.hrv != null).map(x => x.hrv), r = v.filter(x => x.rhr != null).map(x => x.rhr);
+    return { p, h: mean(h), r: mean(r), n: h.length, heavy: v.filter(x => x.heavy).length };
+  }).filter(x => x.n >= 3);
+  const hMax = Math.max(...phRows.map(x => x.h)), hMin = Math.min(...phRows.map(x => x.h));
+  document.getElementById('rec-phases').innerHTML = phRows.map(x => {
+    const t = hMax > hMin ? (x.h - hMin) / (hMax - hMin) : 1;
+    return `<div class="rec-row" style="grid-template-columns:78px 1fr 92px"><span style="color:${x.p.color}">${x.p.short === x.p.label ? x.p.label : x.p.label}</span>
+      <div class="rec-bar"><div style="left:0;width:${(20 + t * 80).toFixed(0)}%;background:${x.p.color}aa"></div></div>
+      <span class="rec-num" style="color:var(--text)">${x.h.toFixed(1)}<span class="rec-n"> ms &middot; ${x.r != null ? x.r.toFixed(0) : '—'}</span></span></div>`;
+  }).join('') + `<div class="analysis-text" style="font-size:11px;margin-top:6px;color:var(--muted)">Gemiddelde HRV per nacht &middot; rustpols (bpm).</div>`;
+  // ── Samenvatting in één oogopslag (geen dagelijkse monitoring, wel de grote lijnen) ──
+  const f1 = x => (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(1).replace('.', ',');
+  const ms = x => x.toFixed(1).replace('.', ',');
+  const parts = [];
+  if (phRows.length >= 2) {
+    const best = phRows.reduce((a, b) => b.h > a.h ? b : a), worst = phRows.reduce((a, b) => b.h < a.h ? b : a);
+    parts.push(`Beste fase <em style="color:${best.p.color}">${best.p.label}</em> (${ms(best.h)} ms), zwakste <em style="color:${worst.p.color}">${worst.p.label}</em> (${ms(worst.h)} ms).`);
+  }
+  if (drivers.length) {
+    const neg = drivers[0];
+    if (neg.diff < 0) parts.push(`Sterkste verband: <b>${neg.label.toLowerCase()}</b> (${f1(neg.diff)} ms).`);
+    const lift = drivers.find(d => d.label === 'Na krachttraining');
+    if (lift && lift.diff > -1.5) parts.push(`Krachttraining kost je nauwelijks herstel (${f1(lift.diff)} ms).`);
+  }
+  const ds = dowStats.filter(x => x.m != null).sort((a, b) => a.m - b.m);
+  if (ds.length >= 2) parts.push(`Zwakste nachten: ${NACHT[ds[0].w]} en ${NACHT[ds[1].w]}; beste: ${NACHT[ds[ds.length - 1].w]}.`);
+  document.getElementById('rec-summary').innerHTML = parts.join(' ');
+}
+document.querySelectorAll('#rec-range .lift-mode-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('#rec-range .lift-mode-btn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); recDays = parseInt(b.dataset.days); renderRecovery();
+}));
+renderRecovery();
 </script>
 </body>
 </html>
