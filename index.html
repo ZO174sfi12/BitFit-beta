@@ -23266,7 +23266,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // REV als eigen kaart, niet meer vastgeplakt aan T3 — anders viel REV weg
       // op maandag, want die dag heeft geen T3.
-      function _revBlock(dayKey) {
+      // Afsluiter (Bert, 21 okt): core met rugbuiging en REV in één blok onderaan,
+      // want als los CORE · NA-blok tussen T3 en REV werden de sit-ups over het hoofd gezien.
+      function _revBlock(dayKey, coreNa) {
         const dagN = {MA:0, WO:1, ZA:2}[dayKey];
         if (dagN === undefined) return '';
         const n = (typeof activeWk === 'number' ? activeWk : 0) * 3 + dagN;
@@ -23286,12 +23288,17 @@ document.addEventListener('DOMContentLoaded', function() {
             '<div style="font-size:12px;color:var(--text)">' + x[0] + ' · ' + x[1] + '</div>' +
             '<div style="font-size:10px;color:var(--muted);margin-top:2px">' + x[2] + '</div></div>';
         }).join('');
+        const coreRows = (coreNa || []).map(function(t){
+          return '<div class="gzclp-t3-item" style="border-color:#00e5ff33;background:#06121a">' +
+            '<div style="font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:1px;color:var(--cyan);margin-bottom:2px">CORE</div>' +
+            '<div style="font-size:12px;color:var(--text)">' + t + '</div></div>';
+        }).join('');
         return '<div class="gzclp-tier gzclp-t3-full" style="border-color:#ff6b3533;grid-column:1/-1">' +
           '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff6b35,transparent 70%)"></div>' +
-          '<span class="gzclp-badge" style="color:#ff6b35;border-color:#ff6b35;background:#ff6b3515">REV</span>' +
+          '<span class="gzclp-badge" style="color:#ff6b35;border-color:#ff6b35;background:#ff6b3515">' + (coreRows ? 'AFSLUITEN' : 'REV') + '</span>' +
           '<div style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--muted);margin:2px 0 6px">' +
-          'Elke sessie één mobilisatie en één voetboog · roteert per sessie</div>' +
-          '<div class="gzclp-t3-grid">' + rows + '</div></div>';
+          (coreRows ? 'Na de liften: buikwerk met rugbuiging, dan één mobilisatie en één voetboog' : 'Elke sessie één mobilisatie en één voetboog · roteert per sessie') + '</div>' +
+          '<div class="gzclp-t3-grid">' + coreRows + rows + '</div></div>';
       }
 
       // ── Per dag opbouwen ─────────────────────────────────────────────
@@ -23311,8 +23318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (d.t3 && d.t3.length) {
           tiersHtml += _t3Block(d.t3.map(function(x){ return _t3Item.apply(null, x); }).join(''), d.t3note);
         }
-        if (d.coreNa) tiersHtml += _coreNaBlock(CORE_NA[d.sessKey || d.key]);
-        tiersHtml += _revBlock(d.sessKey || d.key);
+        tiersHtml += _revBlock(d.sessKey || d.key, d.coreNa ? CORE_NA[d.sessKey || d.key] : null);
       } else if (d.key === 'MA') {
         // Zelfde afwijkende speed-squat-lijn als in buildDayp() — wk3 blijft op 60
         // i.p.v. de formule (67,5), bevestigd door Bert op 3 aug.
