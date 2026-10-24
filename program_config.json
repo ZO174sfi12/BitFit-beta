@@ -825,7 +825,8 @@
                   "rest": 45,
                   "unit": "sec"
                 }
-              ]
+              ],
+              "min": 8
             },
             {
               "label": "T1",
@@ -841,7 +842,8 @@
                   "load": true,
                   "main": true
                 }
-              ]
+              ],
+              "min": 15
             },
             {
               "label": "T1",
@@ -857,7 +859,8 @@
                   "load": true,
                   "main": true
                 }
-              ]
+              ],
+              "min": 11
             },
             {
               "label": "Superset A · 2 rondes · 60–90 sec na ronde",
@@ -883,7 +886,8 @@
                   "rest": 75,
                   "load": true
                 }
-              ]
+              ],
+              "min": 10
             },
             {
               "label": "T3 · na elkaar",
@@ -909,7 +913,8 @@
                   "rest": 60,
                   "load": true
                 }
-              ]
+              ],
+              "min": 10
             },
             {
               "label": "Core · na",
@@ -923,12 +928,14 @@
                   "rest": 45,
                   "unit": "reps"
                 }
-              ]
+              ],
+              "min": 5
             },
             {
               "label": "REV · optioneel",
               "rev": true,
-              "optional": true
+              "optional": true,
+              "min": 0
             }
           ]
         },
@@ -964,7 +971,8 @@
                   "rest": 45,
                   "unit": "reps"
                 }
-              ]
+              ],
+              "min": 8
             },
             {
               "label": "T1",
@@ -980,7 +988,8 @@
                   "load": true,
                   "main": true
                 }
-              ]
+              ],
+              "min": 16
             },
             {
               "label": "T1",
@@ -996,7 +1005,8 @@
                   "load": true,
                   "main": true
                 }
-              ]
+              ],
+              "min": 10
             },
             {
               "label": "T2",
@@ -1011,7 +1021,8 @@
                   "rest": 90,
                   "load": true
                 }
-              ]
+              ],
+              "min": 6
             },
             {
               "label": "Superset A · 2 rondes · 60–90 sec na ronde",
@@ -1038,7 +1049,8 @@
                   "rest": 75,
                   "load": false
                 }
-              ]
+              ],
+              "min": 8
             },
             {
               "label": "Superset B · 3 rondes · 60 sec na ronde",
@@ -1062,7 +1074,8 @@
                   "rest": 60,
                   "load": false
                 }
-              ]
+              ],
+              "min": 10
             },
             {
               "label": "Core · na",
@@ -1102,12 +1115,14 @@
                   "unit": "reps",
                   "optional": true
                 }
-              ]
+              ],
+              "min": 6
             },
             {
               "label": "REV · optioneel",
               "rev": true,
-              "optional": true
+              "optional": true,
+              "min": 0
             }
           ]
         }
@@ -1124,7 +1139,8 @@
           "Unipodale RDL",
           "Hip bridge op bankje"
         ]
-      }
+      },
+      "min_bron": "Geplande minuten per stap voor het schema-kader in BitFit Log (groen = totaal ≤ gepland tot en met de huidige stap + 5 min). Gebaseerd op de tijdstippen per set van za 24 okt (core 8 · deadlift 18 · OHP 6 · pulldown 6 · superset A 5 · superset B tot einde ±20) en de begroting van 13 okt."
     },
     "rev_regel": "REV staat los van de gym: thuis ±3× per week op een vrije dag. Na een gymsessie mag, als hij zin heeft. Altijd te loggen als sessie REV in BitFit Log; de oefeningen komen uit GYM/programma/rev_catalog.json (Bert, 24 okt).",
     "kalibratie_24okt": "Deadlift za 24 okt: oplopende werksets 80-90-100-110 × 5 met straps, bewust als kalibratie (Bert, 24 okt). Gewichtentabel voor deadlift nog te herzien op basis hiervan."
