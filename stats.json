@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24T14:17:03",
+  "updated": "2026-10-24T14:24:44",
   "weight": 88.7,
   "weight_date": "2026-10-24",
   "training_days_total": 187,
@@ -41,10 +41,10 @@
       "pr_weight": 70.0
     },
     "Lat PD": {
-      "last_date": "2026-08-17",
-      "last_weight": 70.0,
-      "last_volume": 1100.0,
-      "pr": true,
+      "last_date": "2026-10-24",
+      "last_weight": 45.0,
+      "last_volume": 1490.0,
+      "pr": false,
       "pr_weight": 70.0
     },
     "DIP-BW": {

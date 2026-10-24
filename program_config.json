@@ -1,6 +1,6 @@
 {
   "_comment": "CANONIEKE BRON VAN WAARHEID voor het phase-programma. Wanneer je een waarde bijstuurt (gewicht, datum, %, doel), pas ze hier aan én in index.html + program.html + het docx-bouwscript (outputs/prog/build.js). Draai daarna check_program_consistency.py om drift tussen de bestanden te vinden. Zie ook BitFit-beta/CLAUDE.md.",
-  "laatste_update": "2026-10-17",
+  "laatste_update": "2026-10-24",
   "blokken": {
     "TAPER": {
       "start": "2026-07-20",
@@ -619,7 +619,7 @@
       "B": 70
     },
     "sessieduur_regel": "60–75 min totaal, van opwarming tot REV",
-    "volgorde": "Core anti-flexie → T1 (2 hoofdliften × 3 sets) → [B: lat pulldown] → T2 superset unipodaal (2 rondes) → T3 superset (3 rondes) → core flexie → REV tenen",
+    "volgorde": "Core anti-flexie → T1 (2 hoofdliften × 3 sets) → [B: lat pulldown] → T2 superset unipodaal (2 rondes) → T3 (A: na elkaar · B: superset, 3 rondes) → core flexie → REV tenen",
     "sessie_A": {
       "core_voor": [
         "Ab wheel 3 × 10",
@@ -630,15 +630,15 @@
         "Barbell Bench Press 3 × 5–6"
       ],
       "T2_superset": [
-        "Bulgarian split squat 6/been (om de week: step-ups of lunges)",
-        "Hip thrust één been 6/been (plate-loaded)"
-      ],
-      "T3_superset": [
-        "Excentrische polsextensie 3 × 8 · 3 kg · 3–4 tellen zakken",
-        "Rug · cable row neutrale greep 3 × 10–12 (elastiek als alternatief)"
+        "Bulgarian split squat 8/been (om de week: step-ups of lunges)",
+        "Hip thrust één been 8/been (plate-loaded)"
       ],
       "core_na": [
         "Sit-Up 3 × 15"
+      ],
+      "T3": [
+        "Excentrische polsextensie 3 × 8 · 4 kg · 3–4 tellen zakken · 60 sec rust",
+        "Rug · cable row neutrale greep 3 × 10–12 · 60 sec rust (elastiek als alternatief)"
       ]
     },
     "sessie_B": {
@@ -655,25 +655,25 @@
         "Lat pulldown neutrale greep 3 × 10–12 · rust 90 sec"
       ],
       "T2_superset": [
-        "Single-leg RDL 6/been",
-        "Box sit-to-stand één been 5/been"
+        "Single-leg RDL 8/been · 15 kg, één hand, straps",
+        "Box sit-to-stand één been 8/been"
       ],
       "T3_superset": [
-        "Excentrische polsextensie 3 × 8 · 3 kg · 3–4 tellen zakken",
+        "Excentrische polsextensie 3 × 8 · 4 kg · 3–4 tellen zakken",
         "Schouders met elastiek 12–15"
       ],
       "core_na": [
-        "Parallel Bar Leg Raise 3 × 8",
         "Sit-Up 2 × 12",
         "Flutter Kick 1 × 20",
-        "Superman 2 × 10"
+        "Superman 2 × 10",
+        "Optioneel: Parallel Bar Leg Raise 3 × 8 of Plank 3 × 45 sec"
       ]
     },
     "rust": {
       "T1": "2–3 min (deadlift 3 min)",
       "pull": "90 sec",
       "superset": "60–90 sec na elke ronde",
-      "T3": "60 sec na elke ronde · 3 rondes"
+      "T3": "A: 60 sec tussen de sets, polsextensie en cable row na elkaar · B: superset, 60 sec na elke ronde, 3 rondes"
     },
     "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Geldt ook voor de deadlift: die stond op 3 × 5 en kon zijn eigen ladder dus nooit verdienen — nu 3 × 5–6, met de rug als veto: alleen omhoog als de rug de dag erna rustig is.",
     "gewichten_bron": "Uit de logs, opwarmsets eruit en gecorrigeerd voor de set_type-bug: squat 80×6×3 (13 okt) · bench 82,5×4×3 (24 sep), 90×3×2 (10 okt) · deadlift 85×3×2 met straps (21 sep), 100×4×3 (4 sep), rug sprak in sep twee keer · OHP 52,5×6,6 (2 sep), 60×4×3 (24 sep), 50×6,5 (10 okt).",
@@ -770,7 +770,7 @@
       }
     ],
     "unipodaal_start": {
-      "Single-leg RDL": "lege stang 20 kg → dumbbells 2×10",
+      "Single-leg RDL": "15 kg dumbbell in één hand, met straps (17 okt: 10 → 15 kg)",
       "Hip thrust één been": "licht → schijf erbij",
       "Bulgarian split squat": "lichaamsgewicht → dumbbells",
       "Step-ups of lunges": "lichaamsgewicht → dumbbells",
@@ -789,12 +789,13 @@
     "weekindeling_bron": "Kracht A stond op maandag, daags na twee uur kickboksen op zondag — squat en bench startten dus structureel vermoeid. Geruild met de zone 2 van dinsdag (Bert, 17 okt).",
     "core_regel": "Anti-flexie en anti-rotatie vóór de liften, lumbale flexie erná. Reden: de rug reageerde in september twee keer, en sit-ups, leg raises en flutter kicks laden precies die richting — vlak vóór de zwaarste deadlift van het blok is dat de verkeerde volgorde (Bert, 17 okt).",
     "trekwerk_bron": "Row stond niet in v8 en al het horizontale trekwerk was 2 × 12–15 met elastiek, één dag per week, terwijl drukken bench én OHP zwaar kreeg. In een blok dat over spierbehoud gaat is dat de dunst belaste grote spiergroep. Nu een echte trek per dag, neutrale greep zodat de laterale elleboogaanhechting gespaard blijft; cables mogen (Bert, 17 okt).",
-    "onderarm_bron": "Huisarts wil excentrisch herstel. Dosis zoals Bert ze op 17 okt deed: 3 × 8 met 3 kg en 3–4 tellen laten zakken. Blijft in de T3-superset, die daarom naar 3 rondes gaat.",
+    "onderarm_bron": "Huisarts wil excentrisch herstel. Dosis zoals Bert ze op 17 okt deed: 3 × 8 met 3 kg en 3–4 tellen laten zakken. Blijft in de T3-superset, die daarom naar 3 rondes gaat. Op 20 okt ging Bert naar 4 kg; vanaf 23 okt staat 4 kg in het plan (Bert, 23 okt).",
     "winconditie": {
       "geslaagd_op_2026-11-14": "Squat 82,5 · bench 77,5 · deadlift 85 · OHP 52,5 staan er nog met minstens 5 reps per set, bij een weekgemiddelde rond 86,5 kg.",
       "waarom": "Spierbehoud is niet te meten met de weegschaal en de vetpercentages uit Apple Health kloppen niet. Het bewijs is dus de werkgewichten: die moeten blijven staan terwijl het lichaamsgewicht zakt. Niet +10 kg deadlift — dat zou progressie meten, geen behoud.",
       "rekensom": "88,7 kg op 17 okt · 0,4–0,5 kg per week · 5 weken → ±86,3–86,7 kg bij vertrek."
     },
-    "sessies_bron": "Kracht A verschoven van maandag naar dinsdag. De laatste A-sessie (di 17 nov) geschrapt: een zware squat 24 uur voor een langeafstandsvlucht levert niets op in de laatste week van een behoudsblok (Bert, 17 okt)."
+    "sessies_bron": "Kracht A verschoven van maandag naar dinsdag. De laatste A-sessie (di 17 nov) geschrapt: een zware squat 24 uur voor een langeafstandsvlucht levert niets op in de laatste week van een behoudsblok (Bert, 17 okt).",
+    "wijziging_23okt": "Na sessie A van 20 okt (Bert, 23 okt): unipodaal 8 in plaats van 6 (box sit-to-stand 8 in plaats van 5) · polsextensie 4 kg · in A doet hij polsextensie en cable row na elkaar, niet als superset · single-leg RDL 15 kg, één hand, straps · leg raise in B optioneel · sit-ups in A op een eigen regel, omdat hij ze op 20 okt niet zag op de dagkaart."
   }
 }
