@@ -926,8 +926,9 @@
               ]
             },
             {
-              "label": "REV · tenen",
-              "rev": true
+              "label": "REV · optioneel",
+              "rev": true,
+              "optional": true
             }
           ]
         },
@@ -1104,8 +1105,9 @@
               ]
             },
             {
-              "label": "REV · tenen",
-              "rev": true
+              "label": "REV · optioneel",
+              "rev": true,
+              "optional": true
             }
           ]
         }
@@ -1123,6 +1125,8 @@
           "Hip bridge op bankje"
         ]
       }
-    }
+    },
+    "rev_regel": "REV staat los van de gym: thuis ±3× per week op een vrije dag. Na een gymsessie mag, als hij zin heeft. Altijd te loggen als sessie REV in BitFit Log; de oefeningen komen uit GYM/programma/rev_catalog.json (Bert, 24 okt).",
+    "kalibratie_24okt": "Deadlift za 24 okt: oplopende werksets 80-90-100-110 × 5 met straps, bewust als kalibratie (Bert, 24 okt). Gewichtentabel voor deadlift nog te herzien op basis hiervan."
   }
 }

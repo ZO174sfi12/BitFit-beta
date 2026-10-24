@@ -346,3 +346,16 @@ Bert kan T3- en REV-oefeningen rechtstreeks via Claude laten loggen (zonder Jefi
 - **2026-04-28**: SQUAT B T3-pool bijgewerkt: Cable Row vervangen door Cable Chest Fly + Dips als push-aanvulling
 - **2026-04-28**: SQUAT B stretches bijgewerkt (bench-gericht → rug/row-gericht)
 - **2026-04-28**: identifyDayIdx bijgewerkt: Squat + Row → dag 2 (SQUAT B)
+
+---
+
+## Nieuw systeem naast het oude (24 okt 2026)
+
+Bert logt voorlopig in Jefit **én** in het artifact **BitFit Log** (claude.ai/artifact/25y28VRTj88FoXz43hBnk9). Niets van het oude systeem is weg; later vergelijken we beide en kiest Bert de bron.
+
+- **Plan** — `program_config.json → blok_fullbody.dagplan` is de gestructureerde A/B-sessie. `GYM/scripts/build_plan.py` maakt daaruit: `GYM/programma/gegenereerd/plan_current.json` (Claude zet het in de artifact-database als `plan/current`), `kaarten_lotte.html` (jpg's voor Lotte), `jefit_lijst.md`, en de sessiekaarten op de PROGRAM-pagina tussen `<!-- FB-SESSIES:START/END -->`. REV-sessie komt uit `GYM/programma/rev_catalog.json`.
+- **REV** staat los van de gym: thuis ±3× per week, na de gym vrijwillig. In BitFit Log is dat sessie **REV**.
+- **Logs uit het artifact** — bij "verwerk": `ArtifactData list sessions` → elk document als `bitfit-data/bitfit_log/<datum>-<sessie>.json`. `process_jefit.py` toont die in LOGS met het label "· BitFit Log", zonder ontdubbeling tegen Jefit. Liftgrafieken blijven uit Jefit. REV-only dagen tellen niet als trainingsdag.
+- **Eén logbestand** — `GYM/scripts/build_sessions.py` → `bitfit-data/sessions.jsonl` (Jefit met echte set-types en tijdstippen, t3_log, manual_activities, BitFit Log). Draaien na elke pipeline-run.
+- **Warm-ups** — `process_jefit.py` leest sinds 24 okt de kolom `set_type` uit EXERCISE SET LOGS (vanaf 1 jul 2026). Oude versies van het script staan in `GYM/scripts/_backup/`.
+- **Volgorde bij een run**: (1) BitFit Log uitlezen naar `bitfit_log/`, (2) CSV-pipeline zoals hierboven, (3) `build_sessions.py`, (4) bij schemawijziging `build_plan.py` + checker, (5) commit.
