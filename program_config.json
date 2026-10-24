@@ -796,6 +796,333 @@
       "rekensom": "88,7 kg op 17 okt · 0,4–0,5 kg per week · 5 weken → ±86,3–86,7 kg bij vertrek."
     },
     "sessies_bron": "Kracht A verschoven van maandag naar dinsdag. De laatste A-sessie (di 17 nov) geschrapt: een zware squat 24 uur voor een langeafstandsvlucht levert niets op in de laatste week van een behoudsblok (Bert, 17 okt).",
-    "wijziging_23okt": "Na sessie A van 20 okt (Bert, 23 okt): unipodaal 8 in plaats van 6 (box sit-to-stand 8 in plaats van 5) · polsextensie 4 kg · in A doet hij polsextensie en cable row na elkaar, niet als superset · single-leg RDL 15 kg, één hand, straps · leg raise in B optioneel · sit-ups in A op een eigen regel, omdat hij ze op 20 okt niet zag op de dagkaart."
+    "wijziging_23okt": "Na sessie A van 20 okt (Bert, 23 okt): unipodaal 8 in plaats van 6 (box sit-to-stand 8 in plaats van 5) · polsextensie 4 kg · in A doet hij polsextensie en cable row na elkaar, niet als superset · single-leg RDL 15 kg, één hand, straps · leg raise in B optioneel · sit-ups in A op een eigen regel, omdat hij ze op 20 okt niet zag op de dagkaart.",
+    "dagplan": {
+      "_bron": "Structuur van de A- en B-sessie zoals op de kaarten van 23 okt (Bert). Hiervan leidt build_plan.py het BitFit Log-plan, de kaarten voor Lotte en de Jefit-lijst af.",
+      "budget_min": 75,
+      "sessies": {
+        "A": {
+          "title": "Squat + bench",
+          "dur": 65,
+          "groups": [
+            {
+              "label": "Core · vóór",
+              "tag": "core",
+              "items": [
+                {
+                  "key": "ab_wheel",
+                  "name": "Ab wheel",
+                  "sets": 3,
+                  "reps": "10",
+                  "rest": 45,
+                  "unit": "reps"
+                },
+                {
+                  "key": "plank",
+                  "name": "Plank",
+                  "sets": 3,
+                  "reps": "45",
+                  "rest": 45,
+                  "unit": "sec"
+                }
+              ]
+            },
+            {
+              "label": "T1",
+              "items": [
+                {
+                  "key": "squat",
+                  "name": "Back squat",
+                  "tier": "T1",
+                  "color": "var(--sq)",
+                  "sets": 3,
+                  "reps": "5–6",
+                  "rest": 150,
+                  "load": true,
+                  "main": true
+                }
+              ]
+            },
+            {
+              "label": "T1",
+              "items": [
+                {
+                  "key": "bench",
+                  "name": "Barbell bench press",
+                  "tier": "T1",
+                  "color": "var(--bp)",
+                  "sets": 3,
+                  "reps": "5–6",
+                  "rest": 150,
+                  "load": true,
+                  "main": true
+                }
+              ]
+            },
+            {
+              "label": "Superset A · 2 rondes · 60–90 sec na ronde",
+              "ss": "a",
+              "items": [
+                {
+                  "key": "bulgarian_split_squat",
+                  "name": "Bulgarian split squat",
+                  "hint": "Om de week step-ups of lunges",
+                  "sets": 2,
+                  "reps": "8",
+                  "perSide": true,
+                  "rest": 0,
+                  "load": true
+                },
+                {
+                  "key": "hip_thrust_single",
+                  "name": "Hip thrust één been",
+                  "hint": "Plate-loaded",
+                  "sets": 2,
+                  "reps": "8",
+                  "perSide": true,
+                  "rest": 75,
+                  "load": true
+                }
+              ]
+            },
+            {
+              "label": "T3 · na elkaar",
+              "items": [
+                {
+                  "key": "wrist_ext_ecc",
+                  "name": "Excentrische polsextensie",
+                  "tier": "T3",
+                  "hint": "3–4 tellen laten zakken",
+                  "sets": 3,
+                  "reps": "8",
+                  "rest": 60,
+                  "load": true,
+                  "w": 4
+                },
+                {
+                  "key": "cable_row",
+                  "name": "Cable row",
+                  "tier": "T3",
+                  "hint": "Neutrale greep · trek met de ellebogen",
+                  "sets": 3,
+                  "reps": "10–12",
+                  "rest": 60,
+                  "load": true
+                }
+              ]
+            },
+            {
+              "label": "Core · na",
+              "tag": "core",
+              "items": [
+                {
+                  "key": "situp",
+                  "name": "Sit-up",
+                  "sets": 3,
+                  "reps": "15",
+                  "rest": 45,
+                  "unit": "reps"
+                }
+              ]
+            },
+            {
+              "label": "REV · tenen",
+              "rev": true
+            }
+          ]
+        },
+        "B": {
+          "title": "Deadlift + OHP",
+          "dur": 70,
+          "groups": [
+            {
+              "label": "Core · vóór",
+              "tag": "core",
+              "items": [
+                {
+                  "key": "plank",
+                  "name": "Plank",
+                  "sets": 3,
+                  "reps": "45",
+                  "rest": 45,
+                  "unit": "sec"
+                },
+                {
+                  "key": "side_plank",
+                  "name": "Side plank",
+                  "sets": 2,
+                  "reps": "40",
+                  "rest": 45,
+                  "unit": "sec"
+                },
+                {
+                  "key": "dead_bug",
+                  "name": "Dead bug",
+                  "sets": 3,
+                  "reps": "12",
+                  "rest": 45,
+                  "unit": "reps"
+                }
+              ]
+            },
+            {
+              "label": "T1",
+              "items": [
+                {
+                  "key": "deadlift",
+                  "name": "Deadlift met straps",
+                  "tier": "T1",
+                  "color": "var(--dl)",
+                  "sets": 3,
+                  "reps": "5–6",
+                  "rest": 180,
+                  "load": true,
+                  "main": true
+                }
+              ]
+            },
+            {
+              "label": "T1",
+              "items": [
+                {
+                  "key": "ohp",
+                  "name": "Overhead press",
+                  "tier": "T1",
+                  "color": "var(--ohp)",
+                  "sets": 3,
+                  "reps": "5–6",
+                  "rest": 150,
+                  "load": true,
+                  "main": true
+                }
+              ]
+            },
+            {
+              "label": "T2",
+              "items": [
+                {
+                  "key": "lat_pulldown",
+                  "name": "Lat pulldown",
+                  "tier": "T2",
+                  "hint": "Neutrale greep · straps · ellebogen naar heupen",
+                  "sets": 3,
+                  "reps": "10–12",
+                  "rest": 90,
+                  "load": true
+                }
+              ]
+            },
+            {
+              "label": "Superset A · 2 rondes · 60–90 sec na ronde",
+              "ss": "a",
+              "items": [
+                {
+                  "key": "sl_rdl",
+                  "name": "Single-leg RDL",
+                  "hint": "Eén hand, straps",
+                  "sets": 2,
+                  "reps": "8",
+                  "perSide": true,
+                  "rest": 0,
+                  "load": true,
+                  "w": 15
+                },
+                {
+                  "key": "box_sit_stand_single",
+                  "name": "Box sit-to-stand één been",
+                  "hint": "Lagere box = vooruitgang",
+                  "sets": 2,
+                  "reps": "8",
+                  "perSide": true,
+                  "rest": 75,
+                  "load": false
+                }
+              ]
+            },
+            {
+              "label": "Superset B · 3 rondes · 60 sec na ronde",
+              "ss": "b",
+              "items": [
+                {
+                  "key": "wrist_ext_ecc",
+                  "name": "Excentrische polsextensie",
+                  "hint": "3–4 tellen laten zakken",
+                  "sets": 3,
+                  "reps": "8",
+                  "rest": 0,
+                  "load": true,
+                  "w": 4
+                },
+                {
+                  "key": "band_shoulders",
+                  "name": "Schouders met elastiek",
+                  "sets": 3,
+                  "reps": "12–15",
+                  "rest": 60,
+                  "load": false
+                }
+              ]
+            },
+            {
+              "label": "Core · na",
+              "tag": "core",
+              "items": [
+                {
+                  "key": "situp",
+                  "name": "Sit-up",
+                  "sets": 2,
+                  "reps": "12",
+                  "rest": 45,
+                  "unit": "reps"
+                },
+                {
+                  "key": "flutter_kick",
+                  "name": "Flutter kick",
+                  "sets": 1,
+                  "reps": "20",
+                  "rest": 45,
+                  "unit": "reps"
+                },
+                {
+                  "key": "superman",
+                  "name": "Superman",
+                  "sets": 2,
+                  "reps": "10",
+                  "rest": 45,
+                  "unit": "reps"
+                },
+                {
+                  "key": "leg_raise",
+                  "name": "Leg raise",
+                  "hint": "Optioneel",
+                  "sets": 3,
+                  "reps": "8",
+                  "rest": 45,
+                  "unit": "reps",
+                  "optional": true
+                }
+              ]
+            },
+            {
+              "label": "REV · tenen",
+              "rev": true
+            }
+          ]
+        }
+      },
+      "rev": {
+        "mobilisatie": [
+          "Toe dorsiflex lunge",
+          "RDL banded mediaal",
+          "Rathleff heel raise"
+        ],
+        "voetboog": [
+          "Y balans",
+          "Twee platen",
+          "Unipodale RDL",
+          "Hip bridge op bankje"
+        ]
+      }
+    }
   }
 }
