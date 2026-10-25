@@ -216,8 +216,8 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
 .gzclp-wu-summary::-webkit-details-marker{display:none;}
 /* WU/WERK-markering: wat in JEFIT als "warm-up" moet, en wat als werkset.
    Kleuren volgen de badges elders in de app (oranje = opwarming, cyaan = werk). */
-.wu-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;padding:1px 4px;border-radius:2px;border:1px solid #ff6b3566;color:#ff8a5c;background:#ff6b3515;flex:0 0 auto;}
-.wu-tag-work{border-color:#00e5ff66;color:#5ff0ff;background:#00e5ff15;}
+.wu-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;padding:1px 4px;border-radius:2px;border:1px dashed #6a6a8099;color:#9a9ab0;background:none;flex:0 0 auto;}
+.wu-tag-work{border:1px solid #d6d6e266;border-style:solid;color:#d6d6e2;background:#d6d6e20d;}
 .wu-hint{font-family:monospace;font-size:10px;color:var(--text);padding:4px 0 2px;letter-spacing:.3px;}
 .wu-none{font-family:monospace;font-size:10px;color:#5ff0ff;padding:3px 0;letter-spacing:.3px;}
 /* Mobiliteitsopwarming per dag (uitvouwbaar, staat vóór de tiers) */
@@ -283,7 +283,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202610251333</span>
+        <span class="meta-value" style="color:var(--muted)">202610251409</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -2409,6 +2409,41 @@ const DATA = {
             {
               "w": 85.0,
               "r": 6,
+              "warmup": false
+            }
+          ]
+        },
+        {
+          "date": "2026-10-25",
+          "weight": 80.0,
+          "volume": 1930.0,
+          "sets": 5,
+          "pr": false,
+          "work_reps": 15,
+          "sets_detail": [
+            {
+              "w": 60.0,
+              "r": 8,
+              "warmup": true
+            },
+            {
+              "w": 50.0,
+              "r": 5,
+              "warmup": true
+            },
+            {
+              "w": 80.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 80.0,
+              "r": 5,
+              "warmup": false
+            },
+            {
+              "w": 80.0,
+              "r": 5,
               "warmup": false
             }
           ]
