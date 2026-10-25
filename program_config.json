@@ -1143,6 +1143,16 @@
       "min_bron": "Geplande minuten per stap voor het schema-kader in BitFit Log (groen = totaal ≤ gepland tot en met de huidige stap + 5 min). Gebaseerd op de tijdstippen per set van za 24 okt (core 8 · deadlift 18 · OHP 6 · pulldown 6 · superset A 5 · superset B tot einde ±20) en de begroting van 13 okt."
     },
     "rev_regel": "REV staat los van de gym: thuis ±3× per week op een vrije dag. Na een gymsessie mag, als hij zin heeft. Altijd te loggen als sessie REV in BitFit Log; de oefeningen komen uit GYM/programma/rev_catalog.json (Bert, 24 okt).",
-    "kalibratie_24okt": "Deadlift za 24 okt: oplopende werksets 80-90-100-110 × 5 met straps, bewust als kalibratie (Bert, 24 okt). Gewichtentabel voor deadlift nog te herzien op basis hiervan."
+    "kalibratie_24okt": "Deadlift za 24 okt: oplopende werksets 80-90-100-110 × 5 met straps, bewust als kalibratie (Bert, 24 okt). Gewichtentabel voor deadlift nog te herzien op basis hiervan.",
+    "achtergrond_kort": [
+      "Doel: gewicht verliezen met spierbehoud. Geslaagd op za 14 nov als squat 82,5 · bench 77,5 · deadlift 85 · OHP 52,5 nog staan met minstens 5 reps per set, bij een weekgemiddelde rond 86,5 kg.",
+      "Superset: A1, meteen A2, dan pas rust — dat is één ronde. In sessie A doe je polsextensie en cable row na elkaar.",
+      "Core in twee delen: anti-flexie vóór de liften, rugbuiging erna. De rug reageerde in september op flexie vlak vóór de deadlift.",
+      "Deadlift met straps. Alleen omhoog als de rug de dag erna rustig is.",
+      "Trekwerk: geen barbell row (onderarm). Cable row in A, lat pulldown in B, allebei neutrale greep.",
+      "REV staat los van de gym: thuis ±3× per week, na de gym mag als je zin hebt.",
+      "Voeding: tekort 300–500 kcal per dag, eiwit 1,6–2,2 g per kg, extra verbruik via stappen en zone 2. Stuur op het weekgemiddelde uit minstens 3 wegingen.",
+      "Laatste sessie: za 14 nov. Di 17 nov is geschrapt: geen zware squat vlak voor de vlucht."
+    ]
   }
 }
