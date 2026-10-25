@@ -664,7 +664,7 @@
       ],
       "core_na": [
         "Sit-Up 2 × 12",
-        "Flutter Kick 1 × 20",
+        "Flutter Kick 1 × 30 sec",
         "Superman 2 × 10",
         "Optioneel: Parallel Bar Leg Raise 3 × 8 of Plank 3 × 45 sec"
       ]
@@ -1093,9 +1093,10 @@
                   "key": "flutter_kick",
                   "name": "Flutter kick",
                   "sets": 1,
-                  "reps": "20",
+                  "reps": "30",
                   "rest": 45,
-                  "unit": "reps"
+                  "unit": "sec",
+                  "hint": "Rustig tempo · onderrug tegen de grond"
                 },
                 {
                   "key": "superman",

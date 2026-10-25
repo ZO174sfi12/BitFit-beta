@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-24T18:12:24",
+  "updated": "2026-10-25T13:33:29",
   "weight": 88.7,
   "weight_date": "2026-10-24",
-  "training_days_total": 187,
-  "last_training_day": "2026-10-24",
+  "training_days_total": 188,
+  "last_training_day": "2026-10-25",
   "lifts": {
     "Squat": {
       "last_date": "2026-10-20",
