@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+<script id="bitfit-start-stats">
+// Startpagina = STATS (Bert, 26 okt 2026). Direct geopend (bladwijzer/adres, geen verwijzing van een
+// eigen pagina) → door naar bitstats.html. Via de GYM-knop in het menu blijf je gewoon hier.
+(function () {
+  try {
+    var ref = document.referrer, own = ref && new URL(ref).origin === location.origin;
+    if (!own && !location.hash && !/[?&]gym\b/.test(location.search)) location.replace('bitstats.html');
+  } catch (e) {}
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Trainingslog · Bert Nijs</title>
