@@ -338,7 +338,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
     <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
     <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
-    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Xiaomi S400 &middot; &#177; = geschat &middot; okt loopt nog<br>Doel: vet &le;16 kg (&minus;0,25/wk) &middot; lean &ge;69 &middot; kg &le;88 &middot; <span style="color:var(--green)">op koers</span> / <span style="color:var(--yellow)">vlak</span> / <span style="color:var(--red)">fout</span></div>
+    
   </div>
 
   <div class="panel analysis-panel" id="primary-lifts-panel">
@@ -22616,8 +22616,8 @@ function renderBodycompMonthly() {
   const el = document.getElementById('bodycomp-monthly-body');
   if (!el || !BODYCOMP.length) return;
   const MND = { '01':'JAN','02':'FEB','03':'MRT','04':'APR','05':'MEI','06':'JUN','07':'JUL','08':'AUG','09':'SEP','10':'OKT','11':'NOV','12':'DEC' };
-  const th = 'text-align:right;padding:4px 10px;color:var(--muted);font-size:10px;letter-spacing:1px;border-bottom:1px solid var(--border);';
-  const td = 'text-align:right;padding:4px 10px;';
+  const th = 'text-align:right;padding:4px 7px;white-space:nowrap;color:var(--muted);font-size:10px;letter-spacing:1px;border-bottom:1px solid var(--border);';
+  const td = 'text-align:right;padding:4px 7px;white-space:nowrap;';
   // Kleurlogica — doelen 26 okt 2026 (Bert): vet kwijt aan ±0,25 kg/week met behoud van spieren.
   // Bron: program_config.json → doel_bodycomp. Geen baseline meer; kleur = trend t.o.v. vorige maand of grens.
   const BC_GOALS = {
@@ -22642,6 +22642,7 @@ function renderBodycompMonthly() {
     : gradClr(dKg <= 0 ? dKg / BC_GOALS.fat_rate : -dKg / 0.5);
   // lean: ≥69 groen, 68,5 geel, ≤68 rood
   const leanClr = kg => gradClr(kg >= BC_GOALS.lean_min ? 1 : 1 - (BC_GOALS.lean_min - kg) * 2);
+  const box = v => `<span style="display:inline-block;border:1px solid var(--muted);padding:0 4px;color:var(--text)">${v}</span>`;
   const rows = BODYCOMP.map((m, i) => {
     const prev = i > 0 ? BODYCOMP[i - 1] : null;
     const fatKg  = Math.round(m.weight_avg * m.fat_pct / 10) / 10;
@@ -22656,7 +22657,7 @@ function renderBodycompMonthly() {
     return `<tr>
       <td style="${td}text-align:left;color:var(--text)">${MND[mm] || mm} <span style="color:var(--muted);font-size:10px">${yr.slice(2)}</span></td>
       <td style="${td}color:${weightClr(m.weight_avg)}">${m.weight_avg.toFixed(1)}</td>
-      <td style="${td}color:var(--text)">${m.fat_pct.toFixed(1)}%${est}</td>
+      <td style="${td}color:var(--text)">${m.fat_pct.toFixed(1)}%</td>
       <td style="${td}color:${dClr}">${dTxt}</td>
       <td style="${td}color:${fatClr(fatKg, dFatKg)};font-weight:700">${fatKg.toFixed(1)}</td>
       <td style="${td}color:${leanClr(leanKg)}">${leanKg.toFixed(1)}</td>
@@ -22667,7 +22668,15 @@ function renderBodycompMonthly() {
       <th style="${th}text-align:left">MAAND</th><th style="${th}">KG &Oslash;</th>
       <th style="${th}">VET%</th><th style="${th}">&Delta; VET%</th>
       <th style="${th}">VET KG</th><th style="${th}">LEAN KG</th>
-    </tr></thead><tbody>${rows}</tbody></table>${strengthCheck()}`;
+    </tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr>
+      <td style="${td}text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px;border-top:1px solid var(--border)">DOEL</td>
+      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.w_max)}</td>
+      <td style="${td}border-top:1px solid var(--border)"></td>
+      <td style="${td}border-top:1px solid var(--border)"></td>
+      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.fat_kg)}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box('&ge;' + BC_GOALS.lean_min)}</td>
+    </tr></tfoot></table>${strengthCheck()}`;
 }
 // Krachtcheck (spierbehoud): beste werkset-e1RM laatste 14 dagen vs de 14 dagen ervoor, per hoofdlift.
 // ↓ rood = >2,5% lager · → geel · ↑ groen = >2,5% hoger. Onder de tabel naast LEAN ≥69.
