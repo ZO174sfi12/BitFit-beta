@@ -22781,7 +22781,7 @@ function renderPrimaryLifts() {
     const lastTxt = lt ? `${lt.w}&times;${workSets(last).filter(s => s.w === lt.w).map(s => s.r).join('-')}` : '—';
     const recent = sessions.slice(0, 5).map(p => sessionRow(p, prim.color)).join('');
     const older = sessions.slice(5);
-    const olderHtml = older.length ? `<details style="margin-top:4px"><summary style="cursor:pointer;color:var(--muted);font-size:10px">ouder (${older.length})</summary>
+    const olderHtml = older.length ? `<details style="margin-top:4px"><summary style="cursor:pointer;color:var(--muted);font-size:10px">meer (${older.length})</summary>
       <div class="plift-scroll" style="max-height:220px;overflow-y:auto;margin-top:4px">${older.map(p => sessionRow(p, prim.color)).join('')}</div></details>` : '';
     return `<div style="min-width:0">
       <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c1c30;padding-bottom:4px;margin-bottom:6px">
