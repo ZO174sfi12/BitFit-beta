@@ -1161,7 +1161,6 @@
     "vet_kg_max": 17.2,
     "tempo_kg_per_week": -0.25,
     "lean_kg_min": 68.8,
-    "kracht_check": "beste werkset-e1RM SQ/BP/DL/OHP, laatste 14 d vs 14 d ervoor; >2,5% lager = rood",
     "gewicht_ondergrens": null,
     "vet_pct": "enkel info",
     "bron_metingen": "GYM/health/health_body.csv (iPhone-opdracht via mail), anders Jefit",
@@ -1169,6 +1168,7 @@
     "vet_pct_bij_doel": 20.0,
     "verwacht_bereikt": "half december 2026 bij −0,25 kg/week",
     "daarna": "beslissen of verder richting 16 kg vet",
-    "delta_vet_pct_per_maand": -0.7
+    "delta_vet_pct_per_maand": -0.7,
+    "kracht": "geen automatische check; Bert en Lotte evalueren de progressie zelf (26 okt 2026)"
   }
 }

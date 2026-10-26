@@ -22678,35 +22678,7 @@ function renderBodycompMonthly() {
       <td style="${td}${fb}color:var(--text)">${BC_GOALS.d_pct.toFixed(1).replace('-', '&minus;')}/mnd</td>
       <td style="${td}${fb}color:var(--text);font-weight:700">${BC_GOALS.fat_kg}</td>
       <td style="${td}${fb}border-right:1px solid var(--muted);color:var(--text)">${BC_GOALS.lean_min}</td>
-    </tr></tfoot></table>${strengthCheck()}`;
-}
-// Krachtcheck (spierbehoud): beste werkset-e1RM laatste 14 dagen vs de 14 dagen ervoor, per hoofdlift.
-// ↓ rood = >2,5% lager · → geel · ↑ groen = >2,5% hoger. Onder de tabel naast LEAN ≥69.
-function strengthCheck() {
-  const lifts = [['Squat','SQ'],['Bench','BP'],['Deadlift','DL'],['OHP','OHP']];
-  const end = new Date(typeof TODAY !== 'undefined' ? TODAY : new Date());
-  const day = 86400000, iso = d => d.toISOString().slice(0, 10);
-  const a1 = iso(new Date(end - 14 * day)), a0 = iso(new Date(end - 28 * day)), e = iso(end);
-  const best = (key, lo, hi) => {
-    let b = null;
-    for (const p of (DATA.lifts[key] || {}).points || []) {
-      if (p.date <= lo || p.date > hi) continue;
-      for (const s of p.sets_detail || []) {
-        if (s.warmup || !s.r || !s.w) continue;
-        const v = s.w * (1 + Math.min(s.r, 8) / 30);
-        if (b === null || v > b) b = v;
-      }
-    }
-    return b;
-  };
-  const parts = lifts.map(([k, lab]) => {
-    const now = best(k, a1, e), before = best(k, a0, a1);
-    if (now === null || before === null) return `<span style="color:var(--muted)">${lab} &middot;</span>`;
-    const d = (now - before) / before;
-    const [sym, clr] = d < -0.025 ? ['&darr;', 'var(--red)'] : d > 0.025 ? ['&uarr;', 'var(--green)'] : ['&rarr;', 'var(--yellow)'];
-    return `<span style="color:${clr}">${lab} ${sym}</span>`;
-  }).join(' &middot; ');
-  return `<div style="margin-top:6px;font-size:11px">KRACHT 2W: ${parts}</div>`;
+    </tr></tfoot></table>`;
 }
 renderBodycompMonthly();
 
@@ -22756,19 +22728,6 @@ function renderPrimaryLifts() {
     for (const s of workSets(pt)) if (!b || s.w > b.w || (s.w === b.w && s.r > b.r)) b = s;
     return b;
   }
-  function trendArrow(points) {   // beste e1RM laatste 14 d vs 14 d ervoor (zelfde regel als KRACHT 2W)
-    const end = new Date(typeof TODAY !== 'undefined' ? TODAY : new Date()), day = 86400000;
-    const iso = d => d.toISOString().slice(0, 10);
-    const a1 = iso(new Date(end - 14 * day)), a0 = iso(new Date(end - 28 * day)), e = iso(end);
-    const best = (lo, hi) => { let b = null; for (const p of points) { if (p.date <= lo || p.date > hi) continue;
-      for (const s of workSets(p)) { const v = e1(s); if (b === null || v > b) b = v; } } return b; };
-    const now = best(a1, e), before = best(a0, a1);
-    if (now === null || before === null) return '<span style="color:var(--muted)">&middot;</span>';
-    const d = (now - before) / before;
-    return d < -0.025 ? '<span style="color:var(--red)">&darr;</span>'
-         : d > 0.025 ? '<span style="color:var(--green)">&uarr;</span>'
-         : '<span style="color:var(--yellow)">&rarr;</span>';
-  }
   function sessionRow(pt, color) {
     const wu = (pt.sets_detail || []).filter(s => s.warmup).length;
     const work = workSets(pt);
@@ -22797,7 +22756,7 @@ function renderPrimaryLifts() {
     return `<div style="min-width:0">
       <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c1c30;padding-bottom:4px;margin-bottom:6px">
         <span style="font-size:10px;letter-spacing:2px;color:${prim.color}">${prim.label}</span>
-        <span style="font-size:10px;color:var(--muted)">laatst <span style="color:var(--text)">${lastTxt}</span> &middot; 2W ${trendArrow(pts)}</span>
+        <span style="font-size:10px;color:var(--muted)">laatst <span style="color:var(--text)">${lastTxt}</span></span>
       </div>
       ${recent}${olderHtml}
     </div>`;
