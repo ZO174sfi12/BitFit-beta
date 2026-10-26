@@ -338,7 +338,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
     <div class="panel-title">&#9658; BODY COMP &mdash; MAANDELIJKS</div>
     <div id="bodycomp-monthly-body" style="font-family:monospace;font-size:11px;overflow-x:auto;"></div>
-    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Bron: bitfit-data/bodycomp.json &mdash; Xiaomi S400 (BIA, ochtend). &#177; = geschat uit maandgrafiek. Aug&ndash;okt = maandgemiddelde van de Xiaomi-metingen via Apple Health (per meting identiek aan de app). Okt = lopende maand.<br>Doelen (26 okt): VET &le;16 kg aan &minus;0,25 kg/week &middot; LEAN &ge;69 kg + kracht 2W niet dalend &middot; KG &le;88 (geen ondergrens) &middot; VET% ter info &mdash; kleur: <span style="color:var(--green)">op tempo/binnen grens</span> &rarr; <span style="color:var(--yellow)">vlak</span> &rarr; <span style="color:var(--red)">verkeerde kant op</span></div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:8px;">Xiaomi S400 &middot; &#177; = geschat &middot; okt loopt nog<br>Doel: vet &le;16 kg (&minus;0,25/wk) &middot; lean &ge;69 &middot; kg &le;88 &middot; <span style="color:var(--green)">op koers</span> / <span style="color:var(--yellow)">vlak</span> / <span style="color:var(--red)">fout</span></div>
   </div>
 
   <div class="panel analysis-panel" id="primary-lifts-panel">
@@ -22662,7 +22662,7 @@ function renderBodycompMonthly() {
       <td style="${td}color:${leanClr(leanKg)}">${leanKg.toFixed(1)}</td>
     </tr>`;
   }).join('');
-  el.innerHTML = `<table style="border-collapse:collapse;width:100%;min-width:420px">
+  el.innerHTML = `<table style="border-collapse:collapse;width:auto">
     <thead><tr>
       <th style="${th}text-align:left">MAAND</th><th style="${th}">KG &Oslash;</th>
       <th style="${th}">VET%</th><th style="${th}">&Delta; VET%</th>
