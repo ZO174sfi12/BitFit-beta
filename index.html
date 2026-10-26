@@ -2,12 +2,13 @@
 <html lang="nl">
 <head>
 <script id="bitfit-start-stats">
-// Startpagina = STATS (Bert, 26 okt 2026). Direct geopend (bladwijzer/adres, geen verwijzing van een
-// eigen pagina) → door naar bitstats.html. Via de GYM-knop in het menu blijf je gewoon hier.
+// Startpagina = STATS (Bert, 26 okt 2026). Eerste keer dat de site in een tabblad opent → door naar
+// bitstats.html; daarna (GYM-knop, herladen) blijf je hier. Werkt ook lokaal (file://), waar geen
+// referrer meegaat. index.html?gym opent altijd GYM.
 (function () {
   try {
-    var ref = document.referrer, own = ref && new URL(ref).origin === location.origin;
-    if (!own && !location.hash && !/[?&]gym\b/.test(location.search)) location.replace('bitstats.html');
+    if (/[?&]gym\b/.test(location.search) || location.hash) { sessionStorage.setItem('bitfit-tab', '1'); return; }
+    if (!sessionStorage.getItem('bitfit-tab')) { sessionStorage.setItem('bitfit-tab', '1'); location.replace('bitstats.html'); }
   } catch (e) {}
 })();
 </script>
