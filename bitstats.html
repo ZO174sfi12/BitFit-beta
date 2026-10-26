@@ -22738,27 +22738,84 @@ function renderPrimaryLifts() {
     }
   }
 
+  function workSets(pt) { return (pt.sets_detail || []).filter(s => !s.warmup && s.r); }
+  function e1(s) { return s.w * (1 + Math.min(s.r, 8) / 30); }
+  function topSet(pt) {           // zwaarste werkset; bij gelijk gewicht de meeste reps
+    let b = null;
+    for (const s of workSets(pt)) if (!b || s.w > b.w || (s.w === b.w && s.r > b.r)) b = s;
+    return b;
+  }
+  function trendArrow(points) {   // beste e1RM laatste 14 d vs 14 d ervoor (zelfde regel als KRACHT 2W)
+    const end = new Date(typeof TODAY !== 'undefined' ? TODAY : new Date()), day = 86400000;
+    const iso = d => d.toISOString().slice(0, 10);
+    const a1 = iso(new Date(end - 14 * day)), a0 = iso(new Date(end - 28 * day)), e = iso(end);
+    const best = (lo, hi) => { let b = null; for (const p of points) { if (p.date <= lo || p.date > hi) continue;
+      for (const s of workSets(p)) { const v = e1(s); if (b === null || v > b) b = v; } } return b; };
+    const now = best(a1, e), before = best(a0, a1);
+    if (now === null || before === null) return '<span style="color:var(--muted)">&middot;</span>';
+    const d = (now - before) / before;
+    return d < -0.025 ? '<span style="color:var(--red)">&darr;</span>'
+         : d > 0.025 ? '<span style="color:var(--green)">&uarr;</span>'
+         : '<span style="color:var(--yellow)">&rarr;</span>';
+  }
+  function sparkline(points, color) {   // topset per sessie, laatste 12 weken
+    const end = new Date(typeof TODAY !== 'undefined' ? TODAY : new Date());
+    const from = new Date(end - 84 * 86400000).toISOString().slice(0, 10);
+    const pts = points.filter(p => p.date >= from).map(p => ({ d: p.date, s: topSet(p) })).filter(x => x.s);
+    if (pts.length < 2) return '';
+    const W = 300, H = 44, P = 5;
+    const t0 = new Date(from).getTime(), t1 = end.getTime();
+    const ws = pts.map(x => x.s.w), lo = Math.min(...ws), hi = Math.max(...ws), span = Math.max(hi - lo, 5);
+    const X = d => P + (new Date(d).getTime() - t0) / (t1 - t0) * (W - 2 * P);
+    const Y = w => H - P - (w - lo) / span * (H - 2 * P);
+    const line = pts.filter(x => x.s.r >= 3).map(x => `${X(x.d).toFixed(1)},${Y(x.s.w).toFixed(1)}`).join(' ');
+    const dots = pts.map(x => x.s.r >= 3
+      ? `<circle cx="${X(x.d).toFixed(1)}" cy="${Y(x.s.w).toFixed(1)}" r="2.2" fill="${color}"><title>${x.d} ${x.s.w}×${x.s.r}</title></circle>`
+      : `<circle cx="${X(x.d).toFixed(1)}" cy="${Y(x.s.w).toFixed(1)}" r="2.6" fill="none" stroke="${color}" stroke-dasharray="1.5 1.5"><title>${x.d} ${x.s.w}×${x.s.r} (single)</title></circle>`).join('');
+    return `<div style="display:flex;align-items:stretch;gap:6px;margin:4px 0 8px">
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="flex:1;height:${H}px;min-width:0;background:#0a0a14;border:1px solid #15152a">
+        <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.4" stroke-opacity=".7" vector-effect="non-scaling-stroke"/>${dots}</svg>
+      <div style="display:flex;flex-direction:column;justify-content:space-between;font-size:9px;color:var(--muted);min-width:30px">
+        <span>${hi}</span><span>12 wk</span><span>${lo}</span></div></div>`;
+  }
+  function sessionRow(pt, color) {
+    const wu = (pt.sets_detail || []).filter(s => s.warmup).length;
+    const work = workSets(pt);
+    const chip = s => {
+      const single = s.r <= 2;
+      return `<span style="${CHIP_BASE}border:1px ${single ? 'dashed' : 'solid'} ${color}66;color:${color};background:${single ? 'transparent' : color + '12'}">${s.w}&times;${s.r}</span>`;
+    };
+    const shown = work.slice(0, 5).map(chip).join('') + (work.length > 5 ? `<span style="${CHIP_BASE}color:var(--muted)">+${work.length - 5}</span>` : '');
+    return `<div style="display:grid;grid-template-columns:62px 34px repeat(5,minmax(0,56px)) 22px;gap:3px;align-items:center;margin-bottom:3px">
+      <span style="color:var(--muted);font-size:10px;white-space:nowrap">${fmtDate(pt.date)}</span>
+      ${wu ? `<span style="${CHIP_BASE}border:1px solid #1e1e2e;color:#4a4a66" title="opwarmsets">WU ${wu}</span>` : '<span></span>'}
+      ${shown}</div>`;
+  }
+
   function renderSection(prim) {
     const liftData = DATA.lifts[prim.key];
     if (!liftData || !liftData.points.length) return '';
-    const sessions = [...liftData.points].reverse();
-    const rows = sessions.map(pt => {
-      const sd = pt.sets_detail || [];
-      // warmup eerst (links), dan werksets (rechts) — grid 6 kolommen
-      const allChips = sd.map(s => makeChip(s, prim.color)).join('');
-      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-        <span style="color:var(--muted);min-width:70px;flex-shrink:0;font-size:10px">${fmtDate(pt.date)}</span>
-        <div style="flex:0 1 auto;display:grid;grid-template-columns:repeat(6,minmax(0,62px));gap:3px;min-width:0;align-items:center">${allChips}</div>
-      </div>`;
-    }).join('');
-    return `<div style="margin-bottom:22px">
-      <div style="font-family:monospace;font-size:10px;letter-spacing:2px;color:${prim.color};margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #1c1c30">${prim.label}</div>
-      <div class="plift-scroll" style="max-height:300px;overflow-y:auto;padding-right:6px">${rows}</div>
+    const pts = liftData.points;
+    const sessions = [...pts].reverse();
+    const last = sessions[0], lt = topSet(last);
+    const lastTxt = lt ? `${lt.w}&times;${workSets(last).filter(s => s.w === lt.w).map(s => s.r).join('-')}` : '—';
+    const recent = sessions.slice(0, 5).map(p => sessionRow(p, prim.color)).join('');
+    const older = sessions.slice(5);
+    const olderHtml = older.length ? `<details style="margin-top:4px"><summary style="cursor:pointer;color:var(--muted);font-size:10px">ouder (${older.length})</summary>
+      <div class="plift-scroll" style="max-height:220px;overflow-y:auto;margin-top:4px">${older.map(p => sessionRow(p, prim.color)).join('')}</div></details>` : '';
+    return `<div style="min-width:0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c1c30;padding-bottom:4px">
+        <span style="font-size:10px;letter-spacing:2px;color:${prim.color}">${prim.label}</span>
+        <span style="font-size:10px;color:var(--muted)">laatst <span style="color:var(--text)">${lastTxt}</span> &middot; 2W ${trendArrow(pts)}</span>
+      </div>
+      ${sparkline(pts, prim.color)}
+      ${recent}${olderHtml}
     </div>`;
   }
 
   const container = document.getElementById('primary-lifts-body');
   if (!container) return;
+  container.style.cssText += ';display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:22px 32px;';
   container.innerHTML = primaries.map(renderSection).join('');
 }
 renderPrimaryLifts();
