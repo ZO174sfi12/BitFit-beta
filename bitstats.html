@@ -22644,7 +22644,7 @@ function renderBodycompMonthly() {
     : gradClr(dKg <= 0 ? dKg / BC_GOALS.fat_rate : -dKg / 0.5);
   // lean: ≥68,8 groen, 0,5 eronder geel, 1 eronder rood
   const leanClr = kg => gradClr(kg >= BC_GOALS.lean_min ? 1 : 1 - (BC_GOALS.lean_min - kg) * 2);
-  const box = v => `<span style="display:inline-block;border:1px solid var(--muted);padding:0 4px;color:var(--text)">${v}</span>`;
+  const fb = 'border-top:1px solid var(--muted);border-bottom:1px solid var(--muted);';   // kader rond de doelrij
   const rows = BODYCOMP.map((m, i) => {
     const prev = i > 0 ? BODYCOMP[i - 1] : null;
     const fatKg  = Math.round(m.weight_avg * m.fat_pct / 10) / 10;
@@ -22671,13 +22671,13 @@ function renderBodycompMonthly() {
       <th style="${th}">VET%</th><th style="${th}">&Delta; VET%</th>
       <th style="${th}">VET KG</th><th style="${th}">LEAN KG</th>
     </tr></thead><tbody>${rows}</tbody>
-    <tfoot><tr>
-      <td style="${td}text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px;border-top:1px solid var(--border)">DOEL</td>
-      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.w_max)}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.fat_pct.toFixed(1) + '%')}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.d_pct.toFixed(1).replace('-', '&minus;') + '/mnd')}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.fat_kg)}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.lean_min)}</td>
+    <tfoot><tr><td style="height:6px"></td></tr><tr>
+      <td style="${td}${fb}border-left:1px solid var(--muted);text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px">DOEL</td>
+      <td style="${td}${fb}color:var(--text)">${BC_GOALS.w_max}</td>
+      <td style="${td}${fb}color:var(--text)">${BC_GOALS.fat_pct.toFixed(1)}%</td>
+      <td style="${td}${fb}color:var(--text)">${BC_GOALS.d_pct.toFixed(1).replace('-', '&minus;')}/mnd</td>
+      <td style="${td}${fb}color:var(--text);font-weight:700">${BC_GOALS.fat_kg}</td>
+      <td style="${td}${fb}border-right:1px solid var(--muted);color:var(--text)">${BC_GOALS.lean_min}</td>
     </tr></tfoot></table>${strengthCheck()}`;
 }
 // Krachtcheck (spierbehoud): beste werkset-e1RM laatste 14 dagen vs de 14 dagen ervoor, per hoofdlift.
