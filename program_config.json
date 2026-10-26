@@ -1155,5 +1155,16 @@
       "Voeding: tekort 300–500 kcal per dag, eiwit 1,6–2,2 g per kg, extra verbruik via stappen en zone 2. Stuur op het weekgemiddelde uit minstens 3 wegingen.",
       "Laatste sessie: za 14 nov. Di 17 nov is geschrapt: geen zware squat vlak voor de vlucht."
     ]
+  },
+  "doel_bodycomp": {
+    "_comment": "Bert, 26 okt 2026: vet kwijt met behoud van spieren. Vervangt KG 85–88 / VET% ≤19,5 / VET ≤15,6 kg / LEAN ≥71 (baseline apr '26). Getoond in bitstats.html → BODY COMP MAANDELIJKS (BC_GOALS).",
+    "vet_kg_max": 16.0,
+    "tempo_kg_per_week": -0.25,
+    "lean_kg_min": 69.0,
+    "kracht_check": "beste werkset-e1RM SQ/BP/DL/OHP, laatste 14 d vs 14 d ervoor; >2,5% lager = rood",
+    "gewicht_kg_max": 88,
+    "gewicht_ondergrens": null,
+    "vet_pct": "enkel info",
+    "bron_metingen": "GYM/health/health_body.csv (iPhone-opdracht via mail), anders Jefit"
   }
 }
