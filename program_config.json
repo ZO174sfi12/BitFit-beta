@@ -1168,6 +1168,7 @@
     "gewicht_kg_doel": 86,
     "vet_pct_bij_doel": 20.0,
     "verwacht_bereikt": "half december 2026 bij −0,25 kg/week",
-    "daarna": "beslissen of verder richting 16 kg vet"
+    "daarna": "beslissen of verder richting 16 kg vet",
+    "delta_vet_pct_per_maand": -0.7
   }
 }

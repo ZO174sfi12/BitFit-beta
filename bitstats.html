@@ -22624,7 +22624,9 @@ function renderBodycompMonthly() {
     w_max:   86,      // doel 86 kg (Bert, 26 okt); geen ondergrens. Tot 88 geel, daarboven rood
     fat_kg:  17.2,    // vet bij 86 kg, realistisch scenario (±20% van het verlies via lean)
     fat_rate: -1.08,  // tempo: −0,25 kg/week ≈ −1,08 kg per maand
-    lean_min: 68.8    // lean (BIA) bij 86 kg, realistisch
+    lean_min: 68.8,   // lean (BIA) bij 86 kg, realistisch
+    fat_pct: 20.0,    // = 17,2 / 86
+    d_pct: -0.7       // Δ vet%/maand bij −0,25 kg vet/week (21,2 → 20,0 in ±7 weken)
   };
   // Graduele kleur: rood (−1) → geel (0) → groen (1)
   const _rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
@@ -22672,8 +22674,8 @@ function renderBodycompMonthly() {
     <tfoot><tr>
       <td style="${td}text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px;border-top:1px solid var(--border)">DOEL</td>
       <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.w_max)}</td>
-      <td style="${td}border-top:1px solid var(--border)"></td>
-      <td style="${td}border-top:1px solid var(--border)"></td>
+      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.fat_pct.toFixed(1) + '%')}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.d_pct.toFixed(1).replace('-', '&minus;') + '/mnd')}</td>
       <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.fat_kg)}</td>
       <td style="${td}border-top:1px solid var(--border)">${box('&ge;' + BC_GOALS.lean_min)}</td>
     </tr></tfoot></table>${strengthCheck()}`;
