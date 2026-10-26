@@ -22673,11 +22673,11 @@ function renderBodycompMonthly() {
     </tr></thead><tbody>${rows}</tbody>
     <tfoot><tr>
       <td style="${td}text-align:left;color:var(--muted);font-size:10px;letter-spacing:1px;border-top:1px solid var(--border)">DOEL</td>
-      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.w_max)}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.fat_pct.toFixed(1) + '%')}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.w_max)}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.fat_pct.toFixed(1) + '%')}</td>
       <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.d_pct.toFixed(1).replace('-', '&minus;') + '/mnd')}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box('&le;' + BC_GOALS.fat_kg)}</td>
-      <td style="${td}border-top:1px solid var(--border)">${box('&ge;' + BC_GOALS.lean_min)}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.fat_kg)}</td>
+      <td style="${td}border-top:1px solid var(--border)">${box(BC_GOALS.lean_min)}</td>
     </tr></tfoot></table>${strengthCheck()}`;
 }
 // Krachtcheck (spierbehoud): beste werkset-e1RM laatste 14 dagen vs de 14 dagen ervoor, per hoofdlift.
