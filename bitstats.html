@@ -22758,26 +22758,6 @@ function renderPrimaryLifts() {
          : d > 0.025 ? '<span style="color:var(--green)">&uarr;</span>'
          : '<span style="color:var(--yellow)">&rarr;</span>';
   }
-  function sparkline(points, color) {   // topset per sessie, laatste 12 weken
-    const end = new Date(typeof TODAY !== 'undefined' ? TODAY : new Date());
-    const from = new Date(end - 84 * 86400000).toISOString().slice(0, 10);
-    const pts = points.filter(p => p.date >= from).map(p => ({ d: p.date, s: topSet(p) })).filter(x => x.s);
-    if (pts.length < 2) return '';
-    const W = 300, H = 44, P = 5;
-    const t0 = new Date(from).getTime(), t1 = end.getTime();
-    const ws = pts.map(x => x.s.w), lo = Math.min(...ws), hi = Math.max(...ws), span = Math.max(hi - lo, 5);
-    const X = d => P + (new Date(d).getTime() - t0) / (t1 - t0) * (W - 2 * P);
-    const Y = w => H - P - (w - lo) / span * (H - 2 * P);
-    const line = pts.filter(x => x.s.r >= 3).map(x => `${X(x.d).toFixed(1)},${Y(x.s.w).toFixed(1)}`).join(' ');
-    const dots = pts.map(x => x.s.r >= 3
-      ? `<circle cx="${X(x.d).toFixed(1)}" cy="${Y(x.s.w).toFixed(1)}" r="2.2" fill="${color}"><title>${x.d} ${x.s.w}×${x.s.r}</title></circle>`
-      : `<circle cx="${X(x.d).toFixed(1)}" cy="${Y(x.s.w).toFixed(1)}" r="2.6" fill="none" stroke="${color}" stroke-dasharray="1.5 1.5"><title>${x.d} ${x.s.w}×${x.s.r} (single)</title></circle>`).join('');
-    return `<div style="display:flex;align-items:stretch;gap:6px;margin:4px 0 8px">
-      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="flex:1;height:${H}px;min-width:0;background:#0a0a14;border:1px solid #15152a">
-        <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.4" stroke-opacity=".7" vector-effect="non-scaling-stroke"/>${dots}</svg>
-      <div style="display:flex;flex-direction:column;justify-content:space-between;font-size:9px;color:var(--muted);min-width:30px">
-        <span>${hi}</span><span>12 wk</span><span>${lo}</span></div></div>`;
-  }
   function sessionRow(pt, color) {
     const wu = (pt.sets_detail || []).filter(s => s.warmup).length;
     const work = workSets(pt);
@@ -22804,11 +22784,10 @@ function renderPrimaryLifts() {
     const olderHtml = older.length ? `<details style="margin-top:4px"><summary style="cursor:pointer;color:var(--muted);font-size:10px">ouder (${older.length})</summary>
       <div class="plift-scroll" style="max-height:220px;overflow-y:auto;margin-top:4px">${older.map(p => sessionRow(p, prim.color)).join('')}</div></details>` : '';
     return `<div style="min-width:0">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c1c30;padding-bottom:4px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c1c30;padding-bottom:4px;margin-bottom:6px">
         <span style="font-size:10px;letter-spacing:2px;color:${prim.color}">${prim.label}</span>
         <span style="font-size:10px;color:var(--muted)">laatst <span style="color:var(--text)">${lastTxt}</span> &middot; 2W ${trendArrow(pts)}</span>
       </div>
-      ${sparkline(pts, prim.color)}
       ${recent}${olderHtml}
     </div>`;
   }
