@@ -1,14 +1,14 @@
 {
-  "updated": "2026-10-26T20:15:56",
+  "updated": "2026-10-27T17:43:05",
   "weight": 88.8,
   "weight_date": "2026-10-26",
-  "training_days_total": 188,
-  "last_training_day": "2026-10-25",
+  "training_days_total": 189,
+  "last_training_day": "2026-10-27",
   "lifts": {
     "Squat": {
-      "last_date": "2026-10-25",
-      "last_weight": 80.0,
-      "last_volume": 1930.0,
+      "last_date": "2026-10-27",
+      "last_weight": 85.0,
+      "last_volume": 2055.0,
       "pr": false,
       "pr_weight": 120.0
     },
@@ -20,9 +20,9 @@
       "pr_weight": 140.0
     },
     "Bench": {
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-27",
       "last_weight": 80.0,
-      "last_volume": 1760.0,
+      "last_volume": 1500.0,
       "pr": false,
       "pr_weight": 100.0
     },
@@ -83,9 +83,9 @@
       "pr_weight": 20.0
     },
     "Cable Row": {
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-27",
       "last_weight": 55.0,
-      "last_volume": 1375.0,
+      "last_volume": 1575.0,
       "pr": false,
       "pr_weight": 60.0
     },
