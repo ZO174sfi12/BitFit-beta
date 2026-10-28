@@ -606,7 +606,7 @@
     "periode": "14 okt – 18 nov",
     "doel": "Gewicht verliezen met spierbehoud · kracht onderhouden (Bert, 13 okt)",
     "weekindeling": {
-      "MA": "Zone 2 · 60 min",
+      "MA": "Zone 2 · 60 min · start met 20′ fietstest @ HR 130",
       "DI": "Kracht A",
       "WO": "Rust",
       "DO": "Kickboksen",
@@ -961,7 +961,8 @@
                   "sets": 2,
                   "reps": "40",
                   "rest": 45,
-                  "unit": "sec"
+                  "unit": "sec",
+                  "sides": true
                 },
                 {
                   "key": "dead_bug",
@@ -1154,7 +1155,8 @@
       "REV staat los van de gym: thuis ±3× per week, na de gym mag als je zin hebt.",
       "Voeding: tekort 300–500 kcal per dag, eiwit 1,6–2,2 g per kg, extra verbruik via stappen en zone 2. Stuur op het weekgemiddelde uit minstens 3 wegingen.",
       "Laatste sessie: za 14 nov. Di 17 nov is geschrapt: geen zware squat vlak voor de vlucht."
-    ]
+    ],
+    "cardio_test": "Maandag: de zone 2-cardio start met een submaximale test, 20 min op de gymfiets met watt bij hartslag ±130. Noteer gemiddeld vermogen (W) en gemiddelde hartslag; Bert geeft ze via de chat, Claude zet ze in bitfit-data/zone2_test.json (Bert, 28 okt)."
   },
   "doel_bodycomp": {
     "_comment": "Bert, 26 okt 2026: doel 86 kg, vet kwijt met behoud van spieren, realistisch scenario (±20% van het gewichtsverlies via BIA-lean). Vervangt KG 85–88 / VET% ≤19,5 / VET ≤15,6 / LEAN ≥71 (baseline apr '26) en de tussenversie vet ≤16 / lean ≥69 / kg ≤88. Getoond in bitstats.html → BODY COMP (BC_GOALS).",
