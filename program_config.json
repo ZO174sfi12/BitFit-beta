@@ -1190,7 +1190,9 @@
           ],
           "rest": 240,
           "basis": "85×6×3 (27/10), 90×5 (9/10) → e1RM ±102–105, 3RM ±95",
-          "hint": "Pogingen 87,5 → 92,5 → 95 · 95 enkel als 92,5 snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder."
+          "hint": "Pogingen 87,5 → 92,5 → 95 · 95 enkel als 92,5 snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "record": "3RM 100 (5 jun) · 1RM 120 (20 aug)",
+          "extra": null
         },
         "bench": {
           "wu": [
@@ -1218,7 +1220,9 @@
           ],
           "rest": 210,
           "basis": "80×5×3 (27/10), 90×3×2 (10/10), 95×3 (25/9) → 3RM ±92,5–95",
-          "hint": "Pogingen 87,5 → 92,5 → 95 · 97,5 enkel als 95 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder."
+          "hint": "Pogingen 87,5 → 92,5 → 95 · 97,5 enkel als 95 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "record": "3RM 95 (25 sep) · 1RM 100 (20 aug)",
+          "extra": 97.5
         }
       },
       "2026-11-14": {
@@ -1248,7 +1252,9 @@
           ],
           "rest": 240,
           "basis": "110×5 (24/10) → e1RM ±128, 3RM ±117,5–120",
-          "hint": "Pogingen 107,5 → 112,5 → 117,5 · 120 enkel als 117,5 snel ging (+ SET). Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder."
+          "hint": "Pogingen 107,5 → 112,5 → 117,5 · 120 enkel als 117,5 snel ging (+ SET). Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "record": "5RM 120 (11 aug) · 1RM 140 (20 aug)",
+          "extra": 120
         },
         "ohp": {
           "wu": [
@@ -1272,7 +1278,9 @@
           ],
           "rest": 180,
           "basis": "55×5/5/6 (24/10), 60×4×3 (24/9) → 3RM ±62,5",
-          "hint": "Pogingen 55 → 60 → 62,5 · 65 enkel als 62,5 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder."
+          "hint": "Pogingen 55 → 60 → 62,5 · 65 enkel als 62,5 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "record": "3RM 67,5 (22 aug) · 1RM 70 (16 sep)",
+          "extra": 65
         }
       }
     }
