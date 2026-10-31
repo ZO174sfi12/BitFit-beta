@@ -22744,12 +22744,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // (mag naar VR). Weken lopen ma–zo vanaf 12 okt: week 1 heeft enkel B (za 17),
     // week 6 enkel A (ma 16 nov, twee dagen voor vertrek — nog open of die lichter
     // wordt). Index = week, 0-based.
-    // ⚠ CANONIEK: program_config.json → blok_fullbody.sessies. Kaartgewicht = plafond;
-    //   wat gelogd wordt stuurt bij (alle sets 6 → +2,5 · 5 → houden · twee keer op rij minder → −2,5).
+    // ⚠ CANONIEK: program_config.json → blok_fullbody.sessies, .piek en .rm_test. Kaartgewicht = richtgewicht;
+    //   reps beslissen, geen plafond (Bert, 31 okt): alle sets ≥5 → +2,5 · een set onder 5 → houden · twee keer op rij onder 5 → −2,5.
+    //   Week index 3 = piekweek (3×3 zwaar), index 4 = 3RM-test (di 10 en za 14 nov).
     const FB_SQ  = [null, 82.5, 85, 92.5, 87.5, null];
     const FB_BP  = [null, 77.5, 80, 85, 82.5, null];
     const FB_DL  = [85, 90, 92.5, 107.5, 95, null];
     const FB_OHP = [52.5, 52.5, 55, 60, 57.5, null];
+    const FB_PIEK = 3, FB_TEST = 4;
+    // 3RM-test (program_config → blok_fullbody.rm_test): opwarming, pogingen en bonus
+    const FB_RM = {
+      Squat:   {wu:[[20,8],[60,5],[72.5,3],[82.5,1]], ramp:[90,95,100],        bonus:[102.5,105], rec:'3RM 100 (5 jun) · 1RM 120 (20 aug)'},
+      Bench:   {wu:[[20,10],[60,5],[75,2]],           ramp:[85,90,95],         bonus:[97.5,100],  rec:'3RM 95 (25 sep) · 1RM 100 (20 aug)'},
+      Deadlift:{wu:[[60,5],[80,3],[95,1]],            ramp:[105,112.5,117.5],  bonus:[122.5,125], rec:'5RM 120 (11 aug) · 1RM 140 (20 aug) · straps mogen'},
+      OHP:     {wu:[[20,10],[40,5],[50,1]],           ramp:[55,60,62.5],       bonus:[65,67.5],   rec:'3RM 67,5 (22 aug) · 1RM 70 (16 sep)'}};
+    const fbKg = x => String(x).replace('.', ',');
+    function fbRmRow(lift, naam) {
+      const t = FB_RM[lift];
+      return ['3RM', lift, naam + ' — 3RM', '3 reps · ' + t.ramp.map(fbKg).join(' → ') + ' · bonus ' + t.bonus.map(fbKg).join(' → '),
+              t.ramp[0], '3–4 min', t.rec, true, true, _rampHtml(lift, t.wu, t.ramp[0], liftColor(lift)), true];
+    }
     const FB_MAAND = ['JAN','FEB','MRT','APR','MEI','JUN','JUL','AUG','SEP','OKT','NOV','DEC'];
     function fbDatum(wk, plus) {
       const dt = new Date(new Date('2026-10-12T12:00:00').getTime() + (wk*7 + plus)*86400000);
@@ -22757,7 +22771,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function fbDays(wk) {
       const i = Math.min(Math.max(wk, 0), 5);
-      const regel = 'Gewicht = plafond · 6/6/6 → +2,5 · 5 → houden · twee sessies op rij onder 5 → −2,5';
+      const regel = i === FB_TEST ? 'Stop als de 3e rep merkbaar trager gaat · 3–4 min rust · bonus enkel na een snelle 3e rep'
+                  : i === FB_PIEK ? 'Piekweek · laatste gewone sessie zwaar en kort: 3 × 3, fris de 3RM-test in'
+                  : 'Reps beslissen, geen plafond · alle sets ≥5 → +2,5 · een set onder 5 → houden · twee sessies op rij onder 5 → −2,5';
+      const sch = i === FB_PIEK ? '3 × 3' : '3 × 5–6';
       const onderarm = {name:'EXCENTRISCHE POLSEXTENSIE', scheme:'3 × 8 · 4 kg', start:'3–4 tellen laten zakken',
                         cue:'De traagheid is het werk · pijn de ochtend erna = stap terug'};
       let di, za;
@@ -22771,11 +22788,12 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         const bss = (i % 2 === 1);   // week 2, 4, 6 Bulgarian split squat · week 3, 5 step-ups of lunges
         di = {key:'DI', color:'#b388ff', sessKey:'MA',
-          card:{h:'DI ' + fbDatum(i,1) + ' · A · SQUAT + BENCH · ±65 MIN'},
+          card:{h:'DI ' + fbDatum(i,1) + (i === FB_TEST ? ' · A · 3RM-TEST · SQUAT + BENCH' : ' · A · SQUAT + BENCH · ±65 MIN')},
           banner: regel,
           tiers:[
-            ['T1','Squat','BACK SQUAT','3 × 5–6', FB_SQ[i], '2–3 min', 'Brace · hard omhoog', true],
-            ['T1','Bench','BARBELL BENCH PRESS','3 × 5–6', FB_BP[i], '2–3 min', 'Pols recht · hielen neer', true],
+            ...(i === FB_TEST ? [fbRmRow('Squat','BACK SQUAT'), fbRmRow('Bench','BARBELL BENCH PRESS')] : [
+            ['T1','Squat','BACK SQUAT',sch, FB_SQ[i], '2–3 min', 'Brace · hard omhoog', true],
+            ['T1','Bench','BARBELL BENCH PRESS',sch, FB_BP[i], '2–3 min', 'Pols recht · hielen neer', true]]),
             {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
               bss ? {name:'BULGARIAN SPLIT SQUAT', scheme:'8 / been', start:'lichaamsgewicht → DB', cue:'Achterste voet op de bank'}
                   : {name:'STEP-UPS OF LUNGES', scheme:'8 / been', start:'lichaamsgewicht → DB', cue:''},
@@ -22791,11 +22809,12 @@ document.addEventListener('DOMContentLoaded', function() {
               card:{h:'ZA ' + fbDatum(i,5) + ' · GEEN SESSIE', r:[['tb-wu','—','Vertrek naar Colombia op wo 18 nov.']]}};
       } else {
         za = {key:'ZA', color:'#ffd600',
-          card:{h:'ZA ' + fbDatum(i,5) + ' · B · DEADLIFT + OHP · ±70 MIN'},
+          card:{h:'ZA ' + fbDatum(i,5) + (i === FB_TEST ? ' · B · 3RM-TEST · DEADLIFT + OHP' : ' · B · DEADLIFT + OHP · ±70 MIN')},
           banner: regel + ' · za lukt niet → vr',
           tiers:[
-            ['T1','Deadlift','DEADLIFT · MET STRAPS','3 × 5–6', FB_DL[i], '3 min', 'Elke rep opnieuw opzetten · +2,5 enkel bij rustige rug', true],
-            ['T1','OHP','OVERHEAD PRESS','3 × 5–6', FB_OHP[i], '2–3 min', 'Ribben omlaag, billen aan', true],
+            ...(i === FB_TEST ? [fbRmRow('Deadlift','DEADLIFT · MET STRAPS'), fbRmRow('OHP','OVERHEAD PRESS')] : [
+            ['T1','Deadlift','DEADLIFT · MET STRAPS',sch, FB_DL[i], '3 min', 'Elke rep opnieuw opzetten · +2,5 enkel bij rustige rug', true],
+            ['T1','OHP','OVERHEAD PRESS',sch, FB_OHP[i], '2–3 min', 'Ribben omlaag, billen aan', true]]),
             ['T2','Lat PD','LAT PULLDOWN · NEUTRALE GREEP','3 × 10–12', null, '90 sec', 'Neutrale greep · bovengreeps trekwerk belast de polsstrekkers het hardst', false],
             {ss:true, badge:'T2', rounds:2, rest:'60–90 sec na elke ronde', items:[
               {name:'SINGLE-LEG RDL', scheme:'8 / been', start:'15 kg · één hand · straps', cue:'Heup naar achter'},
