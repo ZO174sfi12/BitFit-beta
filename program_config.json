@@ -734,8 +734,8 @@
         "sessie": "A",
         "wk": 4,
         "gewichten": {
-          "Squat": 87.5,
-          "Bench": 82.5
+          "Squat": 92.5,
+          "Bench": 85
         }
       },
       {
@@ -744,8 +744,8 @@
         "sessie": "B",
         "wk": 4,
         "gewichten": {
-          "Deadlift": 97.5,
-          "OHP": 57.5
+          "Deadlift": 107.5,
+          "OHP": 60
         }
       },
       {
@@ -1158,7 +1158,7 @@
     ],
     "cardio_test": "Maandag: de zone 2-cardio start met een submaximale test, 20 min op de gymfiets met watt bij hartslag ±130. Noteer gemiddeld vermogen (W) en gemiddelde hartslag; Bert geeft ze via de chat, Claude zet ze in bitfit-data/zone2_test.json (Bert, 28 okt).",
     "rm_test": {
-      "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt): realistisch volgens de recente logs, geen 1RM (rug: 14 en 19 sep bij squat 95 en 100). Pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Overige oefeningen van die sessie mogen lichter of weg.",
+      "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt; ladder verlengd 31 okt tot boven het niveau van 20 aug): pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Bonuspogingen enkel na een vlotte 3e rep. Bijwerk en core van die sessie blijven zoals ze zijn.",
       "2026-11-10": {
         "squat": {
           "wu": [
@@ -1175,24 +1175,23 @@
               "reps": 3
             },
             {
-              "w": 80,
-              "reps": 2
-            },
-            {
-              "w": 85,
+              "w": 82.5,
               "reps": 1
             }
           ],
           "ramp": [
-            87.5,
-            92.5,
-            95
+            90,
+            95,
+            100
           ],
           "rest": 240,
-          "basis": "85×6×3 (27/10), 90×5 (9/10) → e1RM ±102–105, 3RM ±95",
-          "hint": "Pogingen 87,5 → 92,5 → 95 · 95 enkel als 92,5 snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "basis": "85×6×3 (27/10), 3×3 @ 92,5 (3/11) → e1RM ±102–105; niveau 20 aug ≙ 3RM ±102,5–109",
+          "hint": "Pogingen 90 → 95 → 100 · bonus 102,5 → 105 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "3RM 100 (5 jun) · 1RM 120 (20 aug)",
-          "extra": null
+          "extra": [
+            102.5,
+            105
+          ]
         },
         "bench": {
           "wu": [
@@ -1206,23 +1205,22 @@
             },
             {
               "w": 75,
-              "reps": 3
-            },
-            {
-              "w": 82.5,
-              "reps": 1
+              "reps": 2
             }
           ],
           "ramp": [
-            87.5,
-            92.5,
+            85,
+            90,
             95
           ],
           "rest": 210,
-          "basis": "80×5×3 (27/10), 90×3×2 (10/10), 95×3 (25/9) → 3RM ±92,5–95",
-          "hint": "Pogingen 87,5 → 92,5 → 95 · 97,5 enkel als 95 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "basis": "80×5×3 (27/10), 3×3 @ 85 (3/11), 95×3 (25/9); niveau 20 aug ≙ 3RM ±91–95",
+          "hint": "Pogingen 85 → 90 → 95 · bonus 97,5 → 100 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "3RM 95 (25 sep) · 1RM 100 (20 aug)",
-          "extra": 97.5
+          "extra": [
+            97.5,
+            100
+          ]
         }
       },
       "2026-11-14": {
@@ -1238,23 +1236,22 @@
             },
             {
               "w": 95,
-              "reps": 2
-            },
-            {
-              "w": 102.5,
               "reps": 1
             }
           ],
           "ramp": [
-            107.5,
+            105,
             112.5,
             117.5
           ],
           "rest": 240,
-          "basis": "110×5 (24/10) → e1RM ±128, 3RM ±117,5–120",
-          "hint": "Pogingen 107,5 → 112,5 → 117,5 · 120 enkel als 117,5 snel ging (+ SET). Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "basis": "110×5 (24/10), 3×3 @ 107,5 (7/11) → e1RM ±128; niveau 20 aug ≙ 3RM ±120–127,5",
+          "hint": "Pogingen 105 → 112,5 → 117,5 · bonus 122,5 → 125 enkel als de vorige snel ging. Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "5RM 120 (11 aug) · 1RM 140 (20 aug)",
-          "extra": 120
+          "extra": [
+            122.5,
+            125
+          ]
         },
         "ohp": {
           "wu": [
@@ -1268,7 +1265,7 @@
             },
             {
               "w": 50,
-              "reps": 2
+              "reps": 1
             }
           ],
           "ramp": [
@@ -1277,10 +1274,40 @@
             62.5
           ],
           "rest": 180,
-          "basis": "55×5/5/6 (24/10), 60×4×3 (24/9) → 3RM ±62,5",
-          "hint": "Pogingen 55 → 60 → 62,5 · 65 enkel als 62,5 snel ging (+ SET). Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM, niet verder.",
+          "basis": "55×6/6/8 (31/10), 3×3 @ 60 (7/11); niveau 16 sep ≙ 3RM ±63,5–65",
+          "hint": "Pogingen 55 → 60 → 62,5 · bonus 65 → 67,5 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "3RM 67,5 (22 aug) · 1RM 70 (16 sep)",
-          "extra": 65
+          "extra": [
+            65,
+            67.5
+          ]
+        }
+      }
+    },
+    "piek": {
+      "_uitleg": "Piekweek voor de 3RM-test (Bert, 31 okt): laatste gewone sessie per lift 3×3 op ±90 % van het 3RM-doel. Bijwerk en core blijven zoals ze zijn.",
+      "2026-11-03": {
+        "squat": {
+          "sets": 3,
+          "reps": "3",
+          "w": 92.5
+        },
+        "bench": {
+          "sets": 3,
+          "reps": "3",
+          "w": 85
+        }
+      },
+      "2026-11-07": {
+        "deadlift": {
+          "sets": 3,
+          "reps": "3",
+          "w": 107.5
+        },
+        "ohp": {
+          "sets": 3,
+          "reps": "3",
+          "w": 60
         }
       }
     }

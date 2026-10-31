@@ -294,7 +294,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202610311746</span>
+        <span class="meta-value" style="color:var(--muted)">202610311839</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -22746,10 +22746,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // wordt). Index = week, 0-based.
     // ⚠ CANONIEK: program_config.json → blok_fullbody.sessies. Kaartgewicht = plafond;
     //   wat gelogd wordt stuurt bij (alle sets 6 → +2,5 · 5 → houden · twee keer op rij minder → −2,5).
-    const FB_SQ  = [null, 82.5, 85, 87.5, 87.5, null];
-    const FB_BP  = [null, 77.5, 80, 82.5, 82.5, null];
-    const FB_DL  = [85, 90, 92.5, 97.5, 95, null];
-    const FB_OHP = [52.5, 52.5, 55, 57.5, 57.5, null];
+    const FB_SQ  = [null, 82.5, 85, 92.5, 87.5, null];
+    const FB_BP  = [null, 77.5, 80, 85, 82.5, null];
+    const FB_DL  = [85, 90, 92.5, 107.5, 95, null];
+    const FB_OHP = [52.5, 52.5, 55, 60, 57.5, null];
     const FB_MAAND = ['JAN','FEB','MRT','APR','MEI','JUN','JUL','AUG','SEP','OKT','NOV','DEC'];
     function fbDatum(wk, plus) {
       const dt = new Date(new Date('2026-10-12T12:00:00').getTime() + (wk*7 + plus)*86400000);
