@@ -675,7 +675,7 @@
       "superset": "60–90 sec na elke ronde",
       "T3": "A: 60 sec tussen de sets, polsextensie en cable row na elkaar · B: superset, 60 sec na elke ronde, 3 rondes"
     },
-    "progressie": "Gewicht in het plan = plafond. Alle sets 6 reps → volgende keer +2,5 kg · sets van 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Geldt ook voor de deadlift: die stond op 3 × 5 en kon zijn eigen ladder dus nooit verdienen — nu 3 × 5–6, met de rug als veto: alleen omhoog als de rug de dag erna rustig is.",
+    "progressie": "Geen plafond meer (Bert, 31 okt). Alle sets minstens 5 reps → volgende keer +2,5 kg · een set onder 5 → houden · twee sessies op rij onder 5 → −2,5 kg. Stilstaan is normaal in een tekort. Geldt ook voor de deadlift: die stond op 3 × 5 en kon zijn eigen ladder dus nooit verdienen — nu 3 × 5–6, met de rug als veto: alleen omhoog als de rug de dag erna rustig is.",
     "gewichten_bron": "Uit de logs, opwarmsets eruit en gecorrigeerd voor de set_type-bug: squat 80×6×3 (13 okt) · bench 82,5×4×3 (24 sep), 90×3×2 (10 okt) · deadlift 85×3×2 met straps (21 sep), 100×4×3 (4 sep), rug sprak in sep twee keer · OHP 52,5×6,6 (2 sep), 60×4×3 (24 sep), 50×6,5 (10 okt).",
     "sessies": [
       {
@@ -734,8 +734,8 @@
         "sessie": "A",
         "wk": 4,
         "gewichten": {
-          "Squat": 85,
-          "Bench": 80
+          "Squat": 87.5,
+          "Bench": 82.5
         }
       },
       {
@@ -744,8 +744,8 @@
         "sessie": "B",
         "wk": 4,
         "gewichten": {
-          "Deadlift": 95,
-          "OHP": 55
+          "Deadlift": 97.5,
+          "OHP": 57.5
         }
       },
       {
