@@ -645,7 +645,7 @@
       "core_voor": [
         "Plank 3 × 45 sec",
         "Side Plank 2 × 40 sec",
-        "Dead Bug 3 × 12"
+        "Dead Bug 2 × 12"
       ],
       "T1": [
         "Deadlift met straps 3 × 5–6",
@@ -967,7 +967,7 @@
                 {
                   "key": "dead_bug",
                   "name": "Dead bug",
-                  "sets": 3,
+                  "sets": 2,
                   "reps": "12",
                   "rest": 45,
                   "unit": "reps"
