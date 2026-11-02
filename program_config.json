@@ -1156,7 +1156,7 @@
       "Voeding: tekort 300–500 kcal per dag, eiwit 1,6–2,2 g per kg, extra verbruik via stappen en zone 2. Stuur op het weekgemiddelde uit minstens 3 wegingen.",
       "Laatste sessie: za 14 nov. Di 17 nov is geschrapt: geen zware squat vlak voor de vlucht."
     ],
-    "cardio_test": "Maandag: de zone 2-cardio start met een submaximale test, 20 min op de gymfiets met watt bij hartslag ±130. Noteer gemiddeld vermogen (W) en gemiddelde hartslag; Bert geeft ze via de chat, Claude zet ze in bitfit-data/zone2_test.json (Bert, 28 okt).",
+    "cardio_test": "Maandag: submaximale fietstest thuis op de Domyos EB 500 (Kinomap, Helio Strap). Zadel 7 gaatjes · 5 min inrijden niveau 4 · 20 min niveau 8 vast aan 85 rpm · meetwaarde = gemiddelde hartslag min 15–25. Daarna vrij. Bert stuurt de Kinomap-zip; Claude vult bitfit-data/zone2_test.json (Bert, 28 okt; protocol 2 nov).",
     "rm_test": {
       "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt; ladder verlengd 31 okt tot boven het niveau van 20 aug): pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Bonuspogingen enkel na een vlotte 3e rep. Bijwerk en core van die sessie blijven zoals ze zijn.",
       "2026-11-10": {
