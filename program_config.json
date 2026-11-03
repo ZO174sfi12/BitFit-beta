@@ -1127,6 +1127,65 @@
               "min": 0
             }
           ]
+        },
+        "X": {
+          "date": "2026-11-16",
+          "label": "X · LOOPTEST",
+          "title": "Looptest 5 km",
+          "dur": 45,
+          "groups": [
+            {
+              "label": "Inlopen",
+              "tag": "cardio",
+              "min": 10,
+              "items": [
+                {
+                  "key": "run_warmup",
+                  "name": "Inlopen",
+                  "tier": "WU",
+                  "sets": 1,
+                  "reps": "600",
+                  "unit": "sec",
+                  "rest": 0,
+                  "cue": "Rustig, hartslag onder 125. Start OpenCircuit vóór je vertrekt."
+                }
+              ]
+            },
+            {
+              "label": "Looptest",
+              "tag": "cardio",
+              "min": 30,
+              "items": [
+                {
+                  "key": "run_test_5k",
+                  "name": "Looptest 5 km",
+                  "tier": "TEST",
+                  "sets": 1,
+                  "reps": "1800",
+                  "unit": "sec",
+                  "rest": 0,
+                  "cue": "Zelfde parcours als 26 okt. Stevig maar constant tempo, hartslag ±140–150 — niet voluit. Log je eindtijd hier (seconden) en noteer afstand en gemiddelde hartslag in de notitie.",
+                  "why": "VO2max-meting (doel_vo2max): ACSM-loopformule + hartslagreserve. Daarna een Apple Health-export in de chat voor de hartslag van OpenCircuit."
+                }
+              ]
+            },
+            {
+              "label": "Uitlopen",
+              "tag": "cardio",
+              "min": 5,
+              "items": [
+                {
+                  "key": "run_cooldown",
+                  "name": "Uitlopen of wandelen",
+                  "tier": "Z2",
+                  "sets": 1,
+                  "reps": "300",
+                  "unit": "sec",
+                  "rest": 0
+                }
+              ]
+            }
+          ]
         }
       },
       "rev": {
@@ -1326,5 +1385,36 @@
     "daarna": "beslissen of verder richting 16 kg vet",
     "delta_vet_pct_per_maand": -0.7,
     "kracht": "geen automatische check; Bert en Lotte evalueren de progressie zelf (26 okt 2026)"
+  },
+  "doel_vo2max": {
+    "_comment": "Bert, 3 nov 2026. VO2max-doelen; meting via looptest (zie bitfit-data/zone2_test.json → looptesten). De Domyos-fietstest geeft enkel een 'fietsindex' met theoretische VO2max (trend), want de Domyos-watt ligt ±30% te laag.",
+    "basis": {
+      "datum": "2026-11-16",
+      "verwacht": "43–44",
+      "referentie": "loop 26 okt: ±44 · Zepp 25 mei: 44"
+    },
+    "doelen": [
+      {
+        "datum": "2026-12-31",
+        "vo2max_min": 42,
+        "label": "na Colombia max. 2 punten verlies"
+      },
+      {
+        "datum": "2027-02-28",
+        "vo2max": 46,
+        "label": "70e percentiel mannen 30–39 (FRIEND)"
+      },
+      {
+        "datum": "2027-05-31",
+        "vo2max": 48,
+        "label": "±75e percentiel"
+      }
+    ],
+    "nevendoelen": {
+      "fietsindex": "hartslag op Domyos niveau 8 / 85 rpm −5 bpm tegen eind feb 2027 (±127 i.p.v. 132)",
+      "rustpols": "≤ 52 (nu ±55, OpenCircuit)"
+    },
+    "aanpak_vanaf_dec": "1× zone 2 45–60 min (HR 120–135) · 1× intervallen 4×4 min HR ±165–170, 3 min rustig ertussen (roeier of lopen, niet de dag vóór zware squat/deadlift) · kickboksen blijft de derde prikkel",
+    "looptest": "om de 4–6 weken · zelfde parcours als 26 okt · OpenCircuit · 10 min inlopen (HR < 125) · 5 km stevig maar constant tempo (HR ±140–150, niet voluit) · daarna Apple Health-export · VO2max = ACSM-loopformule + hartslagreserve (rust 55, max 185) over km 1–5"
   }
 }
