@@ -1,100 +1,169 @@
-<!doctype html>
-<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BitFit week 44</title>
-<style>
-:root{--bg:#f6f6fa;--card:#fff;--ink:#16161f;--ink2:#55556a;--mute:#8a8aa0;--line:#e3e3ec;--done:#00a844;--late:#e0244f;--sq:#7c4dff;--be:#1e88e5;--dl:#c9a400;--ohp:#00a37a;--core:#5c6bc0;--w:#1e88e5}
-@media (prefers-color-scheme:dark){:root{--bg:#0e0e16;--card:#181824;--ink:#ececf4;--ink2:#a8a8c0;--mute:#6a6a80;--line:#2a2a3a;--done:#00c853;--late:#ff3d6b;--sq:#b388ff;--be:#64b5f6;--dl:#ffd600;--ohp:#00ffb3;--core:#9fa8da;--w:#64b5f6}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:860px;margin:0 auto;padding:20px 16px 40px}
-h1{font-size:22px;margin:0}h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:28px 0 10px}
-.sub{color:var(--ink2);margin:2px 0 0}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-.kpi .l{font-size:12px;color:var(--ink2)}.kpi .v{font-size:26px;font-weight:700;margin-top:2px}.kpi .d{font-size:12px;color:var(--ink2)}
-.ok{color:var(--done)}.bad{color:var(--late)}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px;min-height:98px;border-top:4px solid var(--line)}
-.day.s{border-top-color:var(--done)}.day.r{border-top-color:var(--mute)}.day.m{border-top-color:var(--late)}
-.day b{display:block;font-size:13px}.day .p{color:var(--ink2)}.day .g{margin-top:4px}
-.lifts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.lift{display:flex;align-items:center;gap:12px}
-.pill{width:10px;align-self:stretch;border-radius:5px}
-.lift .n{font-weight:600}.lift .meta{font-size:12px;color:var(--ink2)}
-.sets{display:flex;gap:4px;margin-top:6px}
-.set{min-width:30px;text-align:center;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:6px;padding:2px 4px}
-.set.lo{border-color:var(--late)}
-svg text{fill:var(--ink2);font-size:11px}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:4px 8px;border-radius:6px;opacity:0;transition:opacity .1s;white-space:nowrap}
-.chartwrap{position:relative}
-.legend{display:flex;gap:14px;font-size:12px;color:var(--ink2);margin-top:6px;flex-wrap:wrap}
-.legend i{display:inline-block;width:14px;height:0;border-top:2px solid var(--w);vertical-align:middle;margin-right:5px}
-.legend i.dash{border-top:2px dashed var(--mute)}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}.tbl td{padding:5px 4px;border-bottom:1px solid var(--line)}
-.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.bar{height:10px;border-radius:3px}
-.focus{border-left:4px solid var(--late)}
-@media (max-width:620px){.kpis{grid-template-columns:1fr 1fr}.week{grid-template-columns:repeat(2,1fr)}.lifts{grid-template-columns:1fr}}
-</style></head><body><main>
-<h1>BitFit-week 26 okt – 1 nov</h1>
-<p class="sub">Fullbody-blok · nog 2,5 week tot vertrek (18 nov)</p>
-
-<div class="kpis">
- <div class="card kpi"><div class="l">Kracht</div><div class="v ok">2 / 2</div><div class="d">A di · B za</div></div>
- <div class="card kpi"><div class="l">REV</div><div class="v bad">1 / 3</div><div class="d">doel ±3× per week</div></div>
- <div class="card kpi"><div class="l">Gewicht (gem.)</div><div class="v">88,7 kg</div><div class="d"><span class="bad">+1,0 kg</span> · doel −0,25</div></div>
- <div class="card kpi"><div class="l">Vet (gem.)</div><div class="v">21,6%</div><div class="d">+0,4 · vetmassa 19,1 kg</div></div>
-</div>
-
-<h2>Week</h2>
-<div class="week">
- <div class="day s"><b>ma 26</b><span class="p">Zone 2 · 60′</span><div class="g">Lopen 5 km · 40′ · Ø136</div></div>
- <div class="day s"><b>di 27</b><span class="p">Kracht A</span><div class="g">✓ 57′</div></div>
- <div class="day s"><b>wo 28</b><span class="p">Rust</span><div class="g">Extra sessie · 65′<br>Stairmaster 30′ · Ø135 · 356 kcal<br>+ core, rug, arm, voet, mob</div></div>
- <div class="day s"><b>do 29</b><span class="p">Kickboksen</span><div class="g">✓ 120′</div></div>
- <div class="day r"><b>vr 30</b><span class="p">Rust</span><div class="g">— teveel gedronken</div></div>
- <div class="day s"><b>za 31</b><span class="p">Kracht B</span><div class="g">✓ 70′</div></div>
- <div class="day s"><b>zo 1</b><span class="p">Kickboksen</span><div class="g">✓ 120′</div></div>
-</div>
-
-<h2>Topsets tegenover het plan</h2>
-<div class="lifts">
- <div class="card lift"><span class="pill" style="background:var(--sq)"></span><div><div class="n">Squat · 85 kg</div><div class="meta">plan 85 · alles ≥5 → volgende keer +2,5</div><div class="sets"><span class="set">6</span><span class="set">6</span><span class="set">6</span></div></div></div>
- <div class="card lift"><span class="pill" style="background:var(--be)"></span><div><div class="n">Bench · 80 kg</div><div class="meta">plan 80 · alles ≥5 → +2,5</div><div class="sets"><span class="set">5</span><span class="set">5</span><span class="set">5</span></div></div></div>
- <div class="card lift"><span class="pill" style="background:var(--dl)"></span><div><div class="n">Deadlift · 95 kg</div><div class="meta">plan 92,5 · +2,5 boven plan</div><div class="sets"><span class="set">5</span><span class="set">6</span><span class="set">6</span></div></div></div>
- <div class="card lift"><span class="pill" style="background:var(--ohp)"></span><div><div class="n">OHP · 55 kg</div><div class="meta">plan 55 · alles ≥5 → +2,5</div><div class="sets"><span class="set">6</span><span class="set">6</span><span class="set">8</span></div></div></div>
-</div>
-
-<h2>Gewicht · laatste 15 dagen</h2>
-<div class="card chartwrap" id="wc"><svg id="wsvg" width="100%" height="220" role="img" aria-label="Gewicht per dag, 18 okt tot 1 nov"></svg><div class="tip" id="tip"></div>
- <div class="legend"><span><i></i>gewicht per dag</span><span><i class="dash"></i>weekgemiddelde</span></div></div>
-
-<h2>Tijd per stap · verschil met plan</h2>
-<div class="card" id="times"></div>
-
-<div class="card focus" style="margin-top:22px"><b>Aandachtspunt volgende week</b><br>REV vastzetten op 3 thuisavonden (bv. ma, wo, vr). Bij B: core vóór liep 7 min uit — strakker op de klok.</div>
-</main>
-<script>
-const W=[["18/10",88.8],["19/10",88.9],["20/10",87.7],["21/10",87.5],["22/10",87.0],["23/10",86.9],["24/10",88.7],["25/10",87.5],["26/10",88.8],["27/10",88.5],["28/10",88.5],["29/10",88.7],["30/10",88.5],["31/10",89.1],["1/11",88.9]];
-const svg=document.getElementById('wsvg'),tip=document.getElementById('tip'),NS='http://www.w3.org/2000/svg';
-function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
-function draw(){svg.innerHTML='';const w=svg.clientWidth,h=220,L=36,R=12,T=12,B=26,lo=86.5,hi=89.5;
- const x=i=>L+i*(w-L-R)/(W.length-1),y=v=>T+(hi-v)/(hi-lo)*(h-T-B);
- for(let v=87;v<=89.5;v+=1){el('line',{x1:L,x2:w-R,y1:y(v),y2:y(v),stroke:'var(--line)'});const t=el('text',{x:L-6,y:y(v)+4,'text-anchor':'end'});t.textContent=v}
- const avg=(a,b)=>W.slice(a,b).reduce((s,p)=>s+p[1],0)/(b-a);
- [[1,8],[8,15]].forEach(([a,b])=>{const m=avg(a,b);el('line',{x1:x(a),x2:x(b-1),y1:y(m),y2:y(m),stroke:'var(--mute)','stroke-width':2,'stroke-dasharray':'5 4'});const t=el('text',{x:x(a)+4,y:y(m)+15,'text-anchor':'start'});t.textContent='Ø '+m.toFixed(1).replace('.',',')});
- el('path',{d:W.map((p,i)=>(i?'L':'M')+x(i)+' '+y(p[1])).join(' '),fill:'none',stroke:'var(--w)','stroke-width':2,'stroke-linejoin':'round'});
- W.forEach((p,i)=>{if(i%2==0||i==W.length-1){const t=el('text',{x:x(i),y:h-8,'text-anchor':'middle'});t.textContent=p[0]}
-  el('circle',{cx:x(i),cy:y(p[1]),r:4,fill:'var(--w)',stroke:'var(--card)','stroke-width':2});
-  const hit=el('rect',{x:x(i)-(w-L-R)/(W.length-1)/2,y:T,width:(w-L-R)/(W.length-1),height:h-T-B,fill:'transparent'});
-  hit.addEventListener('mouseenter',()=>{tip.textContent=p[0]+' · '+String(p[1]).replace('.',',')+' kg';tip.style.left=Math.min(x(i)+8,w-110)+'px';tip.style.top=(y(p[1])-10)+'px';tip.style.opacity=1});
-  hit.addEventListener('mouseleave',()=>tip.style.opacity=0)})}
-draw();addEventListener('resize',draw);
-const S={"A · di 27/10 · 57:25 / 54:00":[["Core · vóór",8,9.48],["Back squat",15,16.3],["Bench press",11,14.85],["Superset A",10,10.22],["T3",10,6.55]],
-"B · za 31/10 · 70:07 / 64:00":[["Core · vóór",8,15.32],["Deadlift (straps)",16,17.5],["OHP",10,9.53],["Lat pulldown",6,7.25],["Superset A",8,8.45],["Superset B",10,10.55],["Core · na",6,1.52]]};
-const fm=m=>{const s=Math.round(Math.abs(m)*60);return (m<0?'−':'+')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
-let html='';for(const k in S){html+='<div style="font-weight:600;margin:6px 0 4px">'+k+'</div><table class="tbl">';
- S[k].forEach(([n,p,r])=>{const d=r-p,wd=Math.min(Math.abs(d)/8*50,50);
-  html+='<tr><td style="width:34%">'+n+'</td><td style="width:40%"><div style="position:relative;height:10px"><div style="position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid var(--mute)"></div><div class="bar" title="'+fm(d)+'" style="position:absolute;'+(d>=0?'left:50%':'right:50%')+';width:'+wd+'%;background:'+(d>0.5?'var(--late)':'var(--mute)')+'"></div></div></td><td class="num">'+p+':00 → '+Math.floor(r)+':'+String(Math.round((r%1)*60)).padStart(2,'0')+'</td><td class="num '+(d>0.5?'bad':'')+'">'+fm(d)+'</td></tr>'});
- html+='</table>'}
-document.getElementById('times').innerHTML=html;
-</script></body></html>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BitFit week 44 · t/m 2026-11-01</title><style>:root{color-scheme:dark;--bg:#08080f;--panel:#0d0d18;--border:#1c1c30;--text:#c0c0d8;--hi:#ececf6;--muted:#8888aa;--cyan:#00e5ff}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 40px}h1{color:var(--cyan);font-size:20px}a{color:var(--cyan)}
+table{border-collapse:collapse;width:100%;margin:10px 0 16px;font-size:13px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--panel);color:var(--muted)}
+strong{color:var(--hi)}p{margin:6px 0}</style></head><body><!-- gegenereerd door report.py --><main><!--NAV--><style>.wknav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 0 14px;font:700 13px ui-monospace,Consolas,monospace}.wknav a{color:#00e5ff;text-decoration:none;border:1px solid #1c1c30;border-radius:8px;padding:8px 12px}.wknav .uit{color:#8888aa;border:1px dashed #1c1c30;border-radius:8px;padding:8px 12px}</style><nav class="wknav"><a href="week_2026-10-25.html">‹ W43</a><a href="../log-view.html">LOGS</a><span class="uit">›</span></nav><!--/NAV--><h1>BitFit-week 2026-10-26 t/m 2026-11-01</h1>
+<table>
+<thead>
+<tr>
+<th>Dag</th>
+<th>Gepland</th>
+<th>Gedaan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ma 26/10</td>
+<td>Cardio · start met 20′ fietstest thuis (Domyos, niveau 8, 85 rpm)</td>
+<td>Lopen · 5,00 km · 7:57/km · Ø136 / max 149 bpm · 474 kcal 40 min</td>
+</tr>
+<tr>
+<td>di 27/10</td>
+<td>Kracht A</td>
+<td>kracht A · 57 min: Squat 85×6/6/6 (plan 85), Bench 80×5/5/5 (plan 80)</td>
+</tr>
+<tr>
+<td>wo 28/10</td>
+<td>Rust</td>
+<td>REV</td>
+</tr>
+<tr>
+<td>do 29/10</td>
+<td>Kickboksen</td>
+<td>Kickboxing 120 min</td>
+</tr>
+<tr>
+<td>vr 30/10</td>
+<td>Rust · of kracht B als ZA niet lukt</td>
+<td>—</td>
+</tr>
+<tr>
+<td>za 31/10</td>
+<td>Kracht B</td>
+<td>kracht B · 70 min: Deadlift 95×5/6/6 (plan 92.5), OHP 55×6/6/8 (plan 55)</td>
+</tr>
+<tr>
+<td>zo 01/11</td>
+<td>Kickboksen</td>
+<td>Kickboxing 120 min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>REV:</strong> 1× (doel ±3× per week)<br />
+<strong>Gewicht:</strong> weekgemiddelde 88.7 kg uit 7 metingen (+1.0 kg t.o.v. vorige week · doel −0,25 kg)<br />
+<strong>Vet:</strong> weekgemiddelde 21.6% uit 7 metingen (+0.4 % t.o.v. vorige week)<br />
+<strong>Vetmassa:</strong> 19.1 kg (+0.6 kg) · doel ≤ 16 kg, nog 3.1 kg · <strong>vetvrij:</strong> 69.6 kg (+0.4 kg)<br />
+<strong>Fietsindex:</strong> geen meting deze week<br />
+<strong>VO2max:</strong> <strong>±44</strong> (looptest ma 26/10, referentie) · doel ≥42 tegen 31/12/2026</p>
+<p>Sessie A · 2026-10-27 · tijd per stap tegenover het plan</p>
+<table>
+<thead>
+<tr>
+<th>Stap</th>
+<th>Plan</th>
+<th>Echt</th>
+<th>Verschil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core · vóór</td>
+<td>8:00</td>
+<td>9:29</td>
+<td>+1:29</td>
+</tr>
+<tr>
+<td>Back squat</td>
+<td>15:00</td>
+<td>16:18</td>
+<td>+1:18</td>
+</tr>
+<tr>
+<td>Barbell bench press</td>
+<td>11:00</td>
+<td>14:51</td>
+<td>+3:51</td>
+</tr>
+<tr>
+<td>Superset A</td>
+<td>10:00</td>
+<td>10:13</td>
+<td>+0:13</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>10:00</td>
+<td>6:33</td>
+<td>−3:27</td>
+</tr>
+<tr>
+<td><strong>Totaal</strong></td>
+<td><strong>54:00</strong></td>
+<td><strong>57:25</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Niet gelogd: Sit-up</p>
+<p>Sessie B · 2026-10-31 · tijd per stap tegenover het plan</p>
+<table>
+<thead>
+<tr>
+<th>Stap</th>
+<th>Plan</th>
+<th>Echt</th>
+<th>Verschil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core · vóór</td>
+<td>8:00</td>
+<td>15:19</td>
+<td>+7:19</td>
+</tr>
+<tr>
+<td>Deadlift met straps</td>
+<td>16:00</td>
+<td>17:30</td>
+<td>+1:30</td>
+</tr>
+<tr>
+<td>Overhead press</td>
+<td>10:00</td>
+<td>9:32</td>
+<td>−0:28</td>
+</tr>
+<tr>
+<td>Lat pulldown</td>
+<td>6:00</td>
+<td>7:15</td>
+<td>+1:15</td>
+</tr>
+<tr>
+<td>Superset A</td>
+<td>8:00</td>
+<td>8:27</td>
+<td>+0:27</td>
+</tr>
+<tr>
+<td>Superset B</td>
+<td>10:00</td>
+<td>10:33</td>
+<td>+0:33</td>
+</tr>
+<tr>
+<td>Core · na</td>
+<td>6:00</td>
+<td>1:31</td>
+<td>−4:29</td>
+</tr>
+<tr>
+<td><strong>Totaal</strong></td>
+<td><strong>64:00</strong></td>
+<td><strong>70:07</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table><!--NAV--><style>.wknav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 0 14px;font:700 13px ui-monospace,Consolas,monospace}.wknav a{color:#00e5ff;text-decoration:none;border:1px solid #1c1c30;border-radius:8px;padding:8px 12px}.wknav .uit{color:#8888aa;border:1px dashed #1c1c30;border-radius:8px;padding:8px 12px}</style><nav class="wknav"><a href="week_2026-10-25.html">‹ W43</a><a href="../log-view.html">LOGS</a><span class="uit">›</span></nav><!--/NAV--></main></body></html>

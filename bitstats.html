@@ -253,7 +253,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202611031246</span>
+        <span class="meta-value" style="color:var(--muted)">202611031250</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -383,6 +383,34 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
     <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:10px;line-height:1.6;">Bron: Apple Health-export (Zepp/Helio Strap, vanaf 6 okt OpenCircuit) &mdash; DATA.recovery via process_jefit.py. Datum = ochtend na de nacht. &ldquo;Zware nacht&rdquo; = rustpols &ge; 6 slagen boven je 28-daagse mediaan. Afwijkingen in ms t.o.v. je eigen 28-daags gemiddelde, zodat de langetermijntrend de vergelijking niet vertekent.</div>
   </div>
 
+
+  <!--CONDITIE_START-->
+  <div class="panel analysis-panel c" id="conditie-panel">
+    <div class="cd tl" style="border-color:#29b6f6"></div><div class="cd tr" style="border-color:#29b6f6"></div><div class="cd bl" style="border-color:#29b6f6"></div><div class="cd br" style="border-color:#29b6f6"></div>
+    <div class="panel-title">&#9658; CONDITIE &mdash; VO2MAX &amp; FIETSINDEX</div>
+    <div class="analysis-text" style="font-size:12px;line-height:1.8">VO2max <b style="color:var(--cyan)">±44</b> <span style="color:var(--muted)">(looptest 26/10, referentie)</span><br>Fietsindex <b style="color:#29b6f6">132 bpm</b> bij niveau 8 / 85 rpm <span style="color:var(--muted)">· theoretische VO2max ±34</span><br>Volgend doel <b style="color:var(--yellow)">≥42</b> tegen 31/12 <span style="color:var(--muted)">· na Colombia max. 2 punten verlies</span></div>
+    <div style="position:relative;height:clamp(200px,50vw,260px);margin-top:10px;"><canvas id="condChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas></div>
+    <div class="rec-legend"><span><i style="background:#00e5ff"></i>VO2max looptest</span><span><i style="background:#29b6f6;border-radius:50%"></i>theoretisch (fiets)</span><span><i style="background:#ffd600"></i>doel</span><span><i style="background:#8888aa"></i>50e / 70e percentiel mannen 30–39</span></div>
+    <div style="overflow-x:auto;margin-top:10px"><table style="width:100%;border-collapse:collapse;font-family:'Space Mono',monospace;font-size:11px;color:var(--text)">
+      <tr style="color:var(--muted);text-align:left"><th>DATUM</th><th>TEST</th><th>BELASTING</th><th>HR</th><th>VO2</th></tr><tr><td>2/11</td><td style="color:#29b6f6">FIETS</td><td>116 W · 86 rpm</td><td>132</td><td><b>34</b>*</td></tr><tr><td>26/10</td><td style="color:#00e5ff">LOOP</td><td>5.0 km · 7:57/km</td><td>136</td><td><b>44</b></td></tr></table></div>
+    <div style="font-family:monospace;font-size:10px;color:var(--muted);margin-top:10px;line-height:1.6;">* Fiets = Domyos EB 500 thuis (niveau 8, 85 rpm): de wattmeter ligt ±30% te laag, dus enkel trend. Lager = fitter. VO2max uit de looptest (ACSM-loopformule + hartslagreserve, rust 55 / max 185). Hartslag: OpenCircuit. Normen: FRIEND-registry 2022. Bron: bitfit-data/zone2_test.json.</div>
+  </div>
+<script>
+window.addEventListener('load',function(){
+  if(!window.Chart) return; var D={"labels": ["26/10", "2/11", "31/12", "28/2/27", "31/5/27"], "loop": [44, null, null, null, null], "fiets": [null, 34, null, null, null], "doel": [null, null, 42, 46, 48]}; var el=document.getElementById('condChart'); if(!el) return;
+  var n=D.labels.length, line=function(v){return D.labels.map(function(){return v;});};
+  new Chart(el,{type:'line',data:{labels:D.labels,datasets:[
+    {label:'looptest',data:D.loop,borderColor:'#00e5ff',backgroundColor:'#00e5ff',spanGaps:true,pointRadius:5,borderWidth:2},
+    {label:'fiets (theoretisch)',data:D.fiets,borderColor:'#29b6f6',backgroundColor:'#29b6f6',spanGaps:true,pointRadius:4,borderDash:[4,4],borderWidth:1.5},
+    {label:'doel',data:D.doel,borderColor:'#ffd600',backgroundColor:'#ffd600',spanGaps:true,pointRadius:5,pointStyle:'rectRot',borderDash:[2,4],borderWidth:1},
+    {label:'50e pct',data:line(39.7),borderColor:'#8888aa',pointRadius:0,borderDash:[6,6],borderWidth:1},
+    {label:'70e pct',data:line(46.4),borderColor:'#8888aa',pointRadius:0,borderDash:[2,6],borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{suggestedMin:30,suggestedMax:50,ticks:{color:'#8888aa',font:{size:10}},grid:{color:'#1a1a2e'}},
+              x:{ticks:{color:'#8888aa',font:{size:10}},grid:{display:false}}}}});
+});
+</script>
+<!--CONDITIE_END-->
 
   <a class="panel analysis-panel y" id="year-in-review-link" href="https://claude.ai/artifact/D6GtuB5fudHrXkQKZBdY4G" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:var(--text)">
     <div class="cd tl" style="border-color:var(--yellow)"></div><div class="cd tr" style="border-color:var(--yellow)"></div><div class="cd bl" style="border-color:var(--yellow)"></div><div class="cd br" style="border-color:var(--yellow)"></div>
