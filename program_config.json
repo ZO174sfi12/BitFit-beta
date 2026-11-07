@@ -1290,26 +1290,26 @@
               "reps": 5
             },
             {
-              "w": 80,
+              "w": 85,
               "reps": 3
             },
             {
-              "w": 95,
+              "w": 100,
               "reps": 1
             }
           ],
           "ramp": [
-            105,
-            112.5,
-            117.5
+            110,
+            117.5,
+            122.5
           ],
           "rest": 240,
-          "basis": "110×5 (24/10), 3×3 @ 107,5 (7/11) → e1RM ±128; niveau 20 aug ≙ 3RM ±120–127,5",
-          "hint": "Pogingen 105 → 112,5 → 117,5 · bonus 122,5 → 125 enkel als de vorige snel ging. Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
+          "basis": "110×3×3 en 120×3 (7/11) → 3RM ±122,5–127,5; niveau 20 aug ≙ 3RM ±120–127,5",
+          "hint": "Pogingen 110 → 117,5 → 122,5 · bonus 127,5 → 130 enkel als de vorige snel ging. Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "5RM 120 (11 aug) · 1RM 140 (20 aug)",
           "extra": [
-            122.5,
-            125
+            127.5,
+            130
           ]
         },
         "ohp": {
@@ -1328,17 +1328,17 @@
             }
           ],
           "ramp": [
-            55,
-            60,
-            62.5
+            57.5,
+            62.5,
+            65
           ],
           "rest": 180,
-          "basis": "55×6/6/8 (31/10), 3×3 @ 60 (7/11); niveau 16 sep ≙ 3RM ±63,5–65",
-          "hint": "Pogingen 55 → 60 → 62,5 · bonus 65 → 67,5 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
+          "basis": "62,5×5 (7/11) → e1RM ±73, 3RM ±65–67,5; niveau 16 sep ≙ 3RM ±63,5–65",
+          "hint": "Pogingen 57,5 → 62,5 → 65 · bonus 67,5 → 70 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "3RM 67,5 (22 aug) · 1RM 70 (16 sep)",
           "extra": [
-            65,
-            67.5
+            67.5,
+            70
           ]
         }
       }
