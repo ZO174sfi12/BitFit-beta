@@ -1230,26 +1230,26 @@
               "reps": 5
             },
             {
-              "w": 72.5,
+              "w": 75,
               "reps": 3
             },
             {
-              "w": 82.5,
+              "w": 87.5,
               "reps": 1
             }
           ],
           "ramp": [
-            90,
             95,
-            100
+            100,
+            105
           ],
           "rest": 240,
-          "basis": "85×6×3 (27/10), 3×3 @ 92,5 (3/11) → e1RM ±102–105; niveau 20 aug ≙ 3RM ±102,5–109",
-          "hint": "Pogingen 90 → 95 → 100 · bonus 102,5 → 105 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
+          "basis": "95×3×3 (3/11) → 3RM ±102,5–107,5; niveau 20 aug ≙ 3RM ±102,5–109",
+          "hint": "Pogingen 95 → 100 → 105 · bonus 107,5 → 110 enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM.",
           "record": "3RM 100 (5 jun) · 1RM 120 (20 aug)",
           "extra": [
-            102.5,
-            105
+            107.5,
+            110
           ]
         },
         "bench": {
