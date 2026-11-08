@@ -1217,7 +1217,7 @@
     ],
     "cardio_test": "Maandag: submaximale fietstest thuis op de Domyos EB 500 (Kinomap; hartslag uit OpenCircuit via Apple Health-export). Zadel 7 gaatjes · 5 min inrijden niveau 4 · 20 min niveau 8 vast aan 85 rpm · meetwaarde = gemiddelde hartslag min 15–25. Daarna vrij. Bert stuurt de Kinomap-zip; Claude vult bitfit-data/zone2_test.json (Bert, 28 okt; protocol 2 nov).",
     "rm_test": {
-      "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt). Sinds 8 nov: 3 pogingen per lift, doel boven het niveau van 20 aug, geen aparte bonuspogingen meer; opwarming 2 sets + 1 lichte single, geen lege stang. Pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Bijwerk en core van die sessie blijven zoals ze zijn.",
+      "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt). Sinds 8 nov: 3 pogingen per lift, doel boven het niveau van 20 aug, geen aparte bonuspogingen meer; opwarming 2 sets + 1 lichte single, geen lege stang. Pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Bijwerk en core van die sessie blijven zoals ze zijn. rec3 = huidig 3RM-record, niveau = 3RM dat hoort bij de 1RM van 20 aug (OHP: 16 sep); daaruit volgen de labels per poging (= record · 🏆 record · ≙/> 20/8) op PROGRAM en in BitFit Log (Bert, 8 nov).",
       "2026-11-10": {
         "squat": {
           "wu": [
@@ -1243,7 +1243,13 @@
           "basis": "95×3×3 (3/11) → 3RM ±102,5–107,5; niveau 20 aug ≙ 3RM ±102,5–109",
           "hint": "Doel: boven 20 aug → 110 × 3. Pogingen 100 → 105 → 110, elke stap enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM. Mislukt een rep, dan telt de laatste geslaagde poging.",
           "record": "3RM 100 (5 jun) · 1RM 120 (20 aug)",
-          "extra": []
+          "extra": [],
+          "rec3": 100,
+          "niveau": [
+            102.5,
+            109
+          ],
+          "niveau_dat": "20/8"
         },
         "bench": {
           "wu": [
@@ -1269,7 +1275,13 @@
           "basis": "80×5×3 (27/10), 85 · 87,5 · 90 × 3 (3/11), 95×3 (25/9); niveau 20 aug ≙ 3RM ±91–95",
           "hint": "Doel: boven 20 aug → 97,5 × 3. Pogingen 90 → 95 → 97,5, elke stap enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM. Mislukt een rep, dan telt de laatste geslaagde poging.",
           "record": "3RM 95 (25 sep) · 1RM 100 (20 aug)",
-          "extra": []
+          "extra": [],
+          "rec3": 95,
+          "niveau": [
+            91,
+            95
+          ],
+          "niveau_dat": "20/8"
         }
       },
       "2026-11-14": {
@@ -1297,7 +1309,13 @@
           "basis": "110×3×3 en 120×3 (7/11) → 3RM ±122,5–127,5; niveau 20 aug ≙ 3RM ±120–127,5",
           "hint": "Doel: boven 20 aug → 130 × 3. Pogingen 120 → 125 → 130, elke stap enkel als de vorige snel ging. Straps mogen. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM. Mislukt een rep, dan telt de laatste geslaagde poging.",
           "record": "3RM 120 (7 nov) · 1RM 140 (20 aug)",
-          "extra": []
+          "extra": [],
+          "rec3": 120,
+          "niveau": [
+            120,
+            127.5
+          ],
+          "niveau_dat": "20/8"
         },
         "ohp": {
           "wu": [
@@ -1323,7 +1341,13 @@
           "basis": "62,5×5 (7/11) → e1RM ±73, 3RM ±65–67,5; niveau 16 sep ≙ 3RM ±63,5–65",
           "hint": "Doel: boven 16 sep → 70 × 3. Pogingen 62,5 → 67,5 → 70, elke stap enkel als de vorige snel ging. Stop zodra de 3e rep merkbaar trager gaat: dat gewicht is je 3RM. Mislukt een rep, dan telt de laatste geslaagde poging.",
           "record": "3RM 67,5 (22 aug) · 1RM 70 (16 sep)",
-          "extra": []
+          "extra": [],
+          "rec3": 67.5,
+          "niveau": [
+            63.5,
+            65
+          ],
+          "niveau_dat": "16/9"
         }
       }
     },
