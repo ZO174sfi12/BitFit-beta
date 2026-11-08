@@ -26459,16 +26459,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const FB_DL  = [85, 90, 92.5, 107.5, 95, null];
     const FB_OHP = [52.5, 52.5, 55, 60, 57.5, null];
     const FB_PIEK = 3, FB_TEST = 4;
-    // 3RM-test (program_config → blok_fullbody.rm_test): opwarming, pogingen en bonus
+    // 3RM-test (program_config → blok_fullbody.rm_test): opwarming en 3 pogingen, doel boven 20 aug (Bert, 8 nov)
     const FB_RM = {
-      Squat:   {wu:[[60,5],[80,3]],                  ramp:[95,100,105],       bonus:[107.5,110], rec:'3RM 100 (5 jun) · 1RM 120 (20 aug)'},
-      Bench:   {wu:[[60,5],[75,2]],                   ramp:[85,90,95],         bonus:[97.5,100],  rec:'3RM 95 (25 sep) · 1RM 100 (20 aug)'},
-      Deadlift:{wu:[[60,5],[90,3]],                  ramp:[110,117.5,122.5],  bonus:[127.5,130], rec:'5RM 120 (11 aug) · 1RM 140 (20 aug) · straps mogen'},
-      OHP:     {wu:[[40,5],[50,2]],                   ramp:[57.5,62.5,65],     bonus:[67.5,70],   rec:'3RM 67,5 (22 aug) · 1RM 70 (16 sep)'}};
+      Squat:   {wu:[[60,5],[80,3],[90,1]],      ramp:[100,105,110],   rec:'3RM 100 (5 jun) · 1RM 120 (20 aug)'},
+      Bench:   {wu:[[60,5],[75,2],[82.5,1]],    ramp:[90,95,97.5],    rec:'3RM 95 (25 sep) · 1RM 100 (20 aug)'},
+      Deadlift:{wu:[[60,5],[90,3],[105,1]],     ramp:[120,125,130],   rec:'3RM 120 (7 nov) · 1RM 140 (20 aug) · straps mogen'},
+      OHP:     {wu:[[40,5],[50,2],[57.5,1]],    ramp:[62.5,67.5,70],  rec:'3RM 67,5 (22 aug) · 1RM 70 (16 sep)'}};
     const fbKg = x => String(x).replace('.', ',');
     function fbRmRow(lift, naam) {
       const t = FB_RM[lift];
-      return ['3RM', lift, naam + ' — 3RM', '3 reps · ' + t.ramp.map(fbKg).join(' → ') + ' · bonus ' + t.bonus.map(fbKg).join(' → '),
+      return ['3RM', lift, naam + ' — 3RM', '3 reps · ' + t.ramp.map(fbKg).join(' → '),
               t.ramp[0], '3–4 min', t.rec, true, true, _rampHtml(lift, t.wu, t.ramp[0], liftColor(lift)), true];
     }
     const FB_MAAND = ['JAN','FEB','MRT','APR','MEI','JUN','JUL','AUG','SEP','OKT','NOV','DEC'];
@@ -26478,7 +26478,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function fbDays(wk) {
       const i = Math.min(Math.max(wk, 0), 5);
-      const regel = i === FB_TEST ? 'Stop als de 3e rep merkbaar trager gaat · 3–4 min rust · bonus enkel na een snelle 3e rep'
+      const regel = i === FB_TEST ? 'Stop als de 3e rep merkbaar trager gaat · 3–4 min rust · volgende poging enkel na een snelle 3e rep'
                   : i === FB_PIEK ? 'Piekweek · laatste gewone sessie zwaar en kort: 3 × 3, fris de 3RM-test in'
                   : 'Reps beslissen, geen plafond · alle sets ≥5 → +2,5 · een set onder 5 → houden · twee sessies op rij onder 5 → −2,5';
       const sch = i === FB_PIEK ? '3 × 3' : '3 × 5–6';
