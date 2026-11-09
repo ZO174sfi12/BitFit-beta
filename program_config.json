@@ -749,8 +749,8 @@
         }
       },
       {
-        "datum": "2026-11-10",
-        "dag": "DI",
+        "datum": "2026-11-09",
+        "dag": "MA",
         "sessie": "A",
         "wk": 5,
         "gewichten": {
@@ -1218,7 +1218,7 @@
     "cardio_test": "Maandag: submaximale fietstest thuis op de Domyos EB 500 (Kinomap; hartslag uit OpenCircuit via Apple Health-export). Zadel 7 gaatjes · 5 min inrijden niveau 4 · 20 min niveau 8 vast aan 85 rpm · meetwaarde = gemiddelde hartslag min 15–25. Daarna vrij. Bert stuurt de Kinomap-zip; Claude vult bitfit-data/zone2_test.json (Bert, 28 okt; protocol 2 nov).",
     "rm_test": {
       "_uitleg": "3RM-test op het einde van het blok (Bert, 28 okt). Sinds 8 nov: 3 pogingen per lift, doel boven het niveau van 20 aug, geen aparte bonuspogingen meer; opwarming 2 sets + 1 lichte single, geen lege stang. Pogingen van 3 reps, 3 à 4 min rust, stoppen op snelheid. Bijwerk en core van die sessie blijven zoals ze zijn. rec3 = huidig 3RM-record, niveau = 3RM dat hoort bij de 1RM van 20 aug (OHP: 16 sep); daaruit volgen de labels per poging (= record · 🏆 record · ≙/> 20/8) op PROGRAM en in BitFit Log (Bert, 8 nov).",
-      "2026-11-10": {
+      "2026-11-09": {
         "squat": {
           "wu": [
             {
