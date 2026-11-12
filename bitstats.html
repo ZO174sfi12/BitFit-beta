@@ -253,7 +253,7 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
       </div>
       <div class="meta-item">
         <span class="meta-label">UPDATE</span>
-        <span class="meta-value" style="color:var(--muted)">202611120919</span>
+        <span class="meta-value" style="color:var(--muted)">202611120920</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">STATUS</span>
@@ -361,10 +361,9 @@ header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px
   <!--CONDITIE_START-->
   <div class="panel analysis-panel c" id="conditie-panel">
     <div class="cd tl" style="border-color:#29b6f6"></div><div class="cd tr" style="border-color:#29b6f6"></div><div class="cd bl" style="border-color:#29b6f6"></div><div class="cd br" style="border-color:#29b6f6"></div>
-    <div class="panel-title">&#9658; CONDITIE</div>
-    <div class="panel-title" style="margin-top:6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><span>&#9658; CARDIO-INDEX &mdash; VO2MAX UIT VERGELIJKBARE TESTEN</span><span style="font-size:10px;letter-spacing:0;color:var(--muted);font-weight:normal">rustpols <b style="color:#ff3d6b">55</b> · doel ≤52</span></div>
+    <div class="panel-title" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><span>&#9658; CARDIO-INDEX &middot; VO2MAX</span><span style="font-size:10px;letter-spacing:0;color:var(--muted);font-weight:normal">rustpols <b style="color:#ff3d6b">55</b> · doel ≤52</span></div>
     <div style="position:relative;height:clamp(190px,48vw,250px)"><canvas id="condChart" style="position:absolute;inset:0;width:100%;height:100%;"></canvas></div>
-    <div class="rec-legend"><span><i style="background:#00e5ff"></i>loop</span><span><i style="background:#29b6f6"></i>fiets</span><span><i style="border:1px solid #29b6f6;background:transparent"></i>ijking</span><span><i style="border:1px dashed #8888aa;background:transparent"></i>doel (open symbool)</span></div>
+    <div class="rec-legend" style="font-family:monospace"><span style="color:#00e5ff">&#9679; loop</span><span style="color:#29b6f6">&#9650; fiets</span><span style="color:#29b6f6">&#10005; ijking</span><span style="color:var(--muted)">&#9675;&#9651; doel</span></div>
   </div>
 <script>
 window.addEventListener('load',function(){
@@ -375,11 +374,11 @@ window.addEventListener('load',function(){
   if(c1) new Chart(c1,{type:'scatter',data:{datasets:[
     {label:'looptest',data:D.loop,showLine:true,borderColor:'#00e5ff',pointBackgroundColor:'#00e5ff',pointRadius:5,borderWidth:2},
     {label:'fiets',data:D.fv,showLine:true,borderColor:'#29b6f6',pointBackgroundColor:'#29b6f6',pointStyle:'triangle',pointRadius:5,borderWidth:2},
-    {label:'ijking',data:D.ij,showLine:false,borderColor:'#29b6f6',pointBackgroundColor:'transparent',pointBorderColor:'#29b6f6',pointStyle:'triangle',pointRadius:6,borderWidth:2},
+    {label:'ijking',data:D.ij,showLine:false,borderColor:'#29b6f6',pointBorderColor:'#29b6f6',pointStyle:'crossRot',pointRadius:6,borderWidth:2},
     {label:'doel loop',data:D.dl,showLine:true,borderColor:'#00e5ff99',pointBackgroundColor:'transparent',pointBorderColor:'#00e5ff',pointStyle:'circle',pointRadius:function(c){return c.dataIndex?5:0;},borderDash:[3,4],borderWidth:1.5},
     {label:'doel fiets',data:D.df,showLine:true,borderColor:'#29b6f699',pointBackgroundColor:'transparent',pointBorderColor:'#29b6f6',pointStyle:'triangle',pointRadius:function(c){return c.dataIndex?5:0;},borderDash:[3,4],borderWidth:1.5}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var r=c.raw;return (r.t?c.dataset.label+' ('+r.t+')':c.dataset.label)+': '+r.y+' · '+fmt(r.x)+(r.km?' · '+String(r.km).replace('.',',')+' km':'')+(r.d?' · '+r.d:'');}}}},
-      scales:{x:{type:'linear',min:D.xmin,max:D.xmax,ticks:Object.assign({callback:fmt,maxTicksLimit:7},tick),grid:{display:false}},
+      scales:{x:{type:'linear',min:D.xmin,max:D.xmax,afterBuildTicks:function(ax){var t=[],d=new Date(ax.min*DAG);d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,1));while(d.getTime()/DAG<=ax.max){t.push({value:Math.round(d.getTime()/DAG)});d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+2,1));}ax.ticks=t;},ticks:Object.assign({callback:function(v){var d=new Date(v*DAG),M=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];return M[d.getUTCMonth()]+(d.getUTCMonth()===0?" '"+String(d.getUTCFullYear()).slice(2):'');}},tick),grid:{display:false}},
               y:{suggestedMin:34,suggestedMax:52,ticks:tick,grid:{color:'#1a1a2e'}}}}});
   var c2=document.getElementById('fietsChart');
   if(c2&&D.fiets.length){var fx=D.fiets.map(function(p){return p.x;}), a=Math.min.apply(null,fx)-7;
@@ -25151,48 +25150,6 @@ const DATA = {
       "cardio_min": 29,
       "twijfel": false
     },
-    "2026-01-25": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-09-03": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-04-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-08-30": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-03-09": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-06-11": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
     "2026-02-22": {
       "cat": null,
       "kracht_min": 0,
@@ -25200,196 +25157,7 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-08-13": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-11-06": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-11-01": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-09-10": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-10-01": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-10-08": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-02-15": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2024-10-17": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-04-16": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-03-12": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-07-24": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-04-24": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-04-05": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-05-24": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-12-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-01-15": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-02-13": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-12-28": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-03-16": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-06-07": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-01-18": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-05-03": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-01-26": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-01-19": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-07-17": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2024-10-27": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-11-08": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-07-30": {
+    "2024-11-21": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25403,7 +25171,28 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-07-19": {
+    "2024-10-06": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-01-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-01-04": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-09-17": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25424,42 +25213,7 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-03-19": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-09-13": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-08-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-10-15": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-03-26": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2024-10-24": {
+    "2026-05-31": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25473,104 +25227,6 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2025-01-03": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-05-31": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-02-16": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-01-23": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2024-11-21": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-09-27": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-01-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-02-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-08-23": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-07-23": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2025-01-30": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-07-05": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-05-14": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-04-30": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
     "2026-02-12": {
       "cat": null,
       "kracht_min": 0,
@@ -25578,63 +25234,7 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-03-22": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-10-11": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-03-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-11-05": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2024-10-31": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-03-04": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-07-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-10-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-01-04": {
+    "2024-10-27": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25648,35 +25248,35 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2024-12-01": {
+    "2025-12-29": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2026-10-22": {
+    "2026-05-14": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2026-04-12": {
+    "2026-11-08": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2026-01-01": {
+    "2025-02-02": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2024-11-14": {
+    "2026-06-07": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25690,6 +25290,62 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
+    "2026-01-18": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-08-30": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2024-10-31": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-09-10": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-07-30": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-15": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-01-15": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-09-27": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
     "2026-08-27": {
       "cat": null,
       "kracht_min": 0,
@@ -25697,14 +25353,7 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-01-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-06-25": {
+    "2026-04-12": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25718,42 +25367,35 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
-    "2026-10-18": {
+    "2025-01-26": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2024-10-06": {
+    "2026-06-25": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2026-09-17": {
+    "2025-07-17": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2025-02-09": {
+    "2026-03-19": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
     },
-    "2026-03-15": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "muay": true
-    },
-    "2026-05-21": {
+    "2026-09-03": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25767,12 +25409,390 @@ const DATA = {
       "twijfel": false,
       "muay": true
     },
+    "2026-11-01": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2024-10-17": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-04-30": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2024-11-14": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2024-10-24": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-07-24": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-02-15": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-05-24": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-05-21": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-01-01": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-11-05": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-01-25": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-09-13": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-07-23": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-08-23": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-22": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-02-13": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-07-05": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-26": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-04-24": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-07-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-22": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-01-30": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-02-16": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-05-03": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-08-13": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-08": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
     "2026-02-26": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "muay": true
+    },
+    "2025-01-19": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-01-29": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-03-09": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-11": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-01-03": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-12": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-18": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-12-28": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-04": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-29": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-04-16": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-01-23": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-15": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-10-01": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-03-29": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-07-19": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-03-16": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-04-05": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-06-11": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2024-12-01": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-11-06": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2025-02-09": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-04-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2026-08-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "muay": true
+    },
+    "2022-10-30": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-03-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-07-06": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
     },
     "2023-03-26": {
       "cat": null,
@@ -25781,7 +25801,21 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2023-04-09": {
+    "2023-01-12": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-07-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-06-29": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25795,27 +25829,6 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2023-03-16": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-03-05": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-07-13": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
     "2022-12-01": {
       "cat": null,
       "kracht_min": 0,
@@ -25823,28 +25836,7 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2023-07-09": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-03-23": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-01-08": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2022-11-06": {
+    "2022-11-10": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25858,14 +25850,70 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2026-09-05": {
+    "2023-02-19": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "other": true
     },
-    "2022-10-30": {
+    "2023-04-09": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-03-16": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-03-23": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-03-19": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-06-22": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-01-08": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-05-21": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-05-07": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-05-04": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -25886,118 +25934,6 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2023-07-06": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-03-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-05-21": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-06-22": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-03-19": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2022-11-10": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-05-14": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-07-02": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2022-12-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-04-13": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-02-16": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-01-19": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2022-11-24": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-06-29": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-01-12": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-02-19": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
     "2026-09-06": {
       "cat": null,
       "kracht_min": 0,
@@ -26005,28 +25941,14 @@ const DATA = {
       "twijfel": false,
       "other": true
     },
-    "2023-02-02": {
+    "2026-09-05": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
       "twijfel": false,
       "other": true
     },
-    "2023-05-04": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2022-12-18": {
-      "cat": null,
-      "kracht_min": 0,
-      "cardio_min": 0,
-      "twijfel": false,
-      "other": true
-    },
-    "2023-05-07": {
+    "2023-02-16": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
@@ -26041,6 +25963,83 @@ const DATA = {
       "other": true
     },
     "2022-11-17": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-04-13": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-01-19": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2022-12-18": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-05-14": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-07-13": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2022-11-24": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-03-05": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-07-09": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2023-02-02": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2022-12-29": {
+      "cat": null,
+      "kracht_min": 0,
+      "cardio_min": 0,
+      "twijfel": false,
+      "other": true
+    },
+    "2022-11-06": {
       "cat": null,
       "kracht_min": 0,
       "cardio_min": 0,
