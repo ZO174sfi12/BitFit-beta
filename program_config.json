@@ -1147,7 +1147,7 @@
                   "reps": "600",
                   "unit": "sec",
                   "rest": 0,
-                  "cue": "Rustig, hartslag onder 125. Start OpenCircuit vóór je vertrekt."
+                  "cue": "Rustig, op gevoel. Start OpenCircuit vóór je vertrekt."
                 }
               ]
             },
@@ -1164,8 +1164,8 @@
                   "reps": "1800",
                   "unit": "sec",
                   "rest": 0,
-                  "cue": "Zelfde parcours als 26 okt. Stevig maar constant tempo, hartslag ±140–150 — niet voluit. Log je eindtijd hier (seconden) en noteer afstand en gemiddelde hartslag in de notitie.",
-                  "why": "VO2max-meting (doel_vo2max): ACSM-loopformule + hartslagreserve. Daarna een Apple Health-export in de chat voor de hartslag van OpenCircuit."
+                  "cue": "Zelfde parcours als 26 okt. Rustig beginnen, daarna minstens 15–20 min aan ±140 bpm — stuur op hartslag, niet op tempo. Log je totale tijd hier (seconden), afstand in de notitie.",
+                  "why": "Loopindex + loop-VO2max: tempo in het stabiele stuk rond 140 bpm (Claude knipt het uit de data), ACSM-loopformule + hartslagreserve. Daarna de OpenCircuit-export in de chat."
                 }
               ]
             },
@@ -1395,7 +1395,7 @@
     "kracht": "geen automatische check; Bert en Lotte evalueren de progressie zelf (26 okt 2026)"
   },
   "doel_vo2max": {
-    "_comment": "Bert, 3 nov 2026. VO2max-doelen; meting via looptest (zie bitfit-data/zone2_test.json → looptesten). De Domyos-fietstest geeft enkel een 'fietsindex' met theoretische VO2max (trend), want de Domyos-watt ligt ±30% te laag.",
+    "_comment": "Bert, 3 nov 2026 (bijgewerkt 12 nov). VO2max-doelen gelden voor de loop-VO2max (zone2_test.json → looptesten). Fiets-VO2max (Domyos-fietstest, 140 W echt vermogen na de ijking van 11 nov) is een aparte lijn, ±5–6 lager.",
     "basis": {
       "datum": "2026-11-16",
       "verwacht": "43–44",
@@ -1423,6 +1423,6 @@
       "rustpols": "≤ 52 (nu ±55, OpenCircuit)"
     },
     "aanpak_vanaf_dec": "1× zone 2 45–60 min (HR 120–135) · 1× intervallen 4×4 min HR ±165–170, 3 min rustig ertussen (roeier of lopen, niet de dag vóór zware squat/deadlift) · kickboksen blijft de derde prikkel",
-    "looptest": "om de 4–6 weken · zelfde parcours als 26 okt · OpenCircuit · 10 min inlopen (HR < 125) · 5 km stevig maar constant tempo (HR ±140–150, niet voluit) · daarna Apple Health-export · VO2max = ACSM-loopformule + hartslagreserve (rust 55, max 185) over km 1–5"
+    "looptest": "wekelijks, afwisselend met de fietstest · zelfde parcours als 26 okt · Helio Strap + OpenCircuit · rustig beginnen (inlopen vrij) · daarna minstens 15–20 min aan ±140 bpm, sturen op hartslag, niet op tempo · Claude knipt het langste stabiele stuk rond 140 bpm uit de data · loopindex = tempo (min/km) in dat stuk, sneller = fitter · loop-VO2max = ACSM-loopformule + hartslagreserve (rust 55, max 185)"
   }
 }
