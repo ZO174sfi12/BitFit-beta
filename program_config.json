@@ -1395,7 +1395,7 @@
     "kracht": "geen automatische check; Bert en Lotte evalueren de progressie zelf (26 okt 2026)"
   },
   "doel_vo2max": {
-    "_comment": "Bert, 3 nov 2026 (bijgewerkt 12 nov). VO2max-doelen gelden voor de loop-VO2max (zone2_test.json → looptesten). Fiets-VO2max (Domyos-fietstest, 140 W echt vermogen na de ijking van 11 nov) is een aparte lijn, ±5–6 lager.",
+    "_comment": "Bert, 3 nov 2026 (bijgewerkt 12 nov). VO2max-doelen gelden voor de loop-VO2max (zone2_test.json → looptesten). Fiets-VO2max (Domyos-fietstest, 140 W echt vermogen na de ijking van 11 nov) is een aparte lijn, ±5–6 lager. Doelen 12 nov herschikt naar een gelijkmatige streeflijn: +2 per twee maanden na Colombia.",
     "basis": {
       "datum": "2026-11-16",
       "verwacht": "43–44",
@@ -1409,11 +1409,16 @@
       },
       {
         "datum": "2027-02-28",
+        "vo2max": 44,
+        "label": "terug op niveau nov 2026"
+      },
+      {
+        "datum": "2027-04-30",
         "vo2max": 46,
         "label": "70e percentiel mannen 30–39 (FRIEND)"
       },
       {
-        "datum": "2027-05-31",
+        "datum": "2027-06-30",
         "vo2max": 48,
         "label": "±75e percentiel"
       }
