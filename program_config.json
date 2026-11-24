@@ -1129,63 +1129,126 @@
           ]
         },
         "X": {
-          "date": "2026-11-16",
-          "label": "X · LOOPTEST",
-          "title": "Looptest 5 km",
+          "date": "2026-11-24",
           "dur": 45,
           "groups": [
             {
-              "label": "Inlopen",
-              "tag": "cardio",
-              "min": 10,
               "items": [
                 {
-                  "key": "run_warmup",
-                  "name": "Inlopen",
-                  "tier": "WU",
-                  "sets": 1,
-                  "reps": "600",
-                  "unit": "sec",
-                  "rest": 0,
-                  "cue": "Rustig, op gevoel. Start OpenCircuit vóór je vertrekt."
-                }
-              ]
-            },
-            {
-              "label": "Looptest",
-              "tag": "cardio",
-              "min": 30,
-              "items": [
-                {
-                  "key": "run_test_5k",
-                  "name": "Looptest 5 km",
-                  "tier": "TEST",
-                  "sets": 1,
-                  "reps": "1800",
-                  "unit": "sec",
-                  "rest": 0,
-                  "cue": "Zelfde parcours als 26 okt. Rustig beginnen, daarna minstens 15–20 min aan ±140 bpm — stuur op hartslag, niet op tempo. Log je totale tijd hier (seconden), afstand in de notitie.",
-                  "why": "Loopindex + loop-VO2max: tempo in het stabiele stuk rond 140 bpm (Claude knipt het uit de data), ACSM-loopformule + hartslagreserve. Daarna de OpenCircuit-export in de chat."
-                }
-              ]
-            },
-            {
-              "label": "Uitlopen",
-              "tag": "cardio",
-              "min": 5,
-              "items": [
-                {
-                  "key": "run_cooldown",
-                  "name": "Uitlopen of wandelen",
-                  "tier": "Z2",
-                  "sets": 1,
+                  "cue": "Jumping jacks of ter plaatse lopen · heupcirkels · 10 squats · 10 glute bridges · 5 rustige push-ups.",
+                  "key": "bw_warmup",
+                  "name": "Opwarmen",
                   "reps": "300",
-                  "unit": "sec",
-                  "rest": 0
+                  "rest": 0,
+                  "sets": 1,
+                  "tier": "WU",
+                  "unit": "sec"
                 }
-              ]
+              ],
+              "label": "Opwarmen",
+              "min": 5,
+              "tag": "cardio"
+            },
+            {
+              "items": [
+                {
+                  "cue": "3 tellen zakken. Achterste voet met de veters op het bed, niet op je tenen: dat spaart je grote teen.",
+                  "key": "bw_bss",
+                  "load": false,
+                  "name": "Bulgarian split squat",
+                  "perSide": true,
+                  "reps": "8–10",
+                  "rest": 0,
+                  "sets": 3
+                },
+                {
+                  "cue": "Stop 1–2 reps voor falen. Te makkelijk? Voeten op het bed.",
+                  "key": "bw_pushup",
+                  "load": false,
+                  "name": "Push-ups",
+                  "reps": "12",
+                  "rest": 90,
+                  "sets": 3
+                }
+              ],
+              "label": "Superset A · 3 rondes · 90 sec na ronde",
+              "min": 15,
+              "ss": "a"
+            },
+            {
+              "items": [
+                {
+                  "cue": "Traag en gecontroleerd. Een rugzak in de hand maakt het zwaarder.",
+                  "key": "bw_sl_rdl",
+                  "load": false,
+                  "name": "Single-leg RDL",
+                  "perSide": true,
+                  "reps": "8–10",
+                  "rest": 0,
+                  "sets": 3
+                },
+                {
+                  "cue": "Schouders tegen de rand van het bed. 1 tel pauze bovenaan.",
+                  "key": "bw_hip_thrust",
+                  "load": false,
+                  "name": "Hip thrust één been",
+                  "perSide": true,
+                  "reps": "10–12",
+                  "rest": 90,
+                  "sets": 3
+                }
+              ],
+              "label": "Superset B · 3 rondes · 90 sec na ronde",
+              "min": 12,
+              "ss": "b"
+            },
+            {
+              "items": [
+                {
+                  "cue": "Van een stoel, op één been. Traag gaan zitten, zonder ploffen.",
+                  "key": "bw_chair_stand",
+                  "load": false,
+                  "name": "Sit-to-stand één been",
+                  "perSide": true,
+                  "reps": "5–6",
+                  "rest": 0,
+                  "sets": 2
+                },
+                {
+                  "key": "bw_plank",
+                  "load": false,
+                  "name": "Plank",
+                  "reps": "40",
+                  "rest": 0,
+                  "sets": 2,
+                  "unit": "sec"
+                },
+                {
+                  "key": "bw_side_plank",
+                  "load": false,
+                  "name": "Side plank",
+                  "reps": "30",
+                  "rest": 90,
+                  "sets": 2,
+                  "sides": true,
+                  "unit": "sec"
+                }
+              ],
+              "label": "Circuit C · 2 rondes · 90 sec na ronde",
+              "min": 8,
+              "ss": "c"
+            },
+            {
+              "label": "REV · tenen",
+              "min": 5,
+              "note": "Afsluiter voor de tenen · kies een tegel",
+              "optional": true,
+              "rev": true
             }
-          ]
+          ],
+          "label": "X · HOTEL",
+          "title": "Hotel workout",
+          "until": "2026-12-12"
         }
       },
       "rev": {
